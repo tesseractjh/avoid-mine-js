@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>지뢰피하기</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div id="canvas-container" class="flex">
+        <div id="msg-box" class="flex hidden"></div>
+        <div id="game-result" class="flex-column hidden">
+            <div class="title margin">GAME OVER</div>
+            <div class="flex">
+                <div class="game-result-left">STAGE</div>
+                <div class="space"></div>
+                <div id="stage" class="margin game-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="game-result-left">점수</div>
+                <div class="space"></div>
+                <div id="score" class="margin game-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="game-result-left">RANK</div>
+                <div class="space"></div>
+                <div id="rank" class="margin game-result-right"></div>
+            </div>
+            <button id="back">메인 페이지로 돌아가기</button> <!-- canvas 생성 후 버튼으로 대체 -->
+        </div>
+        <div id="stage-result" class="flex-column hidden">
+            <div id="stage-result-title" class="title margin"></div>
+            <div class="flex">
+                <div class="stage-result-left">밟은 칸 수 x50</div>
+                <div class="space">─</div>
+                <div id="cell-count" class="margin stage-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="stage-result-left">남은 시간 x1</div>
+                <div class="space">─</div>
+                <div id="remaining-time" class="margin stage-result-right"></div>
+            </div>
+            <div id ="movement-div" class="flex">
+                <div class="stage-result-left">움직임 최적화</div>
+                <div class="space">─</div>
+                <div id="movement-optimization" class="margin stage-result-right"></div>
+            </div>
+            <div id="item-div" class="flex">
+                <div class="stage-result-left">아이템 미사용</div>
+                <div class="space">─</div>
+                <div id="reserved-item" class="margin stage-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="stage-result-left">퍼펙트 클리어</div>
+                <div class="space">─</div>
+                <div id="perfect-clear" class="margin stage-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="stage-result-left">총계</div>
+                <div class="space">─</div>
+                <div id="total-score" class="margin stage-result-right"></div>
+            </div>
+            <div id="stage-result-footer">H를 누르면 다음 스테이지로 이동합니다.</div>
+        </div>
+        <div id="information" class="flex-column hidden">
+            <div id="information-title" class="title margin"></div>
+            <div id="information-header" class="align-center"></div>
+            <div class="flex margin">
+                <div id="information-left" class="flex left-right"></div>
+                <div id="arrow" class="flex hidden"></div>
+                <div id="information-right" class="flex left-right"></div>
+            </div>
+            <div id="information-article" class="flex"></div>
+            <div id="information-footer" class="flex"></div>
+        </div>
+        <canvas id="canvas" width="1920", height="920"></canvas>
+    </div>
+    <script src="./constant.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
