@@ -120,17 +120,16 @@ const TEXT = {
   msgBox09: '색깔 힌트의 지뢰 범위를 표시를 해제합니다.',
   msgBox10: '색깔 힌트의 지뢰 범위를 표시합니다.',
   introduceItemJ01: '🔍[J]',
-  introduceItemJ02: 'J키를 눌러 내 주변 2칸 이내에 있는 25칸 중<br>공개되지 않은 무작위 칸의 숫자 힌트를 공개할 수 있습니다.',
+  introduceItemJ02: 'J키를 눌러 내 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸의 숫자 힌트를 공개할 수 있습니다.',
   introduceItemJ03: 'H를 눌러 🔍 10개를 받으세요!',
   introduceItemK01: '🔭[K]',
-  introduceItemK02: 'K키를 눌러 주변 2칸 이내에 있는 25칸 중<br>공개되지 않은 무작위 칸을 공개할 수 있습니다.<br>만약 그 칸이 지뢰가 아니면 숫자 힌트를, 지뢰라면 지뢰를 표시합니다.',
+  introduceItemK02: 'K키를 눌러 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸을 공개할 수 있습니다.<br>만약 그 칸이 지뢰가 아니면 숫자 힌트를, 지뢰라면 지뢰를 표시합니다.',
   introduceItemK03: 'H를 눌러 🔭 5개를 받으세요!',
   introduceItemL01: '📡[L]',
-  introduceItemL02: 'L키를 눌러 내 주변 8칸 중에서 아직 밟지 않은 칸을 공개합니다.<br>만약 그 칸이 지뢰가 아니면 색칠하여 지뢰가 아님을 표시하고,<br>지뢰라면 지뢰를 표시합니다.',
+  introduceItemL02: 'L키를 눌러 내 주변 1칸 이내에 있는 칸 중에서<br>아직 밟지 않은 칸을 공개합니다. 만약 그 칸이 지뢰가 아니면<br>색칠하여 지뢰가 아님을 표시하고, 지뢰라면 지뢰를 표시합니다.',
   introduceItemL03: 'H를 눌러 📡 3개를 받으세요!',
   movementOpt01: '움직임 최적화',
   movementOpt02: '최대한 적게 움직이세요!<br>STAGE 6부터는 움직임을 최소화하면 보너스 점수를 얻습니다.',
-
   stage10Bonus01: 'STAGE 10 클리어 보너스',
   stage10Bonus02: '💖 +3<br>🔍[J] +10<br>🔭[K] +5<br>📡[L] +3',
   stage20Bonus01: 'STAGE 20 클리어 보너스',
@@ -139,7 +138,6 @@ const TEXT = {
   stage30Bonus02: '💖 +2<br>🔍[J] +5<br>🔭[K] +2<br>📡[L] +1',
   stage40Bonus01: 'STAGE 40 클리어 보너스',
   stage40Bonus02: '💖 +1<br>🔍[J] +3<br>🔭[K] +1<br>📡[L] +1',
-
   stageBonusHeader: 'H를 눌러 보너스를 받으세요!',
 
   newHintTitle: '새로운 힌트',
@@ -956,7 +954,7 @@ const GAME_PROCEDURE = [
       type: 'text', 
       text: TEXT.stage20Bonus02
     },
-	  header: TEXT.pressH,
+	  header: TEXT.stageBonusHeader,
     bonus: {
       life: 3, 
       itemJ: 7, 
@@ -1159,7 +1157,7 @@ const GAME_PROCEDURE = [
       type: 'text', 
       text: TEXT.stage30Bonus02
     },
-	  header: TEXT.pressH,
+	  header: TEXT.stageBonusHeader,
     bonus: {
       life: 2, 
       itemJ: 5, 
@@ -1429,7 +1427,7 @@ const GAME_PROCEDURE = [
       type: 'text', 
       text: TEXT.stage40Bonus02
     },
-	  header: TEXT.pressH,
+	  header: TEXT.stageBonusHeader,
     bonus: {
       life: 1, 
       itemJ: 3,
