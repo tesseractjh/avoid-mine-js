@@ -374,8 +374,8 @@ class Canvas {
       tempBoard.ensureCell(x, y);
       cell.number = value;
       cell.hintType = hintType ?? 'normal';
-      if (hintType === 'purple') {
-        cell.shape = shape;
+      if (hintType !== 'normal') {
+        cell.shape = shape ?? shapeMatch[hintType];
       }
       cell.textColor = hintType ? colorMatch[hintType] : BLACK;
       tempBoard.updateCell(cell);
