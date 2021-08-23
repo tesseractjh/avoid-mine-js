@@ -64,6 +64,7 @@ class Canvas {
     this.$stageResult.$moveOpt = new Element('movement-optimization');
     this.$stageResult.$itemDiv = new Element('item-div');
     this.$stageResult.$item = new Element('reserved-item');
+    this.$stageResult.$perfectClearDiv = new Element('perfect-clear-div');
     this.$stageResult.$perfectClear = new Element('perfect-clear');
     this.$stageResult.$totalScore = new Element('total-score');
     this.$information = new Element('information');
@@ -236,16 +237,10 @@ class Canvas {
     this.$information.hide();
     this.$information.top = 50;
     this.$information.opacity = 1;
-    this.$information.$left.innerHTML = '';
-    this.$information.$right.innerHTML = '';
-    this.$information.$article.innerHTML = '';
-    //[...this.$information.values()].forEach(elem => {
-    //  if (elem instanceof Element) {
-    //    elem.clear();
-    //  }
-    //});
-    this.$information.$arrow.innerHTML = '';
-    
+    this.$information.$left.clear();
+    this.$information.$right.clear();
+    this.$information.$article.clear();
+    this.$information.$arrow.clear();
   }
 
   paintAllButton() {
@@ -262,6 +257,7 @@ class Canvas {
     this.paintMainButton();
     this.$stageResult.$movementDiv.hide();
     this.$stageResult.$itemDiv.hide();
+    this.$stageResult.$perfectClearDiv.hide();
   }
 
   paintMainTitle() {
@@ -691,23 +687,24 @@ class Canvas {
         itemRatio = RESERVED_ITEM_RATIO
         $item.color = YELLOWGREEN;
         $item.innerHTML = `CLEAR +${Math.floor(itemRatio*100-100)}%`;
-        this.$stageResult.$itemDiv.show();
       } else {
-        itemRatio = 1;
         $item.color = BLACK;
         $item.innerHTML = 'FAIL';
       }
+      this.$stageResult.$itemDiv.show();
     }
   
-    let perfectClearRatio;
-    if (!isDead && accessable.every(cell => cell.isEnsured)) {
-      perfectClearRatio = PERFECT_CLEAR_RATIO;
-      $perfectClear.color = YELLOWGREEN;
-      $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
-    } else {
-      perfectClearRatio = 1;
-      $perfectClear.color = BLACK;
-      $perfectClear.innerHTML = 'FAIL';
+    let perfectClearRatio = 1;
+    if (stage > 4) {
+      if (!isDead && accessable.every(cell => cell.isEnsured)) {
+        perfectClearRatio = PERFECT_CLEAR_RATIO;
+        $perfectClear.color = YELLOWGREEN;
+        $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
+      } else {
+        $perfectClear.color = BLACK;
+        $perfectClear.innerHTML = 'FAIL';
+      }
+      this.$stageResult.$perfectClearDiv.show();
     }
   
     this.gameInfo.tempScore = Math.floor(

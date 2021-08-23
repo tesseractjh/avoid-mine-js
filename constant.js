@@ -131,6 +131,8 @@ const TEXT = {
   introduceItemL01: '📡[L]',
   introduceItemL02: 'L키를 눌러 내 주변 1칸 이내에 있는 칸 중에서<br>아직 밟지 않은 칸을 공개합니다. 만약 그 칸이 지뢰가 아니면<br>색칠하여 지뢰가 아님을 표시하고, 지뢰라면 지뢰를 표시합니다.',
   introduceItemL03: 'H를 눌러 📡 3개를 받으세요!',
+  perfectClear01: '퍼펙트 클리어',
+  perfectClear02: '밟을 수 있는 모든 칸을 다 밟으세요!<br>STAGE 5부터는 한 번도 죽지 않고<br>모든 안전한 칸을 밟으면 보너스 점수를 얻습니다.',
   movementOpt01: '움직임 최적화',
   movementOpt02: '최대한 적게 움직이세요!<br>STAGE 6부터는 움직임을 최소화하면 보너스 점수를 얻습니다.',
   stage10Bonus01: 'STAGE 10 클리어 보너스',
@@ -677,6 +679,17 @@ const GAME_PROCEDURE = [
 	  }
 	},
   
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.perfectClear01,
+	  article: {
+      type: 'text',
+      text: TEXT.perfectClear02
+    },
+    footer: TEXT.pressH
+	},
+
 	// STAGE 5
 	{
 	  type: 'game',
@@ -696,6 +709,7 @@ const GAME_PROCEDURE = [
       type: 'text',
       text: TEXT.movementOpt02
     },
+    footer: TEXT.pressH
 	},
   
 	{
