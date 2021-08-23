@@ -87,6 +87,10 @@ const OFFSET5_Y = [
   2, 2, 2, 2, 2
 ];
 
+const randRange = (start, end) => {
+  return Math.floor(Math.random()*(end-start+1)) + start;
+};
+
 const TEXT = {
 	mainTitle: '지　뢰　피　하　기',
   mainButton01: '게임설명',
@@ -97,52 +101,52 @@ const TEXT = {
   tutorial02: '칸에 적힌 숫자는 해당 칸과 주변 8칸을 포함한\n9칸 내에 존재하는 지뢰의 개수입니다.',
   tutorial03: '파란색 네모를 움직이면 주변 칸들의 숫자가 공개됩니다.\n시작점 근처 칸들의 숫자와 지뢰는 시작할 때 공개됩니다.',
   tutorial04: '숫자 힌트로는 여기까지가 한계입니다.\n이렇게 운에 의존해야 하는 상황이 종종 발생할 것입니다.',
-  tutorial05: 'L키를 누르면 파란색 네모 주변에 아직 밟지 않은 칸들 중\n무작위로 하나를 공개하는 아이템을 사용할 수 있습니다.',
-  tutorial06: '이 외에도 J키, K키로 무작위 칸을 공개하는\n아이템을 사용할 수 있고 횟수 제한이 있습니다.',
+  tutorial05: '숫자 3키를 누르면 파란색 네모 주변에 아직 밟지 않은 칸들 중\n무작위로 하나를 공개하는 아이템을 사용할 수 있습니다.',
+  tutorial06: '이 외에도 숫자 1키, 2키로 무작위 칸을 공개하는\n아이템을 사용할 수 있고 횟수 제한이 있습니다.',
   tutorial07: '파란색 네모를 WASD키로 조작하여 움직일 수 있습니다.\n도착점까지 직접 들어가보세요!',
   bottomBar01: 'STAGE',
   bottomBar02: '💖',
   bottomBar03: '점수',
   bottomBar04: '⏱',
-  bottomBar05: '🔍[J]',
-  bottomBar06: '🔭[K]',
-  bottomBar07: '📡[L]',
+  bottomBar05: '🔍[1]',
+  bottomBar06: '🔭[2]',
+  bottomBar07: '📡[3]',
   destination: '도착! 메인화면으로 이동합니다.',
   ensuredMine: '💣',
   msgBox01: '지뢰를 밟았습니다!',
-  msgBox02: '🔍[J] 아이템을 사용했습니다',
-  msgBox03: '🔍[J] 아이템이 없습니다!',
-  msgBox04: '🔭[K] 아이템을 사용했습니다',
-  msgBox05: '🔭[K] 아이템이 없습니다!',
-  msgBox06: '📡[L] 아이템을 사용했습니다',
-  msgBox07: '📡[L] 아이템이 없습니다!',
+  msgBox02: '🔍[1] 아이템을 사용했습니다',
+  msgBox03: '🔍[1] 아이템이 없습니다!',
+  msgBox04: '🔭[2] 아이템을 사용했습니다',
+  msgBox05: '🔭[2] 아이템이 없습니다!',
+  msgBox06: '📡[3] 아이템을 사용했습니다',
+  msgBox07: '📡[3] 아이템이 없습니다!',
   msgBox08: '더 이상 공개할 수 있는 칸이 없습니다!',
   msgBox09: '색깔 힌트의 지뢰 범위를 표시를 해제합니다.',
   msgBox10: '색깔 힌트의 지뢰 범위를 표시합니다.',
   clickCell01: '색깔 표시',
   clickCell02: '칸을 클릭하여 색깔 표시를 할 수 있습니다.<br>한 번 누르면 빨간색, 두 번 누르면 초록색, 세 번 누르면 사라집니다.<br>눈으로만 추측하면 실수하기 쉽습니다. 색깔 표시를 적극적으로 활용하세요!',
-  clickCell03: 'H를 누르면 게임을 시작합니다.',
-  introduceItemJ01: '🔍[J]',
-  introduceItemJ02: 'J키를 눌러 내 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸의 숫자 힌트를 공개할 수 있습니다.',
-  introduceItemJ03: 'H를 눌러 🔍 10개를 받으세요!',
-  introduceItemK01: '🔭[K]',
-  introduceItemK02: 'K키를 눌러 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸을 공개할 수 있습니다.<br>만약 그 칸이 지뢰가 아니면 숫자 힌트를, 지뢰라면 지뢰를 표시합니다.',
-  introduceItemK03: 'H를 눌러 🔭 5개를 받으세요!',
-  introduceItemL01: '📡[L]',
-  introduceItemL02: 'L키를 눌러 내 주변 1칸 이내에 있는 칸 중에서<br>아직 밟지 않은 칸을 공개합니다. 만약 그 칸이 지뢰가 아니면<br>색칠하여 지뢰가 아님을 표시하고, 지뢰라면 지뢰를 표시합니다.',
-  introduceItemL03: 'H를 눌러 📡 3개를 받으세요!',
+  clickCell03: 'F를 누르면 게임을 시작합니다.',
+  introduceItem101: '🔍[1]',
+  introduceItem102: '숫자 1키를 눌러 내 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸의 숫자 힌트를 공개할 수 있습니다.',
+  introduceItem103: 'F를 눌러 🔍 10개를 받으세요!',
+  introduceItem201: '🔭[2]',
+  introduceItem202: '숫자 2키를 눌러 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸을 공개할 수 있습니다.<br>만약 그 칸이 지뢰가 아니면 숫자 힌트를, 지뢰라면 지뢰를 표시합니다.',
+  introduceItem203: 'F를 눌러 🔭 5개를 받으세요!',
+  introduceItemL01: '📡[3]',
+  introduceItemL02: '숫자 3키를 눌러 내 주변 1칸 이내에 있는 칸 중에서<br>아직 밟지 않은 칸을 공개합니다. 만약 그 칸이 지뢰가 아니면<br>색칠하여 지뢰가 아님을 표시하고, 지뢰라면 지뢰를 표시합니다.',
+  introduceItemL03: 'F를 눌러 📡 3개를 받으세요!',
   perfectClear01: '퍼펙트 클리어',
   perfectClear02: '밟을 수 있는 모든 칸을 다 밟으세요!<br>STAGE 5부터는 한 번도 죽지 않고<br>모든 안전한 칸을 밟으면 보너스 점수를 얻습니다.',
   movementOpt01: '움직임 최적화',
   movementOpt02: '최대한 적게 움직이세요!<br>STAGE 6부터는 움직임을 최소화하면 보너스 점수를 얻습니다.',
   stage10Bonus01: 'STAGE 10 클리어 보너스',
-  stage10Bonus02: '💖 +3<br>🔍[J] +10<br>🔭[K] +5<br>📡[L] +3',
+  stage10Bonus02: '💖 +3<br>🔍[1] +10<br>🔭[2] +5<br>📡[3] +3',
   stage20Bonus01: 'STAGE 20 클리어 보너스',
-  stage20Bonus02: '💖 +3<br>🔍[J] +7<br>🔭[K] +3<br>📡[L] +2',
+  stage20Bonus02: '💖 +3<br>🔍[1] +7<br>🔭[2] +3<br>📡[3] +2',
   stage30Bonus01: 'STAGE 30 클리어 보너스',
-  stage30Bonus02: '💖 +2<br>🔍[J] +5<br>🔭[K] +2<br>📡[L] +1',
+  stage30Bonus02: '💖 +2<br>🔍[1] +5<br>🔭[2] +2<br>📡[3] +1',
   stage40Bonus01: 'STAGE 40 클리어 보너스',
-  stage40Bonus02: '💖 +1<br>🔍[J] +3<br>🔭[K] +1<br>📡[L] +1',
+  stage40Bonus02: '💖 +1<br>🔍[1] +3<br>🔭[2] +1<br>📡[3] +1',
   stageBonusHeader: 'H를 눌러 보너스를 받으세요!',
 
   newHintTitle: '새로운 힌트',
@@ -155,13 +159,13 @@ const TEXT = {
   newHintPurple: '<span style="color:rgb(127, 0, 255);" class="stroke">보라색 숫자</span>는 2~8칸의 무작위 모양 내의 지뢰 개수를 의미합니다.<br>어떤 모양인지는 숫자가 밝혀질 때 표시됩니다.',
 
   showShape01: '색깔 힌트 모양 표시',
-  showShape02: '앞으로 새로운 색깔 힌트가 계속 등장할 것입니다.<br>모양이 헷갈린다면 U키를 눌러 각 색깔 힌트의 모양을 확인할 수 있습니다.<br>U키를 한 번 더 누르면 해제할 수 있습니다.',
+  showShape02: '앞으로 새로운 색깔 힌트가 계속 등장할 것입니다.<br>모양이 헷갈린다면 R키를 눌러 각 색깔 힌트의 모양을 확인할 수 있습니다.<br>U키를 한 번 더 누르면 해제할 수 있습니다.',
   oddEven01: '홀짝 힌트',
   oddEven02: '일부 칸의 숫자 힌트가 홀짝 힌트로 전환됩니다.<br>1, 3, 5, 7, 9는 "홀"로,<br>0, 2, 4, 6, 8은 "짝"으로 표시됩니다.',
   highLow01: '최대/최소 힌트',
   highLow02: '일부 칸의 숫자 힌트가 최대/최소 힌트로 전환됩니다.<br>주변 8칸 숫자들의 최댓값보다 크거나 같다면 ▲,<br>주변 8칸 숫자들의 최솟값보다 작거나 같다면 ▼으로 표시됩니다.',
 
-  pressH: 'H를 누르면 다음 스테이지로 이동합니다.',
+  pressH: 'F를 누르면 다음 스테이지로 이동합니다.',
 };
 
 const BUTTON = {
@@ -483,10 +487,6 @@ const TUTORIAL = {
   }
 }
 
-const randRange = (start, end) => {
-  return Math.floor(Math.random()*(end-start+1)) + start;
-}
-
 const GAME_PROCEDURE = [
 
 	{
@@ -530,9 +530,6 @@ const GAME_PROCEDURE = [
     arrow: true,
     header: TEXT.clickCell02,
     footer: TEXT.clickCell03,
-    bonus: {
-    	itemJ: 10
-    }
 	},
 
 	{ //  6 6 4 150
@@ -548,7 +545,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
 	  layout: 'leftRight',
-	  title: TEXT.introduceItemJ01,
+	  title: TEXT.introduceItem101,
 	  half1: {
 		  type: 'board',
 		  xCount: 3,
@@ -571,10 +568,10 @@ const GAME_PROCEDURE = [
       me: [0, 0]
 		},
     arrow: true,
-    header: TEXT.introduceItemJ02,
-    footer: TEXT.introduceItemJ03,
+    header: TEXT.introduceItem102,
+    footer: TEXT.introduceItem103,
     bonus: {
-    	itemJ: 10
+    	item1: 10
     }
 	},
 
@@ -591,7 +588,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'leftRight',
-    title: TEXT.introduceItemK01,
+    title: TEXT.introduceItem201,
 	  half1: {
       type: 'board',
       xCount: 3,
@@ -612,10 +609,10 @@ const GAME_PROCEDURE = [
       me: [0, 0]
     },
     arrow: true,
-	  header: TEXT.introduceItemK02,
-    footer: TEXT.introduceItemK03,
+	  header: TEXT.introduceItem202,
+    footer: TEXT.introduceItem203,
     bonus: {
-      itemK: 5
+      item2: 5
     }
   },
 
@@ -665,7 +662,7 @@ const GAME_PROCEDURE = [
 	  header: TEXT.introduceItemL02,
     footer: TEXT.introduceItemL03,
     bonus: {
-      itemL: 3
+      item3: 3
     }
   },
 
@@ -774,9 +771,9 @@ const GAME_PROCEDURE = [
 	  header: TEXT.stageBonusHeader,
     bonus: {
       life: 3, 
-      itemJ: 10, 
-      itemK: 5,
-      itemL: 3
+      item1: 10, 
+      item2: 5,
+      item3: 3
     }
   },
   
@@ -899,7 +896,7 @@ const GAME_PROCEDURE = [
 	  header: TEXT.showShape02,
     footer: TEXT.pressH,
     bonus: {
-      itemL: 3
+      item3: 3
     }
   },
 
@@ -1020,9 +1017,9 @@ const GAME_PROCEDURE = [
 	  header: TEXT.stageBonusHeader,
     bonus: {
       life: 3, 
-      itemJ: 7, 
-      itemK: 3,
-      itemL: 2
+      item1: 7, 
+      item2: 3,
+      item3: 2
     }
   },
 
@@ -1223,9 +1220,9 @@ const GAME_PROCEDURE = [
 	  header: TEXT.stageBonusHeader,
     bonus: {
       life: 2, 
-      itemJ: 5, 
-      itemK: 2,
-	  itemL: 1
+      item1: 5, 
+      item2: 2,
+	  item3: 1
     }
   },
 
@@ -1493,9 +1490,9 @@ const GAME_PROCEDURE = [
 	  header: TEXT.stageBonusHeader,
     bonus: {
       life: 1, 
-      itemJ: 3,
-      itemK: 1,
-	  itemL: 1
+      item1: 3,
+      item2: 1,
+	  item3: 1
     }
   },
 

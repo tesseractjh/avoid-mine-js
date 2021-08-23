@@ -19,9 +19,9 @@ class Canvas {
       stage: 0,
       life: 5,
       score: 0,
-      itemJ: 0,
-      itemK: 0,
-      itemL: 0,
+      item1: 0,
+      item2: 0,
+      item3: 0,
       tempScore: 0,
       procedure: 0,
       bonus: null
@@ -480,7 +480,7 @@ class Canvas {
   }
 
   paintBottomBar() {
-    const { stage, life, score, itemJ, itemL, itemK } = this.gameInfo;
+    const { stage, life, score, item1, item3, item2 } = this.gameInfo;
     const { maxHeight, bottomBarHeight, bottomCenterY } = this.board;
     const { time } = this.board.boardSetting;
     const [ minute, second ] = [ Math.floor(time/60), time%60 ];
@@ -498,9 +498,9 @@ class Canvas {
       `${life}`,
       `${score}`,
       `${minute}:${second<10 ? '0'+second : second}`,
-      `${itemJ}개`,
-      `${itemK}개`,
-      `${itemL}개`
+      `${item1}개`,
+      `${item2}개`,
+      `${item3}개`
     ];
 
     const fontSize = bottomBarHeight/4;
@@ -778,7 +778,7 @@ class Canvas {
   useItemJ() {
     const { board } = this;
     const { me } = board;
-    if (this.gameInfo.itemJ > 0) {
+    if (this.gameInfo.item1 > 0) {
       const cellArr = board.getCell(me.x, me.y).getSurroundingCell(2)
         .filter(cell => !cell.isDetected);
       if (cellArr.length) {
@@ -786,7 +786,7 @@ class Canvas {
         const ensuredCell = cellArr[rand];
         board.openCell(ensuredCell.x, ensuredCell.y);
         board.clearCheck(ensuredCell);
-        this.gameInfo.itemJ--;
+        this.gameInfo.item1--;
         board.isItemUsed = true;
         this.paintBottomBar();
         this.showMsgBox(TEXT.msgBox02, YELLOWGREEN);
@@ -801,7 +801,7 @@ class Canvas {
   useItemK() {
     const { board } = this;
     const { me } = board;
-    if (this.gameInfo.itemK > 0) {
+    if (this.gameInfo.item2 > 0) {
       const cellArr = board.getCell(me.x, me.y).getSurroundingCell(2)
         .filter(cell => !cell.isDetected && cell.type !== 'destination');
       if (cellArr.length) {
@@ -809,7 +809,7 @@ class Canvas {
         const safeCell = cellArr[rand];
         board.ensureCell(safeCell.x, safeCell.y);
         board.clearCheck(safeCell);
-        this.gameInfo.itemK--;
+        this.gameInfo.item2--;
         board.isItemUsed = true;
         this.paintBottomBar();
         this.showMsgBox(TEXT.msgBox04, YELLOWGREEN);
@@ -824,7 +824,7 @@ class Canvas {
   useItemL() {
     const { board } = this;
     const { me } = board;
-    if (this.gameInfo.itemL > 0) {
+    if (this.gameInfo.item3 > 0) {
       const cellArr = board.getCell(me.x, me.y).getSurroundingCell()
         .filter(cell => !cell.isEnsured && cell.type !== 'destination');
       if (cellArr.length) {
@@ -832,7 +832,7 @@ class Canvas {
         const safeCell = cellArr[rand];
         board.ensureCell(safeCell.x, safeCell.y);
         board.clearCheck(safeCell);
-        this.gameInfo.itemL--;
+        this.gameInfo.item3--;
         board.isItemUsed = true;
         this.paintBottomBar();
         this.showMsgBox(TEXT.msgBox06, YELLOWGREEN);
@@ -896,6 +896,7 @@ class Canvas {
   }
 
   keydownCallback({ keyCode }) {
+    console.log(keyCode);
     if (!this.board) return;
     const { me, xCount, yCount } = this.board;
     const { x, y } = me;
@@ -925,36 +926,36 @@ class Canvas {
           }
           break;
   
-        case 74: // 아이템 J
+        case 49: // 아이템 1
           this.useItemJ();
           break;
   
-        case 75: // 아이템 K
+        case 50: // 아이템 2
           this.useItemK();
           break;
   
-        case 76: // 아이템 L
+        case 51: // 아이템 3
           this.useItemL();
           break;
   
-        case 85: // U
+        case 82: // R
           this.showShape();
           break;
       }
 
     } else if (this.page === 'stageResult') {
-      if (keyCode === 72) {  // H
+      if (keyCode === 70) {  // F
         this.gameInfo.score += this.gameInfo.tempScore;
         this.gameInfo.tempScore = 0;
         this.paintPage();
       } 
     } else if (this.page === 'information') {
-      if (keyCode === 72) {  // H
+      if (keyCode === 70) {  // F
         if (this.gameInfo.bonus) {
           this.gameInfo.life += this.gameInfo.bonus.life ?? 0;
-          this.gameInfo.itemJ += this.gameInfo.bonus.itemJ ?? 0;
-          this.gameInfo.itemK += this.gameInfo.bonus.itemK ?? 0;
-          this.gameInfo.itemL += this.gameInfo.bonus.itemL ?? 0;
+          this.gameInfo.item1 += this.gameInfo.bonus.item1 ?? 0;
+          this.gameInfo.item2 += this.gameInfo.bonus.item2 ?? 0;
+          this.gameInfo.item3 += this.gameInfo.bonus.item3 ?? 0;
         }
         this.paintPage();
       }
