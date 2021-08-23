@@ -118,7 +118,47 @@ const TEXT = {
   msgBox07: '📡[L] 아이템이 없습니다!',
   msgBox08: '더 이상 공개할 수 있는 칸이 없습니다!',
   msgBox09: '색깔 힌트의 지뢰 범위를 표시를 해제합니다.',
-  msgBox10: '색깔 힌트의 지뢰 범위를 표시합니다.',  
+  msgBox10: '색깔 힌트의 지뢰 범위를 표시합니다.',
+  introduceItemJ01: '🔍[J]',
+  introduceItemJ02: 'J키를 눌러 내 주변 2칸 이내에 있는 25칸 중<br>공개되지 않은 무작위 칸의 숫자 힌트를 공개할 수 있습니다.',
+  introduceItemJ03: 'H를 눌러 🔍 10개를 받으세요!',
+  introduceItemK01: '🔭[K]',
+  introduceItemK02: 'K키를 눌러 주변 2칸 이내에 있는 25칸 중<br>공개되지 않은 무작위 칸을 공개할 수 있습니다.<br>만약 그 칸이 지뢰가 아니면 숫자 힌트를, 지뢰라면 지뢰를 표시합니다.',
+  introduceItemK03: 'H를 눌러 🔭 5개를 받으세요!',
+  introduceItemL01: '📡[L]',
+  introduceItemL02: 'L키를 눌러 내 주변 8칸 중에서 아직 밟지 않은 칸을 공개합니다.<br>만약 그 칸이 지뢰가 아니면 색칠하여 지뢰가 아님을 표시하고,<br>지뢰라면 지뢰를 표시합니다.',
+  introduceItemL03: 'H를 눌러 📡 3개를 받으세요!',
+  movementOpt01: '움직임 최적화',
+  movementOpt02: '최대한 적게 움직이세요!<br>STAGE 6부터는 움직임을 최소화하면 보너스 점수를 얻습니다.',
+
+  stage10Bonus01: 'STAGE 10 클리어 보너스',
+  stage10Bonus02: '💖 +3<br>🔍[J] +10<br>🔭[K] +5<br>📡[L] +3',
+  stage20Bonus01: 'STAGE 20 클리어 보너스',
+  stage20Bonus02: '💖 +3<br>🔍[J] +7<br>🔭[K] +3<br>📡[L] +2',
+  stage30Bonus01: 'STAGE 30 클리어 보너스',
+  stage30Bonus02: '💖 +2<br>🔍[J] +5<br>🔭[K] +2<br>📡[L] +1',
+  stage40Bonus01: 'STAGE 40 클리어 보너스',
+  stage40Bonus02: '💖 +1<br>🔍[J] +3<br>🔭[K] +1<br>📡[L] +1',
+
+  stageBonusHeader: 'H를 눌러 보너스를 받으세요!',
+
+  newHintTitle: '새로운 힌트',
+  newHintRed: '<span style="color:red;" class="stroke">빨간색 숫자</span>는 양 옆 2칸과 자기 자신을 포함한<br>가로 5칸 내의 지뢰 개수를 의미합니다.',
+  newHintOrange: '<span style="color:rgb(255, 128, 0);" class="stroke">주황색 숫자</span>는 위 아래 2칸과 자기 자신을 포함한<br>세로 5칸 내의 지뢰 개수를 의미합니다.',
+  newHintYellow: '<span style="color:rgb(255, 255, 0);" class="stroke">노란색 숫자</span>는 상하좌우 4칸과 자기 자신을 포함한<br>십자가 모양 5칸 내의 지뢰 개수를 의미합니다.',
+  newHintGreen: '<span style="color:rgb(0, 255, 0);" class="stroke">초록색 숫자</span>는 대각선 4칸과 자기 자신을 포함한<br>X자 모양 5칸 내의 지뢰 개수를 의미합니다.',
+  newHintBlue: '<span style="color:rgb(51, 153, 255);" class="stroke">파란색 숫자</span>는 H자 모양 7칸 내의 지뢰 개수를 의미합니다.',
+  newHintNavy: '<span style="color:rgb(0, 50, 128);">남색 숫자</span>는 工자 모양 7칸 내의 지뢰 개수를 의미합니다.',
+  newHintPurple: '<span style="color:rgb(127, 0, 255);" class="stroke">보라색 숫자</span>는 2~8칸의 무작위 모양 내의 지뢰 개수를 의미합니다.<br>어떤 모양인지는 숫자가 밝혀질 때 표시됩니다.',
+
+  showShape01: '색깔 힌트 모양 표시',
+  showShape02: '앞으로 새로운 색깔 힌트가 계속 등장할 것입니다.<br>모양이 헷갈린다면 U키를 눌러 각 색깔 힌트의 모양을 확인할 수 있습니다.<br>U키를 한 번 더 누르면 해제할 수 있습니다.',
+  oddEven01: '홀짝 힌트',
+  oddEven02: '일부 칸의 숫자 힌트가 홀짝 힌트로 전환됩니다.<br>1, 3, 5, 7, 9는 "홀"로,<br>0, 2, 4, 6, 8은 "짝"으로 표시됩니다.',
+  highLow01: '최대/최소 힌트',
+  highLow02: '일부 칸의 숫자 힌트가 최대/최소 힌트로 전환됩니다.<br>주변 8칸 숫자들의 최댓값보다 크거나 같다면 ▲,<br>주변 8칸 숫자들의 최솟값보다 작거나 같다면 ▼으로 표시됩니다.',
+
+  pressH: 'H를 누르면 다음 스테이지로 이동합니다.',
 };
 
 const BUTTON = {
@@ -459,7 +499,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
 	  layout: 'leftRight',
-	  title: '🔍[J]',
+	  title: TEXT.introduceItemJ01,
 	  half1: {
 		  type: 'board',
 		  xCount: 3,
@@ -482,8 +522,8 @@ const GAME_PROCEDURE = [
       me: [0, 0]
 		},
     arrow: true,
-    header: 'J키를 눌러 내 주변 2칸 이내에 있는 25칸 중<br>공개되지 않은 무작위 칸의 숫자 힌트를 공개할 수 있습니다.',
-    footer: 'H를 눌러 🔍 10개를 받으세요!',
+    header: TEXT.introduceItemJ02,
+    footer: TEXT.introduceItemJ03,
     bonus: {
     	itemJ: 10
     }
@@ -502,7 +542,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'leftRight',
-    title: '🔭[K]',
+    title: TEXT.introduceItemK01,
 	  half1: {
       type: 'board',
       xCount: 3,
@@ -523,8 +563,8 @@ const GAME_PROCEDURE = [
       me: [0, 0]
     },
     arrow: true,
-	  header: 'K키를 눌러 주변 2칸 이내에 있는 25칸 중<br>공개되지 않은 무작위 칸을 공개할 수 있습니다.<br>만약 그 칸이 지뢰가 아니면 숫자 힌트를, 지뢰라면 지뢰를 표시합니다.',
-    footer: 'H를 눌러 🔭 5개를 받으세요!',
+	  header: TEXT.introduceItemK02,
+    footer: TEXT.introduceItemK03,
     bonus: {
       itemK: 5
     }
@@ -543,7 +583,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'leftRight',
-    title: '📡[L]',
+    title: TEXT.introduceItemL01,
 	  half1: {
       type: 'board',
       xCount: 3,
@@ -573,8 +613,8 @@ const GAME_PROCEDURE = [
       me: [1, 1]
     },
     arrow: true,
-	  header: 'L키를 눌러 내 주변 8칸 중에서 아직 밟지 않은 칸을 공개합니다.<br>만약 그 칸이 지뢰가 아니면 색칠하여 지뢰가 아님을 표시하고,<br>지뢰라면 지뢰를 표시합니다.',
-    footer: 'H를 눌러 📡 3개를 받으세요!',
+	  header: TEXT.introduceItemL02,
+    footer: TEXT.introduceItemL03,
     bonus: {
       itemL: 3
     }
@@ -604,10 +644,10 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: '움직임 최적화',
+    title: TEXT.movementOpt01,
 	  article: {
       type: 'text',
-      text: '최대한 적게 움직이세요!<br>STAGE 6부터는 움직임을 최소화하면 보너스 점수를 얻습니다.'
+      text: TEXT.movementOpt02
     },
 	},
   
@@ -665,12 +705,12 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: 'STAGE 10 클리어 보너스',
+    title: TEXT.stage10Bonus01,
 	  article: {
       type: 'text', 
-      text: '💖 +3<br>🔍[J] +10<br>🔭[K] +5<br>📡[L] +3'
+      text: TEXT.stage10Bonus02
     },
-	  header: 'H를 눌러 보너스를 받으세요!',
+	  header: TEXT.stageBonusHeader,
     bonus: {
       life: 3, 
       itemJ: 10, 
@@ -682,7 +722,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: '새로운 힌트',
+    title: TEXT.newHintTitle,
 	  article: {
       type: 'board',
       xCount: 7,
@@ -694,8 +734,8 @@ const GAME_PROCEDURE = [
         [1, 1], [4, 1]
       ],
     },
-	  header: '<span style="color:red;" class="stroke">빨간색 숫자</span>는 양 옆 2칸과 자기 자신을 포함한<br>가로 5칸 내의 지뢰 개수를 의미합니다.',
-    footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.newHintRed,
+    footer: TEXT.pressH,
   },
 	
   {
@@ -745,7 +785,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: '새로운 힌트',
+    title: TEXT.newHintTitle,
 	  article: {
       type: 'board',
       xCount: 3,
@@ -757,14 +797,14 @@ const GAME_PROCEDURE = [
         [1, 0], [1, 3]
       ],
     },
-	  header: '<span style="color:rgb(255, 128, 0);" class="stroke">주황색 숫자</span>는 위 아래 2칸과 자기 자신을 포함한<br>세로 5칸 내의 지뢰 개수를 의미합니다.',
-    footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.newHintOrange,
+    footer: TEXT.pressH,
   },
 
 	{
 	  type: 'info',
     layout: 'leftRight',
-    title: '색깔 힌트 모양 표시',
+    title: TEXT.showShape01,
 	  half1: {
       type: 'board',
       xCount: 3,
@@ -795,8 +835,8 @@ const GAME_PROCEDURE = [
       showShape: true
     },
     arrow: true,
-	  header: '앞으로 새로운 색깔 힌트가 계속 등장할 것입니다.<br>모양이 헷갈린다면 U키를 눌러 각 색깔 힌트의 모양을 확인할 수 있습니다.<br>U키를 한 번 더 누르면 해제할 수 있습니다.',
-    footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.showShape02,
+    footer: TEXT.pressH,
     bonus: {
       itemL: 3
     }
@@ -854,7 +894,7 @@ const GAME_PROCEDURE = [
   {
 	  type: 'info',
 	  layout: 'leftRight',
-	  title: '홀짝 힌트',
+	  title: TEXT.oddEven01,
 	  half1: {
 	  	type: 'board',
 	  	xCount: 3,
@@ -877,8 +917,8 @@ const GAME_PROCEDURE = [
 	  		[0, 0], [1, 0], [2, 2]
 	  	],
 	  },
-	  header: '일부 칸의 숫자 힌트가 홀짝 힌트로 전환됩니다.<br>1, 3, 5, 7, 9는 "홀"로,<br>0, 2, 4, 6, 8은 "짝"으로 표시됩니다.',
-	  footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.oddEven02,
+	  footer: TEXT.pressH,
   },
 
   {
@@ -911,12 +951,12 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: 'STAGE 20 클리어 보너스',
+    title: TEXT.stage20Bonus01,
 	  article: {
       type: 'text', 
-      text: '💖 +3<br>🔍[J] +7<br>🔭[K] +3<br>📡[L] +2'
+      text: TEXT.stage20Bonus02
     },
-	  header: 'H를 눌러 보너스를 받으세요!',
+	  header: TEXT.pressH,
     bonus: {
       life: 3, 
       itemJ: 7, 
@@ -954,7 +994,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: '새로운 힌트',
+    title: TEXT.newHintTitle,
 	  article: {
       type: 'board',
       xCount: 3,
@@ -968,8 +1008,8 @@ const GAME_PROCEDURE = [
         [0, 2], [2, 2]
       ],
     },
-	  header: '<span style="color:rgb(255, 255, 0);" class="stroke">노란색 숫자</span>는 상하좌우 4칸과 자기 자신을 포함한<br>십자가 모양 5칸 내의 지뢰 개수를 의미합니다.',
-    footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.newHIntYellow,
+    footer: TEXT.pressH,
   },
 
   {
@@ -1032,7 +1072,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: '새로운 힌트',
+    title: TEXT.newHintTitle,
 	  article: {
       type: 'board',
       xCount: 3,
@@ -1046,8 +1086,8 @@ const GAME_PROCEDURE = [
         [0, 2], [2, 2]
       ],
     },
-	  header: '<span style="color:rgb(0, 255, 0);" class="stroke">초록색 숫자</span>는 대각선 4칸과 자기 자신을 포함한<br>X자 모양 5칸 내의 지뢰 개수를 의미합니다.',
-    footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.newHintGreen,
+    footer: TEXT.pressH,
   },
 
   {
@@ -1114,12 +1154,12 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: 'STAGE 30 클리어 보너스',
+    title: TEXT.stage30Bonus01,
 	  article: {
       type: 'text', 
-      text: '💖 +2<br>🔍[J] +5<br>🔭[K] +2<br>📡[L] +1'
+      text: TEXT.stage30Bonus02
     },
-	  header: 'H를 눌러 보너스를 받으세요!',
+	  header: TEXT.pressH,
     bonus: {
       life: 2, 
       itemJ: 5, 
@@ -1131,7 +1171,7 @@ const GAME_PROCEDURE = [
   {
 	  type: 'info',
 	  layout: 'leftRight',
-	  title: '최대/최소 힌트',
+	  title: TEXT.highLow01,
 	  half1: {
 	  	type: 'board',
 	  	xCount: 3,
@@ -1162,8 +1202,8 @@ const GAME_PROCEDURE = [
         [1, 2], [2, 2], [1, 5]
       ]
 	  },
-	  header: '일부 칸의 숫자 힌트가 최대/최소 힌트로 전환됩니다.<br>주변 8칸 숫자들의 최댓값보다 크거나 같다면 ▲,<br>주변 8칸 숫자들의 최솟값보다 작거나 같다면 ▼으로 표시됩니다.',
-	  footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.highLow02,
+	  footer: TEXT.pressH,
   },
 
   {
@@ -1217,7 +1257,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: '새로운 힌트',
+    title: TEXT.newHintTitle,
 	  article: {
       type: 'board',
       xCount: 3,
@@ -1231,8 +1271,8 @@ const GAME_PROCEDURE = [
         [2, 1], [1, 2]
       ],
     },
-	  header: '<span style="color:rgb(51, 153, 255);" class="stroke">파란색 숫자</span>는 H자 모양 7칸 내의 지뢰 개수를 의미합니다.',
-    footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.newHintBlue,
+    footer: TEXT.pressH,
   },
 
   {
@@ -1290,7 +1330,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: '새로운 힌트',
+    title: TEXT.newHintTitle,
 	  article: {
       type: 'board',
       xCount: 3,
@@ -1304,8 +1344,8 @@ const GAME_PROCEDURE = [
         [2, 1], [1, 2]
       ],
     },
-	  header: '<span style="color:rgb(0, 50, 128);">남색 숫자</span>는 工자 모양 7칸 내의 지뢰 개수를 의미합니다.',
-    footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.newHintNavy,
+    footer: TEXT.pressH,
   },
 
   {
@@ -1384,12 +1424,12 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: 'STAGE 40 클리어 보너스',
+    title: TEXT.stage40Bonus01,
 	  article: {
       type: 'text', 
-      text: '💖 +1<br>🔍[J] +3<br>🔭[K] +1<br>📡[L] +1'
+      text: TEXT.stage40Bonus02
     },
-	  header: 'H를 눌러 보너스를 받으세요!',
+	  header: TEXT.pressH,
     bonus: {
       life: 1, 
       itemJ: 3,
@@ -1401,7 +1441,7 @@ const GAME_PROCEDURE = [
 	{
 	  type: 'info',
     layout: 'article',
-    title: '새로운 힌트',
+    title: TEXT.newHintTitle,
 	  article: {
       type: 'board',
       xCount: 3,
@@ -1415,8 +1455,8 @@ const GAME_PROCEDURE = [
         [2, 1], [1, 2]
       ],
     },
-	  header: '<span style="color:rgb(127, 0, 255);" class="stroke">보라색 숫자</span>는 2~8칸의 무작위 모양 내의 지뢰 개수를 의미합니다.<br>어떤 모양인지는 숫자가 밝혀질 때 표시됩니다.',
-    footer: 'H를 누르면 다음 스테이지로 이동합니다.',
+	  header: TEXT.newHintPurple,
+    footer: TEXT.pressH,
   },
 
   {
