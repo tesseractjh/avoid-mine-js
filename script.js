@@ -112,7 +112,8 @@ class Canvas {
 
   getGamePage() {
     return function() {
-      this.paintGamePage(GAME_PROCEDURE[this.gameInfo.procedure]);
+      this.board = new Board(this, 1, 1, false);
+      this.paintPage();
       this.canvas.removeEventListener('click', this.clickButtonCallback);
       this.canvas.addEventListener('click', this.clickCellCallback.bind(this));
     }
@@ -352,7 +353,7 @@ class Canvas {
   }
 
   paintInfoBoard(boardInfo, $div, widthRatio = 2/5, heightRatio = 3/5) {
-    const { xCount, yCount, safe, ensured, mine, me, showShape } = boardInfo;
+    const { xCount, yCount, tomato, yellowgreen, safe, ensured, mine, me, showShape } = boardInfo;
     const canvas = document.createElement('canvas');
     canvas.setAttribute('width', `${this.board.maxWidth * widthRatio}px`);
     canvas.setAttribute('height', `${this.height * heightRatio}px`);
@@ -369,6 +370,18 @@ class Canvas {
     tempBoard.showShapeSwitch = showShape ?? false;
     tempBoard.updateCanvas();
     
+    tomato?.forEach(([ x, y ]) => {
+      const cell = tempBoard.getCell(x, y);
+      cell.check = 1;
+      cell.checkColor = TOMATO;
+    });
+
+    yellowgreen?.forEach(([ x, y ]) => {
+      const cell = tempBoard.getCell(x, y);
+      cell.check = 2;
+      cell.checkColor = YELLOWGREEN;
+    });
+
     safe?.forEach(([ x, y, value, hintType, shape ]) => {
       const cell = tempBoard.getCell(x, y);
       tempBoard.ensureCell(x, y);
@@ -936,12 +949,7 @@ class Canvas {
       if (keyCode === 72) {  // H
         this.gameInfo.score += this.gameInfo.tempScore;
         this.gameInfo.tempScore = 0;
-        const procedure = GAME_PROCEDURE[++this.gameInfo.procedure];
-        if (procedure.type === 'game') {
-          this.paintGamePage(procedure);
-        } else if (procedure.type === 'info') {
-          this.showInformation(procedure);
-        }
+        this.paintPage();
       } 
     } else if (this.page === 'information') {
       if (keyCode === 72) {  // H
@@ -951,13 +959,17 @@ class Canvas {
           this.gameInfo.itemK += this.gameInfo.bonus.itemK ?? 0;
           this.gameInfo.itemL += this.gameInfo.bonus.itemL ?? 0;
         }
-        const procedure = GAME_PROCEDURE[++this.gameInfo.procedure];
-        if (procedure.type === 'game') {
-          this.paintGamePage(procedure);
-        } else if (procedure.type === 'info') {
-          this.showInformation(procedure);
-        }
+        this.paintPage();
       }
+    }
+  }
+
+  paintPage() {
+    const procedure = GAME_PROCEDURE[this.gameInfo.procedure++];
+    if (procedure.type === 'game') {
+      this.paintGamePage(procedure);
+    } else if (procedure.type === 'info') {
+      this.showInformation(procedure);
     }
   }
 }

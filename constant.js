@@ -119,6 +119,9 @@ const TEXT = {
   msgBox08: '더 이상 공개할 수 있는 칸이 없습니다!',
   msgBox09: '색깔 힌트의 지뢰 범위를 표시를 해제합니다.',
   msgBox10: '색깔 힌트의 지뢰 범위를 표시합니다.',
+  clickCell01: '색깔 표시',
+  clickCell02: '칸을 클릭하여 색깔 표시를 할 수 있습니다.<br>한 번 누르면 빨간색, 두 번 누르면 초록색, 세 번 누르면 사라집니다.<br>눈으로만 추측하면 실수하기 쉽습니다. 색깔 표시를 적극적으로 활용하세요!',
+  clickCell03: 'H를 누르면 게임을 시작합니다.',
   introduceItemJ01: '🔍[J]',
   introduceItemJ02: 'J키를 눌러 내 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸의 숫자 힌트를 공개할 수 있습니다.',
   introduceItemJ03: 'H를 눌러 🔍 10개를 받으세요!',
@@ -483,6 +486,52 @@ const randRange = (start, end) => {
 }
 
 const GAME_PROCEDURE = [
+
+	{
+	  type: 'info',
+	  layout: 'leftRight',
+	  title: TEXT.clickCell01,
+	  half1: {
+		  type: 'board',
+		  xCount: 3,
+		  yCount: 4,
+		  safe:[
+			  [0, 0, 0], [0, 1, 0], [0, 2, 1],
+        [1, 0, 1], [1, 1, 1], [1, 2, 1], [1, 3, 1]
+			],
+      ensured: [
+        [0, 3, 1], [2, 0, 1],
+        [2, 1, 1], [2, 2, 0], [2, 3, 0]
+      ],
+		  me: [1, 2],
+	  },
+	  half2: {
+		  type: 'board',
+		  xCount: 3,
+		  yCount: 4,
+      tomato: [
+        [0, 3], [2, 0]
+      ],
+      yellowgreen: [
+        [2, 1], [2, 2], [2, 3]
+      ],
+		  safe:[
+			  [0, 0, 0], [0, 1, 0], [0, 2, 1],
+        [1, 0, 1], [1, 1, 1], [1, 2, 1], [1, 3, 1]
+			],
+      ensured: [
+        [0, 3, 1], [2, 0, 1],
+        [2, 1, 1], [2, 2, 0], [2, 3, 0]
+      ],
+		  me: [1, 2],
+	  },
+    arrow: true,
+    header: TEXT.clickCell02,
+    footer: TEXT.clickCell03,
+    bonus: {
+    	itemJ: 10
+    }
+	},
 
 	{ //  6 6 4 150
 	  type: 'game',
