@@ -543,7 +543,7 @@ class Canvas {
 
     this.$msgBox.innerHTML = text;
     this.$msgBox.font = this.FONT_SIZE/2;
-    this.$msgBox.width = this.board.width;
+    this.$msgBox.width = this.board.maxHeight;
     this.$msgBox.height = this.FONT_SIZE*3/4;
     this.$msgBox.borderRadius = this.FONT_SIZE/8
     this.$msgBox.backgroundColor = color;
