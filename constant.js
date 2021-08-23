@@ -97,6 +97,7 @@ const TEXT = {
   mainButton02: '게임시작',
   tutorialButton01: '이전',
   tutorialButton02: '다음',
+  backButton: '메인 화면으로 돌아가기',
   tutorial01: '지뢰피하기는 좌측 상단 시작점에서 우측 하단 도착점까지\n지뢰를 피해서 도달하면 승리하는 게임입니다.',
   tutorial02: '칸에 적힌 숫자는 해당 칸과 주변 8칸을 포함한\n9칸 내에 존재하는 지뢰의 개수입니다.',
   tutorial03: '파란색 네모를 움직이면 주변 칸들의 숫자가 공개됩니다.\n시작점 근처 칸들의 숫자와 지뢰는 시작할 때 공개됩니다.',
@@ -201,6 +202,15 @@ const BUTTON = {
     fillColor: TOMATO,
     hover: {
       fillColor: INVERTED_TOMATO,
+      textColor: WHITE
+    }
+  },
+
+  back: {
+    text: TEXT.backButton,
+    fillColor: YELLOWGREEN,
+    hover: {
+      fillColor: INVERTED_YELLOWGREEN,
       textColor: WHITE
     }
   }

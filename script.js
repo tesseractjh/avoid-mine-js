@@ -1,20 +1,27 @@
 'use strict';
-//--------------------------------------------------------------------------------------------------
-// 캔버스 관련
 
-// 캔버스 객체 생성
 class Canvas {
   constructor(canvas, init = true) {
     this.canvas = canvas;
     this.width = +canvas.clientWidth;
     this.height = +canvas.clientHeight;
-    this.page = 'main';
-    this.button = [];
-    this.board = null;
-    this.bottomBar = null;
     this.CENTER = Math.floor(canvas.width/2);
     this.TITLE_SIZE = Math.floor(this.width/24);
     this.FONT_SIZE = Math.floor(this.TITLE_SIZE*3/4);
+    this.initValues();
+    this.initContext();
+    if (init) {
+      this.initTimerID();
+      this.initElement();
+      this.initEventListener();
+    }
+  }
+
+  initValues() {
+    this.page = 'main';
+    this.button = [];
+    this.callback = [];
+    this.board = null;
     this.gameInfo = {
       stage: 0,
       life: 5,
@@ -26,12 +33,6 @@ class Canvas {
       procedure: 0,
       bonus: null
     };
-    this.initContext();
-    if (init) {
-      this.initTimerID();
-      this.initElement();
-      this.initEventListener();
-    }
   }
 
   initContext() {
@@ -76,22 +77,14 @@ class Canvas {
     this.$information.$article = new Element('information-article');
     this.$information.$footer = new Element('information-footer');
 
-    this.$gameResult.$back.elem.addEventListener('click', () => {
-      this.clearPage();
-      this.clearElement();
-      this.clearTimer();
-      curCanvas.canvas.removeEventListener('click', this.clickCellCallback);
-      curCanvas.canvas.removeEventListener('mousemove', this.mousemoveCallback);
-      window.removeEventListener('keydown', this.keydownCallback);
-      curCanvas = new Canvas(curCanvas.canvas);
-      curCanvas.paintMainPage();
-    });
+    this.$gameResult.$back.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
+    this.$gameResult.$back.elem.setAttribute('height', `${this.TITLE_SIZE*3/2}px`);
   }
 
   initEventListener() {
-    this.canvas.addEventListener('click', this.clickButtonCallback.bind(this));
-    this.canvas.addEventListener('mousemove', this.mousemoveCallback.bind(this));
-    window.addEventListener('keydown', this.keydownCallback.bind(this));
+    this.canvas.addEventListener('click', this.getCallback('clickButton'));
+    this.canvas.addEventListener('mousemove', this.getCallback('mousemove'));
+    window.addEventListener('keydown', this.getCallback('keydown'));
   }
 
   setRectPath(obj) {
@@ -115,8 +108,8 @@ class Canvas {
     return function() {
       this.board = new Board(this, 1, 1, false);
       this.paintPage();
-      this.canvas.removeEventListener('click', this.clickButtonCallback);
-      this.canvas.addEventListener('click', this.clickCellCallback.bind(this));
+      this.canvas.removeEventListener('click', this.getCallback('clickButton'));
+      this.canvas.addEventListener('click', this.getCallback('clickCell'));
     }
   }
 
@@ -145,8 +138,6 @@ class Canvas {
     this.ctx.strokeText(text, x, y + fontSize*0.075);
   }
 
-
-  // 여기에 문제가 있음
   strokeLine(obj) {
     const { x1, y1, x2, y2, strokeColor, lineWidth } = obj.contextInfo;
     this.ctx.strokeStyle = strokeColor;
@@ -219,7 +210,6 @@ class Canvas {
     this.ctx.clearRect(0, 0, this.width, this.height);
   }
 
-  // 모든 박스 및 타이머 없애기
   clearTimer() {
     clearInterval(this.gameTimer);
     clearInterval(this.msgTimer);
@@ -250,7 +240,6 @@ class Canvas {
     });
   }
 
-  // 메인 화면
   paintMainPage() {
     this.clearPage();
     this.paintMainTitle();
@@ -289,7 +278,6 @@ class Canvas {
     this.paintAllButton();
   }
 
-  // board를 그리는 부분이 빠짐!
   paintTutorialPage(page) {
     const { prev, next, board, bottomText, timer, addition } = page;
     this.clearPage();
@@ -338,7 +326,6 @@ class Canvas {
     }
   }
 
-  // 진짜 게임에서 쓸 게임판
   paintGameBoard({ xCount, yCount, mine, boardSetting }) {
     const board = new Board(this, xCount, yCount);
     this.board = board;
@@ -411,7 +398,6 @@ class Canvas {
     $div.elem.appendChild(tempCanvas.canvas);
   }
 
-  // 이 아래 두 메서드들 수정하기!!!!
   paintTutorialButton(prev, next) {
     const [ y, width, height, fontSize, lineWidth ] = [
       this.board.bottomCenterY,
@@ -575,14 +561,12 @@ class Canvas {
     this.msgTimer = setInterval(setOpacity, 10);
   }
 
-  // 박스 초기화
   initPage(page) {
     this.page = page;
     this.clearElement();
     this.clearTimer();
   }
 
-  // 게임결과/스테이지결과/정보 등장 이펙트
   elementDropEffect(element) {
     let top = 0;
     let opacity = 0;
@@ -599,7 +583,7 @@ class Canvas {
   showGameResult() {
     this.initPage('gameResult');
     const { stage, score } = this.gameInfo;
-    const { $stage, $score, $rank } = this.$gameResult;
+    const { $stage, $score, $rank, $back } = this.$gameResult;
 
     this.$gameResult.backgroundColor = WHITE_ALPHA;
     this.$gameResult.font = this.TITLE_SIZE;
@@ -624,8 +608,36 @@ class Canvas {
     }
     $rank.innerHTML = rank;
 
+    const tempCanvas = new Canvas($back.elem, false);
+    $back.elem.addEventListener('click', tempCanvas.getCallback('clickButton'));
+    $back.elem.addEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+    $back.width = this.canvas.height * BOARD_HEIGHT_RATIO;
+    $back.height = this.TITLE_SIZE*3/2;
+    tempCanvas.createButton(BUTTON.back, {
+      x: $back.width/2,
+      y: $back.height/2,
+      fontSize: this.FONT_SIZE,
+      width: $back.width*0.9,
+      height: $back.height*0.9,
+      page: (() => {
+        const originalCanvas = this;
+        return function () {
+          this.canvas.removeEventListener('click', this.getCallback('clickButton'));
+          this.canvas.removeEventListener('mousemove', this.getCallback('mousemove'));
+          originalCanvas.clearPage();
+          originalCanvas.clearElement();
+          originalCanvas.clearTimer();
+          originalCanvas.initValues();
+          originalCanvas.canvas.addEventListener('click', originalCanvas.getCallback('clickButton'));
+          originalCanvas.paintMainPage();
+        };
+      })()
+    });
+    tempCanvas.paintAllButton();
+
     this.$gameResult.show();
     this.elementDropEffect(this.$gameResult);
+    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
   }
 
   showStageResult() {
@@ -719,7 +731,6 @@ class Canvas {
     this.elementDropEffect(this.$stageResult);
   }
 
-  // 추가 정보 표시
   showInformation(info) {
     const { layout, title, half1, half2, article, arrow, header, footer, bonus } = info;
     const { $title, $header, $left, $right, $arrow, $article, $footer } = this.$information;
@@ -844,6 +855,14 @@ class Canvas {
     }
   }
 
+  getCallback(type) {
+    if (!this.callback[type]) {
+      const thisBindedCallback = this[`${type}Callback`].bind(this);
+      this.callback[type] = thisBindedCallback;
+    }
+    return this.callback[type];
+  }
+
   clickButtonCallback({ offsetX, offsetY }) {
     this.button.forEach(btn => {
       if (btn.contextInfo.isCollision(offsetX, offsetY)) {
@@ -896,7 +915,6 @@ class Canvas {
   }
 
   keydownCallback({ keyCode }) {
-    console.log(keyCode);
     if (!this.board) return;
     const { me, xCount, yCount } = this.board;
     const { x, y } = me;
@@ -964,10 +982,14 @@ class Canvas {
 
   paintPage() {
     const procedure = GAME_PROCEDURE[this.gameInfo.procedure++];
-    if (procedure.type === 'game') {
-      this.paintGamePage(procedure);
-    } else if (procedure.type === 'info') {
-      this.showInformation(procedure);
+    if (procedure) {
+      if (procedure.type === 'game') {
+        this.paintGamePage(procedure);
+      } else if (procedure.type === 'info') {
+        this.showInformation(procedure);
+      }
+    } else {
+      this.showGameResult();
     }
   }
 }
@@ -1051,8 +1073,15 @@ class Element {
     this.elem.style.width = `${value}px`;
   }
 
+  get width() {
+    return +[...this.elem.style.width.trim()].slice(0, -2).join('');
+  }
+
   set height(value) {
     this.elem.style.height = `${value}px`;
+  }
+  get height() {
+    return +[...this.elem.style.height.trim()].slice(0, -2).join('');
   }
 
   set borderRadius(value) {
@@ -1158,7 +1187,6 @@ class Rect {
   }
 }
 
-// 버튼의 이름과 필요한 매개변수들을 갖는 객체를 생성하는 Button 클래스 선언
 class Button extends Rect {
   constructor(x, y, callback) {
     super(x, y);
@@ -1303,7 +1331,6 @@ class Cell extends Rect {
    
 }
 
-// me 클래스 선언
 class Me extends Rect {
   constructor(board) {
     super();
@@ -1396,9 +1423,6 @@ class Me extends Rect {
   }
 }
 
-// 게임판 클래스 선언
-// 지금 boardWidth, boardHeight을 width, height으로, width, height를 xCount, yCount로 바꾸었음
-// 지금부터 보이는 모든 width, height가 어떤 것을 가리키는지 판단하여 수정할 것.
 class Board {
   constructor(canvas, xCount, yCount, init = true, sizeValues) {
     this.canvas = canvas;
@@ -1431,8 +1455,6 @@ class Board {
     this.y = (this.maxHeight - this.cellSize * this.yCount) / 2;
     this.width = this.xCount * this.cellSize;
     this.height = this.yCount * this.cellSize;
-
-    // 새로 추가해봄
     this.bottomHeight = this.canvas.height - this.maxHeight;
     this.bottomCenterY = this.canvas.height - this.bottomHeight / 2;
   }
@@ -1805,7 +1827,6 @@ class Board {
     this.updateCellProperty();
   }
 
-  // normal cell의 number값 설정
   setNormalCellNumber(cell) {
     let count = 0;
     cell.shape.forEach(i => {
@@ -1834,7 +1855,6 @@ class Board {
     cell.number = count;
   }
 
-  // 단일 cell의 number값 설정
   setProperty(cell) {
     if (cell.hintType === 'normal') {
       this.setNormalCellNumber(cell);
@@ -1843,7 +1863,6 @@ class Board {
     }
   }
 
-  // 색깔 있는 칸 배치
   setSpecialHint() {
     if (!this.boardSetting) return;
     const candidate = [...this.minePlantable];
@@ -1870,7 +1889,6 @@ class Board {
     });
   }
 
-  // 숫자가 아닌 텍스트가 있는 칸 배치
   setSpecialText() {
     if (!this.boardSetting) return;
     let { oddEven, highLow } = this.boardSetting;
