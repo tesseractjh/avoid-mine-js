@@ -786,7 +786,7 @@ class Canvas {
     this.board.me.updateCanvas();
   }
 
-  useItemJ() {
+  useItem1() {
     const { board } = this;
     const { me } = board;
     if (this.gameInfo.item1 > 0) {
@@ -796,7 +796,7 @@ class Canvas {
         const rand = randRange(0, cellArr.length-1);
         const ensuredCell = cellArr[rand];
         board.openCell(ensuredCell.x, ensuredCell.y);
-        board.clearCheck(ensuredCell);
+        board.updateCell(ensuredCell);
         this.gameInfo.item1--;
         board.isItemUsed = true;
         this.paintBottomBar();
@@ -809,7 +809,7 @@ class Canvas {
     }
   }
 
-  useItemK() {
+  useItem2() {
     const { board } = this;
     const { me } = board;
     if (this.gameInfo.item2 > 0) {
@@ -820,6 +820,7 @@ class Canvas {
         const safeCell = cellArr[rand];
         board.ensureCell(safeCell.x, safeCell.y);
         board.clearCheck(safeCell);
+        board.updateCell(safeCell);
         this.gameInfo.item2--;
         board.isItemUsed = true;
         this.paintBottomBar();
@@ -832,7 +833,7 @@ class Canvas {
     }
   }
 
-  useItemL() {
+  useItem3() {
     const { board } = this;
     const { me } = board;
     if (this.gameInfo.item3 > 0) {
@@ -843,6 +844,7 @@ class Canvas {
         const safeCell = cellArr[rand];
         board.ensureCell(safeCell.x, safeCell.y);
         board.clearCheck(safeCell);
+        board.updateCell(safeCell);
         this.gameInfo.item3--;
         board.isItemUsed = true;
         this.paintBottomBar();
@@ -945,15 +947,15 @@ class Canvas {
           break;
   
         case 49: // 아이템 1
-          this.useItemJ();
+          this.useItem1();
           break;
   
         case 50: // 아이템 2
-          this.useItemK();
+          this.useItem2();
           break;
   
         case 51: // 아이템 3
-          this.useItemL();
+          this.useItem3();
           break;
   
         case 82: // R
@@ -1398,6 +1400,7 @@ class Me extends Rect {
     });
     this.board.ensureCell(cell);
     this.board.clearCheck(cell);
+    this.board.updateCell(cell);
     this.paint();
 
     if (cell.type === 'mine' || cell.type === 'ensuredMine') {
@@ -1522,7 +1525,6 @@ class Board {
   clearCheck(cell) {
     cell.check = 0;
     cell.checkColor = '';
-    this.updateCell(cell);
   }
 
   setAccessable() {
