@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log('listening on 8080');
+  console.log(`listening on ${PORT}`);
 });
 
 app.use('/', express.static(__dirname + '/'));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/views/index.html');
 });
