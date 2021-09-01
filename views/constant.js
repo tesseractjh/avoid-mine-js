@@ -1076,7 +1076,7 @@ const GAME_PROCEDURE = [
         [0, 2], [2, 2]
       ],
     },
-	  header: TEXT.newHIntYellow,
+	  header: TEXT.newHintYellow,
     footer: TEXT.pressH,
   },
 
