@@ -713,15 +713,15 @@ class Canvas {
     $stage.innerHTML = stage;
     $score.innerHTML = `${score}점`;
     let rank;
-    if (score > 500000) {
+    if (score > 300000) {
       rank = 'S';
-    } else if (score > 300000) {
+    } else if (score > 200000) {
       rank = 'A';
-    } else if (score > 100000) {
+    } else if (score > 150000) {
       rank = 'B';
-    } else if (score > 50000) {
+    } else if (score > 100000) {
       rank = 'C';
-    } else if (score > 10000) {
+    } else if (score > 50000) {
       rank = 'D';
     } else {
       rank = 'F';
