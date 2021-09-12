@@ -58,6 +58,7 @@ class Canvas {
     this.$container = new Element('canvas-container');
     this.$msgBox = new Element('msg-box');
     this.$gameResult = new Element('game-result');
+    this.$gameResult.$title = new Element('game-result-title');
     this.$gameResult.$stage = new Element('stage');
     this.$gameResult.$score = new Element('score');
     this.$gameResult.$rank = new Element('rank');
@@ -200,6 +201,12 @@ class Canvas {
     return function() {
       this.showLeaderBoard();
     }
+  }
+
+  playSound(sound) {
+    const audio = new Audio();
+    audio.src = `/sounds/${sound}.mp3`;
+    audio.play();
   }
 
   decreaseLife() {
@@ -628,7 +635,7 @@ class Canvas {
   }
 
   // 메세지 박스 그리기
-  showMsgBox(text, color=RED) {
+  showMsgBox(text, color=RED, sound='explosion') {
     if (this.msgTimer) {
       clearInterval(this.msgTimer);
       this.$msgBox.hide();
@@ -641,6 +648,8 @@ class Canvas {
     this.$msgBox.height = this.FONT_SIZE*3/4;
     this.$msgBox.borderRadius = this.FONT_SIZE/8
     this.$msgBox.backgroundColor = color;
+  
+    this.playSound(sound);
     this.$msgBox.show();
 
     let opacity = 1000;
@@ -682,12 +691,14 @@ class Canvas {
   showGameResult() {
     this.initPage('gameResult');
     const { stage, score } = this.gameInfo;
-    const { $stage, $score, $rank, $back } = this.$gameResult;
+    const { $title, $stage, $score, $rank, $back } = this.$gameResult;
 
     this.$gameResult.backgroundColor = WHITE_ALPHA;
     this.$gameResult.font = this.TITLE_SIZE;
     this.$gameResult.width = this.board.maxWidth;
     this.$gameResult.height = this.height;
+
+    $title.innerHTML = stage < 45 ? 'GAME OVER' : 'GAME CLEAR!!';
 
     $stage.innerHTML = stage;
     $score.innerHTML = `${score}점`;
@@ -741,6 +752,8 @@ class Canvas {
       stage: this.gameInfo.stage,
       log: this.gameInfo.log
     }
+
+    this.playSound(stage < 45 ? 'fail' : 'clear');
     this.postLeaderBoard(userInfo);
     this.canvas.removeEventListener('click', this.getCallback('clickCell'));
   }
@@ -774,19 +787,19 @@ class Canvas {
     let movementRatio = 1;
     if (stage > 5) {
       let rank;
-      if (movement <= shortest + (accessable.length-shortest)*1.1) {
+      if (movement <= shortest + (accessable.length-shortest)*1.2) {
         movementRatio = MOVEMENT_PERFECT_RATIO;
         rank = `Perfect +${Math.floor(movementRatio*100-100)}%`;
         $moveOpt.color = YELLOWGREEN;
-      } else if (movement <= shortest + (accessable.length-shortest)*1.3) {
+      } else if (movement <= shortest + (accessable.length-shortest)*1.5) {
         movementRatio = MOVEMENT_EXCELLENT_RATIO;
         rank = `Excellent +${Math.floor(movementRatio*100-100)}%`;
         $moveOpt.color = YELLOWGREEN;
-      } else if (movement <= shortest + (accessable.length-shortest)*1.6) {
+      } else if (movement <= shortest + (accessable.length-shortest)*2) {
         movementRatio = MOVEMENT_GREAT_RATIO;
         rank = `Great +${Math.floor(movementRatio*100-100)}%`;
         $moveOpt.color = NAVY;
-      } else if (movement <= shortest + (accessable.length-shortest)*2.1) {
+      } else if (movement <= shortest + (accessable.length-shortest)*2.5) {
         movementRatio = MOVEMENT_GOOD_RATIO;
         rank = `Good +${Math.floor(movementRatio*100-100)}%`;
         $moveOpt.color = NAVY;
@@ -833,6 +846,7 @@ class Canvas {
     );
     $totalScore.innerHTML = this.gameInfo.tempScore;
     
+    this.playSound('clear');
     this.saveLog(cellCount, movement, isItemUsed, isDead, isAllEnsured);
     this.$stageResult.show();
     this.elementDropEffect(this.$stageResult);
@@ -945,9 +959,9 @@ class Canvas {
 
   showShape() {
     if (this.board.showShapeSwitch) {
-      this.showMsgBox(TEXT.msgBox09, TOMATO);
+      this.showMsgBox(TEXT.msgBox09, TOMATO, 'shape');
     } else {
-      this.showMsgBox(TEXT.msgBox10, YELLOWGREEN);
+      this.showMsgBox(TEXT.msgBox10, YELLOWGREEN, 'shape');
     }
     this.board.showShapeSwitch = !this.board.showShapeSwitch;
     this.board.updateCanvas();
@@ -968,12 +982,12 @@ class Canvas {
         this.gameInfo.item1--;
         board.isItemUsed = true;
         this.paintBottomBar();
-        this.showMsgBox(TEXT.msgBox02, YELLOWGREEN);
+        this.showMsgBox(TEXT.msgBox02, YELLOWGREEN, 'item');
       } else {
-        this.showMsgBox(TEXT.msgBox08, TOMATO);
+        this.showMsgBox(TEXT.msgBox08, TOMATO, 'cannotUseItem');
       }
     } else {
-      this.showMsgBox(TEXT.msgBox03, TOMATO);
+      this.showMsgBox(TEXT.msgBox03, TOMATO, 'cannotUseItem');
     }
   }
 
@@ -992,12 +1006,12 @@ class Canvas {
         this.gameInfo.item2--;
         board.isItemUsed = true;
         this.paintBottomBar();
-        this.showMsgBox(TEXT.msgBox04, YELLOWGREEN);
+        this.showMsgBox(TEXT.msgBox04, YELLOWGREEN, 'item');
       } else {
-        this.showMsgBox(TEXT.msgBox08, TOMATO);
+        this.showMsgBox(TEXT.msgBox08, TOMATO, 'cannotUseItem');
       }
     } else {
-      this.showMsgBox(TEXT.msgBox05, TOMATO);
+      this.showMsgBox(TEXT.msgBox05, TOMATO, 'cannotUseItem');
     }
   }
 
@@ -1016,12 +1030,12 @@ class Canvas {
         this.gameInfo.item3--;
         board.isItemUsed = true;
         this.paintBottomBar();
-        this.showMsgBox(TEXT.msgBox06, YELLOWGREEN);
+        this.showMsgBox(TEXT.msgBox06, YELLOWGREEN, 'item');
       } else {
-        this.showMsgBox(TEXT.msgBox08, TOMATO);
+        this.showMsgBox(TEXT.msgBox08, TOMATO, 'cannotUseItem');
       }
     } else {
-      this.showMsgBox(TEXT.msgBox07, TOMATO);
+      this.showMsgBox(TEXT.msgBox07, TOMATO, 'cannotUseItem');
     }
   }
 
