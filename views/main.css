@@ -4,6 +4,15 @@ body {
     background: rgb(90, 96, 116);
 }
 
+.elem {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    opacity: 0;
+}
+
 .flex {
     display: flex;
     justify-content: center;
@@ -31,8 +40,9 @@ body {
     margin: 10px 0;
 }
 
-#total-score {
-    color: tomato;
+.margin2 {
+    height: auto;
+    margin: 20px 0;
 }
 
 .hidden {
@@ -77,12 +87,25 @@ body {
     height: 100%;
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 7fr 5fr 3fr 2fr;
+    grid-template-rows: repeat(4, 1fr);
+    row-gap: 10px;  
+}
+
+.border-bottom {
+    border-bottom: 2px solid gray;
+}
+
+.border-bottom2 {
+    border-bottom: 1px solid lightgray;
+}
+
 #msg-box {
-    position: absolute;
     top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border: 3px solid black;
+    opacity: 1;
 }
 
 #canvas-container {
@@ -90,39 +113,31 @@ body {
     position: relative;
 }
 
-#game-result {
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid black;
-    opacity: 0;
-}
-
-#stage-result {
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid black;
-    opacity: 0;
-}
-
 #stage-result-footer {
     font-size: 20px;
 }
 
-#information {
-    position: absolute;
+#information, #input-id, #leaderboard {
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid black;
-    opacity: 0;
+    opacity: 1;
+}
+
+#input-id-input {
+    font-size: 60px;
+    text-align: center;
+}
+
+#total-score {
+    color: tomato;
 }
 
 #arrow {
     width: 10%;
+}
+
+#leaderboard-list {
+    padding: 15px;
+    border: 3px solid tomato;
 }
 
 #canvas {

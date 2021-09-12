@@ -8,6 +8,7 @@ const INVERTED_YELLOWGREEN = 'rgb(101,  50, 205)';
 const TOMATO               = 'rgb(255,  99,  71)';
 const INVERTED_TOMATO      = 'rgb( 20, 175, 207)';
 const SKYBLUE              = 'rgb(135, 206, 235)';
+const INVERTED_SKYBLUE     = 'rgb(120,  49,  20)';
 const RED                  = 'rgb(255,   0,   0)';
 const ORANGE               = 'rgb(255, 128,   0)';
 const YELLOW               = 'rgb(255, 255,   0)';
@@ -95,14 +96,16 @@ const TEXT = {
 	mainTitle: '지　뢰　피　하　기',
   mainButton01: '게임설명',
   mainButton02: '게임시작',
+  mainButton03: '순위표',
   tutorialButton01: '이전',
   tutorialButton02: '다음',
   backButton: '메인 화면으로 돌아가기',
+  submitButton: '확인',
   tutorial01: '지뢰피하기는 좌측 상단 시작점에서 우측 하단 도착점까지\n지뢰를 피해서 도달하면 승리하는 게임입니다.',
   tutorial02: '칸에 적힌 숫자는 해당 칸과 주변 8칸을 포함한\n9칸 내에 존재하는 지뢰의 개수입니다.',
   tutorial03: '파란색 네모를 움직이면 주변 칸들의 숫자가 공개됩니다.\n시작점 근처 칸들의 숫자와 지뢰는 시작할 때 공개됩니다.',
   tutorial04: '숫자 힌트로는 여기까지가 한계입니다.\n이렇게 운에 의존해야 하는 상황이 종종 발생할 것입니다.',
-  tutorial05: '숫자 3키를 누르면 파란색 네모 주변에 아직 밟지 않은 칸들 중\n무작위로 하나를 공개하는 아이템을 사용할 수 있습니다.',
+  tutorial05: '숫자 3키를 누르면 파란색 네모 주변에 아직 밟지 않은 칸들\n중 무작위로 하나를 공개하는 아이템을 사용할 수 있습니다.',
   tutorial06: '이 외에도 숫자 1키, 2키로 무작위 칸을 공개하는\n아이템을 사용할 수 있고 횟수 제한이 있습니다.',
   tutorial07: '파란색 네모를 WASD키로 조작하여 움직일 수 있습니다.\n도착점까지 직접 들어가보세요!',
   bottomBar01: 'STAGE',
@@ -188,6 +191,15 @@ const BUTTON = {
     }
   },
 
+  leaderboard: {
+    text: TEXT.mainButton03,
+    fillColor: SKYBLUE,
+    hover: {
+      fillColor: INVERTED_SKYBLUE,
+      textColor: WHITE
+    }
+  },
+
   prev: {
     text: TEXT.tutorialButton01,
     fillColor: TOMATO,
@@ -211,6 +223,15 @@ const BUTTON = {
     fillColor: YELLOWGREEN,
     hover: {
       fillColor: INVERTED_YELLOWGREEN,
+      textColor: WHITE
+    }
+  },
+
+  submit: {
+    text: TEXT.submitButton,
+    fillColor: SKYBLUE,
+    hover: {
+      fillColor: INVERTED_SKYBLUE,
       textColor: WHITE
     }
   }
@@ -498,6 +519,10 @@ const TUTORIAL = {
 }
 
 const GAME_PROCEDURE = [
+
+  {
+    type: 'input'
+  },
 
 	{
 	  type: 'info',

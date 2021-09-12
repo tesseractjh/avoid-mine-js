@@ -23,6 +23,7 @@ class Canvas {
     this.callback = [];
     this.board = null;
     this.gameInfo = {
+      name: '',
       stage: 0,
       life: 5,
       score: 0,
@@ -31,8 +32,13 @@ class Canvas {
       item3: 0,
       tempScore: 0,
       procedure: 0,
-      bonus: null
+      bonus: null,
+      log: []
     };
+    this.leaderboardInfo = {
+      page: 1,
+      isLastPage: false
+    }
   }
 
   initContext() {
@@ -76,9 +82,21 @@ class Canvas {
     this.$information.$arrow = new Element('arrow');
     this.$information.$article = new Element('information-article');
     this.$information.$footer = new Element('information-footer');
+    this.$inputId = new Element('input-id');
+    this.$inputId.$title = new Element('input-id-title');
+    this.$inputId.$header = new Element('input-id-header');
+    this.$inputId.$input = new Element('input-id-input');
+    this.$inputId.$submit = new Element('submit');
+    this.$leaderboard = new Element('leaderboard');
+    this.$leaderboard.$title = new Element('leaderboard-title');
+    this.$leaderboard.$list = new Element('leaderboard-list');
+    this.$leaderboard.$footer = new Element('leaderboard-footer');
 
     this.$gameResult.$back.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
     this.$gameResult.$back.elem.setAttribute('height', `${this.TITLE_SIZE*3/2}px`);
+
+    this.$inputId.$submit.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
+    this.$inputId.$submit.elem.setAttribute('height', `${this.TITLE_SIZE*3}px`);
   }
 
   initEventListener() {
@@ -97,6 +115,71 @@ class Canvas {
     this.ctx.closePath();
   }
 
+  setLeaderboard() {
+    this.page = 'fetching';
+    const initList = () => {
+      this.$leaderboard.$list.innerHTML = 
+        `<div class="border-bottom">순위</div>
+        <div class="border-bottom">이름</div>
+        <div class="border-bottom">점수</div>
+        <div class="border-bottom">랭크</div>
+        <div class="border-bottom">스테이지</div>`;
+    };
+    const url = '/leaderboard/' + this.leaderboardInfo.page;
+    fetch(url)
+      .then(res => res.json())
+      .then(users => {
+        if (users.length < 10) {
+          this.leaderboardInfo.isLastPage = true;
+        }
+        if (users.length > 0) {
+          initList();
+        } else {
+          this.leaderboardInfo.page--;
+        }
+        const $fragment = document.createDocumentFragment();
+        users.forEach(user => this.createUserInfo($fragment, user));
+        this.$leaderboard.$list.elem.appendChild($fragment);
+      })
+      .then(() => this.$leaderboard.show())
+      .then(() => this.page = 'leaderboard')
+      .catch(console.error);
+  }
+
+  postLeaderBoard(userInfo) {
+    fetch('/leaderboard', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+      .then(() => {
+        this.$gameResult.show();
+        this.elementDropEffect(this.$gameResult);
+      })
+      .catch(console.error);
+  }
+
+  createUserInfo(fragment, user) {
+    const { ranking, name, score, rank, stage } = user;
+    [ranking, name, score, rank, stage].forEach(v => {
+      const div = document.createElement('div');
+      const text = document.createTextNode(v);
+      div.appendChild(text);
+      div.classList.add('border-bottom2');
+      fragment.appendChild(div);
+    });
+  }
+
+  saveLog(cellCount, movement, isItemUsed, isDead, isAllEnsured) {
+    const { stage, life, item1, item2, item3, tempScore } = this.gameInfo;
+    const { time } = this.board.boardSetting;
+    this.gameInfo.log.push({
+      stage, cellCount, time, movement, isItemUsed, isDead, isAllEnsured,
+      life, item1, item2, item3,
+      score: tempScore
+    });
+  }
+
   getTutorialPage(number) {
     const page = TUTORIAL[`tutorial0${number}`];
     return function() {
@@ -113,8 +196,15 @@ class Canvas {
     }
   }
 
+  getLeaderboardPage() {
+    return function() {
+      this.showLeaderBoard();
+    }
+  }
+
   decreaseLife() {
     if (this.gameInfo.life === 0) {
+      this.board.ensureWholeCell();
       this.showGameResult();
     } else {
       this.gameInfo.life--;
@@ -225,12 +315,12 @@ class Canvas {
     this.$stageResult.top = 0;
     this.$stageResult.opacity = 0;
     this.$information.hide();
-    this.$information.top = 50;
-    this.$information.opacity = 1;
     this.$information.$left.clear();
     this.$information.$right.clear();
     this.$information.$article.clear();
     this.$information.$arrow.clear();
+    this.$inputId.hide();
+    this.$leaderboard.hide();
   }
 
   paintAllButton() {
@@ -242,6 +332,7 @@ class Canvas {
 
   paintMainPage() {
     this.clearPage();
+    this.page = 'main';
     this.paintMainTitle();
     this.paintMainButton();
     this.$stageResult.$movementDiv.hide();
@@ -274,6 +365,14 @@ class Canvas {
       width,
       height,
       page: this.getGamePage()
+    });
+    this.createButton(BUTTON.leaderboard, {
+      x,
+      y: this.TITLE_SIZE * 9,
+      fontSize,
+      width,
+      height,
+      page: this.getLeaderboardPage()
     });
     this.paintAllButton();
   }
@@ -635,8 +734,14 @@ class Canvas {
     });
     tempCanvas.paintAllButton();
 
-    this.$gameResult.show();
-    this.elementDropEffect(this.$gameResult);
+    const userInfo = {
+      rank,
+      name: this.gameInfo.name,
+      score: this.gameInfo.score,
+      stage: this.gameInfo.stage,
+      log: this.gameInfo.log
+    }
+    this.postLeaderBoard(userInfo);
     this.canvas.removeEventListener('click', this.getCallback('clickCell'));
   }
 
@@ -655,6 +760,7 @@ class Canvas {
         return count;
       }
     }, 0);
+    const isAllEnsured = accessable.every(cell => cell.isEnsured);
   
     this.$stageResult.backgroundColor = WHITE_ALPHA;
     this.$stageResult.font = this.FONT_SIZE;
@@ -708,7 +814,7 @@ class Canvas {
   
     let perfectClearRatio = 1;
     if (stage > 4) {
-      if (!isDead && accessable.every(cell => cell.isEnsured)) {
+      if (!isDead && isAllEnsured) {
         perfectClearRatio = PERFECT_CLEAR_RATIO;
         $perfectClear.color = YELLOWGREEN;
         $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
@@ -727,6 +833,7 @@ class Canvas {
     );
     $totalScore.innerHTML = this.gameInfo.tempScore;
     
+    this.saveLog(cellCount, movement, isItemUsed, isDead, isAllEnsured);
     this.$stageResult.show();
     this.elementDropEffect(this.$stageResult);
   }
@@ -773,6 +880,67 @@ class Canvas {
       }
     }
     this.$information.show();
+  }
+
+  showInputId() {
+    this.initPage('inputId');
+    const { $header, $input, $submit } = this.$inputId;
+
+    this.$inputId.backgroundColor = WHITE_ALPHA;
+    this.$inputId.font = this.FONT_SIZE;
+    this.$inputId.width = this.width * BOARD_WIDTH_RATIO;
+    this.$inputId.height = this.height;
+
+    $header.font = this.FONT_SIZE*2/3;
+
+    const tempCanvas = new Canvas($submit.elem, false);
+    $submit.elem.addEventListener('click', tempCanvas.getCallback('clickButton'));
+    $submit.elem.addEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+    $submit.width = this.canvas.height * BOARD_HEIGHT_RATIO;
+    $submit.height = this.TITLE_SIZE*3;
+    tempCanvas.createButton(BUTTON.submit, {
+      x: $submit.width/2,
+      y: $submit.height/2,
+      fontSize: this.FONT_SIZE,
+      width: $submit.width*0.5,
+      height: $submit.height*0.5,
+      page: (() => {
+        const originalCanvas = this;
+        return function () {
+          const { value } = $input.elem;
+          if (value.length > 0 && !/[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/.test(value)) {
+            this.canvas.removeEventListener('click', tempCanvas.getCallback('clickButton'));
+            this.canvas.removeEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+            originalCanvas.gameInfo.name = value;
+            originalCanvas.paintPage();
+          } else {
+            alert('잘못된 입력입니다');
+          }
+        };
+      })()
+    });
+    tempCanvas.paintAllButton();
+
+    this.$inputId.$input.value = '';
+    this.$inputId.show();
+  }
+
+  showLeaderBoard() {
+    this.initPage('leaderboard');
+    const { $list, $footer } = this.$leaderboard;
+
+    this.$leaderboard.backgroundColor = WHITE_ALPHA;
+    this.$leaderboard.font = this.FONT_SIZE;
+    this.$leaderboard.width = this.width * BOARD_WIDTH_RATIO;
+    this.$leaderboard.height = this.height;
+
+    $list.font = this.FONT_SIZE/2;
+    $list.fontWeight = 500;
+    $footer.font = this.FONT_SIZE/2;
+
+    this.leaderboardInfo.page = 1;
+    this.leaderboardInfo.isLastPage = false;
+    this.setLeaderboard();
   }
 
   showShape() {
@@ -917,10 +1085,11 @@ class Canvas {
   }
 
   keydownCallback({ keyCode }) {
-    if (!this.board) return;
-    const { me, xCount, yCount } = this.board;
-    const { x, y } = me;
+
     if (this.page === 'game' || this.page === 'tutorial') {
+      if (!this.board) return;
+      const { me, xCount, yCount } = this.board;
+      const { x, y } = me;
       switch (keyCode) {
         case 65: // 좌 A
           if (x > 0) {
@@ -979,16 +1148,35 @@ class Canvas {
         }
         this.paintPage();
       }
+    } else if (this.page === 'leaderboard') {
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.$leaderboard.hide();
+      } else if (keyCode === 65) { // A
+        if (this.leaderboardInfo.page > 1) {
+          this.leaderboardInfo.page--;
+          this.leaderboardInfo.isLastPage = false;
+          this.setLeaderboard();
+        }
+      } else if (keyCode === 68) { // D
+        if (!this.leaderboardInfo.isLastPage) {
+          this.leaderboardInfo.page++;
+          this.setLeaderboard();
+        }
+      }
     }
   }
 
   paintPage() {
     const procedure = GAME_PROCEDURE[this.gameInfo.procedure++];
     if (procedure) {
-      if (procedure.type === 'game') {
+      const { type } = procedure;
+      if (type === 'game') {
         this.paintGamePage(procedure);
-      } else if (procedure.type === 'info') {
+      } else if (type === 'info') {
         this.showInformation(procedure);
+      } else if (type === 'input') {
+        this.showInputId();
       }
     } else {
       this.showGameResult();
@@ -1068,7 +1256,11 @@ class Element {
   }
 
   set font(value) {
-    this.elem.style.font = `bold ${value}px sans-serif`;
+    this.elem.style.font = `600 ${value}px sans-serif`;
+  }
+
+  set fontWeight(value) {
+    this.elem.style.fontWeight = value;
   }
 
   set width(value) {
@@ -1928,6 +2120,12 @@ class Board {
     const cell = x instanceof Cell ? x : this.getCell(x, y);
     cell.isEnsured = true;
     this.openCell(x, y);
+  }
+
+  ensureWholeCell() {
+    this.forEachCell(this.ensureCell);
+    this.forEachCell(this.updateCell, true);
+    this.paintBorder();
   }
 
   // 칸 공개

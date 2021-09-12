@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>지뢰피하기</title>
     <link rel="stylesheet" href="/views/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="canvas-container" class="flex">
-        <div id="msg-box" class="flex hidden"></div>
-        <div id="game-result" class="flex-column hidden">
+        <div id="msg-box" class="elem flex hidden"></div>
+        <div id="game-result" class="elem flex-column hidden">
             <div class="title margin">GAME OVER</div>
             <div class="flex">
                 <div class="game-result-left">STAGE</div>
@@ -27,7 +30,7 @@
             </div>
             <canvas id="back"></canvas>
         </div>
-        <div id="stage-result" class="flex-column hidden">
+        <div id="stage-result" class="elem flex-column hidden">
             <div id="stage-result-title" class="title margin"></div>
             <div class="flex">
                 <div class="stage-result-left">밟은 칸 수 x50</div>
@@ -61,7 +64,7 @@
             </div>
             <div id="stage-result-footer">F를 누르면 다음 스테이지로 이동합니다.</div>
         </div>
-        <div id="information" class="flex-column hidden align-center">
+        <div id="information" class="elem flex-column hidden align-center">
             <div id="information-title" class="title margin"></div>
             <div id="information-header" class="margin"></div>
             <div class="flex margin">
@@ -71,6 +74,25 @@
             </div>
             <div id="information-article" class="flex"></div>
             <div id="information-footer" class="flex"></div>
+        </div>
+        <div id="input-id" class="elem flex-column hidden align-center">
+            <div id="input-id-title" class="title margin">이름을 입력하세요</div>
+            <div id="input-id-header" class="margin2">특수문자(!@#$%: 등)를 포함하지 않은<br> 최대 15글자의 이름을 입력해주세요</div>
+            <div class="flex margin2">
+                <input id="input-id-input" type="text" size="25" maxlength="15" placeholder="여기에 이름 입력">
+            </div>
+            <canvas id="submit" class="margin2"></canvas>
+        </div>
+        <div id="leaderboard" class="elem flex-column hidden align-center">
+            <div id="leaderboard-title" class="margin">순위표</div>
+            <div id="leaderboard-list" class="grid">
+                <div class="border-bottom">순위</div>
+                <div class="border-bottom">이름</div>
+                <div class="border-bottom">점수</div>
+                <div class="border-bottom">랭크</div>
+                <div class="border-bottom">스테이지</div>
+            </div>
+            <div id="leaderboard-footer" class="margin2">A, D를 눌러 순위표 목록을 이동할 수 있습니다.<br>F를 누르면 메인 화면으로 돌아갑니다.</div>
         </div>
         <canvas id="canvas" width="1920", height="920"></canvas>
     </div>
