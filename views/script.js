@@ -14,6 +14,7 @@ class Canvas {
       this.initTimerID();
       this.initElement();
       this.initEventListener();
+      this.initSound();
     }
   }
 
@@ -104,6 +105,15 @@ class Canvas {
     this.canvas.addEventListener('click', this.getCallback('clickButton'));
     this.canvas.addEventListener('mousemove', this.getCallback('mousemove'));
     window.addEventListener('keydown', this.getCallback('keydown'));
+  }
+
+  initSound() {
+    ['cannotUseItem', 'clear', 'explosion', 'fail', 'item', 'shape']
+      .forEach(sound => {
+        const audio = new Audio();
+        audio.src = `/sounds/${sound}.mp3`;
+        audio.preload = 'auto';
+      });
   }
 
   setRectPath(obj) {
