@@ -66,9 +66,9 @@ app.post('/leaderboard', (req, res) => {
       .then(() => user.save())
       .then(() => curLog.save())
       .then(() => res.send('success'))
+      .then(() => console.log(`name: ${name}, score: ${score}, rank: ${rank}, stage: ${stage}`))
       .catch(console.error);
   }
-
 });
 
 app.get('/leaderboard/:page', (req, res) => {
