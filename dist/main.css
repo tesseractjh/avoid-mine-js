@@ -1,0 +1,145 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: rgb(90, 96, 116);
+}
+
+.elem {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    opacity: 0;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.flex-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+.title {
+    width: 100%;
+    color: navy;
+    text-align: center;
+    border-bottom: 3px solid black;
+}
+
+.margin {
+    height: auto;
+    margin: 10px 0;
+}
+
+.margin2 {
+    height: auto;
+    margin: 20px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.stroke {
+    -webkit-text-stroke: 1px black;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.space {
+    width: 10%;
+    text-align: center;
+}
+
+.game-result-right {
+    text-align: left;
+    width: 40%;
+}
+
+.game-result-left {
+    text-align: right;
+    width: 50%;
+}
+
+.stage-result-right {
+    text-align: left;
+    width: 45%;
+}
+
+.stage-result-left {
+    text-align: right;
+    width: 45%;
+}
+
+.left-right {
+    width: 45%;
+    height: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 7fr 5fr 3fr 2fr;
+    grid-template-rows: repeat(4, 1fr);
+    row-gap: 10px;  
+}
+
+.border-bottom {
+    border-bottom: 2px solid gray;
+}
+
+.border-bottom2 {
+    border-bottom: 1px solid lightgray;
+}
+
+#msg-box {
+    top: 10%;
+    border: 3px solid black;
+    opacity: 1;
+}
+
+#canvas-container {
+    height: 933px;
+    position: relative;
+}
+
+#stage-result-footer {
+    font-size: 20px;
+}
+
+#information, #input-id, #leaderboard {
+    top: 50%;
+    opacity: 1;
+}
+
+#input-id-input {
+    font-size: 60px;
+    text-align: center;
+}
+
+#total-score {
+    color: tomato;
+}
+
+#arrow {
+    width: 10%;
+}
+
+#leaderboard-list {
+    padding: 15px;
+    border: 3px solid tomato;
+}
+
+#canvas {
+    background: rgb(90, 96, 116);
+}

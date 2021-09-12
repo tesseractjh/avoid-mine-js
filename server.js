@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, err => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html');
+  res.sendFile(__dirname + '/dist/index.html');
 });
 
 // 
