@@ -717,11 +717,11 @@ class Canvas {
       rank = 'S';
     } else if (score > 200000) {
       rank = 'A';
-    } else if (score > 150000) {
-      rank = 'B';
     } else if (score > 100000) {
-      rank = 'C';
+      rank = 'B';
     } else if (score > 50000) {
+      rank = 'C';
+    } else if (score > 10000) {
       rank = 'D';
     } else {
       rank = 'F';
