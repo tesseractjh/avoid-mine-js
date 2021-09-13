@@ -26,20 +26,22 @@ class Canvas {
     this.board = null;
     this.gameInfo = {
       name: '',
-      stage: 0,
+      stage: 44,
       life: 5,
       score: 0,
       item1: 0,
       item2: 0,
       item3: 0,
       tempScore: 0,
-      procedure: 0,
+      procedure: 65,
+      shapeSwitch: false,
       bonus: null,
       log: []
     };
     this.leaderboardInfo = {
       page: 1,
-      isLastPage: false
+      isLastPage: false,
+      record: []
     }
   }
 
@@ -128,39 +130,70 @@ class Canvas {
     this.ctx.closePath();
   }
 
+  initList() {
+    this.$leaderboard.$list.innerHTML = 
+    `<div class="border-bottom">순위</div>
+    <div class="border-bottom">이름</div>
+    <div class="border-bottom">점수</div>
+    <div class="border-bottom">랭크</div>
+    <div class="border-bottom">스테이지</div>`;
+  }
+
+  appendToList(users) {
+    const $fragment = document.createDocumentFragment();
+    users.forEach(user => this.createUserInfo($fragment, user));
+    this.$leaderboard.$list.elem.appendChild($fragment);
+  }
+
   setLeaderboard() {
     this.page = 'fetching';
-    const initList = () => {
-      this.$leaderboard.$list.innerHTML = 
-        `<div class="border-bottom">순위</div>
-        <div class="border-bottom">이름</div>
-        <div class="border-bottom">점수</div>
-        <div class="border-bottom">랭크</div>
-        <div class="border-bottom">스테이지</div>`;
-    };
-    const url = '/leaderboard/' + this.leaderboardInfo.page;
-    fetch(url)
+    const { page, isLastPage, record } = this.leaderboardInfo;
+
+    if (page === 1 && record.length === 0) { // 처음 순위표 버튼 클릭했을 때
+      fetch('/leaderboard')
       .then(res => res.json())
       .then(users => {
+        record.push(...users);
+        this.initList();
+        this.appendToList(users.slice(0, 10));
         if (users.length < 10) {
           this.leaderboardInfo.isLastPage = true;
         }
-        if (users.length > 0) {
-          initList();
-        } else {
-          this.leaderboardInfo.page--;
-        }
-        const $fragment = document.createDocumentFragment();
-        users.forEach(user => this.createUserInfo($fragment, user));
-        this.$leaderboard.$list.elem.appendChild($fragment);
+        this.$leaderboard.show();
+        this.page = 'leaderboard';
+        console.log('1번');
       })
-      .then(() => this.$leaderboard.show())
-      .then(() => this.page = 'leaderboard')
       .catch(console.error);
+    } else if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
+      this.initList();
+      this.appendToList(record.slice((page - 1) * 10, page * 10));
+      this.$leaderboard.show();
+      this.page = 'leaderboard';
+      console.log('2번');
+    } else { // record에 없는 목록을 fetch하고, fetch 결과에 따라 isLastPage와 page 조정
+      fetch(`/leaderboard/${page}`)
+        .then(res => res.json())
+        .then(users => {
+          if (users.length < 10) {
+            this.leaderboardInfo.isLastPage = true;
+          }
+          if (users.length > 0) {
+            this.initList();
+          } else {
+            this.leaderboardInfo.page--;
+          }
+          this.appendToList(users);
+          this.$leaderboard.show();
+          this.page = 'leaderboard';
+          console.log('3번');
+        })
+        .catch(console.error);
+    }
+    
   }
 
   postLeaderBoard(userInfo) {
-    fetch('/leaderboard', {
+    fetch('/save-record', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)
@@ -970,12 +1003,13 @@ class Canvas {
   }
 
   showShape() {
-    if (this.board.showShapeSwitch) {
+    if (this.gameInfo.shapeSwitch) {
       this.showMsgBox(TEXT.msgBox09, TOMATO, 'shape');
     } else {
       this.showMsgBox(TEXT.msgBox10, YELLOWGREEN, 'shape');
     }
-    this.board.showShapeSwitch = !this.board.showShapeSwitch;
+    this.gameInfo.shapeSwitch = !this.gameInfo.shapeSwitch;
+    this.board.showShapeSwitch = this.gameInfo.shapeSwitch;
     this.board.updateCanvas();
     this.board.me.updateCanvas();
   }
@@ -1175,17 +1209,23 @@ class Canvas {
         this.paintPage();
       }
     } else if (this.page === 'leaderboard') {
+      const { page, isLastPage, record } = this.leaderboardInfo;
       if (keyCode === 70) { // F
         this.page = 'main';
+        this.leaderboardInfo.record = [];
         this.$leaderboard.hide();
       } else if (keyCode === 65) { // A
-        if (this.leaderboardInfo.page > 1) {
+        if (page > 1) {
           this.leaderboardInfo.page--;
           this.leaderboardInfo.isLastPage = false;
           this.setLeaderboard();
         }
       } else if (keyCode === 68) { // D
-        if (!this.leaderboardInfo.isLastPage) {
+        if (isLastPage) return;
+        if (record.length > page * 10) {
+          this.leaderboardInfo.page++;
+          this.setLeaderboard();
+        } else if (record.length === page * 10) {
           this.leaderboardInfo.page++;
           this.setLeaderboard();
         }
@@ -1508,19 +1548,18 @@ class Cell extends Rect {
   }
 
   fill(fillColor) {
-    if (!this.check) {
-      this.fillColor = fillColor;
-      this.canvas.fillRect(this);
-      if (this.hintType !== 'normal' && this.isDetected && this.type !== 'ensuredMine') {
-        if (this.board.showShapeSwitch) {
-          this.fillShape(colorMatch[this.hintType]);
-        } else if (this.hintType === 'purple') {
-          this.fillShape(PURPLE);
-        }
-      }
-    } else {
+    if (this.check) {
       this.fillColor = this.checkColor;
-      this.canvas.fillRect(this);
+    } else {
+      this.fillColor = fillColor;
+    }
+    this.canvas.fillRect(this);
+    if (this.hintType !== 'normal' && this.isDetected && this.type !== 'ensuredMine') {
+      if (this.board.showShapeSwitch) {
+        this.fillShape(colorMatch[this.hintType]);
+      } else if (this.hintType === 'purple') {
+        this.fillShape(PURPLE);
+      }
     }
   }
 
@@ -1571,7 +1610,7 @@ class Me extends Rect {
     const { x, y, cellSize } = this.board;
     this.contextInfo.x = x + 0.5 * cellSize;
     this.contextInfo.y = y + 0.5 * cellSize;
-    this.setFillInfo(cellSize*3/4, cellSize*3/4, SKYBLUE);
+    this.setFillInfo(cellSize*3/4, cellSize*3/4, SKYBLUE_ALPHA);
     this.setStrokeInfo();
   }
 
@@ -1650,8 +1689,8 @@ class Board {
     this.xCount = xCount;
     this.yCount = yCount;
     this.cellCount = xCount * yCount;
+    this.showShapeSwitch = canvas.gameInfo.shapeSwitch;
     this.isItemUsed = false;
-    this.showShapeSwitch = false;
     this.initSizeValue(sizeValues);
     this.initBoardSetting();
     if (init) {

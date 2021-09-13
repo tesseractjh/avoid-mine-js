@@ -26,6 +26,7 @@ const GREEN_ALPHA          = 'rgba(  0, 255,   0, 0.75)';
 const BLUE_ALPHA           = 'rgba( 51, 153, 255, 0.75)';
 const NAVY_ALPHA           = 'rgba(  0,   0, 128, 0.75)';
 const PURPLE_ALPHA         = 'rgba(127,   0, 255, 0.75)';
+const SKYBLUE_ALPHA        = 'rgba(135, 206, 235, 0.75)';
 
 const colorMatch = {
   red: RED,

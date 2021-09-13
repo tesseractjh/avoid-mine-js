@@ -37,7 +37,7 @@ const binSearch = (arr, n) => {
   return low + 1;
 };
 
-app.post('/leaderboard', (req, res) => {
+app.post('/save-record', (req, res) => {
   const { name, score, rank, stage, log } = req.body;
   const user = new User();
   const curLog = new Log();
@@ -69,6 +69,13 @@ app.post('/leaderboard', (req, res) => {
       .then(() => console.log(`name: ${name}, score: ${score}, rank: ${rank}, stage: ${stage}`))
       .catch(console.error);
   }
+});
+
+app.get('/leaderboard', (req, res) => {
+  User.find({ ranking: { $gte: 1, $lte: 100 } }, '-_id ranking name score rank stage')
+    .sort({ ranking: 1 }).exec()
+    .then(users => res.json(users))
+    .catch(console.error);
 });
 
 app.get('/leaderboard/:page', (req, res) => {
