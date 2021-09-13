@@ -121,6 +121,20 @@ class Canvas {
       });
   }
 
+  // temp
+  sendLogToServer() {
+    const { name, stage, tempScore, score } = this.gameInfo;
+    const userInfo = {
+      name, stage, tempScore,
+      score: score + tempScore
+    };
+    fetch('/log', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+  }
+
   setRectPath(obj) {
     const { x1, y1, x2, y2 } = obj.contextInfo;
     this.ctx.beginPath();
@@ -906,6 +920,11 @@ class Canvas {
     
     this.playSound('clear');
     this.saveLog(cellCount, movement, isItemUsed, isDead, isAllEnsured);
+
+    // temp
+    this.sendLogToServer();
+    // temp
+
     this.$stageResult.show();
     this.elementDropEffect(this.$stageResult);
   }
@@ -951,6 +970,7 @@ class Canvas {
         this.paintInfoBoard(article, $article, 7/10, 1/2);
       }
     }
+
     this.$information.show();
   }
 

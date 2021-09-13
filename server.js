@@ -87,6 +87,11 @@ app.get('/leaderboard/:page', (req, res) => {
     .catch(console.error);
 });
 
+app.post('/log', (req, res) => {
+  const { name, stage, tempScore, score } = req.body;
+  console.log(`${name}님이 ${stage}스테이지를 ${tempScore}점으로 클리어! 현재 총점: ${score}점`);
+});
+
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
 });
