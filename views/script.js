@@ -617,9 +617,15 @@ class Canvas {
   paintBottomBar() {
     const { stage, life, score, item1, item3, item2 } = this.gameInfo;
     const { bottomBarHeight, bottomCenterY, remainingMine } = this.board;
-    const { time, mine } = this.board.boardSetting;
+    const { time } = this.board.boardSetting;
     const [ minute, second ] = [ Math.floor(time/60), time%60 ];
     const [ width, height ] = [ this.width/2, bottomBarHeight ];
+    let mine = 0;
+    this.board.forEachCell(v => {
+      if (v.isMine) {
+        mine++;
+      }
+    });
     const background = new Rect(this.CENTER, bottomCenterY);
     background
       .setFillInfo(width, height, WHITE)
