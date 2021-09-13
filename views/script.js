@@ -22,6 +22,7 @@ class Canvas {
     this.page = 'main';
     this.button = [];
     this.callback = [];
+    this.sound = this.sound ?? {};
     this.board = null;
     this.gameInfo = {
       name: '',
@@ -113,6 +114,7 @@ class Canvas {
         const audio = new Audio();
         audio.src = `/sounds/${sound}.mp3`;
         audio.preload = 'auto';
+        this.sound[sound] = audio;
       });
   }
 
@@ -214,9 +216,9 @@ class Canvas {
   }
 
   playSound(sound) {
-    const audio = new Audio();
-    audio.src = `/sounds/${sound}.mp3`;
-    audio.play();
+    this.sound[sound].pause();
+    this.sound[sound].currentTime = 0;
+    this.sound[sound].play();
   }
 
   decreaseLife() {
