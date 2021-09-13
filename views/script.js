@@ -26,15 +26,16 @@ class Canvas {
     this.board = null;
     this.gameInfo = {
       name: '',
-      stage: 44,
+      stage: 0,
       life: 5,
       score: 0,
       item1: 0,
       item2: 0,
       item3: 0,
       tempScore: 0,
-      procedure: 65,
+      procedure: 0,
       shapeSwitch: false,
+      timerSoundSwitch: false,
       bonus: null,
       log: []
     };
@@ -111,7 +112,7 @@ class Canvas {
   }
 
   initSound() {
-    ['cannotUseItem', 'clear', 'explosion', 'fail', 'item', 'shape']
+    ['cannotUseItem', 'clear', 'explosion', 'fail', 'item', 'shape', 'stopwatch']
       .forEach(sound => {
         const audio = new Audio();
         audio.src = `/sounds/${sound}.mp3`;
@@ -161,7 +162,6 @@ class Canvas {
         }
         this.$leaderboard.show();
         this.page = 'leaderboard';
-        console.log('1번');
       })
       .catch(console.error);
     } else if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
@@ -169,7 +169,6 @@ class Canvas {
       this.appendToList(record.slice((page - 1) * 10, page * 10));
       this.$leaderboard.show();
       this.page = 'leaderboard';
-      console.log('2번');
     } else { // record에 없는 목록을 fetch하고, fetch 결과에 따라 isLastPage와 page 조정
       fetch(`/leaderboard/${page}`)
         .then(res => res.json())
@@ -185,7 +184,6 @@ class Canvas {
           this.appendToList(users);
           this.$leaderboard.show();
           this.page = 'leaderboard';
-          console.log('3번');
         })
         .catch(console.error);
     }
@@ -480,7 +478,7 @@ class Canvas {
   paintGameBoard({ xCount, yCount, mine, boardSetting }) {
     const board = new Board(this, xCount, yCount);
     this.board = board;
-    board.boardSetting = { ...boardSetting };
+    board.boardSetting = { mine, ...boardSetting };
     board.setBoard(mine);
     board.updateCanvas();
     board.me.updateCanvas();
@@ -618,10 +616,10 @@ class Canvas {
 
   paintBottomBar() {
     const { stage, life, score, item1, item3, item2 } = this.gameInfo;
-    const { maxHeight, bottomBarHeight, bottomCenterY } = this.board;
-    const { time } = this.board.boardSetting;
+    const { bottomBarHeight, bottomCenterY, remainingMine } = this.board;
+    const { time, mine } = this.board.boardSetting;
     const [ minute, second ] = [ Math.floor(time/60), time%60 ];
-    const [ width, height ] = [ maxHeight, bottomBarHeight ];
+    const [ width, height ] = [ this.width/2, bottomBarHeight ];
     const background = new Rect(this.CENTER, bottomCenterY);
     background
       .setFillInfo(width, height, WHITE)
@@ -632,8 +630,9 @@ class Canvas {
 
     const bottomValues = [
       `${stage}`,
-      `${life}`,
       `${score}`,
+      `${life}`,
+      `${remainingMine}/${mine}`,
       `${minute}:${second<10 ? '0'+second : second}`,
       `${item1}개`,
       `${item2}개`,
@@ -643,15 +642,15 @@ class Canvas {
     const fontSize = bottomBarHeight/4;
     const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
     bottomValues.forEach((value, idx) => {
-      const top = new Rect(this.CENTER + width*(idx-3)/7, topY);
+      const top = new Rect(this.CENTER + width*(idx*2-7)/16, topY);
       top.setTextInfo(TEXT[`bottomBar0${idx+1}`], fontSize);
       this.fillText(top);
 
       let textColor = BLACK;
-      if ((idx === 1 && life === 0) || (idx === 3 && time < 30)) {
+      if ((idx === 2 && life === 0) || (idx === 4 && time < 30)) {
         textColor = TOMATO;
       }
-      const bottom = new Rect(this.CENTER + width*(idx-3)/7, bottomY);
+      const bottom = new Rect(this.CENTER + width*(idx*2-7)/16, bottomY);
       bottom.setTextInfo(value, fontSize, textColor);
       this.fillText(bottom);
     });
@@ -660,8 +659,8 @@ class Canvas {
   paintDivisionLine(box) {
     const x = box.contextInfo.x - box.width / 2;
     const y = box.contextInfo.y;
-    for (let i=0; i<6; i++) {
-      const line = new Rect(x + box.width*(i+1)/7, y);
+    for (let i=0; i<7; i++) {
+      const line = new Rect(x + box.width*(i+1)/8, y);
       line.setFillInfo(0, box.height*3/4);
       line.setStrokeInfo(LIGHTGRAY, 3);
       this.strokeRect(line);
@@ -670,6 +669,12 @@ class Canvas {
 
   setTimer() {
     const { time } = this.board.boardSetting;
+
+    if (time <= 30 && !this.gameInfo.timerSoundSwitch) {
+      this.gameInfo.timerSoundSwitch = true;
+      this.playSound('stopwatch');
+    }
+
     if (time > 0) {
       this.board.boardSetting.time--;
       this.paintBottomBar();
@@ -718,6 +723,8 @@ class Canvas {
     this.page = page;
     this.clearElement();
     this.clearTimer();
+    this.sound['stopwatch'].pause();
+    this.gameInfo.timerSoundSwitch = false;
   }
 
   elementDropEffect(element) {
@@ -1113,10 +1120,12 @@ class Canvas {
           case 0:
             cell.check = 1;
             cell.checkColor = TOMATO;
+            this.board.updateRemainingMine();
             break;
           case 1:
             cell.check = 2;
             cell.checkColor = YELLOWGREEN;
+            this.board.updateRemainingMine();
             break;
           case 2:
             cell.check = 0;
@@ -1722,6 +1731,7 @@ class Board {
   initBoardSetting() {
     this.cellArr = [...Array(this.yCount)].map((_, y) => [...Array(this.xCount)].map((_, x) => new Cell(x, y, this)));
     this.boardSetting = null;
+    this.remainingMine = 0;
     this.accessable = [];
     this.minePlantable = this.getMinePlantable();
     this.shortest = 0;
@@ -1782,6 +1792,9 @@ class Board {
   clearCheck(cell) {
     cell.check = 0;
     cell.checkColor = '';
+    if(this.canvas.page === 'game') {
+      this.updateRemainingMine();
+    }
   }
 
   setAccessable() {
@@ -2217,6 +2230,19 @@ class Board {
     }
   }
 
+  updateRemainingMine() {
+    let mine = 0;
+    this.forEachCell(v => {
+      if (v.type === 'ensuredMine') {
+        mine++;
+      } else if (v.check === 1) {
+        mine++;
+      }
+    });
+    this.remainingMine = mine;
+    this.canvas.paintBottomBar();
+  }
+
   fillCell(cell) {
     if (cell.isEnsured) {
       switch (cell.type) {
@@ -2225,6 +2251,9 @@ class Board {
           break;
         case 'mine':
           cell.type = 'ensuredMine';
+          if(this.canvas.page === 'game') {
+            this.updateRemainingMine();
+          }
         case 'ensuredMine':
           cell.fill(TOMATO);
           break;
