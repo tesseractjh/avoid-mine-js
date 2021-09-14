@@ -39,7 +39,7 @@ const binSearch = (arr, n) => {
   return low + 1;
 };
 
-app.post('/save/classic', (req, res) => {
+app.post('/save/classiczz', (req, res) => {
   const { name, score, rank, stage, log } = req.body;
   const user = new User();
   const curLog = new Log();
