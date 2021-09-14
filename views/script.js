@@ -41,7 +41,7 @@ class Canvas {
     };
     this.leaderboardInfo = {
       page: 1,
-      isLastPage: false,
+      lastPage: 1,
       record: []
     }
   }
@@ -162,46 +162,29 @@ class Canvas {
 
   setLeaderboard() {
     this.page = 'fetching';
-    const { page, isLastPage, record } = this.leaderboardInfo;
+    const { page, record } = this.leaderboardInfo;
 
-    if (page === 1 && record.length === 0) { // 처음 순위표 버튼 클릭했을 때
-      fetch('/leaderboard')
-      .then(res => res.json())
-      .then(users => {
-        record.push(...users);
-        this.initList();
-        this.appendToList(users.slice(0, 10));
-        if (users.length < 10) {
-          this.leaderboardInfo.isLastPage = true;
-        }
-        this.$leaderboard.show();
-        this.page = 'leaderboard';
-      })
-      .catch(console.error);
-    } else if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
+    if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
       this.initList();
       this.appendToList(record.slice((page - 1) * 10, page * 10));
       this.$leaderboard.show();
-      this.page = 'leaderboard';
-    } else { // record에 없는 목록을 fetch하고, fetch 결과에 따라 isLastPage와 page 조정
-      fetch(`/leaderboard/${page}`)
-        .then(res => res.json())
-        .then(users => {
-          if (users.length < 10) {
-            this.leaderboardInfo.isLastPage = true;
-          }
-          if (users.length > 0) {
-            this.initList();
-          } else {
-            this.leaderboardInfo.page--;
-          }
-          this.appendToList(users);
-          this.$leaderboard.show();
-          this.page = 'leaderboard';
-        })
-        .catch(console.error);
+    } else if (record.length % 10 === 0) { // GET요청
+      fetch(`/leaderboard/${Math.floor(page / 10)}`)
+      .then(res => res.json())
+      .then(users => {
+        if (users.length === 0 || (record.length % 100 === users.length)) {
+          this.leaderboardInfo.page--;
+          return;
+        }
+        record.push(...users);
+        this.initList();
+        this.appendToList(record.slice((page-1)*10, page*10));
+        this.leaderboardInfo.lastPage = Math.floor((record.length - 1) / 10) + 1;
+        this.$leaderboard.show();
+      })
+      .catch(console.error);
     }
-    
+    this.page = 'leaderboard';
   }
 
   postLeaderBoard(userInfo) {
@@ -1032,7 +1015,6 @@ class Canvas {
     $footer.font = this.FONT_SIZE/2;
 
     this.leaderboardInfo.page = 1;
-    this.leaderboardInfo.isLastPage = false;
     this.setLeaderboard();
   }
 
@@ -1245,7 +1227,7 @@ class Canvas {
         this.paintPage();
       }
     } else if (this.page === 'leaderboard') {
-      const { page, isLastPage, record } = this.leaderboardInfo;
+      const { page, lastPage, record } = this.leaderboardInfo;
       if (keyCode === 70) { // F
         this.page = 'main';
         this.leaderboardInfo.record = [];
@@ -1253,15 +1235,10 @@ class Canvas {
       } else if (keyCode === 65) { // A
         if (page > 1) {
           this.leaderboardInfo.page--;
-          this.leaderboardInfo.isLastPage = false;
           this.setLeaderboard();
         }
       } else if (keyCode === 68) { // D
-        if (isLastPage) return;
-        if (record.length > page * 10) {
-          this.leaderboardInfo.page++;
-          this.setLeaderboard();
-        } else if (record.length === page * 10) {
+        if (lastPage > page || (lastPage === page && record.length % 10 === 0)) {
           this.leaderboardInfo.page++;
           this.setLeaderboard();
         }
