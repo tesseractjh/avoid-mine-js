@@ -999,8 +999,9 @@ class Canvas {
       page: (() => {
         const originalCanvas = this;
         return function () {
-          const { value } = $input.elem;
-          if (value.length > 0 && !/[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/.test(value)) {
+          const value = $input.elem.value.trim();
+          if (value.length > 0
+            && !/[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/.test(value)) {
             this.canvas.removeEventListener('click', tempCanvas.getCallback('clickButton'));
             this.canvas.removeEventListener('mousemove', tempCanvas.getCallback('mousemove'));
             originalCanvas.gameInfo.name = value;
