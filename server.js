@@ -90,6 +90,7 @@ app.get('/leaderboard/:page', (req, res) => {
 app.post('/log', (req, res) => {
   const { name, stage, tempScore, score } = req.body;
   console.log(`${name}님이 ${stage}스테이지를 ${tempScore}점으로 클리어! 현재 총점: ${score}점`);
+  res.send('received');
 });
 
 app.listen(PORT, () => {
