@@ -39,40 +39,6 @@ const binSearch = (arr, n) => {
   return low + 1;
 };
 
-app.post('/save/classiczz', (req, res) => {
-  const { name, score, rank, stage, log } = req.body;
-  const user = new User();
-  const curLog = new Log();
-  user.name = name;
-  user.score = score;
-  user.rank = rank;
-  user.stage = stage;
-  curLog.log = log;
-
-  if (user.score <= 0) {
-    res.send('fail');
-  } else {
-    User.find({}, 'id').sort({ id: -1 }).limit(1)
-      .then(arr => {
-        const lastUser = arr[0];
-        user.id = lastUser ? lastUser.id + 1 : 1;
-        curLog.id = lastUser ? lastUser.id + 1 : 1;
-      })
-      .then(() => User.find({}, 'score').sort({ score: -1 }))
-      .then(users => binSearch(users.map(u => u.score).sort((a, b) => b - a), score))
-      .then(ranking => {
-        user.ranking = ranking;
-        return ranking;
-      })
-      .then(ranking => User.updateMany({ ranking: { $gte: ranking }}, { $inc: { ranking: 1} }))
-      .then(() => user.save())
-      .then(() => curLog.save())
-      .then(() => res.send('success'))
-      .then(() => console.log(`name: ${name}, score: ${score}, rank: ${rank}, stage: ${stage}`))
-      .catch(console.error);
-  }
-});
-
 app.post('/save-record', (req, res) => {
   const { name, score, rank, stage, log } = req.body;
   const user = new User();
