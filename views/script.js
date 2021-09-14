@@ -20,6 +20,7 @@ class Canvas {
 
   initValues() {
     this.page = 'main';
+    this.mode = '';
     this.button = [];
     this.callback = [];
     this.sound = this.sound ?? {};
@@ -27,6 +28,7 @@ class Canvas {
     this.gameInfo = {
       name: '',
       stage: 0,
+      modeId: 0,
       life: 5,
       score: 0,
       item1: 0,
@@ -84,6 +86,7 @@ class Canvas {
     this.$stageResult.$perfectClearDiv = new Element('perfect-clear-div');
     this.$stageResult.$perfectClear = new Element('perfect-clear');
     this.$stageResult.$totalScore = new Element('total-score');
+    this.$stageResult.$footer = new Element('stage-result-footer');
 
     this.$information = new Element('information');
     this.$information.$title = new Element('information-title');
@@ -106,11 +109,24 @@ class Canvas {
     this.$leaderboard.$title = new Element('leaderboard-title');
     this.$leaderboard.$list = new Element('leaderboard-list');
     this.$leaderboard.$footer = new Element('leaderboard-footer');
+    this.$leaderboard.$mode01 = new Element('leaderboard-mode01');
+    this.$leaderboard.$mode02 = new Element('leaderboard-mode02');
+    this.$leaderboard.$classic = new Element('classic-check');
+    this.$leaderboard.$challenge = new Element('challenge-check');
+    this.$leaderboard.$classic.elem.addEventListener('change', this.getCallback('change'));
+    this.$leaderboard.$challenge.elem.addEventListener('change', this.getCallback('change'));
 
     this.$updateLog = new Element('update-log');
     this.$updateLog.$title = new Element('update-log-title');
     this.$updateLog.$article = new Element('update-log-article');
     this.$updateLog.$footer = new Element('update-log-footer');
+
+    this.$challenge = new Element('challenge');
+    this.$challenge.$title = new Element('challenge-title');
+    this.$challenge.$article = new Element('challenge-article');
+    this.$challenge.$footer = new Element('challenge-footer');
+
+    this.$challengeFail = new Element('challenge-fail');
   }
 
   initEventListener() {
@@ -129,13 +145,33 @@ class Canvas {
       });
   }
 
-  sendLogToServer() {
+  sendClassicLogToServer() {
     const { name, stage, tempScore, score } = this.gameInfo;
     const userInfo = {
       name, stage, tempScore,
       score: score + tempScore
     };
-    fetch('/log', {
+    fetch('/log/classic', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+  }
+
+  sendChallengeLogToServer() {
+    const { name, tempScore, modeId } = this.gameInfo;
+    const userInfo = { name, tempScore, modeId };
+    fetch('/log/challenge', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+  }
+
+  sendChallengeFailLogToServer() {
+    const { name, modeId } = this.gameInfo;
+    const userInfo = { name, modeId };
+    fetch('/log/challenge/fail', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)
@@ -152,6 +188,18 @@ class Canvas {
     this.ctx.closePath();
   }
 
+  setText(elem, text) {
+    const textNode = document.createTextNode(text);
+    elem.appendChild(textNode);
+  }
+
+  appendNodeWithText(elem, text) {
+    const div = document.createElement('div');
+    this.setText(div, text);
+    div.classList.add('margin');
+    elem.appendChild(div);
+  }
+
   setUpdateLog() {
     const wholeLog = document.createElement('ul');
 
@@ -160,8 +208,7 @@ class Canvas {
       const yearMonthUl = document.createElement('ul');
       const li = document.createElement('li');
       const span = document.createElement('span');
-      const text = document.createTextNode(title);
-      span.appendChild(text);
+      this.setText(span, title);
       span.classList.add('h1');
 
       [...log].reverse().forEach(date => {
@@ -169,8 +216,7 @@ class Canvas {
         const dateUl = document.createElement('ul');
         const li = document.createElement('li');
         const span = document.createElement('span');
-        const text = document.createTextNode(title);
-        span.appendChild(text);
+        this.setText(span, title);
         span.classList.add('h2');
 
         log.forEach(note => {
@@ -178,15 +224,13 @@ class Canvas {
           const noteUl = document.createElement('ul');
           const li = document.createElement('li');
           const span = document.createElement('span');
-          const text = document.createTextNode(title);
-          span.appendChild(text);
+          this.setText(span, title);
           span.classList.add('h3');
 
           log.forEach(description => {
             const li = document.createElement('li');
             const span = document.createElement('span');
-            const text = document.createTextNode(description);
-            span.appendChild(text);
+            this.setText(span, title);
             span.classList.add('h4');
             li.appendChild(span);
             li.classList.add('h4');
@@ -214,41 +258,141 @@ class Canvas {
     this.$updateLog.$article.elem.appendChild(wholeLog);
   }
 
-  appendToList(users) {
+  setColorBar(parent, colors) {
+    const div = document.createElement('div');
+    RAINBOW.forEach(color => {
+      const square = document.createElement('div');
+      if (color === 'purple') {
+        square.classList.add('square-purple');
+      } else {
+        square.classList.add('square');
+      }
+      if (colors.includes(color)) {
+        square.style.backgroundColor = colorMatch[color];
+      }
+      div.appendChild(square);
+    });
+    parent.appendChild(div);
+  }
+
+  setChallengeModeList() {
+    CHALLENGE_ARR.forEach((chal, i) => {
+      const { name, width, height, mine, time, colorType, textType, condition, difficulty } = chal;
+      const div = document.createElement('div');
+      const top = document.createElement('div');
+      const bottom = document.createElement('div');
+      const left = document.createElement('div');
+      const right = document.createElement('div');
+      div.classList.add('challenge-mode');
+      left.classList.add('inline-block');
+      left.classList.add('align-right');
+      right.classList.add('inline-block');
+      right.classList.add('align-left');
+      top.classList.add('align-center');
+      top.classList.add('border-bottom')
+      top.classList.add('margin');
+      bottom.classList.add('align-center');
+      bottom.classList.add('margin');
+
+      this.setText(top, `${name}`);
+
+      this.appendNodeWithText(left, '🧩 맵 크기:　');
+      this.appendNodeWithText(right, `${width}X${height}`);
+
+      const minute = Math.floor(time / 60) ? `${Math.floor(time / 60)}분 ` : '';
+      const second = time % 60 ? `${time % 60}초` : '';
+      this.appendNodeWithText(left, '⏱ 제한시간:　');
+      this.appendNodeWithText(right, `${minute}${second}`);
+
+      this.appendNodeWithText(left, '💣 지뢰비율:　');
+      this.appendNodeWithText(right, `${Math.floor(mine * 100 / (width * height))}%`);
+
+      this.appendNodeWithText(left, '🎨 색깔힌트:　');
+      if (colorType.length) {
+        const colorBar = document.createElement('div');
+        this.setColorBar(colorBar, colorType);
+        right.appendChild(colorBar);
+      } else {
+        this.appendNodeWithText(right, '없음');
+      }
+
+      this.appendNodeWithText(left, '📝 글자힌트:　');
+      this.appendNodeWithText(right, `${textType.length ? textType.join(', ') : '없음'}`);
+
+      this.appendNodeWithText(left, '⭐ 난이도:　');
+      this.appendNodeWithText(right, `${'★'.repeat(Math.floor(difficulty / 2))}${difficulty % 2 ? '☆' : ''}`);
+
+      this.setText(bottom, `${condition ? condition+'클리어 후 도전 권장' : '　'}`);
+
+      [top, left, right, bottom].forEach(elem => div.appendChild(elem));
+      div.addEventListener('click', this.getGamePage('CHALLENGE').bind(this));
+      div.addEventListener('click', () => this.$challenge.hide());
+      this.$challenge.$article.elem.appendChild(div);
+    })
+  }
+
+  initClassicLabel() {
     this.$leaderboard.$list.innerHTML = 
     `<div class="border-bottom">순위</div>
     <div class="border-bottom">이름</div>
     <div class="border-bottom">점수</div>
     <div class="border-bottom">랭크</div>
     <div class="border-bottom">스테이지</div>`;
+  }
+
+  initChallengeLabel() {
+    this.$leaderboard.$list.innerHTML = 
+    `<div class="border-bottom">순위</div>
+    <div class="border-bottom">이름</div>
+    <div class="border-bottom">점수</div>
+    <div class="border-bottom">남은시간</div>
+    <div class="border-bottom">밟은칸수</div>`;
+  }
+
+  appendToClassicList(users) {
+    this.$leaderboard.$list.elem.classList.add('classic-grid');
+    this.$leaderboard.$list.elem.classList.remove('challenge-grid');
+    this.initClassicLabel();
     const $fragment = document.createDocumentFragment();
-    users.forEach(user => this.createUserInfo($fragment, user));
+    users.forEach(user => this.createClassicUserInfo($fragment, user));
     this.$leaderboard.$list.elem.appendChild($fragment);
   }
 
-  setLeaderboard() {
+  appendToChallengeList(users) {
+    this.$leaderboard.$list.elem.classList.add('challenge-grid');
+    this.$leaderboard.$list.elem.classList.remove('classic-grid');
+    this.initChallengeLabel();
+    const $fragment = document.createDocumentFragment();
+    users.forEach(user => this.createChallengeUserInfo($fragment, user));
+    this.$leaderboard.$list.elem.appendChild($fragment);
+  }
+
+  setClassicLeaderboard() {
     this.page = 'fetching';
     const { page, record } = this.leaderboardInfo;
 
     if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
-      this.appendToList(record.slice((page - 1) * 10, page * 10));
+      this.appendToClassicList(record.slice((page - 1) * 10, page * 10));
       this.$leaderboard.show();
       this.page = 'leaderboard';
     } else { // GET요청
-      fetch(`/leaderboard/${Math.floor(page / 10)}`)
+      fetch(`/leaderboard/classic/${Math.floor(page / 10)}`)
       .then(res => res.json())
       .then(users => {
         if (record.length === users.length) {
           this.leaderboardInfo.page--;
+          if (users.length === 0) { // 초기에 목록이 0개인 상태 대비
+            this.initClassicLabel();
+          }
           return;
         }
         this.leaderboardInfo.record = users;
         const curList = users.slice((page - 1) * 10, page * 10);
         if (curList.length > 0) {
-          this.appendToList(curList);
+          this.appendToClassicList(curList);
         } else {
           const curPage = --this.leaderboardInfo.page;
-          this.appendToList(users.slice((curPage - 1) * 10, curPage * 10));
+          this.appendToClassicList(users.slice((curPage - 1) * 10, curPage * 10));
         }
         
         this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
@@ -259,8 +403,44 @@ class Canvas {
     }
   }
 
-  postLeaderBoard(userInfo) {
-    fetch('/save-record', {
+  setChallengeLeaderboard() {
+    this.page = 'fetching';
+    const { page, record } = this.leaderboardInfo;
+
+    if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
+      this.appendToChallengeList(record.slice((page - 1) * 10, page * 10));
+      this.$leaderboard.show();
+      this.page = 'leaderboard';
+    } else { // GET요청
+      fetch(`/leaderboard/challenge/${Math.floor(page / 10)}`)
+      .then(res => res.json())
+      .then(users => {
+        if (record.length === users.length) {
+          this.leaderboardInfo.page--;
+          if (users.length === 0) { // 초기에 목록이 0개인 상태 대비
+            this.initChallengeLabel();
+          }
+          return;
+        }
+        this.leaderboardInfo.record = users;
+        const curList = users.slice((page - 1) * 10, page * 10);
+        if (curList.length > 0) {
+          this.appendToChallengeList(curList);
+        } else {
+          const curPage = --this.leaderboardInfo.page;
+          this.appendToChallengeList(users.slice((curPage - 1) * 10, curPage * 10));
+        }
+        
+        this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
+        this.$leaderboard.show();
+      })
+      .then(() => this.page = 'leaderboard')
+      .catch(console.error);
+    }
+  }
+
+  postClassicLeaderBoard(userInfo) {
+    fetch('/save/classic', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)
@@ -272,7 +452,19 @@ class Canvas {
       .catch(console.error);
   }
 
-  createUserInfo(fragment, user) {
+  postChallengeLeaderBoard(userInfo) {
+    fetch('/save/challenge', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+      .then(() => {
+        this.$stageResult.show();
+      })
+      .catch(console.error);
+  }
+
+  createClassicUserInfo(fragment, user) {
     const { ranking, name, score, rank, stage } = user;
     [ranking, name, score, rank, stage].forEach(v => {
       const div = document.createElement('div');
@@ -283,12 +475,32 @@ class Canvas {
     });
   }
 
-  saveLog(cellCount, movement, isItemUsed, isDead, isAllEnsured) {
+  createChallengeUserInfo(fragment, user) {
+    const { ranking, name, score, time, cellCount } = user;
+    [ranking, name, score, time, cellCount].forEach(v => {
+      const div = document.createElement('div');
+      const text = document.createTextNode(v);
+      div.appendChild(text);
+      div.classList.add('border-bottom2');
+      fragment.appendChild(div);
+    });
+  }
+
+  saveClassicLog(cellCount, movement, isItemUsed, isDead, isAllEnsured) {
     const { stage, life, item1, item2, item3, tempScore } = this.gameInfo;
     const { time } = this.board.boardSetting;
     this.gameInfo.log.push({
       stage, cellCount, time, movement, isItemUsed, isDead, isAllEnsured,
       life, item1, item2, item3,
+      score: tempScore
+    });
+  }
+
+  saveChallengeLog(cellCount, movement, isAllEnsured) {
+    const { modeId, tempScore } = this.gameInfo;
+    const { time } = this.board.boardSetting;
+    this.gameInfo.log.push({
+      modeId, cellCount, time, movement, isAllEnsured,
       score: tempScore
     });
   }
@@ -300,8 +512,27 @@ class Canvas {
     };
   }
 
-  getGamePage() {
+  getSelectGameTypePage() {
     return function() {
+      this.paintSelectGameTypePage();
+    }
+  }
+
+  getChallengeModePage() {
+    return function() {
+      this.showChallengeMode();
+    }
+  }
+
+  getMainPage() {
+    return function() {
+      this.paintMainPage();
+    }
+  }
+
+  getGamePage(mode) {
+    return function() {
+      this.mode = mode;
       this.board = new Board(this, 1, 1, false);
       this.paintPage();
       this.canvas.removeEventListener('click', this.getCallback('clickButton'));
@@ -330,7 +561,11 @@ class Canvas {
   decreaseLife() {
     if (this.gameInfo.life === 0) {
       this.board.ensureWholeCell();
-      this.showGameResult();
+      if (this.mode === 'CLASSIC') {
+        this.showGameResult();
+      } else if (this.mode === 'CHALLENGE') {
+        this.showChallengeFail();
+      }
     } else {
       this.gameInfo.life--;
       this.paintBottomBar();
@@ -399,7 +634,7 @@ class Canvas {
       text, fontSize, textColor,
       width, height, fillColor,
       strokeColor, lineWidth,
-      hover,
+      hover, caption,
       page
     } = { ...info, ...addition };
     const button = new Button(x, y, page);
@@ -416,6 +651,14 @@ class Canvas {
     hoverInfo.textColor = hover.textColor;
     button.hoverContextInfo = hoverInfo;
     this.button.push(button);
+
+    if (caption) {
+      const bottomText = new Rect(x, y + height*3/4);
+      bottomText.setTextInfo(caption, fontSize/2, WHITE);
+      bottomText.fontWeight = 500;
+      this.fillText(bottomText);
+    }
+
     return button;
   }
 
@@ -439,6 +682,7 @@ class Canvas {
     this.$stageResult.hide();
     this.$stageResult.top = 0;
     this.$stageResult.opacity = 0;
+    this.$stageResult.$itemDiv.hide();
     this.$information.hide();
     this.$information.$left.clear();
     this.$information.$right.clear();
@@ -446,6 +690,10 @@ class Canvas {
     this.$information.$arrow.clear();
     this.$inputId.hide();
     this.$leaderboard.hide();
+    this.$updateLog.hide();
+    this.$challenge.hide();
+    this.$challenge.$article.clear();
+    this.$challengeFail.hide();
   }
 
   paintAllButton() {
@@ -489,7 +737,7 @@ class Canvas {
       fontSize,
       width,
       height,
-      page: this.getGamePage()
+      page: this.getSelectGameTypePage()
     });
     this.createButton(BUTTON.leaderboard, {
       x,
@@ -556,6 +804,50 @@ class Canvas {
     if (me) {
       board.me.moveTo(meX ?? 0, meY ?? 0);
     }
+  }
+
+  paintSelectGameTypePage() {
+    this.clearPage();
+    this.page = 'selectGame';
+    this.paintSelectGameTypeTitle();
+    this.paintSelectGameTypeButton();
+  }
+
+  paintSelectGameTypeTitle() {
+    const title = new Rect(this.CENTER, this.TITLE_SIZE * 2);
+    title.setTextInfo(TEXT.selectGameTitle, this.TITLE_SIZE);
+    this.fillText(title);
+  }
+
+  paintSelectGameTypeButton() {
+    const [ x, width, height, fontSize ] = [
+      this.CENTER, this.FONT_SIZE * 7, this.FONT_SIZE * 2, this.FONT_SIZE
+    ];
+    this.createButton(BUTTON.modeClassic, {
+        x,
+        y: this.TITLE_SIZE * 4.5,
+        width,
+        height,
+        fontSize,
+        page: this.getGamePage('CLASSIC')
+    });
+    this.createButton(BUTTON.modeChallenge, {
+      x,
+      y: this.TITLE_SIZE * 7,
+      fontSize,
+      width,
+      height,
+      page: this.getChallengeModePage()
+    });
+    this.createButton(BUTTON.backToMainPage, {
+      x,
+      y: this.TITLE_SIZE * 9.5,
+      fontSize,
+      width,
+      height,
+      page: this.getMainPage()
+    });
+    this.paintAllButton();
   }
 
   paintGameBoard({ xCount, yCount, mine, boardSetting }) {
@@ -689,6 +981,9 @@ class Canvas {
   paintGamePage(stageInfo) {
     this.page = 'game';
     this.gameInfo.stage++;
+    if (this.mode === 'CHALLENGE') {
+      this.gameInfo.life = 0;
+    }
     this.clearPage();
     this.clearTimer();
     this.clearElement();
@@ -701,6 +996,7 @@ class Canvas {
     const { stage, life, score, item1, item3, item2 } = this.gameInfo;
     const { bottomBarHeight, bottomCenterY, remainingMine } = this.board;
     const { time } = this.board.boardSetting;
+    const { movement } = this.board.me;
     const [ minute, second ] = [ Math.floor(time/60), time%60 ];
     const [ width, height ] = [ this.width/2, bottomBarHeight ];
     let mine = 0;
@@ -716,44 +1012,78 @@ class Canvas {
     this.fillRect(background, true);
 
     this.paintDivisionLine(background);
+    
+    if (this.mode === 'CLASSIC') {
+      const bottomValues = [
+        `${stage}`,
+        `${score}`,
+        `${life}`,
+        `${remainingMine}/${mine}`,
+        `${minute}:${second<10 ? '0'+second : second}`,
+        `${item1}개`,
+        `${item2}개`,
+        `${item3}개`
+      ];
 
-    const bottomValues = [
-      `${stage}`,
-      `${score}`,
-      `${life}`,
-      `${remainingMine}/${mine}`,
-      `${minute}:${second<10 ? '0'+second : second}`,
-      `${item1}개`,
-      `${item2}개`,
-      `${item3}개`
-    ];
+      const fontSize = bottomBarHeight/4;
+      const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
+      bottomValues.forEach((value, idx) => {
+        const top = new Rect(this.CENTER + width*(idx*2-7)/16, topY);
+        top.setTextInfo(TEXT[`bottomBar0${idx+1}`], fontSize);
+        this.fillText(top);
 
-    const fontSize = bottomBarHeight/4;
-    const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
-    bottomValues.forEach((value, idx) => {
-      const top = new Rect(this.CENTER + width*(idx*2-7)/16, topY);
-      top.setTextInfo(TEXT[`bottomBar0${idx+1}`], fontSize);
-      this.fillText(top);
+        let textColor = BLACK;
+        if ((idx === 2 && life === 0) || (idx === 4 && time < 30)) {
+          textColor = TOMATO;
+        }
+        const bottom = new Rect(this.CENTER + width*(idx*2-7)/16, bottomY);
+        bottom.setTextInfo(value, fontSize, textColor);
+        this.fillText(bottom);
+      });
+    } else if (this.mode === 'CHALLENGE') {
+      const bottomValues = [
+        `${remainingMine}/${mine}`,
+        `${minute}:${second<10 ? '0'+second : second}`,
+        `${movement}회`,
+      ];
 
-      let textColor = BLACK;
-      if ((idx === 2 && life === 0) || (idx === 4 && time < 30)) {
-        textColor = TOMATO;
-      }
-      const bottom = new Rect(this.CENTER + width*(idx*2-7)/16, bottomY);
-      bottom.setTextInfo(value, fontSize, textColor);
-      this.fillText(bottom);
-    });
+      const fontSize = bottomBarHeight/4;
+      const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
+      bottomValues.forEach((value, idx) => {
+        const top = new Rect(this.CENTER + width*(idx-1)/3, topY);
+        top.setTextInfo(TEXT[`bottomBarCh0${idx+1}`], fontSize);
+        this.fillText(top);
+
+        let textColor = BLACK;
+        if (idx === 1 && time < 30) {
+          textColor = TOMATO;
+        }
+        const bottom = new Rect(this.CENTER + width*(idx-1)/3, bottomY);
+        bottom.setTextInfo(value, fontSize, textColor);
+        this.fillText(bottom);
+      });
+    }
   }
 
   paintDivisionLine(box) {
     const x = box.contextInfo.x - box.width / 2;
     const y = box.contextInfo.y;
-    for (let i=0; i<7; i++) {
-      const line = new Rect(x + box.width*(i+1)/8, y);
-      line.setFillInfo(0, box.height*3/4);
-      line.setStrokeInfo(LIGHTGRAY, 3);
-      this.strokeRect(line);
+    if (this.mode === 'CLASSIC') {
+      for (let i=0; i<7; i++) {
+        const line = new Rect(x + box.width*(i+1)/8, y);
+        line.setFillInfo(0, box.height*3/4);
+        line.setStrokeInfo(LIGHTGRAY, 3);
+        this.strokeRect(line);
+      }
+    } else if (this.mode === 'CHALLENGE') {
+      for (let i=0; i<2; i++) {
+        const line = new Rect(x + box.width*(i+1)/3, y);
+        line.setFillInfo(0, box.height*3/4);
+        line.setStrokeInfo(LIGHTGRAY, 3);
+        this.strokeRect(line);
+      }
     }
+    
   }
 
   setTimer() {
@@ -769,7 +1099,11 @@ class Canvas {
       this.paintBottomBar();
     } else {
       clearInterval(this.gameTimer);
-      this.showGameResult();
+      if (this.mode === 'CLASSIC') {
+        this.showGameResult();
+      } else if (this.mode === 'CHALLENGE') {
+        this.showChallengeFail();
+      }
     }
   }
 
@@ -829,7 +1163,7 @@ class Canvas {
     this.boxDropTimer = setInterval(dropBox, 4);
   }
 
-  showGameResult() {
+  showGameResult(isClear = false) {
     this.initPage('gameResult');
     const { stage, score } = this.gameInfo;
     const { $title, $stage, $score, $rank, $back } = this.$gameResult;
@@ -839,7 +1173,13 @@ class Canvas {
     this.$gameResult.width = this.board.maxWidth;
     this.$gameResult.height = this.height;
 
-    $title.innerHTML = stage < 45 ? 'GAME OVER' : '🎉 GAME CLEAR 🎉';
+    if (!isClear) {
+      $title.innerHTML = 'GAME OVER';
+      this.playSound('fail');
+    } else {
+      $title.innerHTML = '🎉 GAME CLEAR 🎉';
+      this.playSound('clear');
+    }
 
     $stage.innerHTML = stage;
     $score.innerHTML = `${score}점`;
@@ -894,8 +1234,7 @@ class Canvas {
       log: this.gameInfo.log
     }
 
-    this.playSound(stage < 45 ? 'fail' : 'clear');
-    this.postLeaderBoard(userInfo);
+    this.postClassicLeaderBoard(userInfo);
     this.canvas.removeEventListener('click', this.getCallback('clickCell'));
   }
 
@@ -905,7 +1244,7 @@ class Canvas {
     const { time } = this.board.boardSetting;
     const { movement, isDead } = this.board.me
     const { stage } = this.gameInfo;
-    const { $title, $cellCount, $time, $moveOpt, $item, $perfectClear, $totalScore } = this.$stageResult;
+    const { $title, $cellCount, $time, $moveOpt, $item, $perfectClear, $totalScore, $footer } = this.$stageResult;
     const cellCount = this.board.cellArr.flat()
     .reduce((count, cell) => {
       if (cell.isEnsured && cell.type !== 'ensuredMine') {
@@ -924,6 +1263,7 @@ class Canvas {
     $title.innerHTML = `STAGE ${stage} 결과`;
     $cellCount.innerHTML = cellCount * CELL_COUNT_SCORE;
     $time.innerHTML = time * REMAINING_TIME_SCORE;
+    $footer.innerHTML = 'F를 누르면 다음 스테이지로 이동합니다.';
   
     let movementRatio = 1;
     if (stage > 5) {
@@ -988,8 +1328,8 @@ class Canvas {
     $totalScore.innerHTML = this.gameInfo.tempScore;
     
     this.playSound('clear');
-    this.saveLog(cellCount, movement, isItemUsed, isDead, isAllEnsured);
-    this.sendLogToServer();
+    this.saveClassicLog(cellCount, movement, isItemUsed, isDead, isAllEnsured);
+    this.sendClassicLogToServer();
     this.$stageResult.show();
     this.elementDropEffect(this.$stageResult);
   }
@@ -1085,7 +1425,7 @@ class Canvas {
 
   showLeaderBoard() {
     this.initPage('leaderboard');
-    const { $list, $footer } = this.$leaderboard;
+    const { $list, $footer, $mode01, $mode02, $classic, $challenge } = this.$leaderboard;
 
     this.$leaderboard.backgroundColor = WHITE_ALPHA;
     this.$leaderboard.font = this.FONT_SIZE;
@@ -1095,9 +1435,20 @@ class Canvas {
     $list.font = this.FONT_SIZE/2;
     $list.fontWeight = 500;
     $footer.font = this.FONT_SIZE/2;
+    $footer.fontWeight = 500;
+    $mode01.font = this.FONT_SIZE/2;
+    $mode01.fontWeight = 500;
+    $mode01.width = 587;
+    $mode02.font = this.FONT_SIZE/2;
+    $mode02.fontWeight = 500;
+    $mode02.width = 587;
 
     this.leaderboardInfo.page = 1;
-    this.setLeaderboard();
+    if ($classic.elem.checked) {
+      this.setClassicLeaderboard();
+    } else if ($challenge.elem.checked) {
+      this.setChallengeLeaderboard();
+    }
   }
 
   showUpdateLog() {
@@ -1113,6 +1464,123 @@ class Canvas {
 
     this.setUpdateLog();
     this.$updateLog.show();
+  }
+
+  showChallengeMode() {
+    this.initPage('challenge');
+    const { $footer } = this.$challenge;
+
+    this.$challenge.backgroundColor = WHITE_ALPHA;
+    this.$challenge.font = this.FONT_SIZE;
+    this.$challenge.width = this.width * BOARD_WIDTH_RATIO;
+    this.$challenge.height = this.height;
+
+    $footer.font = this.FONT_SIZE/2;
+
+    this.setChallengeModeList();
+    this.$challenge.show();
+  }
+
+  showChallengeResult() {
+    this.initPage('challengeResult');
+    const { accessable, shortest } = this.board;
+    const { time } = this.board.boardSetting;
+    const { movement } = this.board.me
+    const { $title, $cellCount, $time, $moveOpt, $perfectClear, $totalScore, $footer } = this.$stageResult;
+    const cellCount = this.board.cellArr.flat()
+    .reduce((count, cell) => {
+      if (cell.isEnsured && cell.type !== 'ensuredMine') {
+        return count + 1;
+      } else {
+        return count;
+      }
+    }, 0);
+    const isAllEnsured = accessable.every(cell => cell.isEnsured);
+  
+    this.$stageResult.backgroundColor = WHITE_ALPHA;
+    this.$stageResult.font = this.FONT_SIZE;
+    this.$stageResult.width = this.board.maxWidth;
+    this.$stageResult.height = this.height;
+
+    $title.innerHTML = `🎉 도전 모드 클리어 🎉`;
+    $cellCount.innerHTML = cellCount * CELL_COUNT_SCORE;
+    $time.innerHTML = time * REMAINING_TIME_SCORE;
+    $footer.innerHTML = 'F를 누르면 메인 화면으로 이동합니다.';
+  
+    let movementRatio = 1;
+    let rank;
+    if (movement <= shortest + (accessable.length-shortest)*1.2) {
+      movementRatio = MOVEMENT_PERFECT_RATIO;
+      rank = `Perfect +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = YELLOWGREEN;
+    } else if (movement <= shortest + (accessable.length-shortest)*1.5) {
+      movementRatio = MOVEMENT_EXCELLENT_RATIO;
+      rank = `Excellent +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = YELLOWGREEN;
+    } else if (movement <= shortest + (accessable.length-shortest)*2) {
+      movementRatio = MOVEMENT_GREAT_RATIO;
+      rank = `Great +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = NAVY;
+    } else if (movement <= shortest + (accessable.length-shortest)*2.5) {
+      movementRatio = MOVEMENT_GOOD_RATIO;
+      rank = `Good +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = NAVY;
+    } else {
+      movementRatio = 1;
+      rank = `Bad`;
+      $moveOpt.color = BLACK;
+    }
+    $moveOpt.innerHTML = rank;
+    this.$stageResult.$movementDiv.show();
+  
+    let perfectClearRatio = 1;
+    if (isAllEnsured) {
+      perfectClearRatio = PERFECT_CLEAR_RATIO;
+      $perfectClear.color = YELLOWGREEN;
+      $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
+    } else {
+      $perfectClear.color = BLACK;
+      $perfectClear.innerHTML = 'FAIL';
+    }
+    this.$stageResult.$perfectClearDiv.show();
+  
+    this.gameInfo.tempScore = Math.floor(
+      (cellCount * CELL_COUNT_SCORE + time * REMAINING_TIME_SCORE)
+      * movementRatio
+      * perfectClearRatio
+    );
+    $totalScore.innerHTML = this.gameInfo.tempScore;
+    
+    this.playSound('clear');
+    this.saveChallengeLog(cellCount, movement, isAllEnsured);
+    this.sendChallengeLogToServer();
+    this.$stageResult.show();
+    this.elementDropEffect(this.$stageResult);
+
+    const userInfo = {
+      name: this.gameInfo.name,
+      score: this.gameInfo.tempScore,
+      time: this.board.boardSetting.time,
+      cellCount,
+      log: this.gameInfo.log
+    }
+
+    this.postChallengeLeaderBoard(userInfo);
+    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
+  }
+
+  showChallengeFail() {
+    this.initPage('challengeFail');
+
+    this.$challengeFail.backgroundColor = WHITE_ALPHA;
+    this.$challengeFail.font = this.FONT_SIZE;
+    this.$challengeFail.width = this.board.maxWidth;
+    this.$challengeFail.height = this.height;
+
+    this.playSound('fail');
+    this.sendChallengeFailLogToServer();
+    this.$challengeFail.show();
+    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
   }
 
   showShape() {
@@ -1260,7 +1728,6 @@ class Canvas {
   }
 
   keydownCallback({ keyCode }) {
-
     if (this.page === 'game' || this.page === 'tutorial') {
       if (!this.board) return;
       const { me, xCount, yCount } = this.board;
@@ -1332,19 +1799,78 @@ class Canvas {
       } else if (keyCode === 65) { // A
         if (page > 1) {
           this.leaderboardInfo.page--;
-          this.setLeaderboard();
+          if (this.$leaderboard.$classic.elem.checked) {
+            this.setClassicLeaderboard();
+          } else if (this.$leaderboard.$challenge.elem.checked) {
+            this.setChallengeLeaderboard();
+          }
         }
       } else if (keyCode === 68) { // D
         if (lastPage >= page) {
           this.leaderboardInfo.page++;
-          this.setLeaderboard();
+          if (this.$leaderboard.$classic.elem.checked) {
+            this.setClassicLeaderboard();
+          } else if (this.$leaderboard.$challenge.elem.checked) {
+            this.setChallengeLeaderboard();
+          }
         }
+      }
+    } else if (this.page === 'updateLog') {
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.$updateLog.hide();
+        this.$updateLog.$article.clear();
+      }
+    } else if (this.page === 'challenge') {
+      if (keyCode === 70) { // F
+        this.page = 'selectGame';
+        this.$challenge.hide();
+        this.$challenge.$article.clear();
+      }
+    } else if (this.page === 'challengeResult') {
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.clearPage();
+        this.clearElement();
+        this.clearTimer();
+        this.initValues();
+        this.canvas.addEventListener('click', this.getCallback('clickButton'));
+        this.paintMainPage();
+      }
+    } else if (this.page === 'challengeFail') {
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.clearPage();
+        this.clearElement();
+        this.clearTimer();
+        this.initValues();
+        this.canvas.addEventListener('click', this.getCallback('clickButton'));
+        this.paintMainPage();
+      } else if (keyCode === 82) { // R
+        this.clearPage();
+        this.clearElement();
+        this.clearTimer();
+        const mode = this.mode;
+        this.initValues();
+        this.getGamePage(mode).bind(this)();
+      }
+    }
+  }
+
+  changeCallback() {
+    if (this.page === 'leaderboard') {
+      this.leaderboardInfo.page = 1;
+      this.leaderboardInfo.record = [];
+      if (this.$leaderboard.$classic.elem.checked) {
+        this.setClassicLeaderboard();
+      } else if (this.$leaderboard.$challenge.elem.checked) {
+        this.setChallengeLeaderboard();
       }
     }
   }
 
   paintPage() {
-    const procedure = GAME_PROCEDURE[this.gameInfo.procedure++];
+    const procedure = MODE[this.mode][this.gameInfo.procedure++];
     if (procedure) {
       const { type } = procedure;
       if (type === 'game') {
@@ -1355,7 +1881,11 @@ class Canvas {
         this.showInputId();
       }
     } else {
-      this.showGameResult();
+      if (this.mode === 'CLASSIC') {
+        this.showGameResult(true);
+      } else if (this.mode === 'CHALLENGE') {
+        this.showChallengeResult();
+      }
     }
   }
 }
@@ -1367,6 +1897,7 @@ class ContextInfo {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.fontWeight = 700;
   }
 
   get x1() {
@@ -1386,7 +1917,7 @@ class ContextInfo {
   }
 
   get font() {
-    return `bold ${this.fontSize}px sans-serif`;
+    return `${this.fontWeight} ${this.fontSize}px sans-serif`;
   }
 
   isCollision(x, y) {
@@ -1554,6 +2085,14 @@ class Rect {
 
   get textColor() {
     return this.contextInfo.textColor;
+  }
+
+  set fontWeight(value) {
+    this.contextInfo.fontWeight = value;
+  }
+
+  get fontWeight() {
+    return this.contextInfo.fontWeight;
   }
 }
 
@@ -1777,7 +2316,11 @@ class Me extends Rect {
         alert(TEXT.destination);
         this.canvas.paintMainPage();
       } else if (this.canvas.page === 'game') {
-        this.canvas.showStageResult();
+        if (this.canvas.mode === 'CLASSIC') {
+          this.canvas.showStageResult();
+        } else if (this.canvas.mode === 'CHALLENGE') {
+          this.canvas.showChallengeResult();
+        }
       }
     }
   }
@@ -1845,6 +2388,12 @@ class Board {
       [1, 0], [1, 1], [1, 2],
       [2, 0], [2, 1], [2, 2]
     ].forEach(coord => this.ensureCell(...coord));
+    if (this.canvas.mode === 'CHALLENGE') {
+      [
+        [0, 3], [1, 3], [2, 3],
+        [3, 0], [3, 1], [3, 2], [3, 3]
+      ].forEach(coord => this.ensureCell(...coord));
+    }
     const destCell = this.cellArr[this.yCount-1][this.xCount-1];
     destCell.type = 'destination';
     this.ensureCell(destCell.x, destCell.y);

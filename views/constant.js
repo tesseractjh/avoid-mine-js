@@ -2,6 +2,7 @@
 const BLACK                = 'rgb(  0,   0,   0)';
 const WHITE                = 'rgb(255, 255, 255)';
 const CHARCOAL             = 'rgb( 70,  70,  70)';
+const INVERTED_CHARCOAL    = 'rgb(185, 185, 185)';
 const LIGHTGRAY            = 'rgb(220, 220, 220)';
 const YELLOWGREEN          = 'rgb(154, 205,  50)';
 const INVERTED_YELLOWGREEN = 'rgb(101,  50, 205)';
@@ -96,10 +97,14 @@ const randRange = (start, end) => {
 
 const TEXT = {
 	mainTitle: '지　뢰　피　하　기',
+  selectGameTitle: '게임 선택',
   mainButton01: '게임설명',
   mainButton02: '게임시작',
   mainButton03: '순위표',
   mainButton04: '패치노트',
+  modeClassic: '클래식 모드',
+  modeChallenge: '도전 모드',
+  backToMainPage: '메인 메뉴',
   tutorialButton01: '이전',
   tutorialButton02: '다음',
   backButton: '메인 화면으로 돌아가기',
@@ -119,6 +124,9 @@ const TEXT = {
   bottomBar06: '🔍[1]',
   bottomBar07: '🔭[2]',
   bottomBar08: '📡[3]',
+  bottomBarCh01: '💣',
+  bottomBarCh02: '⏱',
+  bottomBarCh03: '🏃',
   destination: '도착! 메인화면으로 이동합니다.',
   ensuredMine: '💣',
   msgBox01: '지뢰를 밟았습니다!',
@@ -210,6 +218,36 @@ const BUTTON = {
     hover: {
       fillColor: INVERTED_BLUE,
       textColor: WHITE
+    }
+  },
+
+  modeClassic: {
+    text: TEXT.modeClassic,
+    fillColor: YELLOWGREEN,
+    hover: {
+      fillColor: INVERTED_YELLOWGREEN,
+      textColor: WHITE
+    },
+    caption: '스테이지를 하나씩 클리어하며 지뢰피하기 룰을 익힐 수 있는 기본 모드'
+  },
+
+  modeChallenge: {
+    text: TEXT.modeChallenge,
+    fillColor: TOMATO,
+    hover: {
+      fillColor: INVERTED_TOMATO,
+      textColor: WHITE
+    },
+    caption: '아이템 없이 단 하나의 목숨으로 개별 미션에 도전하는 모드'
+  },
+
+  backToMainPage: {
+    text: TEXT.backToMainPage,
+    textColor: WHITE,
+    fillColor: CHARCOAL,
+    hover: {
+      fillColor: INVERTED_CHARCOAL,
+      textColor: BLACK
     }
   },
 
@@ -531,7 +569,7 @@ const TUTORIAL = {
   }
 }
 
-const GAME_PROCEDURE = [
+const MODE_CLASSIC = [
 
   {
     type: 'input'
@@ -1659,10 +1697,60 @@ const GAME_PROCEDURE = [
 	},
 ];
 
+const CHALLENGE_ARR = [
+
+  {
+    name: '초급 01',
+    width: 8,
+    height: 8,
+    mine: 20,
+    time: 90,
+    colorType: [],
+    textType: [],
+    condition: '',
+    difficulty: 1
+  },
+
+  //{
+  //  name: '초급 02',
+  //  width: 9,
+  //  height: 9,
+  //  mine: 25,
+  //  time: 90,
+  //  colorType: [ 'red', 'orange' ],
+  //  textType: [],
+  //  condition: '클래식 모드 STAGE 15',
+  //  difficulty: 1
+  //}
+
+]
+
+const MODE_CHALLENGE = [
+  {
+    type: 'input'
+  },
+
+  {
+    type: 'game',
+    xCount: 8,
+    yCount: 8,
+    mine: 20,
+    boardSetting: {
+      time: 90
+    }
+  }
+];
+
+const MODE = {
+  CLASSIC: MODE_CLASSIC,
+  CHALLENGE: MODE_CHALLENGE
+};
+
 [
   colorMatch, RAINBOW,
   OFFSET_X, OFFSET_Y, 
   OFFSET5_X, OFFSET5_Y, 
   TEXT, BUTTON, TUTORIAL, 
-  GAME_PROCEDURE
+  MODE_CLASSIC,
+  MODE
 ].forEach(obj => Object.freeze(obj));

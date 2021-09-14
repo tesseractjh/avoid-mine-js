@@ -60,7 +60,7 @@
                 <div class="space">─</div>
                 <div id="total-score" class="margin stage-result-right"></div>
             </div>
-            <div id="stage-result-footer">F를 누르면 다음 스테이지로 이동합니다.</div>
+            <div id="stage-result-footer"></div>
         </div>
         <div id="information" class="elem flex-column hidden align-center">
             <div id="information-title" class="title margin"></div>
@@ -83,18 +83,44 @@
         </div>
         <div id="leaderboard" class="elem flex-column hidden align-center">
             <div id="leaderboard-title" class="margin">순위표</div>
-            <div id="leaderboard-list" class="grid">
-                <div class="border-bottom">순위</div>
-                <div class="border-bottom">이름</div>
-                <div class="border-bottom">점수</div>
-                <div class="border-bottom">랭크</div>
-                <div class="border-bottom">스테이지</div>
+            <div id="leaderboard-check" class="flex">
+                <div>
+                    <label class="box-radio-input">
+                        <input id="classic-check" type="radio" name="cp_item" checked="checked">
+                        <span id="leaderboard-mode01">클래식 모드</span>
+                    </label>
+                </div>
+                <div>
+                    <label class="box-radio-input">
+                        <input id="challenge-check" type="radio" name="cp_item">
+                        <span id="leaderboard-mode02">도전 모드</span>
+                    </label>
+                </div>
             </div>
-            <div id="leaderboard-footer" class="margin2">A, D를 눌러 순위표 목록을 이동할 수 있습니다.<br>F를 누르면 메인 화면으로 돌아갑니다.<br><br>비속어나 부적절한 표현의 이름을 사용한 기록은 관리자에 의해 삭제될 수 있습니다.</div>
+            <div id="leaderboard-list" class="grid"></div>
+            <div id="leaderboard-footer" class="margin2">A, D를 눌러 순위표 목록을 이동할 수 있습니다.<br>F를 누르면 메인 화면으로 돌아갑니다.<br>비속어나 부적절한 표현의 이름을 사용한 기록은 관리자에 의해 삭제될 수 있습니다.</div>
+        </div>
+        <div id="update-log" class="elem flex-column hidden align-center">
+            <div id="update-log-title" class="title margin">🛠 패치 노트 🛠</div>
+            <div id ="update-log-article" class="align-left overflow border-bottom3"></div>
+            <div id="update-log-footer" class="margin">F를 누르면 창을 닫습니다.</div>
+        </div>
+        <div id="challenge" class="elem flex-column hidden align-center">
+            <div id="challenge-title" class="title margin">맵 선택</div>
+            <div id="challenge-article" class="grid2 overflow border-bottom3"></div>
+            <div id="challenge-footer" class="margin">F를 누르면 창을 닫습니다.</div>
+        </div>
+        <div id="challenge-fail" class="elem flex-column hidden align-center">
+            <div id="challenge-fail-title" class="title margin">도전 실패</div>
+            <div id="challenge-fail-article" class="margin2">
+                F키를 누르면 메인 화면으로 돌아갑니다.<br>
+                R키를 누르면 재도전합니다.
+            </div>
         </div>
         <canvas id="canvas" width="1920", height="920"></canvas>
     </div>
     <script src="/dist/constant.js"></script>
+    <script src="/updateLog.js"></script>
     <script src="/dist/script.js"></script>
 </body>
 </html>

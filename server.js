@@ -6,6 +6,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const User = require('./models/User');
 const Log = require('./models/Log');
+const ChallengeUser = require('./models/ChallengeUser');
+const ChallengeLog = require('./models/ChallengeLog');
 
 app.use(cors());
 app.use(express.json());
@@ -37,7 +39,7 @@ const binSearch = (arr, n) => {
   return low + 1;
 };
 
-app.post('/save-record', (req, res) => {
+app.post('/save/classic', (req, res) => {
   const { name, score, rank, stage, log } = req.body;
   const user = new User();
   const curLog = new Log();
@@ -71,7 +73,41 @@ app.post('/save-record', (req, res) => {
   }
 });
 
-app.get('/leaderboard/:page', (req, res) => {
+app.post('/save/challenge', (req, res) => {
+  const { name, score, time, cellCount, log } = req.body;
+  const user = new ChallengeUser();
+  const curLog = new ChallengeLog();
+  user.name = name;
+  user.score = score;
+  user.time = time;
+  user.cellCount = cellCount;
+  curLog.log = log;
+
+  if (user.score <= 0) {
+    res.send('fail');
+  } else {
+    ChallengeUser.find({}, 'id').sort({ id: -1 }).limit(1)
+      .then(arr => {
+        const lastUser = arr[0];
+        user.id = lastUser ? lastUser.id + 1 : 1;
+        curLog.id = lastUser ? lastUser.id + 1 : 1;
+      })
+      .then(() => ChallengeUser.find({}, 'score').sort({ score: -1 }))
+      .then(users => binSearch(users.map(u => u.score).sort((a, b) => b - a), score))
+      .then(ranking => {
+        user.ranking = ranking;
+        return ranking;
+      })
+      .then(ranking => ChallengeUser.updateMany({ ranking: { $gte: ranking }}, { $inc: { ranking: 1} }))
+      .then(() => user.save())
+      .then(() => curLog.save())
+      .then(() => res.send('success'))
+      .then(() => console.log(`name: ${name}, score: ${score}, time:${time}, cell:${cellCount}`))
+      .catch(console.error);
+  }
+});
+
+app.get('/leaderboard/classic/:page', (req, res) => {
   const { page } = req.params;
   const end = (+page + 1) * 100;
   User.find({ ranking: { $gte: 1, $lte: end } }, '-_id ranking name score rank stage')
@@ -80,9 +116,30 @@ app.get('/leaderboard/:page', (req, res) => {
     .catch(console.error);
 });
 
-app.post('/log', (req, res) => {
+app.get('/leaderboard/challenge/:page', (req, res) => {
+  const { page } = req.params;
+  const end = (+page + 1) * 100;
+  ChallengeUser.find({ ranking: { $gte: 1, $lte: end } }, '-_id ranking name score time cellCount')
+    .sort({ ranking: 1 }).exec()
+    .then(users => res.json(users))
+    .catch(console.error);
+});
+
+app.post('/log/classic', (req, res) => {
   const { name, stage, tempScore, score } = req.body;
   console.log(`${name}님이 ${stage}스테이지를 ${tempScore}점으로 클리어! 현재 총점: ${score}점`);
+  res.send('received');
+});
+
+app.post('/log/challenge/fail', (req, res) => {
+  const { name, modeId } = req.body;
+  console.log(`${name}님이 도전모드 ${modeId}을(를) 실패함!`);
+  res.send('received');
+});
+
+app.post('/log/challenge', (req, res) => {
+  const { name, tempScore, modeId } = req.body;
+  console.log(`${name}님이 도전모드 ${modeId}를 ${tempScore}점으로 클리어!`);
   res.send('received');
 });
 

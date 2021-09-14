@@ -4,6 +4,10 @@ body {
     background: rgb(90, 96, 116);
 }
 
+li {
+    list-style-position: inside;
+}
+
 .elem {
     position: absolute;
     top: 0%;
@@ -57,6 +61,14 @@ body {
     text-align: center;
 }
 
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
 .space {
     width: 10%;
     text-align: center;
@@ -87,11 +99,21 @@ body {
     height: 100%;
 }
 
-.grid {
+.classic-grid {
     display: grid;
     grid-template-columns: 2fr 7fr 5fr 3fr 2fr;
-    grid-template-rows: repeat(4, 1fr);
     row-gap: 10px;  
+}
+
+.challenge-grid {
+    display: grid;
+    grid-template-columns: 2fr 7fr 5fr 3fr 2fr;
+    row-gap: 10px;  
+}
+
+.grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .border-bottom {
@@ -100,6 +122,87 @@ body {
 
 .border-bottom2 {
     border-bottom: 1px solid lightgray;
+}
+
+.border-bottom3 {
+    border-bottom: 3px dotted gray;
+}
+
+.overflow {
+    overflow: auto;
+}
+
+.inline-block{
+    display: inline-block;
+}
+
+.h1 {
+    font-size: 60px;
+    margin: 30px 0;
+}
+
+.h2 {
+    font-size: 45px;
+    margin: 22px 0;
+}
+
+.h3 {
+    font-size: 25px;
+    margin: 13px 0;
+}
+
+.h4 {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.challenge-mode {
+    padding: 15px;
+    border: 3px solid black;
+    margin: 5px;
+    border-radius: 5%;
+    font-size: 25px;
+    text-align: left;
+    user-select: none;
+    cursor: pointer;
+}
+
+.challenge-mode:hover {
+    background-color: mistyrose;
+}
+
+.square {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+    border-right: none;
+}
+
+.square-purple {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+}
+
+.box-radio-input input[type="radio"] {
+    display:none;
+}
+  
+.box-radio-input input[type="radio"] + span{
+    display:block;
+    background:none; 
+    text-align:center;
+    height:50px;
+    font-weight:500;
+    cursor:pointer;
+}
+  
+.box-radio-input input[type="radio"]:checked + span {
+    border:1px solid tomato;
+    background:tomato;
+    color:white;
 }
 
 #msg-box {
@@ -117,7 +220,7 @@ body {
     font-size: 20px;
 }
 
-#information, #input-id, #leaderboard {
+#information, #input-id, #leaderboard, #update-log, #challenge, #challenge-fail {
     top: 50%;
     opacity: 1;
 }
