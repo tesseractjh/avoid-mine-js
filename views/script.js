@@ -770,7 +770,7 @@ class Canvas {
     this.$gameResult.width = this.board.maxWidth;
     this.$gameResult.height = this.height;
 
-    $title.innerHTML = stage < 45 ? 'GAME OVER' : 'GAME CLEAR!!';
+    $title.innerHTML = stage < 45 ? 'GAME OVER' : '🎉 GAME CLEAR 🎉';
 
     $stage.innerHTML = stage;
     $score.innerHTML = `${score}점`;
