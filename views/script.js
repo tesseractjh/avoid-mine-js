@@ -145,16 +145,13 @@ class Canvas {
     this.ctx.closePath();
   }
 
-  initList() {
+  appendToList(users) {
     this.$leaderboard.$list.innerHTML = 
     `<div class="border-bottom">순위</div>
     <div class="border-bottom">이름</div>
     <div class="border-bottom">점수</div>
     <div class="border-bottom">랭크</div>
     <div class="border-bottom">스테이지</div>`;
-  }
-
-  appendToList(users) {
     const $fragment = document.createDocumentFragment();
     users.forEach(user => this.createUserInfo($fragment, user));
     this.$leaderboard.$list.elem.appendChild($fragment);
@@ -165,26 +162,32 @@ class Canvas {
     const { page, record } = this.leaderboardInfo;
 
     if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
-      this.initList();
       this.appendToList(record.slice((page - 1) * 10, page * 10));
       this.$leaderboard.show();
-    } else if (record.length % 10 === 0) { // GET요청
+      this.page = 'leaderboard';
+    } else { // GET요청
       fetch(`/leaderboard/${Math.floor(page / 10)}`)
       .then(res => res.json())
       .then(users => {
-        if (users.length === 0 || (record.length % 100 === users.length)) {
+        if (record.length === users.length) {
           this.leaderboardInfo.page--;
           return;
         }
-        record.push(...users);
-        this.initList();
-        this.appendToList(record.slice((page-1)*10, page*10));
-        this.leaderboardInfo.lastPage = Math.floor((record.length - 1) / 10) + 1;
+        this.leaderboardInfo.record = users;
+        const curList = users.slice((page - 1) * 10, page * 10);
+        if (curList.length > 0) {
+          this.appendToList(curList);
+        } else {
+          const curPage = --this.leaderboardInfo.page;
+          this.appendToList(users.slice((curPage - 1) * 10, curPage * 10));
+        }
+        
+        this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
         this.$leaderboard.show();
       })
+      .then(() => this.page = 'leaderboard')
       .catch(console.error);
     }
-    this.page = 'leaderboard';
   }
 
   postLeaderBoard(userInfo) {
@@ -1227,7 +1230,7 @@ class Canvas {
         this.paintPage();
       }
     } else if (this.page === 'leaderboard') {
-      const { page, lastPage, record } = this.leaderboardInfo;
+      const { page, lastPage } = this.leaderboardInfo;
       if (keyCode === 70) { // F
         this.page = 'main';
         this.leaderboardInfo.record = [];
@@ -1238,7 +1241,7 @@ class Canvas {
           this.setLeaderboard();
         }
       } else if (keyCode === 68) { // D
-        if (lastPage > page || (lastPage === page && record.length % 10 === 0)) {
+        if (lastPage >= page) {
           this.leaderboardInfo.page++;
           this.setLeaderboard();
         }

@@ -73,8 +73,8 @@ app.post('/save-record', (req, res) => {
 
 app.get('/leaderboard/:page', (req, res) => {
   const { page } = req.params;
-  const [ start, end ] = [ +page * 100 + 1, (+page + 1) * 100 ];
-  User.find({ ranking: { $gte: start, $lte: end } }, '-_id ranking name score rank stage')
+  const end = (+page + 1) * 100;
+  User.find({ ranking: { $gte: 1, $lte: end } }, '-_id ranking name score rank stage')
     .sort({ ranking: 1 }).exec()
     .then(users => res.json(users))
     .catch(console.error);
