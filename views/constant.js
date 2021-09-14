@@ -148,9 +148,9 @@ const TEXT = {
   stage10Bonus01: 'STAGE 10 클리어 보너스',
   stage10Bonus02: '💖 +3<br>🔍[1] +10<br>🔭[2] +5<br>📡[3] +3',
   stage20Bonus01: 'STAGE 20 클리어 보너스',
-  stage20Bonus02: '💖 +3<br>🔍[1] +7<br>🔭[2] +3<br>📡[3] +2',
+  stage20Bonus02: '💖 +3<br>🔍[1] +7<br>🔭[2] +4<br>📡[3] +3',
   stage30Bonus01: 'STAGE 30 클리어 보너스',
-  stage30Bonus02: '💖 +2<br>🔍[1] +5<br>🔭[2] +2<br>📡[3] +1',
+  stage30Bonus02: '💖 +2<br>🔍[1] +5<br>🔭[2] +3<br>📡[3] +2',
   stage40Bonus01: 'STAGE 40 클리어 보너스',
   stage40Bonus02: '💖 +1<br>🔍[1] +3<br>🔭[2] +1<br>📡[3] +1',
   stageBonusHeader: 'F를 눌러 보너스를 받으세요!',
@@ -932,9 +932,6 @@ const GAME_PROCEDURE = [
     arrow: true,
 	  header: TEXT.showShape02,
     footer: TEXT.pressH,
-    bonus: {
-      item3: 3
-    }
   },
 
   // STAGE 15
@@ -1055,8 +1052,8 @@ const GAME_PROCEDURE = [
     bonus: {
       life: 3, 
       item1: 7, 
-      item2: 3,
-      item3: 2
+      item2: 4,
+      item3: 3
     }
   },
 
@@ -1258,8 +1255,8 @@ const GAME_PROCEDURE = [
     bonus: {
       life: 2, 
       item1: 5, 
-      item2: 2,
-	  item3: 1
+      item2: 3,
+	    item3: 2
     }
   },
 
