@@ -230,7 +230,7 @@ class Canvas {
           log.forEach(description => {
             const li = document.createElement('li');
             const span = document.createElement('span');
-            this.setText(span, title);
+            this.setText(span, description);
             span.classList.add('h4');
             li.appendChild(span);
             li.classList.add('h4');
