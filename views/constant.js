@@ -14,6 +14,7 @@ const ORANGE               = 'rgb(255, 128,   0)';
 const YELLOW               = 'rgb(255, 255,   0)';
 const GREEN                = 'rgb(  0, 255,   0)';
 const BLUE                 = 'rgb( 51, 153, 255)';
+const INVERTED_BLUE        = 'rgb(204, 102,   0)';
 const NAVY                 = 'rgb(  0,   0, 128)';
 const PURPLE               = 'rgb(127,   0, 255)';
 
@@ -98,6 +99,7 @@ const TEXT = {
   mainButton01: '게임설명',
   mainButton02: '게임시작',
   mainButton03: '순위표',
+  mainButton04: '패치노트',
   tutorialButton01: '이전',
   tutorialButton02: '다음',
   backButton: '메인 화면으로 돌아가기',
@@ -198,6 +200,15 @@ const BUTTON = {
     fillColor: SKYBLUE,
     hover: {
       fillColor: INVERTED_SKYBLUE,
+      textColor: WHITE
+    }
+  },
+
+  updateLog: {
+    text: TEXT.mainButton04,
+    fillColor: BLUE,
+    hover: {
+      fillColor: INVERTED_BLUE,
       textColor: WHITE
     }
   },

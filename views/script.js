@@ -62,6 +62,7 @@ class Canvas {
   initElement() {
     this.$container = new Element('canvas-container');
     this.$msgBox = new Element('msg-box');
+
     this.$gameResult = new Element('game-result');
     this.$gameResult.$title = new Element('game-result-title');
     this.$gameResult.$stage = new Element('stage');
@@ -69,6 +70,9 @@ class Canvas {
     this.$gameResult.$rank = new Element('rank');
     this.$gameResult.$space = new Element('space');
     this.$gameResult.$back = new Element('back');
+    this.$gameResult.$back.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
+    this.$gameResult.$back.elem.setAttribute('height', `${this.TITLE_SIZE*3/2}px`);
+
     this.$stageResult = new Element('stage-result');
     this.$stageResult.$title = new Element('stage-result-title');
     this.$stageResult.$cellCount = new Element('cell-count');
@@ -80,6 +84,7 @@ class Canvas {
     this.$stageResult.$perfectClearDiv = new Element('perfect-clear-div');
     this.$stageResult.$perfectClear = new Element('perfect-clear');
     this.$stageResult.$totalScore = new Element('total-score');
+
     this.$information = new Element('information');
     this.$information.$title = new Element('information-title');
     this.$information.$header = new Element('information-header');
@@ -88,21 +93,24 @@ class Canvas {
     this.$information.$arrow = new Element('arrow');
     this.$information.$article = new Element('information-article');
     this.$information.$footer = new Element('information-footer');
+
     this.$inputId = new Element('input-id');
     this.$inputId.$title = new Element('input-id-title');
     this.$inputId.$header = new Element('input-id-header');
     this.$inputId.$input = new Element('input-id-input');
     this.$inputId.$submit = new Element('submit');
+    this.$inputId.$submit.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
+    this.$inputId.$submit.elem.setAttribute('height', `${this.TITLE_SIZE*3}px`);
+
     this.$leaderboard = new Element('leaderboard');
     this.$leaderboard.$title = new Element('leaderboard-title');
     this.$leaderboard.$list = new Element('leaderboard-list');
     this.$leaderboard.$footer = new Element('leaderboard-footer');
 
-    this.$gameResult.$back.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
-    this.$gameResult.$back.elem.setAttribute('height', `${this.TITLE_SIZE*3/2}px`);
-
-    this.$inputId.$submit.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
-    this.$inputId.$submit.elem.setAttribute('height', `${this.TITLE_SIZE*3}px`);
+    this.$updateLog = new Element('update-log');
+    this.$updateLog.$title = new Element('update-log-title');
+    this.$updateLog.$article = new Element('update-log-article');
+    this.$updateLog.$footer = new Element('update-log-footer');
   }
 
   initEventListener() {
@@ -142,6 +150,68 @@ class Canvas {
     this.ctx.lineTo(x2, y2);
     this.ctx.lineTo(x2, y1);
     this.ctx.closePath();
+  }
+
+  setUpdateLog() {
+    const wholeLog = document.createElement('ul');
+
+    [...UPDATE_LOG].reverse().forEach(YM => {
+      const { title, log } = YM;
+      const yearMonthUl = document.createElement('ul');
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      const text = document.createTextNode(title);
+      span.appendChild(text);
+      span.classList.add('h1');
+
+      [...log].reverse().forEach(date => {
+        const { title, log } = date;
+        const dateUl = document.createElement('ul');
+        const li = document.createElement('li');
+        const span = document.createElement('span');
+        const text = document.createTextNode(title);
+        span.appendChild(text);
+        span.classList.add('h2');
+
+        log.forEach(note => {
+          const { title, log } = note;
+          const noteUl = document.createElement('ul');
+          const li = document.createElement('li');
+          const span = document.createElement('span');
+          const text = document.createTextNode(title);
+          span.appendChild(text);
+          span.classList.add('h3');
+
+          log.forEach(description => {
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            const text = document.createTextNode(description);
+            span.appendChild(text);
+            span.classList.add('h4');
+            li.appendChild(span);
+            li.classList.add('h4');
+            noteUl.appendChild(li);
+            noteUl.classList.add('h4');
+          });
+
+          li.appendChild(span);
+          li.appendChild(noteUl);
+          li.classList.add('h3');
+          dateUl.appendChild(li);
+        });
+
+        li.appendChild(span);
+        li.appendChild(dateUl);
+        li.classList.add('h2');
+        yearMonthUl.appendChild(li);
+      });
+
+      li.appendChild(span);
+      li.appendChild(yearMonthUl);
+      li.classList.add('h1');
+      wholeLog.appendChild(li);
+    });
+    this.$updateLog.$article.elem.appendChild(wholeLog);
   }
 
   appendToList(users) {
@@ -242,6 +312,12 @@ class Canvas {
   getLeaderboardPage() {
     return function() {
       this.showLeaderBoard();
+    }
+  }
+
+  getUpdateLogPage() {
+    return function() {
+      this.showUpdateLog();
     }
   }
 
@@ -390,7 +466,7 @@ class Canvas {
   }
 
   paintMainTitle() {
-    const title = new Rect(this.CENTER, this.TITLE_SIZE * 3);
+    const title = new Rect(this.CENTER, this.TITLE_SIZE * 2);
     title.setTextInfo(TEXT.mainTitle, this.TITLE_SIZE);
     this.fillText(title);
   }
@@ -401,7 +477,7 @@ class Canvas {
     ];
     this.createButton(BUTTON.tutorial, {
         x,
-        y: this.TITLE_SIZE * 5,
+        y: this.TITLE_SIZE * 4,
         width,
         height,
         fontSize,
@@ -409,7 +485,7 @@ class Canvas {
     });
     this.createButton(BUTTON.start, {
       x,
-      y: this.TITLE_SIZE * 7,
+      y: this.TITLE_SIZE * 6,
       fontSize,
       width,
       height,
@@ -417,11 +493,19 @@ class Canvas {
     });
     this.createButton(BUTTON.leaderboard, {
       x,
-      y: this.TITLE_SIZE * 9,
+      y: this.TITLE_SIZE * 8,
       fontSize,
       width,
       height,
       page: this.getLeaderboardPage()
+    });
+    this.createButton(BUTTON.updateLog, {
+      x,
+      y: this.TITLE_SIZE * 10,
+      fontSize,
+      width,
+      height,
+      page: this.getUpdateLogPage()
     });
     this.paintAllButton();
   }
@@ -1014,6 +1098,21 @@ class Canvas {
 
     this.leaderboardInfo.page = 1;
     this.setLeaderboard();
+  }
+
+  showUpdateLog() {
+    this.initPage('updateLog');
+    const { $footer } = this.$updateLog;
+
+    this.$updateLog.backgroundColor = WHITE_ALPHA;
+    this.$updateLog.font = this.FONT_SIZE;
+    this.$updateLog.width = this.width * BOARD_WIDTH_RATIO;
+    this.$updateLog.height = this.height;
+
+    $footer.font = this.FONT_SIZE/2;
+
+    this.setUpdateLog();
+    this.$updateLog.show();
   }
 
   showShape() {
