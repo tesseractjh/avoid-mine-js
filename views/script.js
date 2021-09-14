@@ -121,7 +121,6 @@ class Canvas {
       });
   }
 
-  // temp
   sendLogToServer() {
     const { name, stage, tempScore, score } = this.gameInfo;
     const userInfo = {
@@ -906,11 +905,7 @@ class Canvas {
     
     this.playSound('clear');
     this.saveLog(cellCount, movement, isItemUsed, isDead, isAllEnsured);
-
-    // temp
     this.sendLogToServer();
-    // temp
-
     this.$stageResult.show();
     this.elementDropEffect(this.$stageResult);
   }
@@ -2307,3 +2302,4 @@ let curCanvas;
 const mainCanvas = new Canvas(document.getElementById('canvas'));
 curCanvas = mainCanvas;
 curCanvas.paintMainPage();
+curCanvas = null;
