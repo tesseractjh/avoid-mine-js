@@ -44,6 +44,7 @@ class Canvas {
     this.leaderboardInfo = {
       page: 1,
       lastPage: 1,
+      id: 0,
       record: []
     }
   }
@@ -1663,7 +1664,8 @@ class Canvas {
       } else if (keyCode === 68) { // D
         if (lastPage >= page) {
           this.leaderboardInfo.page++;
-          this.setLeaderboard();
+          const id = this.crossMode('id');
+          this.setLeaderboard(id);
         }
       }
     } else if (this.page === 'updateLog') {
@@ -1727,7 +1729,8 @@ class Canvas {
       }
     } else if (tagName === 'SELECT') {
       const { options } = currentTarget;
-      this.setLeaderboard(options.selectedIndex);
+      this.leaderboardInfo.id = options.selectedIndex;
+      this.setLeaderboard(this.leaderboardInfo.id);
     }
   }
 
@@ -1814,6 +1817,9 @@ class Canvas {
 
         case 'procedure':
           return MODE_CLASSIC[this.gameInfo.procedure++];
+
+        case 'id':
+          return undefined;
           
       }
     } else if (this.mode === 'CHALLENGE') {
@@ -1896,6 +1902,8 @@ class Canvas {
         case 'procedure':
           return getProcedure(this.gameInfo.modeId)[this.gameInfo.procedure++];
 
+        case 'id':
+          return this.leaderboardInfo.id;
       }
     }
   }
