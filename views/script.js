@@ -1701,9 +1701,10 @@ class Canvas {
         this.clearPage();
         this.clearElement();
         this.clearTimer();
-        const mode = this.mode;
+        const modeId = this.gameInfo.modeId;
         this.initValues();
-        this.getGamePage(mode).bind(this)();
+        this.gameInfo.modeId = modeId;
+        this.getGamePage('CHALLENGE').bind(this)();
       }
     }
   }

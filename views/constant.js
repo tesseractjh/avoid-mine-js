@@ -1793,6 +1793,60 @@ const MODE_CHALLENGE = [
       difficulty: 1,
       item: [3, 2, 1],
     }
+  },
+
+  {
+    type: 'game',
+    xCount: 9,
+    yCount: 9,
+    mine: 26,
+    boardSetting: {
+      time: 110,
+      red: randRange(2, 4),
+      orange: randRange(2, 4),
+      yellow: randRange(2, 3),
+      oddEven: randRange(3, 4)
+    },
+    selectInfo: {
+      name: '초급 04',
+      difficulty: 1,
+      item: [3, 2, 1],
+    }
+  },
+
+  {
+    type: 'game',
+    xCount: 9,
+    yCount: 9,
+    mine: 26,
+    boardSetting: {
+      time: 110,
+      yellow: randRange(4, 5),
+      green: randRange(4, 5)
+    },
+    selectInfo: {
+      name: '초급 05',
+      difficulty: 1,
+      item: [3, 2, 1],
+    }
+  },
+
+  {
+    type: 'game',
+    xCount: 9,
+    yCount: 9,
+    mine: 26,
+    boardSetting: {
+      time: 120,
+      yellow: randRange(8, 11),
+      green: randRange(8, 11),
+      oddEven: randRange(4, 7)
+    },
+    selectInfo: {
+      name: '초급 06',
+      difficulty: 1,
+      item: [3, 2, 1],
+    }
   }
 
 ];
