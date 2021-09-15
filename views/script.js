@@ -443,7 +443,7 @@ class Canvas {
   }
 
   postClassicLeaderBoard(userInfo) {
-    fetch('/save/classic', {
+    fetch('/save-record', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)

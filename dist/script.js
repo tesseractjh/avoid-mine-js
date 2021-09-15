@@ -1,1 +1,2975 @@
-'use strict';const _0x5c0787=_0x52bd;(function(_0x47885d,_0x14ac02){const _0xe920ee=_0x52bd,_0x7f0960=_0x47885d();while(!![]){try{const _0x449144=-parseInt(_0xe920ee(0x2ce))/0x1*(parseInt(_0xe920ee(0x2d4))/0x2)+-parseInt(_0xe920ee(0x1a1))/0x3*(parseInt(_0xe920ee(0x2c8))/0x4)+-parseInt(_0xe920ee(0x19a))/0x5+-parseInt(_0xe920ee(0x23d))/0x6+-parseInt(_0xe920ee(0x30b))/0x7*(parseInt(_0xe920ee(0x265))/0x8)+-parseInt(_0xe920ee(0x1a6))/0x9+parseInt(_0xe920ee(0x25b))/0xa;if(_0x449144===_0x14ac02)break;else _0x7f0960['push'](_0x7f0960['shift']());}catch(_0x41be51){_0x7f0960['push'](_0x7f0960['shift']());}}}(_0xd4f4,0xd4465));class Canvas{constructor(_0x224470,_0x3832be=!![]){const _0x3a265b=_0x52bd;this['canvas']=_0x224470,this[_0x3a265b(0x1b2)]=+_0x224470[_0x3a265b(0x17e)],this[_0x3a265b(0x30a)]=+_0x224470[_0x3a265b(0x21b)],this['CENTER']=Math['floor'](_0x224470[_0x3a265b(0x1b2)]/0x2),this[_0x3a265b(0x194)]=Math['floor'](this[_0x3a265b(0x1b2)]/0x18),this[_0x3a265b(0x2e1)]=Math[_0x3a265b(0x304)](this[_0x3a265b(0x194)]*0x3/0x4),this[_0x3a265b(0x1cf)](),this['initContext'](),_0x3832be&&(this[_0x3a265b(0x2d0)](),this['initElement'](),this['initEventListener'](),this['initSound']());}[_0x5c0787(0x1cf)](){const _0x2da213=_0x5c0787;this[_0x2da213(0x20f)]='main',this[_0x2da213(0x158)]='',this[_0x2da213(0x176)]=[],this[_0x2da213(0x257)]=[],this[_0x2da213(0x2c4)]=this[_0x2da213(0x2c4)]??{},this['board']=null,this[_0x2da213(0x209)]={'name':'','stage':0x0,'modeId':0x0,'life':0x5,'score':0x0,'item1':0x0,'item2':0x0,'item3':0x0,'tempScore':0x0,'procedure':0x0,'shapeSwitch':![],'timerSoundSwitch':![],'bonus':null,'log':[]},this['leaderboardInfo']={'page':0x1,'lastPage':0x1,'record':[]};}[_0x5c0787(0x138)](){const _0x13d790=_0x5c0787;this['ctx']=this[_0x13d790(0x16c)][_0x13d790(0x282)]('2d'),this[_0x13d790(0x275)]['textBaseline']=_0x13d790(0x1a7),this[_0x13d790(0x275)][_0x13d790(0x18c)]=_0x13d790(0x29b);}[_0x5c0787(0x2d0)](){const _0x1692e7=_0x5c0787;this['tutorialTimer']=null,this[_0x1692e7(0x1f4)]=null,this[_0x1692e7(0x1bf)]=null,this[_0x1692e7(0x169)]=null;}[_0x5c0787(0x22c)](){const _0x527a9e=_0x5c0787;this[_0x527a9e(0x179)]=new Element(_0x527a9e(0x2e5)),this[_0x527a9e(0x154)]=new Element(_0x527a9e(0x2d7)),this[_0x527a9e(0x211)]=new Element(_0x527a9e(0x161)),this[_0x527a9e(0x211)]['$title']=new Element('game-result-title'),this[_0x527a9e(0x211)][_0x527a9e(0x29f)]=new Element(_0x527a9e(0x28c)),this[_0x527a9e(0x211)][_0x527a9e(0x274)]=new Element('score'),this[_0x527a9e(0x211)][_0x527a9e(0x1b8)]=new Element(_0x527a9e(0x266)),this[_0x527a9e(0x211)]['$space']=new Element(_0x527a9e(0x23b)),this[_0x527a9e(0x211)]['$back']=new Element(_0x527a9e(0x149)),this[_0x527a9e(0x211)]['$back']['elem']['setAttribute'](_0x527a9e(0x1b2),this[_0x527a9e(0x16c)]['height']*BOARD_HEIGHT_RATIO+'px'),this[_0x527a9e(0x211)]['$back'][_0x527a9e(0x246)][_0x527a9e(0x200)]('height',this[_0x527a9e(0x194)]*0x3/0x2+'px'),this[_0x527a9e(0x249)]=new Element(_0x527a9e(0x143)),this[_0x527a9e(0x249)]['$title']=new Element(_0x527a9e(0x1ee)),this[_0x527a9e(0x249)]['$cellCount']=new Element(_0x527a9e(0x21f)),this[_0x527a9e(0x249)][_0x527a9e(0x27c)]=new Element(_0x527a9e(0x29d)),this[_0x527a9e(0x249)]['$movementDiv']=new Element(_0x527a9e(0x2a1)),this[_0x527a9e(0x249)][_0x527a9e(0x27a)]=new Element(_0x527a9e(0x196)),this[_0x527a9e(0x249)][_0x527a9e(0x144)]=new Element(_0x527a9e(0x26f)),this[_0x527a9e(0x249)][_0x527a9e(0x19e)]=new Element(_0x527a9e(0x296)),this[_0x527a9e(0x249)]['$perfectClearDiv']=new Element(_0x527a9e(0x148)),this[_0x527a9e(0x249)][_0x527a9e(0x195)]=new Element(_0x527a9e(0x273)),this[_0x527a9e(0x249)]['$totalScore']=new Element('total-score'),this['$stageResult'][_0x527a9e(0x13c)]=new Element('stage-result-footer'),this[_0x527a9e(0x1b5)]=new Element(_0x527a9e(0x2d8)),this['$information']['$title']=new Element(_0x527a9e(0x2ec)),this['$information'][_0x527a9e(0x172)]=new Element(_0x527a9e(0x1b3)),this[_0x527a9e(0x1b5)][_0x527a9e(0x173)]=new Element(_0x527a9e(0x146)),this[_0x527a9e(0x1b5)][_0x527a9e(0x152)]=new Element(_0x527a9e(0x199)),this['$information']['$arrow']=new Element(_0x527a9e(0x1be)),this['$information'][_0x527a9e(0x230)]=new Element(_0x527a9e(0x1ea)),this['$information'][_0x527a9e(0x13c)]=new Element('information-footer'),this['$inputId']=new Element('input-id'),this['$inputId'][_0x527a9e(0x1c1)]=new Element(_0x527a9e(0x215)),this['$inputId'][_0x527a9e(0x172)]=new Element(_0x527a9e(0x229)),this[_0x527a9e(0x15b)][_0x527a9e(0x1ca)]=new Element(_0x527a9e(0x239)),this[_0x527a9e(0x15b)][_0x527a9e(0x1f7)]=new Element(_0x527a9e(0x22a)),this[_0x527a9e(0x15b)][_0x527a9e(0x1f7)][_0x527a9e(0x246)]['setAttribute'](_0x527a9e(0x1b2),this[_0x527a9e(0x16c)][_0x527a9e(0x30a)]*BOARD_HEIGHT_RATIO+'px'),this[_0x527a9e(0x15b)][_0x527a9e(0x1f7)][_0x527a9e(0x246)][_0x527a9e(0x200)]('height',this[_0x527a9e(0x194)]*0x3+'px'),this[_0x527a9e(0x168)]=new Element(_0x527a9e(0x2dc)),this[_0x527a9e(0x168)][_0x527a9e(0x1c1)]=new Element(_0x527a9e(0x289)),this['$leaderboard'][_0x527a9e(0x271)]=new Element(_0x527a9e(0x2bf)),this[_0x527a9e(0x168)][_0x527a9e(0x13c)]=new Element(_0x527a9e(0x23a)),this['$leaderboard'][_0x527a9e(0x2ef)]=new Element('leaderboard-mode01'),this['$leaderboard'][_0x527a9e(0x17b)]=new Element('leaderboard-mode02'),this[_0x527a9e(0x168)][_0x527a9e(0x22f)]=new Element(_0x527a9e(0x2b4)),this[_0x527a9e(0x168)][_0x527a9e(0x2a4)]=new Element(_0x527a9e(0x2ff)),this[_0x527a9e(0x168)][_0x527a9e(0x22f)][_0x527a9e(0x246)]['addEventListener'](_0x527a9e(0x307),this[_0x527a9e(0x2d2)](_0x527a9e(0x307))),this[_0x527a9e(0x168)][_0x527a9e(0x2a4)]['elem']['addEventListener'](_0x527a9e(0x307),this[_0x527a9e(0x2d2)](_0x527a9e(0x307))),this[_0x527a9e(0x2ae)]=new Element(_0x527a9e(0x2b6)),this[_0x527a9e(0x2ae)][_0x527a9e(0x1c1)]=new Element(_0x527a9e(0x1a5)),this[_0x527a9e(0x2ae)][_0x527a9e(0x230)]=new Element(_0x527a9e(0x293)),this[_0x527a9e(0x2ae)]['$footer']=new Element(_0x527a9e(0x197)),this[_0x527a9e(0x2a4)]=new Element(_0x527a9e(0x204)),this[_0x527a9e(0x2a4)]['$title']=new Element(_0x527a9e(0x258)),this[_0x527a9e(0x2a4)][_0x527a9e(0x230)]=new Element(_0x527a9e(0x233)),this[_0x527a9e(0x2a4)][_0x527a9e(0x13c)]=new Element(_0x527a9e(0x140)),this['$challengeFail']=new Element(_0x527a9e(0x165));}[_0x5c0787(0x1b9)](){const _0xbe69ed=_0x5c0787;this[_0xbe69ed(0x16c)][_0xbe69ed(0x224)](_0xbe69ed(0x17d),this[_0xbe69ed(0x2d2)]('clickButton')),this['canvas'][_0xbe69ed(0x224)](_0xbe69ed(0x228),this[_0xbe69ed(0x2d2)](_0xbe69ed(0x228))),window[_0xbe69ed(0x224)](_0xbe69ed(0x186),this['getCallback'](_0xbe69ed(0x186)));}[_0x5c0787(0x2cb)](){const _0x516ac6=_0x5c0787;[_0x516ac6(0x139),_0x516ac6(0x15c),_0x516ac6(0x26e),'fail',_0x516ac6(0x2bb),_0x516ac6(0x27e),_0x516ac6(0x1bc)][_0x516ac6(0x2d3)](_0x3e3fb8=>{const _0x3251c8=_0x516ac6,_0x294e2e=new Audio();_0x294e2e[_0x3251c8(0x16d)]=_0x3251c8(0x28f)+_0x3e3fb8+'.mp3',_0x294e2e[_0x3251c8(0x2fc)]=_0x3251c8(0x286),this[_0x3251c8(0x2c4)][_0x3e3fb8]=_0x294e2e;});}[_0x5c0787(0x306)](){const _0x2c9158=_0x5c0787,{name:_0x352999,stage:_0x1b531d,tempScore:_0x4b505e,score:_0x1284b3}=this[_0x2c9158(0x209)],_0x1b12d6={'name':_0x352999,'stage':_0x1b531d,'tempScore':_0x4b505e,'score':_0x1284b3+_0x4b505e};fetch(_0x2c9158(0x1da),{'method':_0x2c9158(0x1d4),'headers':{'content-type':_0x2c9158(0x1d6)},'body':JSON[_0x2c9158(0x21a)](_0x1b12d6)});}[_0x5c0787(0x1b1)](){const _0x61c95e=_0x5c0787,{name:_0x3395ca,tempScore:_0x5cdd9c,modeId:_0x34d645}=this[_0x61c95e(0x209)],_0x13a305={'name':_0x3395ca,'tempScore':_0x5cdd9c,'modeId':_0x34d645};fetch(_0x61c95e(0x163),{'method':'POST','headers':{'content-type':_0x61c95e(0x1d6)},'body':JSON[_0x61c95e(0x21a)](_0x13a305)});}['sendChallengeFailLogToServer'](){const _0x2296e7=_0x5c0787,{name:_0x5dc893,modeId:_0x44e9f9}=this[_0x2296e7(0x209)],_0x473bec={'name':_0x5dc893,'modeId':_0x44e9f9};fetch('/log/challenge/fail',{'method':_0x2296e7(0x1d4),'headers':{'content-type':_0x2296e7(0x1d6)},'body':JSON['stringify'](_0x473bec)});}['setRectPath'](_0x2c00ac){const _0x5c9256=_0x5c0787,{x1:_0x49887f,y1:_0xcdf66a,x2:_0x1e95b8,y2:_0x2a02a4}=_0x2c00ac[_0x5c9256(0x264)];this[_0x5c9256(0x275)][_0x5c9256(0x253)](),this[_0x5c9256(0x275)]['moveTo'](_0x49887f,_0xcdf66a),this[_0x5c9256(0x275)][_0x5c9256(0x260)](_0x49887f,_0x2a02a4),this[_0x5c9256(0x275)]['lineTo'](_0x1e95b8,_0x2a02a4),this[_0x5c9256(0x275)][_0x5c9256(0x260)](_0x1e95b8,_0xcdf66a),this[_0x5c9256(0x275)][_0x5c9256(0x1c2)]();}[_0x5c0787(0x1a3)](_0x2752ec,_0x2a18da){const _0x5cfa16=_0x5c0787,_0x1cf336=document[_0x5cfa16(0x1c4)](_0x2a18da);_0x2752ec[_0x5cfa16(0x14a)](_0x1cf336);}[_0x5c0787(0x182)](_0x20e583,_0x3a5a2e){const _0x5e2533=_0x5c0787,_0x3e4cd8=document['createElement']('div');this['setText'](_0x3e4cd8,_0x3a5a2e),_0x3e4cd8['classList'][_0x5e2533(0x28e)](_0x5e2533(0x183)),_0x20e583['appendChild'](_0x3e4cd8);}[_0x5c0787(0x1df)](){const _0x461125=_0x5c0787,_0x31922d=document[_0x461125(0x153)]('ul');[...UPDATE_LOG]['reverse']()['forEach'](_0x11b773=>{const _0x10afb3=_0x461125,{title:_0x3978cc,log:_0x5d4c3a}=_0x11b773,_0x4e1d90=document['createElement']('ul'),_0x521af6=document[_0x10afb3(0x153)]('li'),_0x1c7eeb=document[_0x10afb3(0x153)](_0x10afb3(0x2d5));this[_0x10afb3(0x1a3)](_0x1c7eeb,_0x3978cc),_0x1c7eeb[_0x10afb3(0x1f5)]['add']('h1'),[..._0x5d4c3a]['reverse']()[_0x10afb3(0x2d3)](_0x14a082=>{const _0x4489ff=_0x10afb3,{title:_0x1302af,log:_0x5eb4b4}=_0x14a082,_0x7b056f=document['createElement']('ul'),_0x42bb80=document[_0x4489ff(0x153)]('li'),_0x1faf79=document[_0x4489ff(0x153)](_0x4489ff(0x2d5));this[_0x4489ff(0x1a3)](_0x1faf79,_0x1302af),_0x1faf79['classList'][_0x4489ff(0x28e)]('h2'),_0x5eb4b4[_0x4489ff(0x2d3)](_0x3619fe=>{const _0x93716e=_0x4489ff,{title:_0x2b68fb,log:_0x3e0b59}=_0x3619fe,_0x348b85=document[_0x93716e(0x153)]('ul'),_0x466811=document[_0x93716e(0x153)]('li'),_0x166530=document[_0x93716e(0x153)](_0x93716e(0x2d5));this[_0x93716e(0x1a3)](_0x166530,_0x2b68fb),_0x166530[_0x93716e(0x1f5)][_0x93716e(0x28e)]('h3'),_0x3e0b59['forEach'](_0x5e7600=>{const _0x27835f=_0x93716e,_0xcea977=document[_0x27835f(0x153)]('li'),_0x2dd8af=document['createElement'](_0x27835f(0x2d5));this[_0x27835f(0x1a3)](_0x2dd8af,_0x5e7600),_0x2dd8af[_0x27835f(0x1f5)][_0x27835f(0x28e)]('h4'),_0xcea977[_0x27835f(0x14a)](_0x2dd8af),_0xcea977['classList'][_0x27835f(0x28e)]('h4'),_0x348b85[_0x27835f(0x14a)](_0xcea977),_0x348b85[_0x27835f(0x1f5)][_0x27835f(0x28e)]('h4');}),_0x466811[_0x93716e(0x14a)](_0x166530),_0x466811['appendChild'](_0x348b85),_0x466811[_0x93716e(0x1f5)][_0x93716e(0x28e)]('h3'),_0x7b056f['appendChild'](_0x466811);}),_0x42bb80[_0x4489ff(0x14a)](_0x1faf79),_0x42bb80[_0x4489ff(0x14a)](_0x7b056f),_0x42bb80[_0x4489ff(0x1f5)]['add']('h2'),_0x4e1d90[_0x4489ff(0x14a)](_0x42bb80);}),_0x521af6['appendChild'](_0x1c7eeb),_0x521af6['appendChild'](_0x4e1d90),_0x521af6['classList'][_0x10afb3(0x28e)]('h1'),_0x31922d[_0x10afb3(0x14a)](_0x521af6);}),this[_0x461125(0x2ae)][_0x461125(0x230)][_0x461125(0x246)]['appendChild'](_0x31922d);}[_0x5c0787(0x1b6)](_0x574b4,_0xb56908){const _0x33294b=_0x5c0787,_0x5a038f=document[_0x33294b(0x153)](_0x33294b(0x1e4));RAINBOW[_0x33294b(0x2d3)](_0xc20e27=>{const _0x437edd=_0x33294b,_0x31f917=document[_0x437edd(0x153)]('div');_0xc20e27===_0x437edd(0x250)?_0x31f917[_0x437edd(0x1f5)][_0x437edd(0x28e)]('square-purple'):_0x31f917[_0x437edd(0x1f5)][_0x437edd(0x28e)](_0x437edd(0x14b)),_0xb56908[_0x437edd(0x2a3)](_0xc20e27)&&(_0x31f917[_0x437edd(0x205)][_0x437edd(0x2db)]=colorMatch[_0xc20e27]),_0x5a038f[_0x437edd(0x14a)](_0x31f917);}),_0x574b4[_0x33294b(0x14a)](_0x5a038f);}[_0x5c0787(0x26d)](){const _0x34c5e2=_0x5c0787;CHALLENGE_ARR[_0x34c5e2(0x2d3)]((_0x7c427e,_0x3ea552)=>{const _0x36c41a=_0x34c5e2,{name:_0x8fe48e,width:_0x6c3dcd,height:_0x2447f4,mine:_0x537733,time:_0xcc587e,colorType:_0x14cce9,textType:_0x10fc57,condition:_0x45ccda,difficulty:_0x5e3156}=_0x7c427e,_0x535ed4=document[_0x36c41a(0x153)](_0x36c41a(0x1e4)),_0x1a8899=document[_0x36c41a(0x153)]('div'),_0x1c6948=document[_0x36c41a(0x153)](_0x36c41a(0x1e4)),_0x24f71f=document[_0x36c41a(0x153)](_0x36c41a(0x1e4)),_0x3389c4=document[_0x36c41a(0x153)](_0x36c41a(0x1e4));_0x535ed4[_0x36c41a(0x1f5)][_0x36c41a(0x28e)](_0x36c41a(0x14c)),_0x24f71f[_0x36c41a(0x1f5)][_0x36c41a(0x28e)](_0x36c41a(0x29a)),_0x24f71f['classList']['add'](_0x36c41a(0x2c9)),_0x3389c4[_0x36c41a(0x1f5)][_0x36c41a(0x28e)](_0x36c41a(0x29a)),_0x3389c4[_0x36c41a(0x1f5)]['add'](_0x36c41a(0x2d9)),_0x1a8899['classList'][_0x36c41a(0x28e)]('align-center'),_0x1a8899['classList'][_0x36c41a(0x28e)](_0x36c41a(0x18d)),_0x1a8899[_0x36c41a(0x1f5)][_0x36c41a(0x28e)](_0x36c41a(0x183)),_0x1c6948[_0x36c41a(0x1f5)]['add'](_0x36c41a(0x137)),_0x1c6948[_0x36c41a(0x1f5)]['add'](_0x36c41a(0x183)),this[_0x36c41a(0x1a3)](_0x1a8899,''+_0x8fe48e),this[_0x36c41a(0x182)](_0x24f71f,_0x36c41a(0x2df)),this['appendNodeWithText'](_0x3389c4,_0x6c3dcd+'X'+_0x2447f4);const _0x9b3c6d=Math[_0x36c41a(0x304)](_0xcc587e/0x3c)?Math[_0x36c41a(0x304)](_0xcc587e/0x3c)+'분\x20':'',_0x573110=_0xcc587e%0x3c?_0xcc587e%0x3c+'초':'';this[_0x36c41a(0x182)](_0x24f71f,_0x36c41a(0x294)),this[_0x36c41a(0x182)](_0x3389c4,''+_0x9b3c6d+_0x573110),this['appendNodeWithText'](_0x24f71f,'💣\x20지뢰비율:\u3000'),this['appendNodeWithText'](_0x3389c4,Math[_0x36c41a(0x304)](_0x537733*0x64/(_0x6c3dcd*_0x2447f4))+'%'),this[_0x36c41a(0x182)](_0x24f71f,_0x36c41a(0x1fe));if(_0x14cce9[_0x36c41a(0x27f)]){const _0x3ae966=document[_0x36c41a(0x153)](_0x36c41a(0x1e4));this['setColorBar'](_0x3ae966,_0x14cce9),_0x3389c4[_0x36c41a(0x14a)](_0x3ae966);}else this['appendNodeWithText'](_0x3389c4,'없음');this['appendNodeWithText'](_0x24f71f,_0x36c41a(0x18f)),this['appendNodeWithText'](_0x3389c4,''+(_0x10fc57[_0x36c41a(0x27f)]?_0x10fc57[_0x36c41a(0x29c)](',\x20'):'없음')),this[_0x36c41a(0x182)](_0x24f71f,_0x36c41a(0x1dc)),this[_0x36c41a(0x182)](_0x3389c4,''+'★'[_0x36c41a(0x301)](Math[_0x36c41a(0x304)](_0x5e3156/0x2))+(_0x5e3156%0x2?'☆':'')),this['setText'](_0x1c6948,''+(_0x45ccda?_0x45ccda+_0x36c41a(0x1aa):'\u3000')),[_0x1a8899,_0x24f71f,_0x3389c4,_0x1c6948][_0x36c41a(0x2d3)](_0x266833=>_0x535ed4[_0x36c41a(0x14a)](_0x266833)),_0x535ed4[_0x36c41a(0x224)](_0x36c41a(0x17d),this[_0x36c41a(0x2b2)](_0x36c41a(0x190))[_0x36c41a(0x159)](this)),_0x535ed4[_0x36c41a(0x224)](_0x36c41a(0x17d),()=>this[_0x36c41a(0x2a4)][_0x36c41a(0x160)]()),this[_0x36c41a(0x2a4)][_0x36c41a(0x230)]['elem'][_0x36c41a(0x14a)](_0x535ed4);});}[_0x5c0787(0x150)](){const _0x21d899=_0x5c0787;this['$leaderboard']['$list'][_0x21d899(0x2af)]='<div\x20class=\x22border-bottom\x22>순위</div>\x0a\x20\x20\x20\x20<div\x20class=\x22border-bottom\x22>이름</div>\x0a\x20\x20\x20\x20<div\x20class=\x22border-bottom\x22>점수</div>\x0a\x20\x20\x20\x20<div\x20class=\x22border-bottom\x22>랭크</div>\x0a\x20\x20\x20\x20<div\x20class=\x22border-bottom\x22>스테이지</div>';}[_0x5c0787(0x25c)](){const _0xc9c41=_0x5c0787;this[_0xc9c41(0x168)][_0xc9c41(0x271)][_0xc9c41(0x2af)]=_0xc9c41(0x18a);}[_0x5c0787(0x1f2)](_0x3f2da0){const _0x546bd5=_0x5c0787;this[_0x546bd5(0x168)]['$list']['elem']['classList'][_0x546bd5(0x28e)](_0x546bd5(0x14d)),this[_0x546bd5(0x168)][_0x546bd5(0x271)][_0x546bd5(0x246)][_0x546bd5(0x1f5)][_0x546bd5(0x15f)](_0x546bd5(0x191)),this[_0x546bd5(0x150)]();const _0x5817d1=document[_0x546bd5(0x1e3)]();_0x3f2da0['forEach'](_0x3f888d=>this[_0x546bd5(0x184)](_0x5817d1,_0x3f888d)),this['$leaderboard'][_0x546bd5(0x271)]['elem']['appendChild'](_0x5817d1);}[_0x5c0787(0x1e5)](_0x2b199a){const _0x583104=_0x5c0787;this['$leaderboard'][_0x583104(0x271)]['elem'][_0x583104(0x1f5)][_0x583104(0x28e)](_0x583104(0x191)),this[_0x583104(0x168)]['$list']['elem'][_0x583104(0x1f5)][_0x583104(0x15f)](_0x583104(0x14d)),this['initChallengeLabel']();const _0x573abf=document[_0x583104(0x1e3)]();_0x2b199a[_0x583104(0x2d3)](_0x2fd8d5=>this[_0x583104(0x2a2)](_0x573abf,_0x2fd8d5)),this['$leaderboard']['$list'][_0x583104(0x246)][_0x583104(0x14a)](_0x573abf);}[_0x5c0787(0x2c3)](){const _0x54a71b=_0x5c0787;this[_0x54a71b(0x20f)]=_0x54a71b(0x162);const {page:_0x58efc5,record:_0x335000}=this[_0x54a71b(0x243)];_0x335000['length']>(_0x58efc5-0x1)*0xa?(this[_0x54a71b(0x1f2)](_0x335000[_0x54a71b(0x217)]((_0x58efc5-0x1)*0xa,_0x58efc5*0xa)),this[_0x54a71b(0x168)][_0x54a71b(0x1ec)](),this[_0x54a71b(0x20f)]=_0x54a71b(0x2dc)):fetch(_0x54a71b(0x279)+Math[_0x54a71b(0x304)](_0x58efc5/0xa))[_0x54a71b(0x1eb)](_0x5049cb=>_0x5049cb[_0x54a71b(0x156)]())[_0x54a71b(0x1eb)](_0x4d12db=>{const _0x1a9b0e=_0x54a71b;if(_0x335000['length']===_0x4d12db[_0x1a9b0e(0x27f)]){this[_0x1a9b0e(0x243)][_0x1a9b0e(0x20f)]--;_0x4d12db[_0x1a9b0e(0x27f)]===0x0&&this[_0x1a9b0e(0x150)]();return;}this['leaderboardInfo'][_0x1a9b0e(0x292)]=_0x4d12db;const _0x491d42=_0x4d12db[_0x1a9b0e(0x217)]((_0x58efc5-0x1)*0xa,_0x58efc5*0xa);if(_0x491d42[_0x1a9b0e(0x27f)]>0x0)this[_0x1a9b0e(0x1f2)](_0x491d42);else{const _0x51f8ac=--this[_0x1a9b0e(0x243)][_0x1a9b0e(0x20f)];this[_0x1a9b0e(0x1f2)](_0x4d12db[_0x1a9b0e(0x217)]((_0x51f8ac-0x1)*0xa,_0x51f8ac*0xa));}this[_0x1a9b0e(0x243)][_0x1a9b0e(0x177)]=Math[_0x1a9b0e(0x304)]((_0x4d12db['length']-0x1)/0xa)+0x1,this[_0x1a9b0e(0x168)][_0x1a9b0e(0x1ec)]();})[_0x54a71b(0x1eb)](()=>this[_0x54a71b(0x20f)]=_0x54a71b(0x2dc))[_0x54a71b(0x2e3)](console['error']);}['setChallengeLeaderboard'](){const _0x160736=_0x5c0787;this['page']='fetching';const {page:_0x2f00c5,record:_0x1e0f8a}=this[_0x160736(0x243)];_0x1e0f8a['length']>(_0x2f00c5-0x1)*0xa?(this['appendToChallengeList'](_0x1e0f8a['slice']((_0x2f00c5-0x1)*0xa,_0x2f00c5*0xa)),this['$leaderboard'][_0x160736(0x1ec)](),this['page']=_0x160736(0x2dc)):fetch(_0x160736(0x2f6)+Math['floor'](_0x2f00c5/0xa))[_0x160736(0x1eb)](_0x339ca4=>_0x339ca4['json']())[_0x160736(0x1eb)](_0x26a68f=>{const _0x4051f8=_0x160736;if(_0x1e0f8a['length']===_0x26a68f[_0x4051f8(0x27f)]){this['leaderboardInfo'][_0x4051f8(0x20f)]--;_0x26a68f['length']===0x0&&this[_0x4051f8(0x25c)]();return;}this[_0x4051f8(0x243)][_0x4051f8(0x292)]=_0x26a68f;const _0x3de382=_0x26a68f[_0x4051f8(0x217)]((_0x2f00c5-0x1)*0xa,_0x2f00c5*0xa);if(_0x3de382['length']>0x0)this[_0x4051f8(0x1e5)](_0x3de382);else{const _0x28822c=--this[_0x4051f8(0x243)][_0x4051f8(0x20f)];this[_0x4051f8(0x1e5)](_0x26a68f[_0x4051f8(0x217)]((_0x28822c-0x1)*0xa,_0x28822c*0xa));}this['leaderboardInfo'][_0x4051f8(0x177)]=Math[_0x4051f8(0x304)]((_0x26a68f[_0x4051f8(0x27f)]-0x1)/0xa)+0x1,this[_0x4051f8(0x168)][_0x4051f8(0x1ec)]();})[_0x160736(0x1eb)](()=>this[_0x160736(0x20f)]=_0x160736(0x2dc))[_0x160736(0x2e3)](console[_0x160736(0x242)]);}[_0x5c0787(0x2a6)](_0x1000b7){const _0x4e5936=_0x5c0787;fetch(_0x4e5936(0x235),{'method':_0x4e5936(0x1d4),'headers':{'content-type':_0x4e5936(0x1d6)},'body':JSON[_0x4e5936(0x21a)](_0x1000b7)})['then'](()=>{const _0x3a304d=_0x4e5936;this['$gameResult'][_0x3a304d(0x1ec)](),this[_0x3a304d(0x1a2)](this[_0x3a304d(0x211)]);})[_0x4e5936(0x2e3)](console[_0x4e5936(0x242)]);}[_0x5c0787(0x13b)](_0x1bbebb){const _0x9408ad=_0x5c0787;fetch(_0x9408ad(0x2e8),{'method':_0x9408ad(0x1d4),'headers':{'content-type':_0x9408ad(0x1d6)},'body':JSON[_0x9408ad(0x21a)](_0x1bbebb)})[_0x9408ad(0x1eb)](()=>{const _0x4da15f=_0x9408ad;this[_0x4da15f(0x249)][_0x4da15f(0x1ec)]();})[_0x9408ad(0x2e3)](console['error']);}[_0x5c0787(0x184)](_0x1643ae,_0x2b81f1){const _0x2f40ab=_0x5c0787,{ranking:_0x311c5e,name:_0x3efec8,score:_0x2a86df,rank:_0x432a8c,stage:_0x249792}=_0x2b81f1;[_0x311c5e,_0x3efec8,_0x2a86df,_0x432a8c,_0x249792][_0x2f40ab(0x2d3)](_0x54ce1b=>{const _0x162e3f=_0x2f40ab,_0xf2a082=document[_0x162e3f(0x153)](_0x162e3f(0x1e4)),_0xe8e7e7=document[_0x162e3f(0x1c4)](_0x54ce1b);_0xf2a082[_0x162e3f(0x14a)](_0xe8e7e7),_0xf2a082[_0x162e3f(0x1f5)][_0x162e3f(0x28e)]('border-bottom2'),_0x1643ae['appendChild'](_0xf2a082);});}['createChallengeUserInfo'](_0x121e10,_0x1fc7d4){const _0x53a0ac=_0x5c0787,{ranking:_0xdf0d5c,name:_0x4c8459,score:_0x41a848,time:_0x11282e,cellCount:_0x84cd52}=_0x1fc7d4;[_0xdf0d5c,_0x4c8459,_0x41a848,_0x11282e,_0x84cd52][_0x53a0ac(0x2d3)](_0x1bd208=>{const _0x444983=_0x53a0ac,_0x5e9107=document[_0x444983(0x153)](_0x444983(0x1e4)),_0x203441=document['createTextNode'](_0x1bd208);_0x5e9107[_0x444983(0x14a)](_0x203441),_0x5e9107[_0x444983(0x1f5)][_0x444983(0x28e)](_0x444983(0x188)),_0x121e10['appendChild'](_0x5e9107);});}[_0x5c0787(0x267)](_0x55632c,_0x46f0e8,_0x2c6a4b,_0x37db62,_0x4e74b9){const _0x118cab=_0x5c0787,{stage:_0x46e7d0,life:_0x5107d1,item1:_0x1f3219,item2:_0x3ab864,item3:_0x43bdbc,tempScore:_0x52b277}=this['gameInfo'],{time:_0xeb08ff}=this[_0x118cab(0x2eb)]['boardSetting'];this['gameInfo'][_0x118cab(0x285)][_0x118cab(0x28d)]({'stage':_0x46e7d0,'cellCount':_0x55632c,'time':_0xeb08ff,'movement':_0x46f0e8,'isItemUsed':_0x2c6a4b,'isDead':_0x37db62,'isAllEnsured':_0x4e74b9,'life':_0x5107d1,'item1':_0x1f3219,'item2':_0x3ab864,'item3':_0x43bdbc,'score':_0x52b277});}[_0x5c0787(0x1c8)](_0x21edf8,_0x173cc6,_0x2c1657){const _0x5b03dd=_0x5c0787,{modeId:_0x6fbb51,tempScore:_0x5532bd}=this[_0x5b03dd(0x209)],{time:_0xf88717}=this[_0x5b03dd(0x2eb)][_0x5b03dd(0x30d)];this[_0x5b03dd(0x209)][_0x5b03dd(0x285)]['push']({'modeId':_0x6fbb51,'cellCount':_0x21edf8,'time':_0xf88717,'movement':_0x173cc6,'isAllEnsured':_0x2c1657,'score':_0x5532bd});}['getTutorialPage'](_0x5566f2){const _0x4a52ce=_0x5c0787,_0x5584fb=TUTORIAL[_0x4a52ce(0x17a)+_0x5566f2];return function(){const _0x13825e=_0x4a52ce;this[_0x13825e(0x2f4)](_0x5584fb);};}[_0x5c0787(0x290)](){return function(){const _0x5538f1=_0x52bd;this[_0x5538f1(0x1bd)]();};}[_0x5c0787(0x1bb)](){return function(){const _0x51210d=_0x52bd;this[_0x51210d(0x29e)]();};}['getMainPage'](){return function(){const _0x38a2c8=_0x52bd;this[_0x38a2c8(0x1e2)]();};}[_0x5c0787(0x2b2)](_0x22e457){return function(){const _0x582c17=_0x52bd;this[_0x582c17(0x158)]=_0x22e457,this[_0x582c17(0x2eb)]=new Board(this,0x1,0x1,![]),this['paintPage'](),this[_0x582c17(0x16c)][_0x582c17(0x2e7)](_0x582c17(0x17d),this[_0x582c17(0x2d2)]('clickButton')),this[_0x582c17(0x16c)]['addEventListener']('click',this['getCallback'](_0x582c17(0x295)));};}[_0x5c0787(0x30c)](){return function(){const _0x54564f=_0x52bd;this[_0x54564f(0x1a9)]();};}[_0x5c0787(0x232)](){return function(){this['showUpdateLog']();};}[_0x5c0787(0x28b)](_0x22f9b6){const _0xd98ccd=_0x5c0787;this[_0xd98ccd(0x2c4)][_0x22f9b6]['pause'](),this[_0xd98ccd(0x2c4)][_0x22f9b6][_0xd98ccd(0x218)]=0x0,this[_0xd98ccd(0x2c4)][_0x22f9b6][_0xd98ccd(0x303)]();}['decreaseLife'](){const _0x120ba8=_0x5c0787;if(this[_0x120ba8(0x209)][_0x120ba8(0x2e0)]===0x0){this['board'][_0x120ba8(0x1a0)]();if(this[_0x120ba8(0x158)]===_0x120ba8(0x280))this[_0x120ba8(0x237)]();else this[_0x120ba8(0x158)]===_0x120ba8(0x190)&&this[_0x120ba8(0x170)]();}else this[_0x120ba8(0x209)][_0x120ba8(0x2e0)]--,this[_0x120ba8(0x13a)]();}[_0x5c0787(0x181)](_0x2c7b51){const _0x5a7fc4=_0x5c0787,{strokeColor:_0x2f6f10,lineWidth:_0x51db9d}=_0x2c7b51[_0x5a7fc4(0x264)];this[_0x5a7fc4(0x207)](_0x2c7b51),this[_0x5a7fc4(0x275)][_0x5a7fc4(0x309)]=_0x2f6f10,this['ctx'][_0x5a7fc4(0x263)]=_0x51db9d,this['ctx'][_0x5a7fc4(0x26b)]();}[_0x5c0787(0x15d)](_0x4d60fd){const _0x3911f7=_0x5c0787,{text:_0x2ea65e,x:_0x4b7149,y:_0x52f4a9,strokeColor:_0xc45cb4,lineWidth:_0x29ac9d,fontSize:_0x99bac8,font:_0x33c122}=_0x4d60fd['contextInfo'];this['ctx'][_0x3911f7(0x309)]=_0xc45cb4,this['ctx'][_0x3911f7(0x263)]=_0x29ac9d,this['ctx'][_0x3911f7(0x23e)]=_0x33c122,this['ctx'][_0x3911f7(0x15d)](_0x2ea65e,_0x4b7149,_0x52f4a9+_0x99bac8*0.075);}[_0x5c0787(0x2f9)](_0x460faf){const _0x288a4d=_0x5c0787,{x1:_0x14d719,y1:_0x4a3c9c,x2:_0x5a545b,y2:_0x1f5450,strokeColor:_0x3221bb,lineWidth:_0x276eae}=_0x460faf[_0x288a4d(0x264)];this[_0x288a4d(0x275)]['strokeStyle']=_0x3221bb,this[_0x288a4d(0x275)][_0x288a4d(0x263)]=_0x276eae,this[_0x288a4d(0x275)][_0x288a4d(0x253)](),this[_0x288a4d(0x275)][_0x288a4d(0x2e2)](parseInt(_0x14d719),parseInt(_0x4a3c9c)),this[_0x288a4d(0x275)][_0x288a4d(0x260)](parseInt(_0x5a545b),parseInt(_0x1f5450)),this[_0x288a4d(0x275)][_0x288a4d(0x1c2)](),this['ctx'][_0x288a4d(0x26b)]();}[_0x5c0787(0x1c3)](_0x40b859,_0x3d283f,_0x44cb87=BLACK,_0x300f5a=0x1){const _0x321dab=_0x5c0787,[_0x13f717,_0x25deae]=[_0x40b859['contextInfo']['x'],_0x40b859[_0x321dab(0x264)]['y']],[_0x4ad9c2,_0x54cdc5]=[_0x3d283f[_0x321dab(0x264)]['x'],_0x3d283f[_0x321dab(0x264)]['y']],_0x2e7d73=_0x40b859['width'],_0x1e25ff=(_0x3d283f['x']-_0x40b859['x']+0x1)*_0x2e7d73,_0xa12c15=(_0x3d283f['y']-_0x40b859['y']+0x1)*_0x2e7d73,_0x3d96dc=new Rect((_0x13f717+_0x4ad9c2)/0x2,(_0x25deae+_0x54cdc5)/0x2);_0x3d96dc[_0x321dab(0x206)](_0x1e25ff,_0xa12c15),_0x3d96dc['setStrokeInfo'](_0x44cb87,_0x300f5a),this['strokeRect'](_0x3d96dc);}[_0x5c0787(0x30e)](_0x27699c,_0x5118d3=![]){const _0x5bacfc=_0x5c0787,{fillColor:_0xb89eed}=_0x27699c[_0x5bacfc(0x264)];this[_0x5bacfc(0x275)][_0x5bacfc(0x25d)]=_0xb89eed,this[_0x5bacfc(0x207)](_0x27699c),this['ctx'][_0x5bacfc(0x1f3)](),_0x5118d3&&this[_0x5bacfc(0x181)](_0x27699c);}[_0x5c0787(0x1ad)](_0x26452e){const _0x47efbe=_0x5c0787,{text:_0x1d60c5,x:_0x4309bb,y:_0x729fe4,textColor:_0x3f9c85,fontSize:_0x50058b,font:_0x16f714}=_0x26452e[_0x47efbe(0x264)];this[_0x47efbe(0x275)][_0x47efbe(0x25d)]=_0x3f9c85,this[_0x47efbe(0x275)]['font']=_0x16f714,this['ctx'][_0x47efbe(0x1ad)](_0x1d60c5,_0x4309bb,_0x729fe4+_0x50058b*0.075);}['createButton'](_0x29d83f,_0x18b983){const _0x4c9d7d=_0x5c0787,{x:_0x5b5d61,y:_0x2112b3,text:_0xa4b053,fontSize:_0x5198b7,textColor:_0x13b42c,width:_0x5d6e72,height:_0x1bb210,fillColor:_0x16e301,strokeColor:_0x140afb,lineWidth:_0x7dbbfd,hover:_0x2b310f,caption:_0x4be156,page:_0x23f0e2}={..._0x29d83f,..._0x18b983},_0xa635c1=new Button(_0x5b5d61,_0x2112b3,_0x23f0e2);_0xa635c1[_0x4c9d7d(0x20b)](_0xa4b053,_0x5198b7,_0x13b42c)['setFillInfo'](_0x5d6e72,_0x1bb210,_0x16e301)[_0x4c9d7d(0x1a4)](_0x140afb,_0x7dbbfd);const _0x21f66e=new ContextInfo();Object[_0x4c9d7d(0x201)](_0xa635c1[_0x4c9d7d(0x264)])[_0x4c9d7d(0x2d3)](([_0x270595,_0x83785])=>{_0x21f66e[_0x270595]=_0x83785;}),_0x21f66e['fillColor']=_0x2b310f['fillColor'],_0x21f66e[_0x4c9d7d(0x287)]=_0x2b310f[_0x4c9d7d(0x287)],_0xa635c1['hoverContextInfo']=_0x21f66e,this[_0x4c9d7d(0x176)][_0x4c9d7d(0x28d)](_0xa635c1);if(_0x4be156){const _0x62d022=new Rect(_0x5b5d61,_0x2112b3+_0x1bb210*0x3/0x4);_0x62d022[_0x4c9d7d(0x20b)](_0x4be156,_0x5198b7/0x2,WHITE),_0x62d022[_0x4c9d7d(0x1d7)]=0x1f4,this[_0x4c9d7d(0x1ad)](_0x62d022);}return _0xa635c1;}[_0x5c0787(0x214)](){const _0x1c74fc=_0x5c0787;this[_0x1c74fc(0x176)]=[],this['board']=null,this[_0x1c74fc(0x275)][_0x1c74fc(0x308)](0x0,0x0,this['width'],this['height']);}[_0x5c0787(0x1fd)](){const _0xaeb4cc=_0x5c0787;clearInterval(this[_0xaeb4cc(0x1f4)]),clearInterval(this['msgTimer']),clearInterval(this[_0xaeb4cc(0x169)]);}[_0x5c0787(0x2ee)](){const _0x409e0e=_0x5c0787;this[_0x409e0e(0x154)][_0x409e0e(0x160)](),this[_0x409e0e(0x211)][_0x409e0e(0x160)](),this[_0x409e0e(0x211)][_0x409e0e(0x251)]=0x0,this[_0x409e0e(0x211)][_0x409e0e(0x26c)]=0x0,this[_0x409e0e(0x249)][_0x409e0e(0x160)](),this[_0x409e0e(0x249)][_0x409e0e(0x251)]=0x0,this[_0x409e0e(0x249)][_0x409e0e(0x26c)]=0x0,this['$stageResult'][_0x409e0e(0x144)][_0x409e0e(0x160)](),this[_0x409e0e(0x1b5)]['hide'](),this[_0x409e0e(0x1b5)]['$left'][_0x409e0e(0x15c)](),this[_0x409e0e(0x1b5)]['$right'][_0x409e0e(0x15c)](),this[_0x409e0e(0x1b5)][_0x409e0e(0x230)][_0x409e0e(0x15c)](),this[_0x409e0e(0x1b5)][_0x409e0e(0x227)][_0x409e0e(0x15c)](),this[_0x409e0e(0x15b)]['hide'](),this[_0x409e0e(0x168)]['hide'](),this[_0x409e0e(0x2ae)]['hide'](),this['$challenge'][_0x409e0e(0x160)](),this[_0x409e0e(0x2a4)][_0x409e0e(0x230)]['clear'](),this[_0x409e0e(0x2a5)][_0x409e0e(0x160)]();}['paintAllButton'](){const _0x12fe0f=_0x5c0787;this[_0x12fe0f(0x176)]['forEach'](_0x166e20=>{const _0x15f001=_0x12fe0f;this[_0x15f001(0x30e)](_0x166e20,!![]),this[_0x15f001(0x1ad)](_0x166e20);});}['paintMainPage'](){const _0x595cb5=_0x5c0787;this[_0x595cb5(0x214)](),this[_0x595cb5(0x20f)]='main',this[_0x595cb5(0x14e)](),this[_0x595cb5(0x22d)](),this[_0x595cb5(0x249)][_0x595cb5(0x1ba)][_0x595cb5(0x160)](),this[_0x595cb5(0x249)][_0x595cb5(0x144)][_0x595cb5(0x160)](),this[_0x595cb5(0x249)][_0x595cb5(0x262)][_0x595cb5(0x160)]();}[_0x5c0787(0x14e)](){const _0x55a7e0=_0x5c0787,_0x28e618=new Rect(this[_0x55a7e0(0x2da)],this[_0x55a7e0(0x194)]*0x2);_0x28e618[_0x55a7e0(0x20b)](TEXT[_0x55a7e0(0x1ac)],this[_0x55a7e0(0x194)]),this['fillText'](_0x28e618);}[_0x5c0787(0x22d)](){const _0x208892=_0x5c0787,[_0x428b5e,_0x309fc3,_0x35bdac,_0x5325ac]=[this['CENTER'],this[_0x208892(0x2e1)]*0x7,this['FONT_SIZE']*0x2,this[_0x208892(0x2e1)]];this[_0x208892(0x222)](BUTTON[_0x208892(0x2e6)],{'x':_0x428b5e,'y':this[_0x208892(0x194)]*0x4,'width':_0x309fc3,'height':_0x35bdac,'fontSize':_0x5325ac,'page':this[_0x208892(0x202)](0x1)}),this[_0x208892(0x222)](BUTTON[_0x208892(0x18e)],{'x':_0x428b5e,'y':this[_0x208892(0x194)]*0x6,'fontSize':_0x5325ac,'width':_0x309fc3,'height':_0x35bdac,'page':this[_0x208892(0x290)]()}),this['createButton'](BUTTON[_0x208892(0x2dc)],{'x':_0x428b5e,'y':this[_0x208892(0x194)]*0x8,'fontSize':_0x5325ac,'width':_0x309fc3,'height':_0x35bdac,'page':this[_0x208892(0x30c)]()}),this['createButton'](BUTTON[_0x208892(0x2b3)],{'x':_0x428b5e,'y':this['TITLE_SIZE']*0xa,'fontSize':_0x5325ac,'width':_0x309fc3,'height':_0x35bdac,'page':this[_0x208892(0x232)]()}),this[_0x208892(0x24c)]();}[_0x5c0787(0x2f4)](_0x2f2754){const _0x3b4446=_0x5c0787,{prev:_0xc83ccb,next:_0x4a9858,board:_0x1f35da,bottomText:_0x58931d,timer:_0x11985e,addition:_0x1f2f46}=_0x2f2754;this[_0x3b4446(0x214)](),this[_0x3b4446(0x276)](_0x1f35da),this[_0x3b4446(0x2ac)](_0xc83ccb,_0x4a9858),this['paintBottomText'](_0x58931d),clearInterval(this[_0x3b4446(0x25e)]);if(_0x11985e){const {getTimer:_0x94e8dd,delay:_0x3fe608}=_0x11985e,_0x1c767f=_0x94e8dd[_0x3b4446(0x159)](this)();this['tutorialTimer']=setInterval(_0x1c767f,_0x3fe608);}_0x1f2f46&&_0x1f2f46[_0x3b4446(0x159)](this)();}['paintTutorialBoard'](_0x43a0c9){const _0x2fb75d=_0x5c0787,{me:_0xd4f158,meX:_0x36e5d2,meY:_0x368167,ensured:_0x4f0867,detected:_0x489b74}=_0x43a0c9,_0xd7d58=new Board(this,0x5,0x5);this[_0x2fb75d(0x2eb)]=_0xd7d58,[[0x2,0x2],[0x0,0x4],[0x4,0x0],[0x3,0x3]][_0x2fb75d(0x2d3)](_0x221896=>{const _0x1ffb01=_0x2fb75d,[_0x5d094b,_0x3483a5]=_0x221896;_0xd7d58[_0x1ffb01(0x2ed)](_0x5d094b,_0x3483a5)[_0x1ffb01(0x1c9)]='mine';}),_0x4f0867&&_0x4f0867[_0x2fb75d(0x2d3)](_0x251225=>{const _0x422b3c=_0x2fb75d,[_0xb76bef,_0x30c2b1]=_0x251225;_0xd7d58[_0x422b3c(0x21e)](_0xb76bef,_0x30c2b1);}),_0x489b74&&_0x489b74['forEach'](_0x1e2c3c=>{const _0x2374ce=_0x2fb75d,[_0x4f5701,_0x10b44f]=_0x1e2c3c;_0xd7d58[_0x2374ce(0x1cb)](_0x4f5701,_0x10b44f);}),_0xd7d58[_0x2fb75d(0x2ed)](0x2,0x2)['type']=_0x2fb75d(0x259),_0xd7d58[_0x2fb75d(0x166)](),_0xd7d58[_0x2fb75d(0x278)](),_0xd4f158&&_0xd7d58['me']['moveTo'](_0x36e5d2??0x0,_0x368167??0x0);}['paintSelectGameTypePage'](){const _0x12c24b=_0x5c0787;this[_0x12c24b(0x214)](),this['page']='selectGame',this[_0x12c24b(0x1c0)](),this[_0x12c24b(0x284)]();}[_0x5c0787(0x1c0)](){const _0x5b719b=_0x5c0787,_0x377a5e=new Rect(this['CENTER'],this[_0x5b719b(0x194)]*0x2);_0x377a5e[_0x5b719b(0x20b)](TEXT[_0x5b719b(0x1dd)],this[_0x5b719b(0x194)]),this[_0x5b719b(0x1ad)](_0x377a5e);}[_0x5c0787(0x284)](){const _0x2f5dd4=_0x5c0787,[_0x1b8fc7,_0x3d3185,_0x1dcae9,_0x454bce]=[this[_0x2f5dd4(0x2da)],this[_0x2f5dd4(0x2e1)]*0x7,this[_0x2f5dd4(0x2e1)]*0x2,this[_0x2f5dd4(0x2e1)]];this[_0x2f5dd4(0x222)](BUTTON['modeClassic'],{'x':_0x1b8fc7,'y':this[_0x2f5dd4(0x194)]*4.5,'width':_0x3d3185,'height':_0x1dcae9,'fontSize':_0x454bce,'page':this[_0x2f5dd4(0x2b2)](_0x2f5dd4(0x280))}),this[_0x2f5dd4(0x222)](BUTTON[_0x2f5dd4(0x16b)],{'x':_0x1b8fc7,'y':this[_0x2f5dd4(0x194)]*0x7,'fontSize':_0x454bce,'width':_0x3d3185,'height':_0x1dcae9,'page':this[_0x2f5dd4(0x1bb)]()}),this[_0x2f5dd4(0x222)](BUTTON['backToMainPage'],{'x':_0x1b8fc7,'y':this[_0x2f5dd4(0x194)]*9.5,'fontSize':_0x454bce,'width':_0x3d3185,'height':_0x1dcae9,'page':this[_0x2f5dd4(0x2a9)]()}),this[_0x2f5dd4(0x24c)]();}['paintGameBoard']({xCount:_0x45b13e,yCount:_0x8bd4c0,mine:_0x49b342,boardSetting:_0x108788}){const _0x5669a0=_0x5c0787,_0x5a8bba=new Board(this,_0x45b13e,_0x8bd4c0);this['board']=_0x5a8bba,_0x5a8bba[_0x5669a0(0x30d)]={'mine':_0x49b342,..._0x108788},_0x5a8bba[_0x5669a0(0x13f)](_0x49b342),_0x5a8bba[_0x5669a0(0x278)](),_0x5a8bba['me']['updateCanvas']();}['paintInfoBoard'](_0x58c236,_0x2afff9,_0x1f7b6f=0x2/0x5,_0x486207=0x3/0x5){const _0x135472=_0x5c0787,{xCount:_0x25b65c,yCount:_0xf2da30,tomato:_0x1c8e0a,yellowgreen:_0xc4de3b,safe:_0x4e4379,ensured:_0x36c3e3,mine:_0x90fa21,me:_0x3b6c44,showShape:_0x2da8af}=_0x58c236,_0x3f5c5c=document['createElement'](_0x135472(0x16c));_0x3f5c5c[_0x135472(0x200)](_0x135472(0x1b2),this[_0x135472(0x2eb)][_0x135472(0x2cf)]*_0x1f7b6f+'px'),_0x3f5c5c[_0x135472(0x200)](_0x135472(0x30a),this[_0x135472(0x30a)]*_0x486207+'px');const _0x193a1a=new Canvas(_0x3f5c5c,![]);_0x193a1a['width']=this[_0x135472(0x2eb)][_0x135472(0x2cf)]*_0x1f7b6f,_0x193a1a[_0x135472(0x30a)]=this[_0x135472(0x30a)]*_0x486207;const _0x118470=Math['min'](_0x193a1a[_0x135472(0x1b2)]/_0x25b65c,_0x193a1a[_0x135472(0x30a)]*0.9/_0xf2da30),_0x1cea4c=new Board(_0x193a1a,_0x25b65c,_0xf2da30,![],{'maxWidth':_0x193a1a[_0x135472(0x1b2)],'maxHeight':_0x193a1a[_0x135472(0x30a)],'cellSize':_0x118470});_0x1cea4c['showShapeSwitch']=_0x2da8af??![],_0x1cea4c['updateCanvas'](),_0x1c8e0a?.[_0x135472(0x2d3)](([_0x2a3205,_0xffa271])=>{const _0x8b31b=_0x135472,_0x263d30=_0x1cea4c[_0x8b31b(0x2ed)](_0x2a3205,_0xffa271);_0x263d30[_0x8b31b(0x1de)]=0x1,_0x263d30[_0x8b31b(0x2d6)]=TOMATO;}),_0xc4de3b?.[_0x135472(0x2d3)](([_0x4b70ae,_0x1de610])=>{const _0x180faa=_0x135472,_0x4341d5=_0x1cea4c[_0x180faa(0x2ed)](_0x4b70ae,_0x1de610);_0x4341d5[_0x180faa(0x1de)]=0x2,_0x4341d5[_0x180faa(0x2d6)]=YELLOWGREEN;}),_0x4e4379?.[_0x135472(0x2d3)](([_0x6ab2c4,_0x2be206,_0x1b3e7f,_0x1ff8f3,_0x3b2a5e])=>{const _0x532dd9=_0x135472,_0x5310cc=_0x1cea4c[_0x532dd9(0x2ed)](_0x6ab2c4,_0x2be206);_0x1cea4c[_0x532dd9(0x21e)](_0x6ab2c4,_0x2be206),_0x5310cc[_0x532dd9(0x1b0)]=_0x1b3e7f,_0x5310cc[_0x532dd9(0x145)]=_0x1ff8f3??_0x532dd9(0x2fa),_0x1ff8f3!==_0x532dd9(0x2fa)&&(_0x5310cc['shape']=_0x3b2a5e??shapeMatch[_0x1ff8f3]),_0x5310cc[_0x532dd9(0x287)]=_0x1ff8f3?colorMatch[_0x1ff8f3]:BLACK,_0x1cea4c[_0x532dd9(0x18b)](_0x5310cc);}),_0x36c3e3?.['forEach'](([_0x205180,_0x9a5cac,_0x318706])=>{const _0x344b17=_0x135472,_0x1f2123=_0x1cea4c[_0x344b17(0x2ed)](_0x205180,_0x9a5cac);_0x1cea4c['openCell'](_0x205180,_0x9a5cac),_0x1f2123['number']=_0x318706,_0x1cea4c[_0x344b17(0x18b)](_0x1f2123);}),_0x90fa21?.['forEach'](([_0x4ee36a,_0x3d4bd7])=>{const _0x23c186=_0x135472,_0x131a0e=_0x1cea4c['getCell'](_0x4ee36a,_0x3d4bd7);_0x131a0e['type']=_0x23c186(0x259),_0x1cea4c['ensureCell'](_0x4ee36a,_0x3d4bd7),_0x1cea4c['updateCell'](_0x131a0e);}),_0x3b6c44&&_0x1cea4c['me'][_0x135472(0x2e2)](_0x3b6c44[0x0],_0x3b6c44[0x1]),_0x2afff9[_0x135472(0x246)][_0x135472(0x14a)](_0x193a1a[_0x135472(0x16c)]);}[_0x5c0787(0x2ac)](_0x5674a0,_0x1380e4){const _0x1248b5=_0x5c0787,[_0x28c46b,_0x1d29e1,_0x2a1ece,_0x5acc20,_0x2380c9]=[this['board']['bottomCenterY'],this[_0x1248b5(0x2e1)]*0x3,this[_0x1248b5(0x2e1)]*0x3/0x2,this[_0x1248b5(0x2e1)],0x1];_0x5674a0&&this[_0x1248b5(0x222)](BUTTON[_0x1248b5(0x16f)],{'x':this['board']['x']-_0x1d29e1*0x3/0x4,'y':_0x28c46b,'width':_0x1d29e1,'height':_0x2a1ece,'fontSize':_0x5acc20,'lineWidth':_0x2380c9,'page':this[_0x1248b5(0x202)](_0x5674a0)}),_0x1380e4&&this[_0x1248b5(0x222)](BUTTON[_0x1248b5(0x2e4)],{'x':this['board']['x']+this['board'][_0x1248b5(0x1b2)]+_0x1d29e1*0x3/0x4,'y':_0x28c46b,'width':_0x1d29e1,'height':_0x2a1ece,'fontSize':_0x5acc20,'lineWidth':_0x2380c9,'page':this[_0x1248b5(0x202)](_0x1380e4)}),this[_0x1248b5(0x24c)]();}[_0x5c0787(0x219)](_0x1c5d3d){const _0x210b37=_0x5c0787,{text:_0x4a1d4a,linebreak:_0xbf5031}=_0x1c5d3d,_0x2a614c=new Rect(this[_0x210b37(0x2da)],this[_0x210b37(0x2eb)][_0x210b37(0x2be)]);_0x2a614c[_0x210b37(0x206)](this[_0x210b37(0x2eb)][_0x210b37(0x1b2)],this[_0x210b37(0x2eb)][_0x210b37(0x1ff)],WHITE_ALPHA2),this[_0x210b37(0x30e)](_0x2a614c);const _0x4e6461=this[_0x210b37(0x2eb)]['bottomHeight']/0x5;if(_0xbf5031){const [_0x3b1193,_0x4421ce]=[..._0x4a1d4a][_0x210b37(0x29c)]('')[_0x210b37(0x238)]('\x0a'),_0x5652cf=new Rect(this[_0x210b37(0x2da)],this[_0x210b37(0x2eb)][_0x210b37(0x2be)]-_0x4e6461*0x3/0x4);_0x5652cf[_0x210b37(0x20b)](_0x3b1193,_0x4e6461),this[_0x210b37(0x1ad)](_0x5652cf),this[_0x210b37(0x181)](_0x5652cf),_0x5652cf[_0x210b37(0x264)]['y']=this[_0x210b37(0x2eb)]['bottomCenterY']+_0x4e6461*0x3/0x4,_0x5652cf[_0x210b37(0x13e)]=_0x4421ce,this['fillText'](_0x5652cf);}else{const _0x306dbb=new Rect(this[_0x210b37(0x2da)],this[_0x210b37(0x2eb)][_0x210b37(0x2be)]);_0x306dbb[_0x210b37(0x20b)](_0x4a1d4a,_0x4e6461),this[_0x210b37(0x1ad)](_0x306dbb);}}[_0x5c0787(0x20e)](_0x2f99a5){const _0x14a37c=_0x5c0787;this[_0x14a37c(0x20f)]=_0x14a37c(0x21c),this['gameInfo'][_0x14a37c(0x28c)]++,this['mode']===_0x14a37c(0x190)&&(this['gameInfo'][_0x14a37c(0x2e0)]=0x0),this[_0x14a37c(0x214)](),this[_0x14a37c(0x1fd)](),this[_0x14a37c(0x2ee)](),this[_0x14a37c(0x23c)](_0x2f99a5),this[_0x14a37c(0x13a)](),this[_0x14a37c(0x1f4)]=setInterval(this['setTimer']['bind'](this),0x3e8);}[_0x5c0787(0x13a)](){const _0x488d1d=_0x5c0787,{stage:_0x545e43,life:_0x36ae87,score:_0x3eab11,item1:_0x5b3592,item3:_0x6a59b,item2:_0x4f7399}=this['gameInfo'],{bottomBarHeight:_0x25b1e3,bottomCenterY:_0x1b35ab,remainingMine:_0x210d4f}=this[_0x488d1d(0x2eb)],{time:_0xe06d05}=this[_0x488d1d(0x2eb)][_0x488d1d(0x30d)],{movement:_0xa1039d}=this['board']['me'],[_0x2d16f0,_0x705b2c]=[Math[_0x488d1d(0x304)](_0xe06d05/0x3c),_0xe06d05%0x3c],[_0x385acd,_0x11ac9b]=[this[_0x488d1d(0x1b2)]/0x2,_0x25b1e3];let _0x4dc9c1=0x0;this[_0x488d1d(0x2eb)][_0x488d1d(0x1f0)](_0x4b1b2c=>{_0x4b1b2c['isMine']&&_0x4dc9c1++;});const _0x33fe50=new Rect(this[_0x488d1d(0x2da)],_0x1b35ab);_0x33fe50['setFillInfo'](_0x385acd,_0x11ac9b,WHITE)['setStrokeInfo'](),this[_0x488d1d(0x30e)](_0x33fe50,!![]),this[_0x488d1d(0x270)](_0x33fe50);if(this[_0x488d1d(0x158)]===_0x488d1d(0x280)){const _0x1af44e=[''+_0x545e43,''+_0x3eab11,''+_0x36ae87,_0x210d4f+'/'+_0x4dc9c1,_0x2d16f0+':'+(_0x705b2c<0xa?'0'+_0x705b2c:_0x705b2c),_0x5b3592+'개',_0x4f7399+'개',_0x6a59b+'개'],_0x447ea6=_0x25b1e3/0x4,[_0x48a70c,_0x5dd048]=[_0x1b35ab-_0x25b1e3/0x5,_0x1b35ab+_0x25b1e3/0x5];_0x1af44e[_0x488d1d(0x2d3)]((_0x4a5318,_0x2c8c7f)=>{const _0x4ad9f4=_0x488d1d,_0x28084d=new Rect(this[_0x4ad9f4(0x2da)]+_0x385acd*(_0x2c8c7f*0x2-0x7)/0x10,_0x48a70c);_0x28084d['setTextInfo'](TEXT[_0x4ad9f4(0x221)+(_0x2c8c7f+0x1)],_0x447ea6),this[_0x4ad9f4(0x1ad)](_0x28084d);let _0x4f5f90=BLACK;(_0x2c8c7f===0x2&&_0x36ae87===0x0||_0x2c8c7f===0x4&&_0xe06d05<0x1e)&&(_0x4f5f90=TOMATO);const _0x482819=new Rect(this[_0x4ad9f4(0x2da)]+_0x385acd*(_0x2c8c7f*0x2-0x7)/0x10,_0x5dd048);_0x482819[_0x4ad9f4(0x20b)](_0x4a5318,_0x447ea6,_0x4f5f90),this['fillText'](_0x482819);});}else{if(this[_0x488d1d(0x158)]===_0x488d1d(0x190)){const _0x50d5b2=[_0x210d4f+'/'+_0x4dc9c1,_0x2d16f0+':'+(_0x705b2c<0xa?'0'+_0x705b2c:_0x705b2c),_0xa1039d+'회'],_0x228d51=_0x25b1e3/0x4,[_0x294d34,_0x1db767]=[_0x1b35ab-_0x25b1e3/0x5,_0x1b35ab+_0x25b1e3/0x5];_0x50d5b2[_0x488d1d(0x2d3)]((_0x3ba874,_0x236179)=>{const _0x5dba78=_0x488d1d,_0x36aabc=new Rect(this[_0x5dba78(0x2da)]+_0x385acd*(_0x236179-0x1)/0x3,_0x294d34);_0x36aabc['setTextInfo'](TEXT[_0x5dba78(0x19b)+(_0x236179+0x1)],_0x228d51),this['fillText'](_0x36aabc);let _0x2e2886=BLACK;_0x236179===0x1&&_0xe06d05<0x1e&&(_0x2e2886=TOMATO);const _0x144df2=new Rect(this[_0x5dba78(0x2da)]+_0x385acd*(_0x236179-0x1)/0x3,_0x1db767);_0x144df2[_0x5dba78(0x20b)](_0x3ba874,_0x228d51,_0x2e2886),this['fillText'](_0x144df2);});}}}[_0x5c0787(0x270)](_0x8a792c){const _0x302b3f=_0x5c0787,_0x433a1c=_0x8a792c[_0x302b3f(0x264)]['x']-_0x8a792c[_0x302b3f(0x1b2)]/0x2,_0x106cae=_0x8a792c[_0x302b3f(0x264)]['y'];if(this[_0x302b3f(0x158)]==='CLASSIC')for(let _0x3514c8=0x0;_0x3514c8<0x7;_0x3514c8++){const _0x121969=new Rect(_0x433a1c+_0x8a792c[_0x302b3f(0x1b2)]*(_0x3514c8+0x1)/0x8,_0x106cae);_0x121969[_0x302b3f(0x206)](0x0,_0x8a792c[_0x302b3f(0x30a)]*0x3/0x4),_0x121969['setStrokeInfo'](LIGHTGRAY,0x3),this[_0x302b3f(0x181)](_0x121969);}else{if(this[_0x302b3f(0x158)]===_0x302b3f(0x190))for(let _0xcfc543=0x0;_0xcfc543<0x2;_0xcfc543++){const _0x1fee95=new Rect(_0x433a1c+_0x8a792c[_0x302b3f(0x1b2)]*(_0xcfc543+0x1)/0x3,_0x106cae);_0x1fee95['setFillInfo'](0x0,_0x8a792c[_0x302b3f(0x30a)]*0x3/0x4),_0x1fee95[_0x302b3f(0x1a4)](LIGHTGRAY,0x3),this[_0x302b3f(0x181)](_0x1fee95);}}}[_0x5c0787(0x187)](){const _0x1f1af4=_0x5c0787,{time:_0x481e06}=this[_0x1f1af4(0x2eb)][_0x1f1af4(0x30d)];_0x481e06<=0x1e&&!this['gameInfo'][_0x1f1af4(0x24f)]&&(this[_0x1f1af4(0x209)][_0x1f1af4(0x24f)]=!![],this[_0x1f1af4(0x28b)](_0x1f1af4(0x1bc)));if(_0x481e06>0x0)this[_0x1f1af4(0x2eb)][_0x1f1af4(0x30d)]['time']--,this[_0x1f1af4(0x13a)]();else{clearInterval(this[_0x1f1af4(0x1f4)]);if(this[_0x1f1af4(0x158)]==='CLASSIC')this['showGameResult']();else this['mode']===_0x1f1af4(0x190)&&this[_0x1f1af4(0x170)]();}}['showMsgBox'](_0x46ad72,_0xb10153=RED,_0x5559df=_0x5c0787(0x26e)){const _0x4a2755=_0x5c0787;this['msgTimer']&&(clearInterval(this[_0x4a2755(0x1bf)]),this[_0x4a2755(0x154)][_0x4a2755(0x160)](),this[_0x4a2755(0x154)][_0x4a2755(0x26c)]=0x1);this[_0x4a2755(0x154)]['innerHTML']=_0x46ad72,this[_0x4a2755(0x154)][_0x4a2755(0x23e)]=this[_0x4a2755(0x2e1)]/0x2,this['$msgBox'][_0x4a2755(0x1b2)]=this[_0x4a2755(0x2eb)]['maxHeight'],this['$msgBox']['height']=this[_0x4a2755(0x2e1)]*0x3/0x4,this[_0x4a2755(0x154)][_0x4a2755(0x254)]=this[_0x4a2755(0x2e1)]/0x8,this[_0x4a2755(0x154)][_0x4a2755(0x2db)]=_0xb10153,this['playSound'](_0x5559df),this[_0x4a2755(0x154)][_0x4a2755(0x1ec)]();let _0x303ad5=0x3e8,_0x200eb6=0x28;const _0x230f7f=()=>{const _0x470f3c=_0x4a2755;_0x200eb6>0x0?_0x200eb6--:(this['$msgBox'][_0x470f3c(0x26c)]=_0x303ad5/0x3e8,_0x303ad5-=0x11,_0x303ad5<0x0&&(this[_0x470f3c(0x154)][_0x470f3c(0x160)](),clearInterval(this[_0x470f3c(0x1bf)])));};this[_0x4a2755(0x1bf)]=setInterval(_0x230f7f,0xa);}[_0x5c0787(0x302)](_0x3d36dc){const _0x35fc42=_0x5c0787;this[_0x35fc42(0x20f)]=_0x3d36dc,this[_0x35fc42(0x2ee)](),this[_0x35fc42(0x1fd)](),this[_0x35fc42(0x2c4)][_0x35fc42(0x1bc)]['pause'](),this[_0x35fc42(0x209)][_0x35fc42(0x24f)]=![];}[_0x5c0787(0x1a2)](_0x2b06d8){const _0x5c08ef=_0x5c0787;let _0x3a5f7=0x0,_0x211b49=0x0;const _0x2a4c5e=()=>{const _0x410bae=_0x52bd;_0x2b06d8[_0x410bae(0x251)]=++_0x3a5f7/0x2,_0x2b06d8[_0x410bae(0x26c)]=++_0x211b49/0x64,_0x3a5f7===0x64&&clearInterval(this[_0x410bae(0x169)]);};this[_0x5c08ef(0x169)]=setInterval(_0x2a4c5e,0x4);}[_0x5c0787(0x237)](_0x46c49d=![]){const _0x5a28f9=_0x5c0787;this['initPage'](_0x5a28f9(0x1af));const {stage:_0x5d619b,score:_0xbd178a}=this[_0x5a28f9(0x209)],{$title:_0x14bee4,$stage:_0x514cec,$score:_0x5e5b0d,$rank:_0x3463ba,$back:_0x2754ae}=this[_0x5a28f9(0x211)];this[_0x5a28f9(0x211)][_0x5a28f9(0x2db)]=WHITE_ALPHA,this[_0x5a28f9(0x211)][_0x5a28f9(0x23e)]=this[_0x5a28f9(0x194)],this[_0x5a28f9(0x211)][_0x5a28f9(0x1b2)]=this[_0x5a28f9(0x2eb)][_0x5a28f9(0x2cf)],this[_0x5a28f9(0x211)][_0x5a28f9(0x30a)]=this[_0x5a28f9(0x30a)];!_0x46c49d?(_0x14bee4[_0x5a28f9(0x2af)]=_0x5a28f9(0x268),this['playSound'](_0x5a28f9(0x245))):(_0x14bee4[_0x5a28f9(0x2af)]='🎉\x20GAME\x20CLEAR\x20🎉',this[_0x5a28f9(0x28b)](_0x5a28f9(0x15c)));_0x514cec[_0x5a28f9(0x2af)]=_0x5d619b,_0x5e5b0d['innerHTML']=_0xbd178a+'점';let _0x171866;if(_0xbd178a>0x493e0)_0x171866='S';else{if(_0xbd178a>0x30d40)_0x171866='A';else{if(_0xbd178a>0x186a0)_0x171866='B';else{if(_0xbd178a>0xc350)_0x171866='C';else _0xbd178a>0x2710?_0x171866='D':_0x171866='F';}}}_0x3463ba['innerHTML']=_0x171866;const _0x4effdc=new Canvas(_0x2754ae[_0x5a28f9(0x246)],![]);_0x2754ae[_0x5a28f9(0x246)]['addEventListener'](_0x5a28f9(0x17d),_0x4effdc[_0x5a28f9(0x2d2)](_0x5a28f9(0x252))),_0x2754ae[_0x5a28f9(0x246)][_0x5a28f9(0x224)](_0x5a28f9(0x228),_0x4effdc[_0x5a28f9(0x2d2)](_0x5a28f9(0x228))),_0x2754ae['width']=this['canvas'][_0x5a28f9(0x30a)]*BOARD_HEIGHT_RATIO,_0x2754ae[_0x5a28f9(0x30a)]=this['TITLE_SIZE']*0x3/0x2,_0x4effdc[_0x5a28f9(0x222)](BUTTON[_0x5a28f9(0x149)],{'x':_0x2754ae[_0x5a28f9(0x1b2)]/0x2,'y':_0x2754ae['height']/0x2,'fontSize':this[_0x5a28f9(0x2e1)],'width':_0x2754ae[_0x5a28f9(0x1b2)]*0.9,'height':_0x2754ae[_0x5a28f9(0x30a)]*0.9,'page':(()=>{const _0x2cfe3d=this;return function(){const _0x54c3e8=_0x52bd;this[_0x54c3e8(0x16c)][_0x54c3e8(0x2e7)](_0x54c3e8(0x17d),this['getCallback']('clickButton')),this[_0x54c3e8(0x16c)][_0x54c3e8(0x2e7)](_0x54c3e8(0x228),this[_0x54c3e8(0x2d2)](_0x54c3e8(0x228))),_0x2cfe3d[_0x54c3e8(0x214)](),_0x2cfe3d[_0x54c3e8(0x2ee)](),_0x2cfe3d[_0x54c3e8(0x1fd)](),_0x2cfe3d['initValues'](),_0x2cfe3d[_0x54c3e8(0x16c)]['addEventListener'](_0x54c3e8(0x17d),_0x2cfe3d['getCallback'](_0x54c3e8(0x252))),_0x2cfe3d[_0x54c3e8(0x1e2)]();};})()}),_0x4effdc[_0x5a28f9(0x24c)]();const _0x29e6ff={'rank':_0x171866,'name':this[_0x5a28f9(0x209)][_0x5a28f9(0x1fc)],'score':this[_0x5a28f9(0x209)]['score'],'stage':this[_0x5a28f9(0x209)][_0x5a28f9(0x28c)],'log':this[_0x5a28f9(0x209)][_0x5a28f9(0x285)]};this[_0x5a28f9(0x2a6)](_0x29e6ff),this[_0x5a28f9(0x16c)]['removeEventListener']('click',this[_0x5a28f9(0x2d2)](_0x5a28f9(0x295)));}[_0x5c0787(0x1c5)](){const _0x4f59f2=_0x5c0787;this[_0x4f59f2(0x302)](_0x4f59f2(0x1d0));const {isItemUsed:_0x46a97f,accessable:_0x4ec25b,shortest:_0x2d8db0}=this['board'],{time:_0x3a5c4e}=this[_0x4f59f2(0x2eb)]['boardSetting'],{movement:_0x5d9fa2,isDead:_0x1ce67a}=this[_0x4f59f2(0x2eb)]['me'],{stage:_0x1a7f30}=this['gameInfo'],{$title:_0x332965,$cellCount:_0x37af83,$time:_0x2f816e,$moveOpt:_0x3f20ee,$item:_0x51456b,$perfectClear:_0x202233,$totalScore:_0x50fa8e,$footer:_0x2bd674}=this[_0x4f59f2(0x249)],_0x280569=this[_0x4f59f2(0x2eb)][_0x4f59f2(0x291)][_0x4f59f2(0x305)]()[_0x4f59f2(0x15a)]((_0x4738a1,_0xa579c5)=>{const _0x48fccf=_0x4f59f2;return _0xa579c5[_0x48fccf(0x220)]&&_0xa579c5[_0x48fccf(0x1c9)]!==_0x48fccf(0x259)?_0x4738a1+0x1:_0x4738a1;},0x0),_0x30e6de=_0x4ec25b[_0x4f59f2(0x2b7)](_0x12fabd=>_0x12fabd[_0x4f59f2(0x220)]);this[_0x4f59f2(0x249)][_0x4f59f2(0x2db)]=WHITE_ALPHA,this['$stageResult'][_0x4f59f2(0x23e)]=this[_0x4f59f2(0x2e1)],this['$stageResult']['width']=this[_0x4f59f2(0x2eb)][_0x4f59f2(0x2cf)],this[_0x4f59f2(0x249)][_0x4f59f2(0x30a)]=this[_0x4f59f2(0x30a)],_0x332965[_0x4f59f2(0x2af)]=_0x4f59f2(0x213)+_0x1a7f30+_0x4f59f2(0x2f7),_0x37af83[_0x4f59f2(0x2af)]=_0x280569*CELL_COUNT_SCORE,_0x2f816e[_0x4f59f2(0x2af)]=_0x3a5c4e*REMAINING_TIME_SCORE,_0x2bd674[_0x4f59f2(0x2af)]='F를\x20누르면\x20다음\x20스테이지로\x20이동합니다.';let _0xb96e04=0x1;if(_0x1a7f30>0x5){let _0x2b0bd5;if(_0x5d9fa2<=_0x2d8db0+(_0x4ec25b[_0x4f59f2(0x27f)]-_0x2d8db0)*1.2)_0xb96e04=MOVEMENT_PERFECT_RATIO,_0x2b0bd5=_0x4f59f2(0x1f6)+Math[_0x4f59f2(0x304)](_0xb96e04*0x64-0x64)+'%',_0x3f20ee[_0x4f59f2(0x247)]=YELLOWGREEN;else{if(_0x5d9fa2<=_0x2d8db0+(_0x4ec25b[_0x4f59f2(0x27f)]-_0x2d8db0)*1.5)_0xb96e04=MOVEMENT_EXCELLENT_RATIO,_0x2b0bd5=_0x4f59f2(0x185)+Math[_0x4f59f2(0x304)](_0xb96e04*0x64-0x64)+'%',_0x3f20ee[_0x4f59f2(0x247)]=YELLOWGREEN;else{if(_0x5d9fa2<=_0x2d8db0+(_0x4ec25b[_0x4f59f2(0x27f)]-_0x2d8db0)*0x2)_0xb96e04=MOVEMENT_GREAT_RATIO,_0x2b0bd5=_0x4f59f2(0x2f8)+Math[_0x4f59f2(0x304)](_0xb96e04*0x64-0x64)+'%',_0x3f20ee[_0x4f59f2(0x247)]=NAVY;else _0x5d9fa2<=_0x2d8db0+(_0x4ec25b['length']-_0x2d8db0)*2.5?(_0xb96e04=MOVEMENT_GOOD_RATIO,_0x2b0bd5=_0x4f59f2(0x2de)+Math[_0x4f59f2(0x304)](_0xb96e04*0x64-0x64)+'%',_0x3f20ee[_0x4f59f2(0x247)]=NAVY):(_0xb96e04=0x1,_0x2b0bd5=_0x4f59f2(0x248),_0x3f20ee[_0x4f59f2(0x247)]=BLACK);}}_0x3f20ee['innerHTML']=_0x2b0bd5,this[_0x4f59f2(0x249)]['$movementDiv'][_0x4f59f2(0x1ec)]();}let _0x22bbe7=0x1;_0x1a7f30>0x1&&(!_0x46a97f?(_0x22bbe7=RESERVED_ITEM_RATIO,_0x51456b[_0x4f59f2(0x247)]=YELLOWGREEN,_0x51456b[_0x4f59f2(0x2af)]=_0x4f59f2(0x24b)+Math[_0x4f59f2(0x304)](_0x22bbe7*0x64-0x64)+'%'):(_0x51456b[_0x4f59f2(0x247)]=BLACK,_0x51456b['innerHTML']='FAIL'),this[_0x4f59f2(0x249)]['$itemDiv'][_0x4f59f2(0x1ec)]());let _0x50b6b7=0x1;_0x1a7f30>0x4&&(!_0x1ce67a&&_0x30e6de?(_0x50b6b7=PERFECT_CLEAR_RATIO,_0x202233[_0x4f59f2(0x247)]=YELLOWGREEN,_0x202233[_0x4f59f2(0x2af)]=_0x4f59f2(0x17f)+_0x50b6b7):(_0x202233[_0x4f59f2(0x247)]=BLACK,_0x202233[_0x4f59f2(0x2af)]=_0x4f59f2(0x255)),this['$stageResult'][_0x4f59f2(0x262)][_0x4f59f2(0x1ec)]()),this['gameInfo']['tempScore']=Math[_0x4f59f2(0x304)]((_0x280569*CELL_COUNT_SCORE+_0x3a5c4e*REMAINING_TIME_SCORE)*_0xb96e04*_0x22bbe7*_0x50b6b7),_0x50fa8e['innerHTML']=this[_0x4f59f2(0x209)][_0x4f59f2(0x283)],this[_0x4f59f2(0x28b)](_0x4f59f2(0x15c)),this[_0x4f59f2(0x267)](_0x280569,_0x5d9fa2,_0x46a97f,_0x1ce67a,_0x30e6de),this[_0x4f59f2(0x306)](),this['$stageResult']['show'](),this[_0x4f59f2(0x1a2)](this[_0x4f59f2(0x249)]);}[_0x5c0787(0x208)](_0x282e9b){const _0x2dc360=_0x5c0787,{layout:_0x134641,title:_0x2ec930,half1:_0x1aea7b,half2:_0x1a9ab2,article:_0x93160e,arrow:_0x17ab6e,header:_0x3dc40b,footer:_0x494c45,bonus:_0x1a9581}=_0x282e9b,{$title:_0x42afcf,$header:_0x33713c,$left:_0x38976b,$right:_0xf4bc37,$arrow:_0x136df4,$article:_0x1609e7,$footer:_0x3085ed}=this[_0x2dc360(0x1b5)];this['initPage'](_0x2dc360(0x2d8)),this['gameInfo']['bonus']=_0x1a9581,this[_0x2dc360(0x1b5)][_0x2dc360(0x2db)]=WHITE_ALPHA,this['$information'][_0x2dc360(0x23e)]=this[_0x2dc360(0x2e1)]*0x3/0x5,this[_0x2dc360(0x1b5)][_0x2dc360(0x1b2)]=this['board']['maxWidth'],this[_0x2dc360(0x1b5)][_0x2dc360(0x30a)]=this['height'],_0x42afcf[_0x2dc360(0x2af)]=_0x2ec930??'',_0x42afcf[_0x2dc360(0x23e)]=this[_0x2dc360(0x2e1)],_0x33713c['innerHTML']=_0x3dc40b??'',_0x3085ed[_0x2dc360(0x2af)]=_0x494c45??'';if(_0x134641===_0x2dc360(0x147)){if(_0x1aea7b[_0x2dc360(0x1c9)]===_0x2dc360(0x2eb))this[_0x2dc360(0x167)](_0x1aea7b,_0x38976b);else _0x1aea7b['type']===_0x2dc360(0x13e)&&(_0x38976b['innerHTML']=_0x1aea7b[_0x2dc360(0x13e)]);if(_0x1a9ab2[_0x2dc360(0x1c9)]===_0x2dc360(0x2eb))this[_0x2dc360(0x167)](_0x1a9ab2,_0xf4bc37);else _0x1a9ab2[_0x2dc360(0x1c9)]==='text'&&(_0xf4bc37[_0x2dc360(0x2af)]=_0x1a9ab2['text']);_0x17ab6e?(_0x136df4[_0x2dc360(0x23e)]=this['FONT_SIZE']*0x2,_0x136df4[_0x2dc360(0x2af)]='☞',_0x136df4['show']()):_0x136df4[_0x2dc360(0x160)]();}else{if(_0x134641===_0x2dc360(0x1e7)){if(_0x93160e['type']===_0x2dc360(0x13e))_0x1609e7[_0x2dc360(0x2af)]=_0x93160e[_0x2dc360(0x13e)];else _0x93160e['type']===_0x2dc360(0x2eb)&&this[_0x2dc360(0x167)](_0x93160e,_0x1609e7,0x7/0xa,0x1/0x2);}}this[_0x2dc360(0x1b5)][_0x2dc360(0x1ec)]();}['showInputId'](){const _0x31c29e=_0x5c0787;this[_0x31c29e(0x302)]('inputId');const {$header:_0x211bac,$input:_0xb48777,$submit:_0x15c5e2}=this[_0x31c29e(0x15b)];this['$inputId']['backgroundColor']=WHITE_ALPHA,this[_0x31c29e(0x15b)]['font']=this[_0x31c29e(0x2e1)],this['$inputId'][_0x31c29e(0x1b2)]=this[_0x31c29e(0x1b2)]*BOARD_WIDTH_RATIO,this[_0x31c29e(0x15b)][_0x31c29e(0x30a)]=this[_0x31c29e(0x30a)],_0x211bac[_0x31c29e(0x23e)]=this[_0x31c29e(0x2e1)]*0x2/0x3;const _0x2d9df5=new Canvas(_0x15c5e2[_0x31c29e(0x246)],![]);_0x15c5e2[_0x31c29e(0x246)][_0x31c29e(0x224)](_0x31c29e(0x17d),_0x2d9df5[_0x31c29e(0x2d2)](_0x31c29e(0x252))),_0x15c5e2[_0x31c29e(0x246)][_0x31c29e(0x224)]('mousemove',_0x2d9df5['getCallback'](_0x31c29e(0x228))),_0x15c5e2[_0x31c29e(0x1b2)]=this[_0x31c29e(0x16c)]['height']*BOARD_HEIGHT_RATIO,_0x15c5e2[_0x31c29e(0x30a)]=this['TITLE_SIZE']*0x3,_0x2d9df5[_0x31c29e(0x222)](BUTTON[_0x31c29e(0x22a)],{'x':_0x15c5e2[_0x31c29e(0x1b2)]/0x2,'y':_0x15c5e2[_0x31c29e(0x30a)]/0x2,'fontSize':this['FONT_SIZE'],'width':_0x15c5e2[_0x31c29e(0x1b2)]*0.5,'height':_0x15c5e2['height']*0.5,'page':(()=>{const _0x6b4137=this;return function(){const _0x27b57d=_0x52bd,_0x484dab=_0xb48777[_0x27b57d(0x246)][_0x27b57d(0x1b7)][_0x27b57d(0x24d)]();_0x484dab[_0x27b57d(0x27f)]>0x0&&!/[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/[_0x27b57d(0x1c6)](_0x484dab)?(this[_0x27b57d(0x16c)][_0x27b57d(0x2e7)](_0x27b57d(0x17d),_0x2d9df5[_0x27b57d(0x2d2)](_0x27b57d(0x252))),this[_0x27b57d(0x16c)][_0x27b57d(0x2e7)]('mousemove',_0x2d9df5[_0x27b57d(0x2d2)](_0x27b57d(0x228))),_0x6b4137['gameInfo'][_0x27b57d(0x1fc)]=_0x484dab,_0x6b4137[_0x27b57d(0x2c2)]()):alert('잘못된\x20입력입니다');};})()}),_0x2d9df5[_0x31c29e(0x24c)](),this['$inputId'][_0x31c29e(0x1ca)][_0x31c29e(0x1b7)]='',this[_0x31c29e(0x15b)]['show']();}[_0x5c0787(0x1a9)](){const _0x1c1966=_0x5c0787;this[_0x1c1966(0x302)]('leaderboard');const {$list:_0x1b9a49,$footer:_0x436076,$mode01:_0x9a7961,$mode02:_0x8ebc5b,$classic:_0x4ddf1b,$challenge:_0x4c4129}=this[_0x1c1966(0x168)];this[_0x1c1966(0x168)][_0x1c1966(0x2db)]=WHITE_ALPHA,this['$leaderboard'][_0x1c1966(0x23e)]=this[_0x1c1966(0x2e1)],this['$leaderboard'][_0x1c1966(0x1b2)]=this[_0x1c1966(0x1b2)]*BOARD_WIDTH_RATIO,this[_0x1c1966(0x168)]['height']=this[_0x1c1966(0x30a)],_0x1b9a49[_0x1c1966(0x23e)]=this[_0x1c1966(0x2e1)]/0x2,_0x1b9a49[_0x1c1966(0x1d7)]=0x1f4,_0x436076[_0x1c1966(0x23e)]=this[_0x1c1966(0x2e1)]/0x2,_0x436076['fontWeight']=0x1f4,_0x9a7961[_0x1c1966(0x23e)]=this[_0x1c1966(0x2e1)]/0x2,_0x9a7961[_0x1c1966(0x1d7)]=0x1f4,_0x9a7961[_0x1c1966(0x1b2)]=0x24b,_0x8ebc5b[_0x1c1966(0x23e)]=this[_0x1c1966(0x2e1)]/0x2,_0x8ebc5b[_0x1c1966(0x1d7)]=0x1f4,_0x8ebc5b[_0x1c1966(0x1b2)]=0x24b,this['leaderboardInfo'][_0x1c1966(0x20f)]=0x1;if(_0x4ddf1b[_0x1c1966(0x246)][_0x1c1966(0x1d2)])this[_0x1c1966(0x2c3)]();else _0x4c4129[_0x1c1966(0x246)]['checked']&&this[_0x1c1966(0x17c)]();}[_0x5c0787(0x2e9)](){const _0x1ef737=_0x5c0787;this[_0x1ef737(0x302)]('updateLog');const {$footer:_0x3bb2cf}=this[_0x1ef737(0x2ae)];this['$updateLog'][_0x1ef737(0x2db)]=WHITE_ALPHA,this['$updateLog']['font']=this[_0x1ef737(0x2e1)],this[_0x1ef737(0x2ae)][_0x1ef737(0x1b2)]=this[_0x1ef737(0x1b2)]*BOARD_WIDTH_RATIO,this[_0x1ef737(0x2ae)]['height']=this[_0x1ef737(0x30a)],_0x3bb2cf[_0x1ef737(0x23e)]=this[_0x1ef737(0x2e1)]/0x2,this[_0x1ef737(0x1df)](),this[_0x1ef737(0x2ae)]['show']();}[_0x5c0787(0x29e)](){const _0x33a828=_0x5c0787;this[_0x33a828(0x302)](_0x33a828(0x204));const {$footer:_0x331671}=this[_0x33a828(0x2a4)];this[_0x33a828(0x2a4)][_0x33a828(0x2db)]=WHITE_ALPHA,this[_0x33a828(0x2a4)][_0x33a828(0x23e)]=this[_0x33a828(0x2e1)],this[_0x33a828(0x2a4)][_0x33a828(0x1b2)]=this[_0x33a828(0x1b2)]*BOARD_WIDTH_RATIO,this[_0x33a828(0x2a4)][_0x33a828(0x30a)]=this[_0x33a828(0x30a)],_0x331671['font']=this[_0x33a828(0x2e1)]/0x2,this[_0x33a828(0x26d)](),this[_0x33a828(0x2a4)]['show']();}['showChallengeResult'](){const _0x101974=_0x5c0787;this[_0x101974(0x302)](_0x101974(0x1ce));const {accessable:_0x20cd8b,shortest:_0x3f6fd7}=this[_0x101974(0x2eb)],{time:_0x45986f}=this[_0x101974(0x2eb)]['boardSetting'],{movement:_0x4e8c3f}=this['board']['me'],{$title:_0x3605a8,$cellCount:_0x51fa9c,$time:_0x32f9d8,$moveOpt:_0x29695b,$perfectClear:_0x102c5f,$totalScore:_0x48c66a,$footer:_0x5cfad2}=this[_0x101974(0x249)],_0x3b3d4b=this['board'][_0x101974(0x291)][_0x101974(0x305)]()[_0x101974(0x15a)]((_0x53ec5a,_0x8ba30c)=>{const _0x1d8c1a=_0x101974;return _0x8ba30c['isEnsured']&&_0x8ba30c[_0x1d8c1a(0x1c9)]!==_0x1d8c1a(0x259)?_0x53ec5a+0x1:_0x53ec5a;},0x0),_0x4011ce=_0x20cd8b[_0x101974(0x2b7)](_0x14b217=>_0x14b217[_0x101974(0x220)]);this[_0x101974(0x249)][_0x101974(0x2db)]=WHITE_ALPHA,this[_0x101974(0x249)][_0x101974(0x23e)]=this[_0x101974(0x2e1)],this[_0x101974(0x249)][_0x101974(0x1b2)]=this[_0x101974(0x2eb)][_0x101974(0x2cf)],this[_0x101974(0x249)]['height']=this[_0x101974(0x30a)],_0x3605a8[_0x101974(0x2af)]=_0x101974(0x256),_0x51fa9c[_0x101974(0x2af)]=_0x3b3d4b*CELL_COUNT_SCORE,_0x32f9d8[_0x101974(0x2af)]=_0x45986f*REMAINING_TIME_SCORE,_0x5cfad2[_0x101974(0x2af)]=_0x101974(0x20d);let _0x561a72=0x1,_0x12bdb5;if(_0x4e8c3f<=_0x3f6fd7+(_0x20cd8b['length']-_0x3f6fd7)*1.2)_0x561a72=MOVEMENT_PERFECT_RATIO,_0x12bdb5=_0x101974(0x1f6)+Math[_0x101974(0x304)](_0x561a72*0x64-0x64)+'%',_0x29695b[_0x101974(0x247)]=YELLOWGREEN;else{if(_0x4e8c3f<=_0x3f6fd7+(_0x20cd8b[_0x101974(0x27f)]-_0x3f6fd7)*1.5)_0x561a72=MOVEMENT_EXCELLENT_RATIO,_0x12bdb5='Excellent\x20+'+Math['floor'](_0x561a72*0x64-0x64)+'%',_0x29695b[_0x101974(0x247)]=YELLOWGREEN;else{if(_0x4e8c3f<=_0x3f6fd7+(_0x20cd8b['length']-_0x3f6fd7)*0x2)_0x561a72=MOVEMENT_GREAT_RATIO,_0x12bdb5=_0x101974(0x2f8)+Math[_0x101974(0x304)](_0x561a72*0x64-0x64)+'%',_0x29695b[_0x101974(0x247)]=NAVY;else _0x4e8c3f<=_0x3f6fd7+(_0x20cd8b[_0x101974(0x27f)]-_0x3f6fd7)*2.5?(_0x561a72=MOVEMENT_GOOD_RATIO,_0x12bdb5='Good\x20+'+Math[_0x101974(0x304)](_0x561a72*0x64-0x64)+'%',_0x29695b['color']=NAVY):(_0x561a72=0x1,_0x12bdb5=_0x101974(0x248),_0x29695b[_0x101974(0x247)]=BLACK);}}_0x29695b['innerHTML']=_0x12bdb5,this[_0x101974(0x249)][_0x101974(0x1ba)][_0x101974(0x1ec)]();let _0x279257=0x1;_0x4011ce?(_0x279257=PERFECT_CLEAR_RATIO,_0x102c5f[_0x101974(0x247)]=YELLOWGREEN,_0x102c5f[_0x101974(0x2af)]=_0x101974(0x17f)+_0x279257):(_0x102c5f['color']=BLACK,_0x102c5f['innerHTML']=_0x101974(0x255));this['$stageResult']['$perfectClearDiv'][_0x101974(0x1ec)](),this[_0x101974(0x209)]['tempScore']=Math[_0x101974(0x304)]((_0x3b3d4b*CELL_COUNT_SCORE+_0x45986f*REMAINING_TIME_SCORE)*_0x561a72*_0x279257),_0x48c66a['innerHTML']=this[_0x101974(0x209)][_0x101974(0x283)],this['playSound'](_0x101974(0x15c)),this[_0x101974(0x1c8)](_0x3b3d4b,_0x4e8c3f,_0x4011ce),this['sendChallengeLogToServer'](),this[_0x101974(0x249)]['show'](),this['elementDropEffect'](this['$stageResult']);const _0x347cd0={'name':this[_0x101974(0x209)][_0x101974(0x1fc)],'score':this[_0x101974(0x209)]['tempScore'],'time':this['board'][_0x101974(0x30d)][_0x101974(0x1cd)],'cellCount':_0x3b3d4b,'log':this['gameInfo'][_0x101974(0x285)]};this['postChallengeLeaderBoard'](_0x347cd0),this[_0x101974(0x16c)][_0x101974(0x2e7)](_0x101974(0x17d),this[_0x101974(0x2d2)]('clickCell'));}[_0x5c0787(0x170)](){const _0x66961f=_0x5c0787;this[_0x66961f(0x302)](_0x66961f(0x2ab)),this[_0x66961f(0x2a5)][_0x66961f(0x2db)]=WHITE_ALPHA,this[_0x66961f(0x2a5)][_0x66961f(0x23e)]=this[_0x66961f(0x2e1)],this[_0x66961f(0x2a5)][_0x66961f(0x1b2)]=this[_0x66961f(0x2eb)][_0x66961f(0x2cf)],this[_0x66961f(0x2a5)][_0x66961f(0x30a)]=this[_0x66961f(0x30a)],this['playSound'](_0x66961f(0x245)),this[_0x66961f(0x231)](),this[_0x66961f(0x2a5)][_0x66961f(0x1ec)](),this[_0x66961f(0x16c)][_0x66961f(0x2e7)]('click',this[_0x66961f(0x2d2)](_0x66961f(0x295)));}[_0x5c0787(0x2c5)](){const _0x59a1b2=_0x5c0787;this['gameInfo'][_0x59a1b2(0x21d)]?this[_0x59a1b2(0x16e)](TEXT[_0x59a1b2(0x1d9)],TOMATO,'shape'):this[_0x59a1b2(0x16e)](TEXT[_0x59a1b2(0x171)],YELLOWGREEN,_0x59a1b2(0x27e)),this[_0x59a1b2(0x209)][_0x59a1b2(0x21d)]=!this[_0x59a1b2(0x209)][_0x59a1b2(0x21d)],this[_0x59a1b2(0x2eb)][_0x59a1b2(0x28a)]=this[_0x59a1b2(0x209)][_0x59a1b2(0x21d)],this[_0x59a1b2(0x2eb)][_0x59a1b2(0x278)](),this[_0x59a1b2(0x2eb)]['me'][_0x59a1b2(0x278)]();}[_0x5c0787(0x2ba)](){const _0x2019b1=_0x5c0787,{board:_0x2463af}=this,{me:_0x1cef8c}=_0x2463af;if(this[_0x2019b1(0x209)][_0x2019b1(0x2bd)]>0x0){const _0x30963f=_0x2463af[_0x2019b1(0x2ed)](_0x1cef8c['x'],_0x1cef8c['y'])['getSurroundingCell'](0x2)['filter'](_0xa8f1e6=>!_0xa8f1e6[_0x2019b1(0x2fe)]);if(_0x30963f['length']){const _0x1fea17=randRange(0x0,_0x30963f[_0x2019b1(0x27f)]-0x1),_0x2da699=_0x30963f[_0x1fea17];_0x2463af[_0x2019b1(0x1cb)](_0x2da699['x'],_0x2da699['y']),_0x2463af[_0x2019b1(0x18b)](_0x2da699),this[_0x2019b1(0x209)]['item1']--,_0x2463af[_0x2019b1(0x281)]=!![],this[_0x2019b1(0x13a)](),this[_0x2019b1(0x16e)](TEXT[_0x2019b1(0x25f)],YELLOWGREEN,_0x2019b1(0x2bb));}else this[_0x2019b1(0x16e)](TEXT['msgBox08'],TOMATO,_0x2019b1(0x139));}else this[_0x2019b1(0x16e)](TEXT[_0x2019b1(0x15e)],TOMATO,'cannotUseItem');}['useItem2'](){const _0x56ec58=_0x5c0787,{board:_0x15f999}=this,{me:_0x3f507f}=_0x15f999;if(this['gameInfo']['item2']>0x0){const _0x3700ae=_0x15f999['getCell'](_0x3f507f['x'],_0x3f507f['y'])[_0x56ec58(0x2cd)](0x2)[_0x56ec58(0x297)](_0x557896=>!_0x557896['isDetected']&&_0x557896[_0x56ec58(0x1c9)]!=='destination');if(_0x3700ae[_0x56ec58(0x27f)]){const _0x1f3643=randRange(0x0,_0x3700ae[_0x56ec58(0x27f)]-0x1),_0x43d2f0=_0x3700ae[_0x1f3643];_0x15f999[_0x56ec58(0x21e)](_0x43d2f0['x'],_0x43d2f0['y']),_0x15f999[_0x56ec58(0x1db)](_0x43d2f0),_0x15f999[_0x56ec58(0x18b)](_0x43d2f0),this[_0x56ec58(0x209)]['item2']--,_0x15f999[_0x56ec58(0x281)]=!![],this[_0x56ec58(0x13a)](),this[_0x56ec58(0x16e)](TEXT[_0x56ec58(0x241)],YELLOWGREEN,'item');}else this[_0x56ec58(0x16e)](TEXT[_0x56ec58(0x299)],TOMATO,_0x56ec58(0x139));}else this['showMsgBox'](TEXT[_0x56ec58(0x244)],TOMATO,_0x56ec58(0x139));}[_0x5c0787(0x141)](){const _0x188b50=_0x5c0787,{board:_0x32208f}=this,{me:_0x16cacb}=_0x32208f;if(this[_0x188b50(0x209)][_0x188b50(0x203)]>0x0){const _0x2274e9=_0x32208f['getCell'](_0x16cacb['x'],_0x16cacb['y'])[_0x188b50(0x2cd)]()['filter'](_0x1f5488=>!_0x1f5488[_0x188b50(0x220)]&&_0x1f5488[_0x188b50(0x1c9)]!==_0x188b50(0x298));if(_0x2274e9[_0x188b50(0x27f)]){const _0x3034db=randRange(0x0,_0x2274e9['length']-0x1),_0x190b13=_0x2274e9[_0x3034db];_0x32208f['ensureCell'](_0x190b13['x'],_0x190b13['y']),_0x32208f[_0x188b50(0x1db)](_0x190b13),_0x32208f[_0x188b50(0x18b)](_0x190b13),this[_0x188b50(0x209)][_0x188b50(0x203)]--,_0x32208f[_0x188b50(0x281)]=!![],this[_0x188b50(0x13a)](),this[_0x188b50(0x16e)](TEXT[_0x188b50(0x2c0)],YELLOWGREEN,_0x188b50(0x2bb));}else this[_0x188b50(0x16e)](TEXT['msgBox08'],TOMATO,_0x188b50(0x139));}else this[_0x188b50(0x16e)](TEXT[_0x188b50(0x19c)],TOMATO,_0x188b50(0x139));}[_0x5c0787(0x2d2)](_0x37ca82){const _0x71a3cc=_0x5c0787;if(!this['callback'][_0x37ca82]){const _0x4bbca9=this[_0x37ca82+_0x71a3cc(0x212)]['bind'](this);this['callback'][_0x37ca82]=_0x4bbca9;}return this['callback'][_0x37ca82];}[_0x5c0787(0x2aa)]({offsetX:_0x19dcae,offsetY:_0x4887bb}){const _0x178198=_0x5c0787;this[_0x178198(0x176)][_0x178198(0x2d3)](_0x11be5a=>{const _0x3f5ac4=_0x178198;_0x11be5a[_0x3f5ac4(0x264)][_0x3f5ac4(0x142)](_0x19dcae,_0x4887bb)&&_0x11be5a[_0x3f5ac4(0x257)][_0x3f5ac4(0x159)](this)();});}[_0x5c0787(0x288)]({offsetX:_0x44c4f4,offsetY:_0x37e607}){const _0xf62d14=_0x5c0787;if(this[_0xf62d14(0x20f)]===_0xf62d14(0x21c)){const {x:_0x3ca4bb,y:_0x419566,cellSize:_0x3d0f2,cellCount:_0x2ce0d0}=this[_0xf62d14(0x2eb)],[_0xe80f9c,_0x41dbbd]=[Math[_0xf62d14(0x304)]((_0x44c4f4-_0x3ca4bb)/_0x3d0f2),Math[_0xf62d14(0x304)]((_0x37e607-_0x419566)/_0x3d0f2)];if(this[_0xf62d14(0x2eb)]['isValid'](_0xe80f9c,_0x41dbbd)&&!this[_0xf62d14(0x2eb)][_0xf62d14(0x2ed)](_0xe80f9c,_0x41dbbd)[_0xf62d14(0x220)]&&this[_0xf62d14(0x2eb)]['getIdx'](_0xe80f9c,_0x41dbbd)!==_0x2ce0d0-0x1){const _0x4ad238=this[_0xf62d14(0x2eb)][_0xf62d14(0x2ed)](_0xe80f9c,_0x41dbbd);switch(_0x4ad238[_0xf62d14(0x1de)]){case 0x0:_0x4ad238['check']=0x1,_0x4ad238[_0xf62d14(0x2d6)]=TOMATO,this['board'][_0xf62d14(0x2ea)]();break;case 0x1:_0x4ad238[_0xf62d14(0x1de)]=0x2,_0x4ad238[_0xf62d14(0x2d6)]=YELLOWGREEN,this[_0xf62d14(0x2eb)][_0xf62d14(0x2ea)]();break;case 0x2:_0x4ad238['check']=0x0,_0x4ad238[_0xf62d14(0x2d6)]='';break;}this[_0xf62d14(0x2eb)]['updateCell'](_0x4ad238),this[_0xf62d14(0x2eb)]['me']['updateCanvas']();}}}['mousemoveCallback']({offsetX:_0x20f717,offsetY:_0x4f90d8}){const _0x835675=_0x5c0787;this[_0x835675(0x176)][_0x835675(0x2d3)](_0x30059e=>{const _0xaab802=_0x835675;if(_0x30059e['contextInfo'][_0xaab802(0x142)](_0x20f717,_0x4f90d8)){const _0x5de638=_0x30059e[_0xaab802(0x264)];_0x30059e[_0xaab802(0x264)]=_0x30059e[_0xaab802(0x19d)],this[_0xaab802(0x30e)](_0x30059e,!![]),this[_0xaab802(0x1ad)](_0x30059e),_0x30059e['contextInfo']=_0x5de638;}else this['fillRect'](_0x30059e,!![]),this['fillText'](_0x30059e);});}[_0x5c0787(0x198)]({keyCode:_0x3d93b8}){const _0x164e46=_0x5c0787;if(this[_0x164e46(0x20f)]===_0x164e46(0x21c)||this[_0x164e46(0x20f)]===_0x164e46(0x2e6)){if(!this['board'])return;const {me:_0x422f89,xCount:_0x2f7a0f,yCount:_0x43e1d6}=this[_0x164e46(0x2eb)],{x:_0x107f7b,y:_0x2ef555}=_0x422f89;switch(_0x3d93b8){case 0x41:_0x107f7b>0x0&&_0x422f89[_0x164e46(0x240)](-0x1);break;case 0x57:_0x2ef555>0x0&&_0x422f89[_0x164e46(0x1ed)](-0x1);break;case 0x44:_0x107f7b<_0x2f7a0f-0x1&&_0x422f89[_0x164e46(0x240)](0x1);break;case 0x53:_0x2ef555<_0x43e1d6-0x1&&_0x422f89[_0x164e46(0x1ed)](0x1);break;case 0x31:this['useItem1']();break;case 0x32:this[_0x164e46(0x2f5)]();break;case 0x33:this[_0x164e46(0x141)]();break;case 0x52:this[_0x164e46(0x2c5)]();break;}}else{if(this[_0x164e46(0x20f)]==='stageResult')_0x3d93b8===0x46&&(this[_0x164e46(0x209)][_0x164e46(0x1d1)]+=this['gameInfo']['tempScore'],this[_0x164e46(0x209)][_0x164e46(0x283)]=0x0,this[_0x164e46(0x2c2)]());else{if(this[_0x164e46(0x20f)]===_0x164e46(0x2d8))_0x3d93b8===0x46&&(this[_0x164e46(0x209)][_0x164e46(0x1e9)]&&(this['gameInfo'][_0x164e46(0x2e0)]+=this[_0x164e46(0x209)]['bonus'][_0x164e46(0x2e0)]??0x0,this[_0x164e46(0x209)][_0x164e46(0x2bd)]+=this['gameInfo'][_0x164e46(0x1e9)][_0x164e46(0x2bd)]??0x0,this[_0x164e46(0x209)][_0x164e46(0x1fa)]+=this[_0x164e46(0x209)][_0x164e46(0x1e9)]['item2']??0x0,this[_0x164e46(0x209)][_0x164e46(0x203)]+=this[_0x164e46(0x209)][_0x164e46(0x1e9)]['item3']??0x0),this[_0x164e46(0x2c2)]());else{if(this[_0x164e46(0x20f)]==='leaderboard'){const {page:_0x3f7034,lastPage:_0x254ab5}=this[_0x164e46(0x243)];if(_0x3d93b8===0x46)this[_0x164e46(0x20f)]=_0x164e46(0x25a),this['leaderboardInfo'][_0x164e46(0x292)]=[],this['$leaderboard'][_0x164e46(0x160)]();else{if(_0x3d93b8===0x41){if(_0x3f7034>0x1){this[_0x164e46(0x243)][_0x164e46(0x20f)]--;if(this[_0x164e46(0x168)][_0x164e46(0x22f)][_0x164e46(0x246)]['checked'])this[_0x164e46(0x2c3)]();else this[_0x164e46(0x168)][_0x164e46(0x2a4)][_0x164e46(0x246)][_0x164e46(0x1d2)]&&this[_0x164e46(0x17c)]();}}else{if(_0x3d93b8===0x44){if(_0x254ab5>=_0x3f7034){this[_0x164e46(0x243)][_0x164e46(0x20f)]++;if(this[_0x164e46(0x168)]['$classic']['elem']['checked'])this[_0x164e46(0x2c3)]();else this[_0x164e46(0x168)][_0x164e46(0x2a4)][_0x164e46(0x246)]['checked']&&this[_0x164e46(0x17c)]();}}}}}else{if(this['page']===_0x164e46(0x2b3))_0x3d93b8===0x46&&(this[_0x164e46(0x20f)]=_0x164e46(0x25a),this[_0x164e46(0x2ae)]['hide'](),this[_0x164e46(0x2ae)]['$article'][_0x164e46(0x15c)]());else{if(this[_0x164e46(0x20f)]===_0x164e46(0x204))_0x3d93b8===0x46&&(this[_0x164e46(0x20f)]=_0x164e46(0x189),this['$challenge'][_0x164e46(0x160)](),this[_0x164e46(0x2a4)][_0x164e46(0x230)][_0x164e46(0x15c)]());else{if(this[_0x164e46(0x20f)]===_0x164e46(0x1ce))_0x3d93b8===0x46&&(this[_0x164e46(0x20f)]=_0x164e46(0x25a),this[_0x164e46(0x214)](),this[_0x164e46(0x2ee)](),this[_0x164e46(0x1fd)](),this[_0x164e46(0x1cf)](),this[_0x164e46(0x16c)]['addEventListener']('click',this[_0x164e46(0x2d2)]('clickButton')),this[_0x164e46(0x1e2)]());else{if(this[_0x164e46(0x20f)]===_0x164e46(0x2ab)){if(_0x3d93b8===0x46)this[_0x164e46(0x20f)]=_0x164e46(0x25a),this[_0x164e46(0x214)](),this[_0x164e46(0x2ee)](),this[_0x164e46(0x1fd)](),this[_0x164e46(0x1cf)](),this['canvas'][_0x164e46(0x224)]('click',this[_0x164e46(0x2d2)](_0x164e46(0x252))),this[_0x164e46(0x1e2)]();else{if(_0x3d93b8===0x52){this[_0x164e46(0x214)](),this[_0x164e46(0x2ee)](),this[_0x164e46(0x1fd)]();const _0x411373=this[_0x164e46(0x158)];this[_0x164e46(0x1cf)](),this[_0x164e46(0x2b2)](_0x411373)[_0x164e46(0x159)](this)();}}}}}}}}}}}[_0x5c0787(0x2b0)](){const _0x1a5015=_0x5c0787;if(this[_0x1a5015(0x20f)]==='leaderboard'){this[_0x1a5015(0x243)][_0x1a5015(0x20f)]=0x1,this['leaderboardInfo'][_0x1a5015(0x292)]=[];if(this[_0x1a5015(0x168)]['$classic']['elem'][_0x1a5015(0x1d2)])this[_0x1a5015(0x2c3)]();else this['$leaderboard'][_0x1a5015(0x2a4)][_0x1a5015(0x246)][_0x1a5015(0x1d2)]&&this[_0x1a5015(0x17c)]();}}[_0x5c0787(0x2c2)](){const _0x45e2b8=_0x5c0787,_0x3617b9=MODE[this[_0x45e2b8(0x158)]][this['gameInfo'][_0x45e2b8(0x272)]++];if(_0x3617b9){const {type:_0x53723f}=_0x3617b9;if(_0x53723f===_0x45e2b8(0x21c))this[_0x45e2b8(0x20e)](_0x3617b9);else{if(_0x53723f==='info')this['showInformation'](_0x3617b9);else _0x53723f===_0x45e2b8(0x20a)&&this['showInputId']();}}else{if(this[_0x45e2b8(0x158)]===_0x45e2b8(0x280))this[_0x45e2b8(0x237)](!![]);else this[_0x45e2b8(0x158)]===_0x45e2b8(0x190)&&this[_0x45e2b8(0x226)]();}}}class ContextInfo{constructor(_0x41d194,_0x480577){const _0x66359d=_0x5c0787;this['x']=_0x41d194,this['y']=_0x480577,this[_0x66359d(0x1d7)]=0x2bc;}get['x1'](){return this['x']-this['width']/0x2;}get['x2'](){const _0xe69fb5=_0x5c0787;return this['x']+this[_0xe69fb5(0x1b2)]/0x2;}get['y1'](){const _0x5285bc=_0x5c0787;return this['y']-this[_0x5285bc(0x30a)]/0x2;}get['y2'](){const _0x55032e=_0x5c0787;return this['y']+this[_0x55032e(0x30a)]/0x2;}get[_0x5c0787(0x23e)](){const _0x2025d7=_0x5c0787;return this[_0x2025d7(0x1d7)]+'\x20'+this[_0x2025d7(0x1a8)]+_0x2025d7(0x210);}[_0x5c0787(0x142)](_0x405a6e,_0x494860){return _0x405a6e>=this['x1']&&_0x405a6e<=this['x2']&&_0x494860>=this['y1']&&_0x494860<=this['y2'];}}class Element{constructor(_0x1ac69a){const _0x453dfa=_0x5c0787;this[_0x453dfa(0x246)]=document[_0x453dfa(0x19f)](_0x1ac69a);}[_0x5c0787(0x160)](){const _0x5b2f9c=_0x5c0787;this[_0x5b2f9c(0x246)]['classList'][_0x5b2f9c(0x28e)]('hidden');}['show'](){const _0x1ab10b=_0x5c0787;this[_0x1ab10b(0x246)]['classList']['remove'](_0x1ab10b(0x2c6));}[_0x5c0787(0x15c)](){const _0x13f387=_0x5c0787;this[_0x13f387(0x246)]['innerHTML']='';}set[_0x5c0787(0x251)](_0x5b4935){const _0x3429e2=_0x5c0787;this[_0x3429e2(0x246)][_0x3429e2(0x205)][_0x3429e2(0x251)]=_0x5b4935+'%';}set[_0x5c0787(0x26c)](_0x30948f){const _0x2e527f=_0x5c0787;this[_0x2e527f(0x246)][_0x2e527f(0x205)][_0x2e527f(0x26c)]=''+_0x30948f;}get[_0x5c0787(0x26c)](){const _0x59feed=_0x5c0787;return+this['elem']['style'][_0x59feed(0x26c)];}set[_0x5c0787(0x2af)](_0x33ec59){const _0x4a2f01=_0x5c0787;this[_0x4a2f01(0x246)][_0x4a2f01(0x2af)]=_0x33ec59;}get['innerHTML'](){const _0x2977a0=_0x5c0787;return this[_0x2977a0(0x246)]['innerHTML'];}set[_0x5c0787(0x23e)](_0x3082ea){const _0x48356d=_0x5c0787;this['elem']['style'][_0x48356d(0x23e)]=_0x48356d(0x22b)+_0x3082ea+_0x48356d(0x210);}set['fontWeight'](_0x5e4ef3){const _0x4f2cee=_0x5c0787;this[_0x4f2cee(0x246)][_0x4f2cee(0x205)]['fontWeight']=_0x5e4ef3;}set[_0x5c0787(0x1b2)](_0x502988){const _0x4d8640=_0x5c0787;this['elem'][_0x4d8640(0x205)]['width']=_0x502988+'px';}get[_0x5c0787(0x1b2)](){const _0x44bf5c=_0x5c0787;return+[...this['elem'][_0x44bf5c(0x205)][_0x44bf5c(0x1b2)][_0x44bf5c(0x24d)]()][_0x44bf5c(0x217)](0x0,-0x2)[_0x44bf5c(0x29c)]('');}set[_0x5c0787(0x30a)](_0x178fbc){const _0x27bd9e=_0x5c0787;this['elem']['style'][_0x27bd9e(0x30a)]=_0x178fbc+'px';}get[_0x5c0787(0x30a)](){const _0x21b086=_0x5c0787;return+[...this[_0x21b086(0x246)][_0x21b086(0x205)][_0x21b086(0x30a)][_0x21b086(0x24d)]()][_0x21b086(0x217)](0x0,-0x2)[_0x21b086(0x29c)]('');}set[_0x5c0787(0x254)](_0x5e8476){this['elem']['style']['borderRadius']=_0x5e8476+'px';}set[_0x5c0787(0x247)](_0x42d140){const _0x1f6199=_0x5c0787;this[_0x1f6199(0x246)][_0x1f6199(0x205)][_0x1f6199(0x247)]=_0x42d140;}set[_0x5c0787(0x2db)](_0x16175f){const _0x315136=_0x5c0787;this[_0x315136(0x246)][_0x315136(0x205)][_0x315136(0x2db)]=_0x16175f;}}class Rect{constructor(_0x24d0fa,_0x203686){const _0x2adb26=_0x5c0787;this[_0x2adb26(0x264)]=new ContextInfo(_0x24d0fa,_0x203686);}['setFillInfo'](_0x6bf8c0,_0x55ec0b,_0x54bdcc=BLACK){const _0x313d3f=_0x5c0787;return this[_0x313d3f(0x1b2)]=_0x6bf8c0,this[_0x313d3f(0x30a)]=_0x55ec0b??_0x6bf8c0,this[_0x313d3f(0x216)]=_0x54bdcc,this;}['setStrokeInfo'](_0x4d8f0f=BLACK,_0x4a45d9=0x1){const _0x110e91=_0x5c0787;return this[_0x110e91(0x1d5)]=_0x4d8f0f,this['lineWidth']=_0x4a45d9,this;}['setTextInfo'](_0x37bcc7,_0x57251b,_0x174cbf=BLACK){const _0x4e0a4d=_0x5c0787;return this[_0x4e0a4d(0x13e)]=_0x37bcc7,this['fontSize']=_0x57251b,this[_0x4e0a4d(0x287)]=_0x174cbf,this;}set[_0x5c0787(0x1b2)](_0x1e9826){const _0x43135c=_0x5c0787;this[_0x43135c(0x264)]['width']=_0x1e9826;}get[_0x5c0787(0x1b2)](){const _0x125737=_0x5c0787;return this[_0x125737(0x264)]['width'];}set[_0x5c0787(0x30a)](_0x1b270d){const _0x79ef22=_0x5c0787;this[_0x79ef22(0x264)][_0x79ef22(0x30a)]=_0x1b270d;}get[_0x5c0787(0x30a)](){const _0x4821f3=_0x5c0787;return this[_0x4821f3(0x264)][_0x4821f3(0x30a)];}set[_0x5c0787(0x216)](_0x3d4c9e){const _0xa8e21a=_0x5c0787;this[_0xa8e21a(0x264)][_0xa8e21a(0x216)]=_0x3d4c9e;}get[_0x5c0787(0x216)](){const _0xa57a42=_0x5c0787;return this[_0xa57a42(0x264)][_0xa57a42(0x216)];}set[_0x5c0787(0x1d5)](_0x924d0a){const _0x1bc8f7=_0x5c0787;this[_0x1bc8f7(0x264)][_0x1bc8f7(0x1d5)]=_0x924d0a;}get['strokeColor'](){const _0x4779b0=_0x5c0787;return this['contextInfo'][_0x4779b0(0x1d5)];}set[_0x5c0787(0x263)](_0x46f307){const _0x99d22d=_0x5c0787;this[_0x99d22d(0x264)][_0x99d22d(0x263)]=_0x46f307;}get[_0x5c0787(0x263)](){const _0x4b4410=_0x5c0787;return this['contextInfo'][_0x4b4410(0x263)];}set[_0x5c0787(0x13e)](_0x32d148){this['contextInfo']['text']=_0x32d148;}get['text'](){const _0x719b07=_0x5c0787;return this[_0x719b07(0x264)]['text'];}set[_0x5c0787(0x1a8)](_0x23fb27){const _0x16e1cf=_0x5c0787;this['contextInfo'][_0x16e1cf(0x1a8)]=_0x23fb27;}get['fontSize'](){const _0x4c5c09=_0x5c0787;return this['contextInfo'][_0x4c5c09(0x1a8)];}set[_0x5c0787(0x287)](_0x30e133){const _0x32a504=_0x5c0787;this[_0x32a504(0x264)][_0x32a504(0x287)]=_0x30e133;}get[_0x5c0787(0x287)](){const _0x785945=_0x5c0787;return this['contextInfo'][_0x785945(0x287)];}set[_0x5c0787(0x1d7)](_0x57367c){const _0x49aa5c=_0x5c0787;this[_0x49aa5c(0x264)]['fontWeight']=_0x57367c;}get[_0x5c0787(0x1d7)](){const _0x34126a=_0x5c0787;return this['contextInfo'][_0x34126a(0x1d7)];}}class Button extends Rect{constructor(_0x274342,_0x5d8432,_0x1db309){const _0x569240=_0x5c0787;super(_0x274342,_0x5d8432),this[_0x569240(0x257)]=_0x1db309,this[_0x569240(0x19d)]=this[_0x569240(0x264)];}};class Cell extends Rect{constructor(_0x478208,_0x55df74,_0x39f4cd){const _0x242fe7=_0x5c0787;super(),this['x']=_0x478208,this['y']=_0x55df74,this[_0x242fe7(0x2eb)]=_0x39f4cd,this[_0x242fe7(0x16c)]=_0x39f4cd[_0x242fe7(0x16c)],this[_0x242fe7(0x1f1)](),this['initCellInfo'](),this[_0x242fe7(0x236)](),this[_0x242fe7(0x16a)]();}get[_0x5c0787(0x1b7)](){const _0x47208a=_0x5c0787;if(this['type']===_0x47208a(0x259))return TEXT[_0x47208a(0x259)];switch(this[_0x47208a(0x1c7)]){case'normal':return this[_0x47208a(0x1b0)];case'oddEven':return this[_0x47208a(0x1b0)]%0x2?'홀':'짝';case'high':return'▲';case _0x47208a(0x1e1):return'▼';}}[_0x5c0787(0x1f1)](){const _0xed845c=_0x5c0787;this[_0xed845c(0x2fe)]=![],this[_0xed845c(0x220)]=![];}[_0x5c0787(0x23f)](){const _0x149548=_0x5c0787;this[_0x149548(0x1c9)]=_0x149548(0x2fa),this['hintType']=_0x149548(0x2fa),this['shape']=[...new Array(0x9)][_0x149548(0x2fb)]((_0x46cae5,_0x5757ad)=>_0x5757ad),this[_0x149548(0x1c7)]='normal',this[_0x149548(0x1b0)]=0x0,this['graphIndex']=null;}[_0x5c0787(0x236)](){const _0x58c270=_0x5c0787;this[_0x58c270(0x1de)]=0x0,this[_0x58c270(0x2d6)]='';}[_0x5c0787(0x16a)](){const _0x473a69=_0x5c0787,{x:_0x16fe8,y:_0x525707,cellSize:_0x42fb6c}=this[_0x473a69(0x2eb)];this['contextInfo']['x']=_0x16fe8+(this['x']+0.5)*_0x42fb6c,this[_0x473a69(0x264)]['y']=_0x525707+(this['y']+0.5)*_0x42fb6c,this[_0x473a69(0x206)](_0x42fb6c,_0x42fb6c,CHARCOAL),this[_0x473a69(0x20b)](this[_0x473a69(0x1b7)],_0x42fb6c/0x2,BLACK);}get[_0x5c0787(0x27d)](){const _0xdc054=_0x5c0787;return this['type']==='mine'||this[_0xdc054(0x1c9)]===_0xdc054(0x259);}[_0x5c0787(0x2cd)](_0x4b5478=0x1){const _0x550836=_0x5c0787;let _0x389144,_0x48abf2,_0x276732;if(_0x4b5478===0x1)_0x389144=[...new Array(0x9)][_0x550836(0x2fb)]((_0x579f4e,_0x17c3d8)=>_0x17c3d8),[_0x48abf2,_0x276732]=[OFFSET_X,OFFSET_Y];else _0x4b5478===0x2&&(_0x389144=[...new Array(0x19)][_0x550836(0x2fb)]((_0x3afc3c,_0x1383e1)=>_0x1383e1),[_0x48abf2,_0x276732]=[OFFSET5_X,OFFSET5_Y]);const _0x52f2df=[];return _0x389144[_0x550836(0x2d3)](_0x58d8b1=>{const _0xc07be7=_0x550836,[_0x42ef7c,_0x49fede]=[this['x']+_0x48abf2[_0x58d8b1],this['y']+_0x276732[_0x58d8b1]];this[_0xc07be7(0x2eb)][_0xc07be7(0x193)](_0x42ef7c,_0x49fede)&&_0x52f2df[_0xc07be7(0x28d)](this[_0xc07be7(0x2eb)][_0xc07be7(0x2ed)](_0x42ef7c,_0x49fede));}),_0x52f2df;}[_0x5c0787(0x26b)](_0x5958af=BLACK,_0x1c642d=0x1){const _0x4eed20=_0x5c0787;this[_0x4eed20(0x1a4)](_0x5958af,_0x1c642d),this[_0x4eed20(0x16c)][_0x4eed20(0x181)](this);}[_0x5c0787(0x15d)](_0xee387b=BLACK,_0x26971a=0x1){const _0x531a91=_0x5c0787;this[_0x531a91(0x13e)]=this[_0x531a91(0x1b7)],this[_0x531a91(0x1d5)]=_0xee387b,this['lineWidth']=_0x26971a,this[_0x531a91(0x16c)][_0x531a91(0x15d)](this);}[_0x5c0787(0x1f3)](_0x356863){const _0x1aa7e8=_0x5c0787;this[_0x1aa7e8(0x1de)]?this[_0x1aa7e8(0x216)]=this[_0x1aa7e8(0x2d6)]:this[_0x1aa7e8(0x216)]=_0x356863;this[_0x1aa7e8(0x16c)][_0x1aa7e8(0x30e)](this);if(this[_0x1aa7e8(0x145)]!=='normal'&&this[_0x1aa7e8(0x2fe)]&&this[_0x1aa7e8(0x1c9)]!==_0x1aa7e8(0x259)){if(this[_0x1aa7e8(0x2eb)][_0x1aa7e8(0x28a)])this[_0x1aa7e8(0x1e6)](colorMatch[this[_0x1aa7e8(0x145)]]);else this[_0x1aa7e8(0x145)]===_0x1aa7e8(0x250)&&this[_0x1aa7e8(0x1e6)](PURPLE);}}[_0x5c0787(0x1ad)](){const _0x4431fc=_0x5c0787;this['text']=this[_0x4431fc(0x1b7)],this[_0x4431fc(0x16c)][_0x4431fc(0x1ad)](this);}[_0x5c0787(0x1e6)](_0x17031a){const _0x1ce1a9=_0x5c0787;let _0x2c28d2,_0x1abec9,_0x1730ee;this[_0x1ce1a9(0x145)]===_0x1ce1a9(0x1f8)||this[_0x1ce1a9(0x145)]===_0x1ce1a9(0x2dd)?(_0x2c28d2=this[_0x1ce1a9(0x2eb)][_0x1ce1a9(0x2f2)]/0x5,_0x1abec9=OFFSET5_X,_0x1730ee=OFFSET5_Y):(_0x2c28d2=this[_0x1ce1a9(0x2eb)][_0x1ce1a9(0x2f2)]/0x3,_0x1abec9=OFFSET_X,_0x1730ee=OFFSET_Y);const _0x391e7c=new Rect(this['x'],this['y']);_0x391e7c[_0x1ce1a9(0x206)](_0x2c28d2,_0x2c28d2,_0x17031a),this['shape'][_0x1ce1a9(0x2d3)](_0x17989c=>{const _0x172052=_0x1ce1a9;_0x391e7c[_0x172052(0x264)]['x']=this['contextInfo']['x']+_0x1abec9[_0x17989c]*_0x2c28d2,_0x391e7c[_0x172052(0x264)]['y']=this[_0x172052(0x264)]['y']+_0x1730ee[_0x17989c]*_0x2c28d2,this[_0x172052(0x16c)][_0x172052(0x30e)](_0x391e7c);});}}class Me extends Rect{constructor(_0x5d4b01){const _0x430d04=_0x5c0787;super(),this[_0x430d04(0x2eb)]=_0x5d4b01,this[_0x430d04(0x16c)]=_0x5d4b01[_0x430d04(0x16c)],this['movement']=0x0,this[_0x430d04(0x1ae)]=![],this[_0x430d04(0x2cc)](),this[_0x430d04(0x16a)]();}['initCoord'](){this['x']=0x0,this['y']=0x0;}[_0x5c0787(0x16a)](){const _0x3d81a8=_0x5c0787,{x:_0x507629,y:_0x496b4c,cellSize:_0x12fd40}=this[_0x3d81a8(0x2eb)];this['contextInfo']['x']=_0x507629+0.5*_0x12fd40,this[_0x3d81a8(0x264)]['y']=_0x496b4c+0.5*_0x12fd40,this[_0x3d81a8(0x206)](_0x12fd40*0x3/0x4,_0x12fd40*0x3/0x4,SKYBLUE_ALPHA),this[_0x3d81a8(0x1a4)]();}['moveX'](_0x416d21){const _0x22825b=_0x5c0787;this[_0x22825b(0x2eb)][_0x22825b(0x18b)]([this['x'],this['y']]),this['x']+=_0x416d21,this['contextInfo']['x']+=this['board'][_0x22825b(0x2f2)]*_0x416d21,this[_0x22825b(0x13d)]++,this[_0x22825b(0x278)]();}[_0x5c0787(0x1ed)](_0x16adb9){const _0x5bc0d8=_0x5c0787;this['board'][_0x5bc0d8(0x18b)]([this['x'],this['y']]),this['y']+=_0x16adb9,this[_0x5bc0d8(0x264)]['y']+=this[_0x5bc0d8(0x2eb)][_0x5bc0d8(0x2f2)]*_0x16adb9,this[_0x5bc0d8(0x13d)]++,this['updateCanvas']();}[_0x5c0787(0x2e2)](_0x4b3c09,_0x33cb40){const _0x48a7c7=_0x5c0787,{cellSize:_0x16cafa}=this['board'];this['board'][_0x48a7c7(0x18b)]([this['x'],this['y']]),this['x']=_0x4b3c09,this['y']=_0x33cb40,this[_0x48a7c7(0x264)]['x']=this[_0x48a7c7(0x2eb)]['x']+(_0x4b3c09+0.5)*_0x16cafa,this[_0x48a7c7(0x264)]['y']=this[_0x48a7c7(0x2eb)]['y']+(_0x33cb40+0.5)*_0x16cafa,this['updateCanvas']();}[_0x5c0787(0x234)](){const _0x2996f7=_0x5c0787;this[_0x2996f7(0x16c)][_0x2996f7(0x30e)](this,!![]);}['updateCanvas'](){const _0x36860b=_0x5c0787,_0x15462d=this[_0x36860b(0x2eb)]['getCell'](this['x'],this['y']),_0x1d327e=[0x0,0x1,0x2,0x3,0x5,0x6,0x7,0x8];_0x1d327e[_0x36860b(0x2d3)](_0x122c7e=>{const _0x4a46cc=_0x36860b,[_0x53fb0b,_0x30be0b]=[this['x']+OFFSET_X[_0x122c7e],this['y']+OFFSET_Y[_0x122c7e]];this['board'][_0x4a46cc(0x193)](_0x53fb0b,_0x30be0b)&&(this['board'][_0x4a46cc(0x1cb)](_0x53fb0b,_0x30be0b),this[_0x4a46cc(0x2eb)][_0x4a46cc(0x18b)]([_0x53fb0b,_0x30be0b]));}),this['board'][_0x36860b(0x21e)](_0x15462d),this[_0x36860b(0x2eb)]['clearCheck'](_0x15462d),this['board'][_0x36860b(0x18b)](_0x15462d),this[_0x36860b(0x234)]();if(_0x15462d['type']===_0x36860b(0x2bc)||_0x15462d[_0x36860b(0x1c9)]==='ensuredMine')this['mineExplosion']();else{if(_0x15462d['type']==='destination'){if(this['canvas'][_0x36860b(0x20f)]==='tutorial')alert(TEXT[_0x36860b(0x298)]),this['canvas'][_0x36860b(0x1e2)]();else{if(this[_0x36860b(0x16c)]['page']===_0x36860b(0x21c)){if(this[_0x36860b(0x16c)][_0x36860b(0x158)]===_0x36860b(0x280))this[_0x36860b(0x16c)]['showStageResult']();else this[_0x36860b(0x16c)][_0x36860b(0x158)]===_0x36860b(0x190)&&this[_0x36860b(0x16c)][_0x36860b(0x226)]();}}}}}['mineExplosion'](){const _0x5cee84=_0x5c0787;this[_0x5cee84(0x2eb)]['updateCell']([this['x'],this['y']]),this[_0x5cee84(0x2e2)](0x0,0x0),this[_0x5cee84(0x16c)]['showMsgBox'](TEXT['msgBox01']),this[_0x5cee84(0x16c)][_0x5cee84(0x20f)]==='game'&&(this[_0x5cee84(0x1ae)]=!![],this[_0x5cee84(0x16c)][_0x5cee84(0x1ab)]());}}function _0x52bd(_0x2fc700,_0x5c4f09){const _0xd4f43d=_0xd4f4();return _0x52bd=function(_0x52bd81,_0xa0af86){_0x52bd81=_0x52bd81-0x136;let _0x1078d7=_0xd4f43d[_0x52bd81];return _0x1078d7;},_0x52bd(_0x2fc700,_0x5c4f09);}class Board{constructor(_0x344d51,_0x7f1dd7,_0xdceb73,_0x4a2990=!![],_0x338cad){const _0x29ced8=_0x5c0787;this[_0x29ced8(0x16c)]=_0x344d51,this[_0x29ced8(0x2b1)]=_0x7f1dd7,this['yCount']=_0xdceb73,this[_0x29ced8(0x157)]=_0x7f1dd7*_0xdceb73,this[_0x29ced8(0x28a)]=_0x344d51[_0x29ced8(0x209)]['shapeSwitch'],this[_0x29ced8(0x281)]=![],this[_0x29ced8(0x223)](_0x338cad),this[_0x29ced8(0x136)](),_0x4a2990&&this['initCellProperty']();}['initSizeValue'](_0x5d9e25){const _0x30fd0a=_0x5c0787;if(_0x5d9e25){const {maxWidth:_0x210ee5,maxHeight:_0x4239f6,cellSize:_0x2a35e7}=_0x5d9e25;this['maxWidth']=_0x210ee5,this[_0x30fd0a(0x300)]=_0x4239f6,this[_0x30fd0a(0x2f2)]=_0x2a35e7;}else this['maxWidth']=this[_0x30fd0a(0x16c)][_0x30fd0a(0x1b2)]*BOARD_WIDTH_RATIO,this[_0x30fd0a(0x300)]=this['canvas'][_0x30fd0a(0x30a)]*BOARD_HEIGHT_RATIO,this[_0x30fd0a(0x2b8)]=this[_0x30fd0a(0x16c)][_0x30fd0a(0x30a)]*BOARD_BOTTOM_GAP_RATIO,this[_0x30fd0a(0x2f2)]=Math['min'](this[_0x30fd0a(0x2cf)]/this[_0x30fd0a(0x2b1)],this['maxHeight']*0.98/this[_0x30fd0a(0x180)]);this['x']=(this[_0x30fd0a(0x16c)][_0x30fd0a(0x1b2)]-this[_0x30fd0a(0x2f2)]*this[_0x30fd0a(0x2b1)])/0x2,this['y']=(this['maxHeight']-this[_0x30fd0a(0x2f2)]*this[_0x30fd0a(0x180)])/0x2,this[_0x30fd0a(0x1b2)]=this[_0x30fd0a(0x2b1)]*this[_0x30fd0a(0x2f2)],this[_0x30fd0a(0x30a)]=this['yCount']*this['cellSize'],this['bottomHeight']=this['canvas'][_0x30fd0a(0x30a)]-this[_0x30fd0a(0x300)],this[_0x30fd0a(0x2be)]=this[_0x30fd0a(0x16c)][_0x30fd0a(0x30a)]-this[_0x30fd0a(0x1ff)]/0x2;}[_0x5c0787(0x136)](){const _0x3e78f6=_0x5c0787;this[_0x3e78f6(0x291)]=[...Array(this[_0x3e78f6(0x180)])][_0x3e78f6(0x2fb)]((_0x34f2b9,_0x4323bd)=>[...Array(this[_0x3e78f6(0x2b1)])]['map']((_0x151887,_0x1255e3)=>new Cell(_0x1255e3,_0x4323bd,this))),this[_0x3e78f6(0x30d)]=null,this[_0x3e78f6(0x2d1)]=0x0,this[_0x3e78f6(0x2fd)]=[],this[_0x3e78f6(0x2ca)]=this['getMinePlantable'](),this['shortest']=0x0,this['me']=new Me(this);}[_0x5c0787(0x1f9)](){const _0x988ec1=_0x5c0787;[[0x0,0x0],[0x0,0x1],[0x0,0x2],[0x1,0x0],[0x1,0x1],[0x1,0x2],[0x2,0x0],[0x2,0x1],[0x2,0x2]][_0x988ec1(0x2d3)](_0x38a2df=>this['ensureCell'](..._0x38a2df));this[_0x988ec1(0x16c)][_0x988ec1(0x158)]===_0x988ec1(0x190)&&[[0x0,0x3],[0x1,0x3],[0x2,0x3],[0x3,0x0],[0x3,0x1],[0x3,0x2],[0x3,0x3]][_0x988ec1(0x2d3)](_0x2b8344=>this['ensureCell'](..._0x2b8344));const _0x98ea7=this[_0x988ec1(0x291)][this[_0x988ec1(0x180)]-0x1][this['xCount']-0x1];_0x98ea7[_0x988ec1(0x1c9)]=_0x988ec1(0x298),this[_0x988ec1(0x21e)](_0x98ea7['x'],_0x98ea7['y']),_0x98ea7[_0x988ec1(0x2fe)]=![];}[_0x5c0787(0x20c)](){const _0x12a24d=_0x5c0787,_0x62f59f=this[_0x12a24d(0x291)][_0x12a24d(0x305)]();return _0x62f59f[_0x12a24d(0x22e)](),_0x62f59f[_0x12a24d(0x2a8)](),_0x62f59f;}[_0x5c0787(0x151)](_0xc35a0a){const _0x2e5e84=_0x5c0787;return[_0xc35a0a%this[_0x2e5e84(0x2b1)],Math[_0x2e5e84(0x304)](_0xc35a0a/this[_0x2e5e84(0x2b1)])];}['getIdx'](_0x309bc2,_0x17eba8){const _0x485bb8=_0x5c0787;if(_0x309bc2 instanceof Cell){const _0x4ecef3=_0x309bc2;return _0x4ecef3['x']+_0x4ecef3['y']*this[_0x485bb8(0x2b1)];}return _0x309bc2+_0x17eba8*this[_0x485bb8(0x2b1)];}[_0x5c0787(0x2ed)](_0x21643c,_0x1b8b16=null){const _0x5f24c6=_0x5c0787;if(_0x1b8b16===null){const [_0x57fcb1,_0x543729]=this['getXY'](_0x21643c);return this[_0x5f24c6(0x291)][_0x543729][_0x57fcb1];}return this[_0x5f24c6(0x291)][_0x1b8b16][_0x21643c];}['isValid'](_0x19c0a5,_0x213e8a){const _0x1d0905=_0x5c0787;return _0x19c0a5>=0x0&&_0x19c0a5<this[_0x1d0905(0x2b1)]&&_0x213e8a>=0x0&&_0x213e8a<this[_0x1d0905(0x180)];}[_0x5c0787(0x1f0)](_0x516e12,..._0x5c9d27){const _0x5182ac=_0x5c0787;this[_0x5182ac(0x291)]['forEach'](_0xe8813a=>_0xe8813a['forEach'](_0x493b69=>{const _0x336f6a=_0x5182ac;_0x516e12[_0x336f6a(0x159)](this)(_0x493b69,..._0x5c9d27);}));}[_0x5c0787(0x1db)](_0x53057a){const _0x9cd9c5=_0x5c0787;_0x53057a[_0x9cd9c5(0x1de)]=0x0,_0x53057a[_0x9cd9c5(0x2d6)]='',this[_0x9cd9c5(0x16c)]['page']===_0x9cd9c5(0x21c)&&this[_0x9cd9c5(0x2ea)]();}[_0x5c0787(0x2a0)](){const _0x47b7e7=_0x5c0787,_0x1e0882=[],_0x144444=new Array(this[_0x47b7e7(0x157)])['fill'](![]),_0x276610=()=>{const _0x7922d9=_0x47b7e7,_0x34dc60=[0x0];while(_0x34dc60[_0x7922d9(0x27f)]){const _0x2913a7=_0x34dc60[_0x7922d9(0x22e)]();if(!_0x144444[_0x2913a7]){_0x144444[_0x2913a7]=!![];const _0xfe5f=this[_0x7922d9(0x2ed)](_0x2913a7);_0x1e0882[_0x7922d9(0x28d)](_0xfe5f),[0x1,0x3,0x5,0x7][_0x7922d9(0x2d3)](_0x127d0c=>{const _0x3e6068=_0x7922d9,[_0x50245c,_0x6f2cb9]=[_0xfe5f['x']+OFFSET_X[_0x127d0c],_0xfe5f['y']+OFFSET_Y[_0x127d0c]],_0x50dbfa=this[_0x3e6068(0x1e8)](_0x50245c,_0x6f2cb9);this['isValid'](_0x50245c,_0x6f2cb9)&&!_0x144444[_0x50dbfa]&&this[_0x3e6068(0x2ed)](_0x50245c,_0x6f2cb9)[_0x3e6068(0x1c9)]!==_0x3e6068(0x2bc)&&this[_0x3e6068(0x2ed)](_0x50245c,_0x6f2cb9)[_0x3e6068(0x1c9)]!==_0x3e6068(0x298)&&_0x34dc60[_0x3e6068(0x28d)](_0x50dbfa);});}}};_0x276610(),_0x1e0882[_0x47b7e7(0x28d)](this['getCell'](this[_0x47b7e7(0x157)]-0x1)),this[_0x47b7e7(0x2fd)]=_0x1e0882;}['arrangeMine'](_0x53a0ed){const _0x532ed1=_0x5c0787;let _0x46c5ce=[...new Array(this[_0x532ed1(0x157)]-0x2)][_0x532ed1(0x2fb)]((_0x1799f5,_0x1b47df)=>_0x1b47df+0x1);while(_0x53a0ed--){const _0x18fab1=randRange(0x0,_0x46c5ce[_0x532ed1(0x27f)]-0x1);this[_0x532ed1(0x2ed)](_0x46c5ce[_0x532ed1(0x2a7)](_0x18fab1,0x1)[0x0])[_0x532ed1(0x1c9)]=_0x532ed1(0x2bc);}}[_0x5c0787(0x1b4)](){const _0x44bdd7=_0x5c0787,_0x377a67=[];return this[_0x44bdd7(0x1f0)](_0x5f1128=>{const _0x3d0afa=_0x44bdd7;this[_0x3d0afa(0x1e0)](_0x5f1128);if(_0x5f1128['number']===0x9){const _0x5c369d=randRange(0x0,0x8),[_0x43c9ad,_0x531077]=[x+OFFSET_X[_0x5c369d],y+OFFSET_Y[_0x5c369d]],_0x20a64e=this['getCell'](_0x43c9ad,_0x531077);_0x20a64e[_0x3d0afa(0x1c9)]='normal',_0x377a67['push'](_0x20a64e);}}),_0x377a67;}['getConnectedComponent'](){const _0x402e24=_0x5c0787,_0xc6393b=new Array(this[_0x402e24(0x157)])[_0x402e24(0x1f3)](![]),_0x4aef91=[],_0x13017f=_0x5c9b0c=>{const _0x13a0c5=_0x402e24,_0x55087f=[_0x5c9b0c],_0x3a56be=[];while(_0x55087f['length']){const _0x30eb7e=_0x55087f[_0x13a0c5(0x22e)]();if(!_0xc6393b[_0x30eb7e]){_0xc6393b[_0x30eb7e]=!![],_0x3a56be[_0x13a0c5(0x28d)](_0x30eb7e);const _0x44a3d1=this[_0x13a0c5(0x2ed)](_0x30eb7e);_0x44a3d1[_0x13a0c5(0x2b5)]=_0x4aef91[_0x13a0c5(0x27f)],[0x1,0x3,0x5,0x7]['forEach'](_0x5de3bc=>{const _0x1dc631=_0x13a0c5,[_0x230dcd,_0x45bbb8]=[_0x44a3d1['x']+OFFSET_X[_0x5de3bc],_0x44a3d1['y']+OFFSET_Y[_0x5de3bc]];if(this[_0x1dc631(0x193)](_0x230dcd,_0x45bbb8)&&this[_0x1dc631(0x2ed)](_0x230dcd,_0x45bbb8)[_0x1dc631(0x1c9)]!==_0x1dc631(0x2bc)){const _0x52bd46=this[_0x1dc631(0x1e8)](_0x230dcd,_0x45bbb8);!_0xc6393b[_0x52bd46]&&_0x55087f[_0x1dc631(0x28d)](_0x52bd46);}});}}return _0x3a56be;};return _0xc6393b[_0x402e24(0x2d3)]((_0x23724a,_0x26090c)=>{const _0x1953e6=_0x402e24;!_0x23724a&&this['getCell'](_0x26090c)[_0x1953e6(0x1c9)]!==_0x1953e6(0x2bc)&&_0x4aef91[_0x1953e6(0x28d)](_0x13017f(_0x26090c));}),_0x4aef91;}['getMineMap'](){const _0x3fb5bd=_0x5c0787,_0x1349c4=new Map();this[_0x3fb5bd(0x1f0)](_0x542640=>{const _0xc1d8df=_0x3fb5bd;if(_0x542640[_0xc1d8df(0x1c9)]==='mine'){let _0x1ee96a=[];[0x1,0x3,0x5,0x7][_0xc1d8df(0x2d3)](_0x5704f4=>{const _0x35b9fe=_0xc1d8df,[_0x1b2c5b,_0x1060b5]=[_0x542640['x']+OFFSET_X[_0x5704f4],_0x542640['y']+OFFSET_Y[_0x5704f4]];if(this[_0x35b9fe(0x193)](_0x1b2c5b,_0x1060b5)&&this['getCell'](_0x1b2c5b,_0x1060b5)[_0x35b9fe(0x1c9)]!==_0x35b9fe(0x2bc)){const _0x1bb85a=this[_0x35b9fe(0x2ed)](_0x1b2c5b,_0x1060b5)[_0x35b9fe(0x2b5)];_0x1ee96a[_0x35b9fe(0x28d)](_0x1bb85a);}}),_0x1ee96a[_0xc1d8df(0x27f)]>0x0&&(_0x1ee96a=[...new Set(_0x1ee96a)][_0xc1d8df(0x2f1)]((_0x42ca98,_0x1c2ef7)=>_0x42ca98-_0x1c2ef7)['join'](),_0x1349c4['has'](_0x1ee96a)?_0x1349c4[_0xc1d8df(0x1ef)](_0x1ee96a)[_0xc1d8df(0x28d)](_0x542640):_0x1349c4['set'](_0x1ee96a,[_0x542640]));}});const _0x33c91e=[..._0x1349c4[_0x3fb5bd(0x261)]()];return _0x33c91e[_0x3fb5bd(0x2d3)](_0x3f2392=>{const _0x5600fa=_0x3fb5bd;_0x3f2392['length']<=0x2&&_0x1349c4[_0x5600fa(0x1d8)](_0x3f2392);}),_0x33c91e[_0x3fb5bd(0x2d3)](_0x1ee8ce=>{const _0x277473=_0x3fb5bd;_0x33c91e[_0x277473(0x2d3)](_0x55728e=>{const _0x46ea1d=_0x277473;if(_0x1ee8ce!==_0x55728e){const _0x1f2e79=new Set([..._0x1ee8ce[_0x46ea1d(0x238)](',')]),_0x61fe5b=new Set([..._0x1ee8ce[_0x46ea1d(0x238)](','),..._0x55728e['split'](',')]);_0x1f2e79['size']===_0x61fe5b[_0x46ea1d(0x2ad)]&&_0x1349c4[_0x46ea1d(0x1d8)](_0x55728e);}});}),_0x1349c4;}[_0x5c0787(0x175)](_0x895de){const _0x4a74a4=new Set();return[0x1,0x3,0x5,0x7]['forEach'](_0x340fb5=>{const _0x26190b=_0x52bd,[_0x1080fc,_0x24b3fc]=[_0x895de['x']+OFFSET_X[_0x340fb5],_0x895de['y']+OFFSET_Y[_0x340fb5]];if(this[_0x26190b(0x193)](_0x1080fc,_0x24b3fc)){const _0x29fdee=this[_0x26190b(0x2ed)](_0x1080fc,_0x24b3fc);_0x29fdee[_0x26190b(0x1c9)]!==_0x26190b(0x2bc)&&_0x4a74a4[_0x26190b(0x28e)](_0x29fdee[_0x26190b(0x2b5)]);}}),[..._0x4a74a4];}[_0x5c0787(0x225)](_0x4404d3){const _0x5692b4=_0x5c0787,_0x580ae4=new Set();return _0x4404d3[_0x5692b4(0x2d3)](_0x2677bb=>{const _0x4dd305=_0x5692b4,_0x2ce893=this[_0x4dd305(0x2ed)](_0x2677bb);[0x1,0x3,0x5,0x7][_0x4dd305(0x2d3)](_0x54ede3=>{const _0xad794=_0x4dd305,[_0x1d6705,_0x1d86dd]=[_0x2ce893['x']+OFFSET_X[_0x54ede3],_0x2ce893['y']+OFFSET_Y[_0x54ede3]];if(this[_0xad794(0x193)](_0x1d6705,_0x1d86dd)){const _0x1948b9=this[_0xad794(0x2ed)](_0x1d6705,_0x1d86dd);_0x1948b9['type']===_0xad794(0x2bc)&&_0x580ae4[_0xad794(0x28e)](_0x1948b9);}});}),[..._0x580ae4];}[_0x5c0787(0x1d3)](){const _0x4fbde7=_0x5c0787,_0x6a122c=[];while(!![]){const _0x1a71a2=this[_0x4fbde7(0x2b9)]();if(_0x1a71a2[_0x4fbde7(0x27f)]===0x1)break;const _0x466d1e=[...new Array(_0x1a71a2[_0x4fbde7(0x27f)])][_0x4fbde7(0x2fb)]((_0x49957c,_0x50a51e)=>_0x50a51e),_0x5d0fb0=this[_0x4fbde7(0x27b)]();for(const _0x3b4ac6 of _0x5d0fb0['values']()){const _0x353300=randRange(0x0,_0x3b4ac6[_0x4fbde7(0x27f)]-0x1),_0xb8e37b=_0x3b4ac6[_0x4fbde7(0x2a7)](_0x353300,0x1)[0x0];this[_0x4fbde7(0x175)](_0xb8e37b)[_0x4fbde7(0x2d3)](_0x50c6a0=>{const _0x4ddf18=_0x4fbde7;_0x466d1e[_0x4ddf18(0x2a3)](_0x50c6a0)&&_0x466d1e[_0x4ddf18(0x2a7)](_0x466d1e[_0x4ddf18(0x2f0)](_0x50c6a0),0x1);}),_0xb8e37b[_0x4fbde7(0x1c9)]=_0x4fbde7(0x2fa),_0x6a122c[_0x4fbde7(0x28d)](_0xb8e37b);}_0x466d1e[_0x4fbde7(0x2d3)](_0x52c51a=>{const _0x2c46da=_0x4fbde7,_0xc7b0e2=this[_0x2c46da(0x225)](_0x1a71a2[_0x52c51a]),_0x4cf53b=randRange(0x0,_0xc7b0e2['length']-0x1),_0x3e3e53=_0xc7b0e2[_0x2c46da(0x2a7)](_0x4cf53b,0x1)[0x0];_0x3e3e53[_0x2c46da(0x1c9)]=_0x2c46da(0x2fa),_0x6a122c['push'](_0x3e3e53);});}return _0x6a122c;}[_0x5c0787(0x269)](_0x2441ae){const _0x185279=_0x5c0787;let _0x1520e=_0x2441ae[_0x185279(0x27f)];const _0x5092e0=this['minePlantable']['filter'](_0x439976=>!_0x2441ae[_0x185279(0x2a3)](_0x439976)),_0x51ce92=()=>{const _0x31499b=_0x185279,_0x19b066=new Array(this[_0x31499b(0x157)])[_0x31499b(0x1f3)](![]),_0x2ef853=[0x0];let _0x2f09e5=![];while(_0x2ef853['length']){const _0x1b17b8=_0x2ef853[_0x31499b(0x22e)]();if(_0x1b17b8===this[_0x31499b(0x157)]-0x1){_0x2f09e5=!![];break;}if(!_0x19b066[_0x1b17b8]){_0x19b066[_0x1b17b8]=!![];const _0x22bdac=this[_0x31499b(0x2ed)](_0x1b17b8);[0x1,0x3,0x5,0x7][_0x31499b(0x2d3)](_0x401b7c=>{const _0x23979e=_0x31499b,[_0x3b4d8f,_0x4199f6]=[_0x22bdac['x']+OFFSET_X[_0x401b7c],_0x22bdac['y']+OFFSET_Y[_0x401b7c]];if(this[_0x23979e(0x193)](_0x3b4d8f,_0x4199f6)){const _0x2194a6=this[_0x23979e(0x1e8)](_0x3b4d8f,_0x4199f6);this[_0x23979e(0x2ed)](_0x2194a6)[_0x23979e(0x1c9)]!==_0x23979e(0x2bc)&&_0x2ef853['push'](_0x2194a6);}});}}return _0x2f09e5;};while(_0x5092e0[_0x185279(0x27f)]&&_0x1520e){const _0x3eee73=randRange(0x0,_0x5092e0[_0x185279(0x27f)]-0x1),_0x43064f=_0x5092e0[_0x185279(0x2a7)](_0x3eee73,0x1)[0x0];_0x43064f['type']=_0x185279(0x2bc),_0x51ce92()?_0x1520e--:_0x43064f['type']='normal';}}['getShortest'](_0x557ed7=0x0){const _0x177231=_0x5c0787,_0x15a789=new Array(this[_0x177231(0x157)])[_0x177231(0x1f3)](![]),_0x3e8ff3=new Array(this[_0x177231(0x157)])['fill'](0x0),_0x49937b=[_0x557ed7];while(_0x49937b[_0x177231(0x27f)]){const _0x41ed26=_0x49937b['shift']();if(_0x41ed26===this[_0x177231(0x157)]-0x1)return _0x3e8ff3[_0x41ed26];if(!_0x15a789[_0x41ed26]){_0x15a789[_0x41ed26]=!![];const _0x385539=this[_0x177231(0x2ed)](_0x41ed26);[0x1,0x3,0x5,0x7]['forEach'](_0x514924=>{const _0x48815b=_0x177231,[_0xd4aa1d,_0x21bee0]=[_0x385539['x']+OFFSET_X[_0x514924],_0x385539['y']+OFFSET_Y[_0x514924]];if(this[_0x48815b(0x193)](_0xd4aa1d,_0x21bee0)){const _0x3264b1=this[_0x48815b(0x1e8)](_0xd4aa1d,_0x21bee0);!_0x15a789[_0x3264b1]&&!this[_0x48815b(0x2ed)](_0x3264b1)[_0x48815b(0x27d)]&&(_0x49937b[_0x48815b(0x28d)](_0x3264b1),_0x3e8ff3[_0x3264b1]=_0x3e8ff3[_0x41ed26]+0x1);}});}}return 0x0;}[_0x5c0787(0x13f)](_0x110c63){const _0x1e32c4=_0x5c0787,_0x283ed4=[];this[_0x1e32c4(0x1fb)](_0x110c63),_0x283ed4['push'](...this[_0x1e32c4(0x1b4)]()),_0x283ed4['push'](...this[_0x1e32c4(0x1d3)]()),this['relocateMine'](_0x283ed4),this[_0x1e32c4(0x2a0)](),this[_0x1e32c4(0x26a)]=this[_0x1e32c4(0x277)](),this[_0x1e32c4(0x166)]();}[_0x5c0787(0x1e0)](_0x119d8a){const _0x3f8ae1=_0x5c0787;let _0x151e1b=0x0;_0x119d8a[_0x3f8ae1(0x27e)]['forEach'](_0x4aa231=>{const _0x3b113c=_0x3f8ae1,[_0x1badb0,_0x4ce3e9]=[_0x119d8a['x']+OFFSET_X[_0x4aa231],_0x119d8a['y']+OFFSET_Y[_0x4aa231]];this[_0x3b113c(0x193)](_0x1badb0,_0x4ce3e9)&&this[_0x3b113c(0x2ed)](_0x1badb0,_0x4ce3e9)[_0x3b113c(0x27d)]&&_0x151e1b++;}),_0x119d8a[_0x3f8ae1(0x1b0)]=_0x151e1b;}[_0x5c0787(0x24a)](_0x4ba0a6){const _0x1e754b=_0x5c0787;let _0x111559=0x0,_0x3d5809=OFFSET_X,_0x212703=OFFSET_Y;(_0x4ba0a6[_0x1e754b(0x145)]==='red'||_0x4ba0a6[_0x1e754b(0x145)]==='orange')&&(_0x3d5809=OFFSET5_X,_0x212703=OFFSET5_Y),_0x4ba0a6[_0x1e754b(0x27e)][_0x1e754b(0x2d3)](_0xf32f3a=>{const _0x2d10b5=_0x1e754b,[_0x4fc6a2,_0x37c798]=[_0x4ba0a6['x']+_0x3d5809[_0xf32f3a],_0x4ba0a6['y']+_0x212703[_0xf32f3a]];this[_0x2d10b5(0x193)](_0x4fc6a2,_0x37c798)&&this[_0x2d10b5(0x2ed)](_0x4fc6a2,_0x37c798)[_0x2d10b5(0x27d)]&&_0x111559++;}),_0x4ba0a6['number']=_0x111559;}[_0x5c0787(0x192)](_0x400fe5){const _0xf42408=_0x5c0787;_0x400fe5[_0xf42408(0x145)]==='normal'?this['setNormalCellNumber'](_0x400fe5):this[_0xf42408(0x24a)](_0x400fe5);}[_0x5c0787(0x24e)](){const _0x1e5ad4=_0x5c0787;if(!this[_0x1e5ad4(0x30d)])return;const _0x57d6a4=[...this[_0x1e5ad4(0x2ca)]];RAINBOW[_0x1e5ad4(0x2d3)](_0x3a8e40=>{const _0x38856c=_0x1e5ad4;let _0x1a3bfe=this[_0x38856c(0x30d)][_0x3a8e40]??0x0;while(_0x1a3bfe--){const _0x3e6605=randRange(0x0,_0x57d6a4[_0x38856c(0x27f)]-0x1),_0x222aaf=_0x57d6a4[_0x38856c(0x2a7)](_0x3e6605,0x1)[0x0];_0x222aaf['hintType']=_0x3a8e40,_0x222aaf[_0x38856c(0x287)]=colorMatch[_0x3a8e40];if(_0x3a8e40===_0x38856c(0x250)){const _0x17df4=[...new Array(0x9)]['map']((_0x3b50d8,_0x3922ad)=>_0x3922ad);let _0x403bea=randRange(0x1,0x7);while(_0x403bea){const _0x2ab43f=randRange(0x0,_0x17df4['length']-0x1);_0x17df4[_0x38856c(0x2a7)](_0x2ab43f,0x1),_0x403bea--;}_0x222aaf[_0x38856c(0x27e)]=_0x17df4;}else _0x222aaf['shape']=shapeMatch[_0x3a8e40];}});}[_0x5c0787(0x178)](){const _0x39b9be=_0x5c0787;if(!this[_0x39b9be(0x30d)])return;let {oddEven:_0x33d74c,highLow:_0xeb23f1}=this[_0x39b9be(0x30d)];const _0x22dcac=[...this[_0x39b9be(0x2ca)]];while(_0x33d74c){const _0x7a3cdf=randRange(0x0,_0x22dcac['length']-0x1),_0x4a393d=_0x22dcac[_0x39b9be(0x2a7)](_0x7a3cdf,0x1)[0x0];_0x4a393d['textType']=_0x39b9be(0x174),_0x33d74c--;}while(_0x22dcac[_0x39b9be(0x27f)]&&_0xeb23f1){const _0x3cf885=randRange(0x0,_0x22dcac[_0x39b9be(0x27f)]-0x1),_0x24d91e=_0x22dcac[_0x39b9be(0x2a7)](_0x3cf885,0x1)[0x0],_0x1aa724=_0x24d91e[_0x39b9be(0x2cd)]()['map'](_0xf842bf=>_0xf842bf[_0x39b9be(0x1b0)]);if(_0x24d91e[_0x39b9be(0x1b0)]===Math[_0x39b9be(0x164)](..._0x1aa724))_0x24d91e[_0x39b9be(0x1c7)]=_0x39b9be(0x2c7),_0xeb23f1--;else _0x24d91e[_0x39b9be(0x1b0)]===Math[_0x39b9be(0x2f3)](..._0x1aa724)&&(_0x24d91e['textType']='low',_0xeb23f1--);}}['updateCellProperty'](){const _0x24a731=_0x5c0787;this[_0x24a731(0x24e)](),this[_0x24a731(0x1f0)](this['setProperty']),this[_0x24a731(0x178)]();}['ensureCell'](_0x4b5734,_0x1daad5){const _0x23cb4b=_0x5c0787,_0xdad320=_0x4b5734 instanceof Cell?_0x4b5734:this[_0x23cb4b(0x2ed)](_0x4b5734,_0x1daad5);_0xdad320['isEnsured']=!![],this[_0x23cb4b(0x1cb)](_0x4b5734,_0x1daad5);}[_0x5c0787(0x1a0)](){const _0x5d36ee=_0x5c0787;this[_0x5d36ee(0x1f0)](this[_0x5d36ee(0x21e)]),this[_0x5d36ee(0x1f0)](this['updateCell'],!![]),this[_0x5d36ee(0x1cc)]();}['openCell'](_0x13099f,_0x34364a){const _0x8f35a0=_0x5c0787,_0x10d60e=_0x13099f instanceof Cell?_0x13099f:this[_0x8f35a0(0x2ed)](_0x13099f,_0x34364a);_0x10d60e[_0x8f35a0(0x2fe)]=!![];}[_0x5c0787(0x278)](){const _0x2f713b=_0x5c0787;this[_0x2f713b(0x1f0)](this[_0x2f713b(0x18b)],!![]),this['paintBorder']();}[_0x5c0787(0x18b)](_0x26efa2,_0x5e078f=![]){const _0x282304=_0x5c0787;!(_0x26efa2 instanceof Cell)&&(_0x26efa2=this['getCell'](..._0x26efa2)),this[_0x282304(0x155)](_0x26efa2),this[_0x282304(0x2c1)](_0x26efa2),!_0x5e078f&&this[_0x282304(0x1cc)]();}['updateRemainingMine'](){const _0x344db9=_0x5c0787;let _0x2e8adb=0x0;this[_0x344db9(0x1f0)](_0x382ba0=>{const _0x4f4379=_0x344db9;if(_0x382ba0[_0x4f4379(0x1c9)]===_0x4f4379(0x259))_0x2e8adb++;else _0x382ba0[_0x4f4379(0x1de)]===0x1&&_0x2e8adb++;}),this[_0x344db9(0x2d1)]=_0x2e8adb,this[_0x344db9(0x16c)][_0x344db9(0x13a)]();}[_0x5c0787(0x155)](_0x3cd9c6){const _0x1016c9=_0x5c0787;if(_0x3cd9c6[_0x1016c9(0x220)])switch(_0x3cd9c6[_0x1016c9(0x1c9)]){case _0x1016c9(0x2fa):_0x3cd9c6[_0x1016c9(0x1f3)](LIGHTGRAY);break;case'mine':_0x3cd9c6[_0x1016c9(0x1c9)]=_0x1016c9(0x259);this[_0x1016c9(0x16c)][_0x1016c9(0x20f)]==='game'&&this[_0x1016c9(0x2ea)]();case'ensuredMine':_0x3cd9c6[_0x1016c9(0x1f3)](TOMATO);break;case'destination':_0x3cd9c6[_0x1016c9(0x1f3)](YELLOWGREEN);break;}else _0x3cd9c6[_0x1016c9(0x1f3)](CHARCOAL);}[_0x5c0787(0x2c1)](_0x3f11fc){const _0x29a342=_0x5c0787;_0x3f11fc[_0x29a342(0x2fe)]&&(_0x3f11fc[_0x29a342(0x1ad)](),_0x3f11fc[_0x29a342(0x145)]!==_0x29a342(0x2fa)&&_0x3f11fc[_0x29a342(0x1c9)]!==_0x29a342(0x259)&&_0x3f11fc[_0x29a342(0x15d)](_0x3f11fc[_0x29a342(0x145)]!==_0x29a342(0x14f)?BLACK:WHITE_ALPHA));}[_0x5c0787(0x1cc)](){const _0x11e03e=_0x5c0787,_0x1841e4=new Rect(this[_0x11e03e(0x16c)][_0x11e03e(0x2da)],this['y']-this[_0x11e03e(0x2f2)]);_0x1841e4[_0x11e03e(0x1a4)](),_0x1841e4[_0x11e03e(0x206)](this[_0x11e03e(0x1b2)],0x0);for(let _0x4a07b6=0x0;_0x4a07b6<=this[_0x11e03e(0x180)];_0x4a07b6++){_0x1841e4[_0x11e03e(0x264)]['y']+=this[_0x11e03e(0x2f2)],this[_0x11e03e(0x16c)][_0x11e03e(0x2f9)](_0x1841e4);}_0x1841e4['contextInfo']['x']=this['x']-this['cellSize'],_0x1841e4[_0x11e03e(0x264)]['y']=this['y']+this[_0x11e03e(0x30a)]/0x2,_0x1841e4[_0x11e03e(0x206)](0x0,this[_0x11e03e(0x30a)]);for(let _0x2a9967=0x0;_0x2a9967<=this['xCount'];_0x2a9967++){_0x1841e4[_0x11e03e(0x264)]['x']+=this[_0x11e03e(0x2f2)],this[_0x11e03e(0x16c)]['strokeLine'](_0x1841e4);}}}let curCanvas;const mainCanvas=new Canvas(document[_0x5c0787(0x19f)]('canvas'));curCanvas=mainCanvas,curCanvas[_0x5c0787(0x1e2)](),curCanvas=null;function _0xd4f4(){const _0x28d24c=['⏱\x20제한시간:\u3000','clickCell','reserved-item','filter','destination','msgBox08','inline-block','center','join','remaining-time','showChallengeMode','$stage','setAccessable','movement-div','createChallengeUserInfo','includes','$challenge','$challengeFail','postClassicLeaderBoard','splice','shift','getMainPage','clickButtonCallback','challengeFail','paintTutorialButton','size','$updateLog','innerHTML','changeCallback','xCount','getGamePage','updateLog','classic-check','graphIndex','update-log','every','bottomBarHeight','getConnectedComponent','useItem1','item','mine','item1','bottomCenterY','leaderboard-list','msgBox06','fillCellText','paintPage','setClassicLeaderboard','sound','showShape','hidden','high','4BfVAwS','align-right','minePlantable','initSound','initCoord','getSurroundingCell','1560613JncQrq','maxWidth','initTimerID','remainingMine','getCallback','forEach','2ILUiHm','span','checkColor','msg-box','information','align-left','CENTER','backgroundColor','leaderboard','orange','Good\x20+','🧩\x20맵\x20크기:\u3000','life','FONT_SIZE','moveTo','catch','next','canvas-container','tutorial','removeEventListener','/save/challenge','showUpdateLog','updateRemainingMine','board','information-title','getCell','clearElement','$mode01','indexOf','sort','cellSize','min','paintTutorialPage','useItem2','/leaderboard/challenge/','\x20결과','Great\x20+','strokeLine','normal','map','preload','accessable','isDetected','challenge-check','maxHeight','repeat','initPage','play','floor','flat','sendClassicLogToServer','change','clearRect','strokeStyle','height','104818SGHmEC','getLeaderboardPage','boardSetting','fillRect','initBoardSetting','align-center','initContext','cannotUseItem','paintBottomBar','postChallengeLeaderBoard','$footer','movement','text','setBoard','challenge-footer','useItem3','isCollision','stage-result','$itemDiv','hintType','information-left','leftRight','perfect-clear-div','back','appendChild','square','challenge-mode','classic-grid','paintMainTitle','navy','initClassicLabel','getXY','$right','createElement','$msgBox','fillCell','json','cellCount','mode','bind','reduce','$inputId','clear','strokeText','msgBox03','remove','hide','game-result','fetching','/log/challenge','max','challenge-fail','updateCellProperty','paintInfoBoard','$leaderboard','boxDropTimer','initContextInfo','modeChallenge','canvas','src','showMsgBox','prev','showChallengeFail','msgBox10','$header','$left','oddEven','getAdjacentSafeCell','button','lastPage','setSpecialText','$container','tutorial0','$mode02','setChallengeLeaderboard','click','clientWidth','CLEAR\x20x','yCount','strokeRect','appendNodeWithText','margin','createClassicUserInfo','Excellent\x20+','keydown','setTimer','border-bottom2','selectGame','<div\x20class=\x22border-bottom\x22>순위</div>\x0a\x20\x20\x20\x20<div\x20class=\x22border-bottom\x22>이름</div>\x0a\x20\x20\x20\x20<div\x20class=\x22border-bottom\x22>점수</div>\x0a\x20\x20\x20\x20<div\x20class=\x22border-bottom\x22>남은시간</div>\x0a\x20\x20\x20\x20<div\x20class=\x22border-bottom\x22>밟은칸수</div>','updateCell','textAlign','border-bottom','start','📝\x20글자힌트:\u3000','CHALLENGE','challenge-grid','setProperty','isValid','TITLE_SIZE','$perfectClear','movement-optimization','update-log-footer','keydownCallback','information-right','5845185ZEuXNW','bottomBarCh0','msgBox07','hoverContextInfo','$item','getElementById','ensureWholeCell','3968787uSQIjH','elementDropEffect','setText','setStrokeInfo','update-log-title','2323566LKxmpE','middle','fontSize','showLeaderBoard','클리어\x20후\x20도전\x20권장','decreaseLife','mainTitle','fillText','isDead','gameResult','number','sendChallengeLogToServer','width','information-header','relaxMineDensity','$information','setColorBar','value','$rank','initEventListener','$movementDiv','getChallengeModePage','stopwatch','paintSelectGameTypePage','arrow','msgTimer','paintSelectGameTypeTitle','$title','closePath','strokeCells','createTextNode','showStageResult','test','textType','saveChallengeLog','type','$input','openCell','paintBorder','time','challengeResult','initValues','stageResult','score','checked','connectSafeGraph','POST','strokeColor','application/json','fontWeight','delete','msgBox09','/log/classic','clearCheck','⭐\x20난이도:\u3000','selectGameTitle','check','setUpdateLog','setNormalCellNumber','low','paintMainPage','createDocumentFragment','div','appendToChallengeList','fillShape','article','getIdx','bonus','information-article','then','show','moveY','stage-result-title','get','forEachCell','initStatus','appendToClassicList','fill','gameTimer','classList','Perfect\x20+','$submit','red','initCellProperty','item2','arrangeMine','name','clearTimer','🎨\x20색깔힌트:\u3000','bottomHeight','setAttribute','entries','getTutorialPage','item3','challenge','style','setFillInfo','setRectPath','showInformation','gameInfo','input','setTextInfo','getMinePlantable','F를\x20누르면\x20메인\x20화면으로\x20이동합니다.','paintGamePage','page','px\x20sans-serif','$gameResult','Callback','STAGE\x20','clearPage','input-id-title','fillColor','slice','currentTime','paintBottomText','stringify','clientHeight','game','shapeSwitch','ensureCell','cell-count','isEnsured','bottomBar0','createButton','initSizeValue','addEventListener','getMineArr','showChallengeResult','$arrow','mousemove','input-id-header','submit','600\x20','initElement','paintMainButton','pop','$classic','$article','sendChallengeFailLogToServer','getUpdateLogPage','challenge-article','paint','/save/classic','initCheckInfo','showGameResult','split','input-id-input','leaderboard-footer','space','paintGameBoard','6896316AWwCQz','font','initCellInfo','moveX','msgBox04','error','leaderboardInfo','msgBox05','fail','elem','color','Bad','$stageResult','setSpecialCellNumber','CLEAR\x20+','paintAllButton','trim','setSpecialHint','timerSoundSwitch','purple','top','clickButton','beginPath','borderRadius','FAIL','🎉\x20도전\x20모드\x20클리어\x20🎉','callback','challenge-title','ensuredMine','main','79617820VbXlWV','initChallengeLabel','fillStyle','tutorialTimer','msgBox02','lineTo','keys','$perfectClearDiv','lineWidth','contextInfo','872rAWFVw','rank','saveClassicLog','GAME\x20OVER','relocateMine','shortest','stroke','opacity','setChallengeModeList','explosion','item-div','paintDivisionLine','$list','procedure','perfect-clear','$score','ctx','paintTutorialBoard','getShortest','updateCanvas','/leaderboard/classic/','$moveOpt','getMineMap','$time','isMine','shape','length','CLASSIC','isItemUsed','getContext','tempScore','paintSelectGameTypeButton','log','auto','textColor','clickCellCallback','leaderboard-title','showShapeSwitch','playSound','stage','push','add','/sounds/','getSelectGameTypePage','cellArr','record','update-log-article'];_0xd4f4=function(){return _0x28d24c;};return _0xd4f4();}
+'use strict';
+
+class Canvas {
+  constructor(canvas, init = true) {
+    this.canvas = canvas;
+    this.width = +canvas.clientWidth;
+    this.height = +canvas.clientHeight;
+    this.CENTER = Math.floor(canvas.width/2);
+    this.TITLE_SIZE = Math.floor(this.width/24);
+    this.FONT_SIZE = Math.floor(this.TITLE_SIZE*3/4);
+    this.initValues();
+    this.initContext();
+    if (init) {
+      this.initTimerID();
+      this.initElement();
+      this.initEventListener();
+      this.initSound();
+    }
+  }
+
+  initValues() {
+    this.page = 'main';
+    this.mode = '';
+    this.button = [];
+    this.callback = [];
+    this.sound = this.sound ?? {};
+    this.board = null;
+    this.gameInfo = {
+      name: '',
+      stage: 0,
+      modeId: 0,
+      life: 5,
+      score: 0,
+      item1: 0,
+      item2: 0,
+      item3: 0,
+      tempScore: 0,
+      procedure: 0,
+      shapeSwitch: false,
+      timerSoundSwitch: false,
+      bonus: null,
+      log: []
+    };
+    this.leaderboardInfo = {
+      page: 1,
+      lastPage: 1,
+      record: []
+    }
+  }
+
+  initContext() {
+    this.ctx = this.canvas.getContext('2d');
+    this.ctx.textBaseline = 'middle';
+    this.ctx.textAlign = 'center';
+  }
+
+  initTimerID() {
+    this.tutorialTimer = null;
+    this.gameTimer = null;
+    this.msgTimer = null;
+    this.boxDropTimer = null;
+  }
+
+  initElement() {
+    this.$container = new Element('canvas-container');
+    this.$msgBox = new Element('msg-box');
+
+    this.$gameResult = new Element('game-result');
+    this.$gameResult.$title = new Element('game-result-title');
+    this.$gameResult.$stage = new Element('stage');
+    this.$gameResult.$score = new Element('score');
+    this.$gameResult.$rank = new Element('rank');
+    this.$gameResult.$space = new Element('space');
+    this.$gameResult.$back = new Element('back');
+    this.$gameResult.$back.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
+    this.$gameResult.$back.elem.setAttribute('height', `${this.TITLE_SIZE*3/2}px`);
+
+    this.$stageResult = new Element('stage-result');
+    this.$stageResult.$title = new Element('stage-result-title');
+    this.$stageResult.$cellCount = new Element('cell-count');
+    this.$stageResult.$time = new Element('remaining-time');
+    this.$stageResult.$movementDiv = new Element('movement-div');
+    this.$stageResult.$moveOpt = new Element('movement-optimization');
+    this.$stageResult.$itemDiv = new Element('item-div');
+    this.$stageResult.$item = new Element('reserved-item');
+    this.$stageResult.$perfectClearDiv = new Element('perfect-clear-div');
+    this.$stageResult.$perfectClear = new Element('perfect-clear');
+    this.$stageResult.$totalScore = new Element('total-score');
+    this.$stageResult.$footer = new Element('stage-result-footer');
+
+    this.$information = new Element('information');
+    this.$information.$title = new Element('information-title');
+    this.$information.$header = new Element('information-header');
+    this.$information.$left = new Element('information-left');
+    this.$information.$right = new Element('information-right');
+    this.$information.$arrow = new Element('arrow');
+    this.$information.$article = new Element('information-article');
+    this.$information.$footer = new Element('information-footer');
+
+    this.$inputId = new Element('input-id');
+    this.$inputId.$title = new Element('input-id-title');
+    this.$inputId.$header = new Element('input-id-header');
+    this.$inputId.$input = new Element('input-id-input');
+    this.$inputId.$submit = new Element('submit');
+    this.$inputId.$submit.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
+    this.$inputId.$submit.elem.setAttribute('height', `${this.TITLE_SIZE*3}px`);
+
+    this.$leaderboard = new Element('leaderboard');
+    this.$leaderboard.$title = new Element('leaderboard-title');
+    this.$leaderboard.$list = new Element('leaderboard-list');
+    this.$leaderboard.$footer = new Element('leaderboard-footer');
+    this.$leaderboard.$mode01 = new Element('leaderboard-mode01');
+    this.$leaderboard.$mode02 = new Element('leaderboard-mode02');
+    this.$leaderboard.$classic = new Element('classic-check');
+    this.$leaderboard.$challenge = new Element('challenge-check');
+    this.$leaderboard.$classic.elem.addEventListener('change', this.getCallback('change'));
+    this.$leaderboard.$challenge.elem.addEventListener('change', this.getCallback('change'));
+
+    this.$updateLog = new Element('update-log');
+    this.$updateLog.$title = new Element('update-log-title');
+    this.$updateLog.$article = new Element('update-log-article');
+    this.$updateLog.$footer = new Element('update-log-footer');
+
+    this.$challenge = new Element('challenge');
+    this.$challenge.$title = new Element('challenge-title');
+    this.$challenge.$article = new Element('challenge-article');
+    this.$challenge.$footer = new Element('challenge-footer');
+
+    this.$challengeFail = new Element('challenge-fail');
+  }
+
+  initEventListener() {
+    this.canvas.addEventListener('click', this.getCallback('clickButton'));
+    this.canvas.addEventListener('mousemove', this.getCallback('mousemove'));
+    window.addEventListener('keydown', this.getCallback('keydown'));
+  }
+
+  initSound() {
+    ['cannotUseItem', 'clear', 'explosion', 'fail', 'item', 'shape', 'stopwatch']
+      .forEach(sound => {
+        const audio = new Audio();
+        audio.src = `/sounds/${sound}.mp3`;
+        audio.preload = 'auto';
+        this.sound[sound] = audio;
+      });
+  }
+
+  sendClassicLogToServer() {
+    const { name, stage, tempScore, score } = this.gameInfo;
+    const userInfo = {
+      name, stage, tempScore,
+      score: score + tempScore
+    };
+    fetch('/log/classic', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+  }
+
+  sendChallengeLogToServer() {
+    const { name, tempScore, modeId } = this.gameInfo;
+    const userInfo = { name, tempScore, modeId };
+    fetch('/log/challenge', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+  }
+
+  sendChallengeFailLogToServer() {
+    const { name, modeId } = this.gameInfo;
+    const userInfo = { name, modeId };
+    fetch('/log/challenge/fail', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+  }
+
+  setRectPath(obj) {
+    const { x1, y1, x2, y2 } = obj.contextInfo;
+    this.ctx.beginPath();
+    this.ctx.moveTo(x1, y1);
+    this.ctx.lineTo(x1, y2);
+    this.ctx.lineTo(x2, y2);
+    this.ctx.lineTo(x2, y1);
+    this.ctx.closePath();
+  }
+
+  setText(elem, text) {
+    const textNode = document.createTextNode(text);
+    elem.appendChild(textNode);
+  }
+
+  appendNodeWithText(elem, text) {
+    const div = document.createElement('div');
+    this.setText(div, text);
+    div.classList.add('margin');
+    elem.appendChild(div);
+  }
+
+  setUpdateLog() {
+    const wholeLog = document.createElement('ul');
+
+    [...UPDATE_LOG].reverse().forEach(YM => {
+      const { title, log } = YM;
+      const yearMonthUl = document.createElement('ul');
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      this.setText(span, title);
+      span.classList.add('h1');
+
+      [...log].reverse().forEach(date => {
+        const { title, log } = date;
+        const dateUl = document.createElement('ul');
+        const li = document.createElement('li');
+        const span = document.createElement('span');
+        this.setText(span, title);
+        span.classList.add('h2');
+
+        log.forEach(note => {
+          const { title, log } = note;
+          const noteUl = document.createElement('ul');
+          const li = document.createElement('li');
+          const span = document.createElement('span');
+          this.setText(span, title);
+          span.classList.add('h3');
+
+          log.forEach(description => {
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            this.setText(span, description);
+            span.classList.add('h4');
+            li.appendChild(span);
+            li.classList.add('h4');
+            noteUl.appendChild(li);
+            noteUl.classList.add('h4');
+          });
+
+          li.appendChild(span);
+          li.appendChild(noteUl);
+          li.classList.add('h3');
+          dateUl.appendChild(li);
+        });
+
+        li.appendChild(span);
+        li.appendChild(dateUl);
+        li.classList.add('h2');
+        yearMonthUl.appendChild(li);
+      });
+
+      li.appendChild(span);
+      li.appendChild(yearMonthUl);
+      li.classList.add('h1');
+      wholeLog.appendChild(li);
+    });
+    this.$updateLog.$article.elem.appendChild(wholeLog);
+  }
+
+  setColorBar(parent, colors) {
+    const div = document.createElement('div');
+    RAINBOW.forEach(color => {
+      const square = document.createElement('div');
+      if (color === 'purple') {
+        square.classList.add('square-purple');
+      } else {
+        square.classList.add('square');
+      }
+      if (colors.includes(color)) {
+        square.style.backgroundColor = colorMatch[color];
+      }
+      div.appendChild(square);
+    });
+    parent.appendChild(div);
+  }
+
+  setChallengeModeList() {
+    CHALLENGE_ARR.forEach((chal, i) => {
+      const { name, width, height, mine, time, colorType, textType, condition, difficulty } = chal;
+      const div = document.createElement('div');
+      const top = document.createElement('div');
+      const bottom = document.createElement('div');
+      const left = document.createElement('div');
+      const right = document.createElement('div');
+      div.classList.add('challenge-mode');
+      left.classList.add('inline-block');
+      left.classList.add('align-right');
+      right.classList.add('inline-block');
+      right.classList.add('align-left');
+      top.classList.add('align-center');
+      top.classList.add('border-bottom')
+      top.classList.add('margin');
+      bottom.classList.add('align-center');
+      bottom.classList.add('margin');
+
+      this.setText(top, `${name}`);
+
+      this.appendNodeWithText(left, '🧩 맵 크기:　');
+      this.appendNodeWithText(right, `${width}X${height}`);
+
+      const minute = Math.floor(time / 60) ? `${Math.floor(time / 60)}분 ` : '';
+      const second = time % 60 ? `${time % 60}초` : '';
+      this.appendNodeWithText(left, '⏱ 제한시간:　');
+      this.appendNodeWithText(right, `${minute}${second}`);
+
+      this.appendNodeWithText(left, '💣 지뢰비율:　');
+      this.appendNodeWithText(right, `${Math.floor(mine * 100 / (width * height))}%`);
+
+      this.appendNodeWithText(left, '🎨 색깔힌트:　');
+      if (colorType.length) {
+        const colorBar = document.createElement('div');
+        this.setColorBar(colorBar, colorType);
+        right.appendChild(colorBar);
+      } else {
+        this.appendNodeWithText(right, '없음');
+      }
+
+      this.appendNodeWithText(left, '📝 글자힌트:　');
+      this.appendNodeWithText(right, `${textType.length ? textType.join(', ') : '없음'}`);
+
+      this.appendNodeWithText(left, '⭐ 난이도:　');
+      this.appendNodeWithText(right, `${'★'.repeat(Math.floor(difficulty / 2))}${difficulty % 2 ? '☆' : ''}`);
+
+      this.setText(bottom, `${condition ? condition+'클리어 후 도전 권장' : '　'}`);
+
+      [top, left, right, bottom].forEach(elem => div.appendChild(elem));
+      div.addEventListener('click', this.getGamePage('CHALLENGE').bind(this));
+      div.addEventListener('click', () => {
+        this.gameInfo.modeId = i;
+        this.$challenge.hide();
+      });
+      this.$challenge.$article.elem.appendChild(div);
+    })
+  }
+
+  initClassicLabel() {
+    this.$leaderboard.$list.innerHTML = 
+    `<div class="border-bottom">순위</div>
+    <div class="border-bottom">이름</div>
+    <div class="border-bottom">점수</div>
+    <div class="border-bottom">랭크</div>
+    <div class="border-bottom">스테이지</div>`;
+  }
+
+  initChallengeLabel() {
+    this.$leaderboard.$list.innerHTML = 
+    `<div class="border-bottom">순위</div>
+    <div class="border-bottom">이름</div>
+    <div class="border-bottom">점수</div>
+    <div class="border-bottom">남은시간</div>
+    <div class="border-bottom">밟은칸수</div>`;
+  }
+
+  appendToClassicList(users) {
+    this.$leaderboard.$list.elem.classList.add('classic-grid');
+    this.$leaderboard.$list.elem.classList.remove('challenge-grid');
+    this.initClassicLabel();
+    const $fragment = document.createDocumentFragment();
+    users.forEach(user => this.createClassicUserInfo($fragment, user));
+    this.$leaderboard.$list.elem.appendChild($fragment);
+  }
+
+  appendToChallengeList(users) {
+    this.$leaderboard.$list.elem.classList.add('challenge-grid');
+    this.$leaderboard.$list.elem.classList.remove('classic-grid');
+    this.initChallengeLabel();
+    const $fragment = document.createDocumentFragment();
+    users.forEach(user => this.createChallengeUserInfo($fragment, user));
+    this.$leaderboard.$list.elem.appendChild($fragment);
+  }
+
+  setClassicLeaderboard() {
+    this.page = 'fetching';
+    const { page, record } = this.leaderboardInfo;
+
+    if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
+      this.appendToClassicList(record.slice((page - 1) * 10, page * 10));
+      this.$leaderboard.show();
+      this.page = 'leaderboard';
+    } else { // GET요청
+      fetch(`/leaderboard/classic/${Math.floor(page / 10)}`)
+      .then(res => res.json())
+      .then(users => {
+        if (record.length === users.length) {
+          this.leaderboardInfo.page--;
+          if (users.length === 0) { // 초기에 목록이 0개인 상태 대비
+            this.initClassicLabel();
+          }
+          return;
+        }
+        this.leaderboardInfo.record = users;
+        const curList = users.slice((page - 1) * 10, page * 10);
+        if (curList.length > 0) {
+          this.appendToClassicList(curList);
+        } else {
+          const curPage = --this.leaderboardInfo.page;
+          this.appendToClassicList(users.slice((curPage - 1) * 10, curPage * 10));
+        }
+        
+        this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
+        this.$leaderboard.show();
+      })
+      .then(() => this.page = 'leaderboard')
+      .catch(console.error);
+    }
+  }
+
+  setChallengeLeaderboard() {
+    this.page = 'fetching';
+    const { page, record } = this.leaderboardInfo;
+
+    if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
+      this.appendToChallengeList(record.slice((page - 1) * 10, page * 10));
+      this.$leaderboard.show();
+      this.page = 'leaderboard';
+    } else { // GET요청
+      fetch(`/leaderboard/challenge/${Math.floor(page / 10)}`)
+      .then(res => res.json())
+      .then(users => {
+        if (record.length === users.length) {
+          this.leaderboardInfo.page--;
+          if (users.length === 0) { // 초기에 목록이 0개인 상태 대비
+            this.initChallengeLabel();
+          }
+          return;
+        }
+        this.leaderboardInfo.record = users;
+        const curList = users.slice((page - 1) * 10, page * 10);
+        if (curList.length > 0) {
+          this.appendToChallengeList(curList);
+        } else {
+          const curPage = --this.leaderboardInfo.page;
+          this.appendToChallengeList(users.slice((curPage - 1) * 10, curPage * 10));
+        }
+        
+        this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
+        this.$leaderboard.show();
+      })
+      .then(() => this.page = 'leaderboard')
+      .catch(console.error);
+    }
+  }
+
+  postClassicLeaderBoard(userInfo) {
+    fetch('/save-record', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+      .then(() => {
+        this.$gameResult.show();
+        this.elementDropEffect(this.$gameResult);
+      })
+      .catch(console.error);
+  }
+
+  postChallengeLeaderBoard(userInfo) {
+    fetch('/save/challenge', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(userInfo)
+    })
+      .then(() => {
+        this.$stageResult.show();
+      })
+      .catch(console.error);
+  }
+
+  createClassicUserInfo(fragment, user) {
+    const { ranking, name, score, rank, stage } = user;
+    [ranking, name, score, rank, stage].forEach(v => {
+      const div = document.createElement('div');
+      const text = document.createTextNode(v);
+      div.appendChild(text);
+      div.classList.add('border-bottom2');
+      fragment.appendChild(div);
+    });
+  }
+
+  createChallengeUserInfo(fragment, user) {
+    const { ranking, name, score, time, cellCount } = user;
+    [ranking, name, score, time, cellCount].forEach(v => {
+      const div = document.createElement('div');
+      const text = document.createTextNode(v);
+      div.appendChild(text);
+      div.classList.add('border-bottom2');
+      fragment.appendChild(div);
+    });
+  }
+
+  saveClassicLog(cellCount, movement, isItemUsed, isDead, isAllEnsured) {
+    const { stage, life, item1, item2, item3, tempScore } = this.gameInfo;
+    const { time } = this.board.boardSetting;
+    this.gameInfo.log.push({
+      stage, cellCount, time, movement, isItemUsed, isDead, isAllEnsured,
+      life, item1, item2, item3,
+      score: tempScore
+    });
+  }
+
+  saveChallengeLog(cellCount, movement, isAllEnsured) {
+    const { modeId, tempScore } = this.gameInfo;
+    const { time } = this.board.boardSetting;
+    this.gameInfo.log.push({
+      modeId, cellCount, time, movement, isAllEnsured,
+      score: tempScore
+    });
+  }
+
+  getTutorialPage(number) {
+    const page = TUTORIAL[`tutorial0${number}`];
+    return function() {
+      this.paintTutorialPage(page);
+    };
+  }
+
+  getSelectGameTypePage() {
+    return function() {
+      this.paintSelectGameTypePage();
+    }
+  }
+
+  getChallengeModePage() {
+    return function() {
+      this.showChallengeMode();
+    }
+  }
+
+  getMainPage() {
+    return function() {
+      this.paintMainPage();
+    }
+  }
+
+  getGamePage(mode) {
+    return function() {
+      this.mode = mode;
+      this.board = new Board(this, 1, 1, false);
+      this.paintPage();
+      this.canvas.removeEventListener('click', this.getCallback('clickButton'));
+      this.canvas.addEventListener('click', this.getCallback('clickCell'));
+    }
+  }
+
+  getLeaderboardPage() {
+    return function() {
+      this.showLeaderBoard();
+    }
+  }
+
+  getUpdateLogPage() {
+    return function() {
+      this.showUpdateLog();
+    }
+  }
+
+  playSound(sound) {
+    this.sound[sound].pause();
+    this.sound[sound].currentTime = 0;
+    this.sound[sound].play();
+  }
+
+  decreaseLife() {
+    if (this.gameInfo.life === 0) {
+      this.board.ensureWholeCell();
+      if (this.mode === 'CLASSIC') {
+        this.showGameResult();
+      } else if (this.mode === 'CHALLENGE') {
+        this.showChallengeFail();
+      }
+    } else {
+      this.gameInfo.life--;
+      this.paintBottomBar();
+    }
+  }
+
+  strokeRect(obj) {
+    const { strokeColor, lineWidth } = obj.contextInfo;
+    this.setRectPath(obj);
+    this.ctx.strokeStyle = strokeColor;
+    this.ctx.lineWidth = lineWidth;
+    this.ctx.stroke();
+  }
+  
+  strokeText(obj) {
+    const { text, x, y, strokeColor, lineWidth, fontSize, font } = obj.contextInfo;
+    this.ctx.strokeStyle = strokeColor;
+    this.ctx.lineWidth = lineWidth;
+    this.ctx.font = font;
+    this.ctx.strokeText(text, x, y + fontSize*0.075);
+  }
+
+  strokeLine(obj) {
+    const { x1, y1, x2, y2, strokeColor, lineWidth } = obj.contextInfo;
+    this.ctx.strokeStyle = strokeColor;
+    this.ctx.lineWidth = lineWidth;
+    this.ctx.beginPath();
+    this.ctx.moveTo(parseInt(x1), parseInt(y1));
+    this.ctx.lineTo(parseInt(x2), parseInt(y2));
+    this.ctx.closePath();
+    this.ctx.stroke();
+  }
+
+  strokeCells(startCell, endCell, strokeColor = BLACK, lineWidth = 1) {
+    const [ sx, sy ] = [ startCell.contextInfo.x, startCell.contextInfo.y ];
+    const [ ex, ey ] = [ endCell.contextInfo.x, endCell.contextInfo.y ];
+    const cellSize = startCell.width;
+    const width = (endCell.x - startCell.x + 1) * cellSize;
+    const height = (endCell.y - startCell.y + 1) * cellSize;
+    const bigCell = new Rect((sx + ex)/2, (sy + ey)/2);
+    bigCell.setFillInfo(width, height);
+    bigCell.setStrokeInfo(strokeColor, lineWidth);
+    this.strokeRect(bigCell);
+  }
+
+  fillRect(obj, stroke=false) {
+    const { fillColor } = obj.contextInfo;
+    this.ctx.fillStyle = fillColor;
+    this.setRectPath(obj);
+    this.ctx.fill();
+    if (stroke) {
+      this.strokeRect(obj);
+    }
+  }
+  
+  fillText(obj) {
+    const { text, x, y, textColor, fontSize, font } = obj.contextInfo;
+    this.ctx.fillStyle = textColor;
+    this.ctx.font = font;
+    this.ctx.fillText(text, x, y + fontSize*0.075);
+  }
+
+  createButton(info, addition) {
+    const {
+      x, y,
+      text, fontSize, textColor,
+      width, height, fillColor,
+      strokeColor, lineWidth,
+      hover, caption,
+      page
+    } = { ...info, ...addition };
+    const button = new Button(x, y, page);
+    button
+      .setTextInfo(text, fontSize, textColor)
+      .setFillInfo(width, height, fillColor)
+      .setStrokeInfo(strokeColor, lineWidth);
+    const hoverInfo = new ContextInfo();
+    Object.entries(button.contextInfo).forEach(([key, value]) => {
+      hoverInfo[key] = value;
+    });
+
+    hoverInfo.fillColor = hover.fillColor;
+    hoverInfo.textColor = hover.textColor;
+    button.hoverContextInfo = hoverInfo;
+
+    if (caption) {
+      const bottomText = new Rect(x, y + height*3/4);
+      bottomText
+        .setFillInfo(this.width, fontSize/2, BACKGROUND_COLOR)
+        .setTextInfo(caption, fontSize/2, WHITE);
+      bottomText.fontWeight = 500;
+      button.caption = bottomText;
+    }
+
+    this.button.push(button);
+    return button;
+  }
+
+  clearPage() {
+    this.button = [];
+    this.board = null;
+    this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+
+  clearTimer() {
+    clearInterval(this.gameTimer);
+    clearInterval(this.msgTimer);
+    clearInterval(this.boxDropTimer);
+  }
+
+  clearElement() {
+    this.$msgBox.hide();
+    this.$gameResult.hide();
+    this.$gameResult.top = 0;
+    this.$gameResult.opacity = 0;
+    this.$stageResult.hide();
+    this.$stageResult.top = 0;
+    this.$stageResult.opacity = 0;
+    this.$stageResult.$itemDiv.hide();
+    this.$information.hide();
+    this.$information.$left.clear();
+    this.$information.$right.clear();
+    this.$information.$article.clear();
+    this.$information.$arrow.clear();
+    this.$inputId.hide();
+    this.$leaderboard.hide();
+    this.$updateLog.hide();
+    this.$challenge.hide();
+    this.$challenge.$article.clear();
+    this.$challengeFail.hide();
+  }
+
+  paintAllButton() {
+    this.button.forEach(btn => {
+      this.fillRect(btn, true);
+      this.fillText(btn);
+    });
+  }
+
+  paintMainPage() {
+    this.clearPage();
+    this.page = 'main';
+    this.paintMainTitle();
+    this.paintMainButton();
+    this.$stageResult.$movementDiv.hide();
+    this.$stageResult.$itemDiv.hide();
+    this.$stageResult.$perfectClearDiv.hide();
+  }
+
+  paintMainTitle() {
+    const title = new Rect(this.CENTER, this.TITLE_SIZE * 2);
+    title.setTextInfo(TEXT.mainTitle, this.TITLE_SIZE);
+    this.fillText(title);
+  }
+
+  paintMainButton() {
+    const [ x, width, height, fontSize ] = [
+      this.CENTER, this.FONT_SIZE * 7, this.FONT_SIZE * 2, this.FONT_SIZE
+    ];
+    this.createButton(BUTTON.tutorial, {
+        x,
+        y: this.TITLE_SIZE * 4,
+        width,
+        height,
+        fontSize,
+        page: this.getTutorialPage(1)
+    });
+    this.createButton(BUTTON.start, {
+      x,
+      y: this.TITLE_SIZE * 6,
+      fontSize,
+      width,
+      height,
+      page: this.getSelectGameTypePage()
+    });
+    this.createButton(BUTTON.leaderboard, {
+      x,
+      y: this.TITLE_SIZE * 8,
+      fontSize,
+      width,
+      height,
+      page: this.getLeaderboardPage()
+    });
+    this.createButton(BUTTON.updateLog, {
+      x,
+      y: this.TITLE_SIZE * 10,
+      fontSize,
+      width,
+      height,
+      page: this.getUpdateLogPage()
+    });
+    this.paintAllButton();
+  }
+
+  paintTutorialPage(page) {
+    const { prev, next, board, bottomText, timer, addition } = page;
+    this.clearPage();
+    this.paintTutorialBoard(board);
+    this.paintTutorialButton(prev, next);
+    this.paintBottomText(bottomText);
+    clearInterval(this.tutorialTimer);
+    if (timer) {
+      const { getTimer, delay } = timer;
+      const timerID = getTimer.bind(this)();
+      this.tutorialTimer = setInterval(timerID, delay);
+    }
+    if (addition) {
+      addition.bind(this)();
+    }
+  }
+
+  paintTutorialBoard(boardInfo) {
+    const { me, meX, meY, ensured, detected } = boardInfo;
+    const board = new Board(this, 5, 5);
+    this.board = board;
+    [
+      [2, 2], [0, 4],
+      [4, 0], [3, 3]
+    ].forEach(coord => {
+      const [ x, y ] = coord;
+      board.getCell(x, y).type = 'mine';
+    });
+    if (ensured) {
+      ensured.forEach(coord => {
+        const [ x, y ] = coord;
+        board.ensureCell(x, y);
+      })
+    }
+    if (detected) {
+      detected.forEach(coord => {
+        const [ x, y ] = coord;
+        board.openCell(x, y);
+      })
+    }
+    board.getCell(2, 2).type = 'ensuredMine';
+    board.updateCellProperty();
+    board.updateCanvas();
+    if (me) {
+      board.me.moveTo(meX ?? 0, meY ?? 0);
+    }
+  }
+
+  paintSelectGameTypePage() {
+    this.clearPage();
+    this.page = 'selectGame';
+    this.paintSelectGameTypeTitle();
+    this.paintSelectGameTypeButton();
+  }
+
+  paintSelectGameTypeTitle() {
+    const title = new Rect(this.CENTER, this.TITLE_SIZE * 2);
+    title.setTextInfo(TEXT.selectGameTitle, this.TITLE_SIZE);
+    this.fillText(title);
+  }
+
+  paintSelectGameTypeButton() {
+    const [ x, width, height, fontSize ] = [
+      this.CENTER, this.FONT_SIZE * 7, this.FONT_SIZE * 2, this.FONT_SIZE
+    ];
+    this.createButton(BUTTON.modeClassic, {
+        x,
+        y: this.TITLE_SIZE * 4.5,
+        width,
+        height,
+        fontSize,
+        page: this.getGamePage('CLASSIC')
+    });
+    this.createButton(BUTTON.modeChallenge, {
+      x,
+      y: this.TITLE_SIZE * 7,
+      fontSize,
+      width,
+      height,
+      page: this.getChallengeModePage()
+    });
+    this.createButton(BUTTON.backToMainPage, {
+      x,
+      y: this.TITLE_SIZE * 9.5,
+      fontSize,
+      width,
+      height,
+      page: this.getMainPage()
+    });
+    this.paintAllButton();
+  }
+
+  paintGameBoard({ xCount, yCount, mine, boardSetting }) {
+    const board = new Board(this, xCount, yCount);
+    this.board = board;
+    board.boardSetting = { mine, ...boardSetting };
+    board.setBoard(mine);
+    board.updateCanvas();
+    board.me.updateCanvas();
+  }
+
+  paintInfoBoard(boardInfo, $div, widthRatio = 2/5, heightRatio = 3/5) {
+    const { xCount, yCount, tomato, yellowgreen, safe, ensured, mine, me, showShape } = boardInfo;
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('width', `${this.board.maxWidth * widthRatio}px`);
+    canvas.setAttribute('height', `${this.height * heightRatio}px`);
+    const tempCanvas = new Canvas(canvas, false);
+    tempCanvas.width = this.board.maxWidth * widthRatio;
+    tempCanvas.height = this.height * heightRatio;
+    
+    const cellSize = Math.min(tempCanvas.width / xCount, tempCanvas.height*0.9 / yCount);
+    const tempBoard = new Board(tempCanvas, xCount, yCount, false, {
+      maxWidth: tempCanvas.width,
+      maxHeight: tempCanvas.height,
+      cellSize
+    });
+    tempBoard.showShapeSwitch = showShape ?? false;
+    tempBoard.updateCanvas();
+    
+    tomato?.forEach(([ x, y ]) => {
+      const cell = tempBoard.getCell(x, y);
+      cell.check = 1;
+      cell.checkColor = TOMATO;
+    });
+
+    yellowgreen?.forEach(([ x, y ]) => {
+      const cell = tempBoard.getCell(x, y);
+      cell.check = 2;
+      cell.checkColor = YELLOWGREEN;
+    });
+
+    safe?.forEach(([ x, y, value, hintType, shape ]) => {
+      const cell = tempBoard.getCell(x, y);
+      tempBoard.ensureCell(x, y);
+      cell.number = value;
+      cell.hintType = hintType ?? 'normal';
+      if (hintType !== 'normal') {
+        cell.shape = shape ?? shapeMatch[hintType];
+      }
+      cell.textColor = hintType ? colorMatch[hintType] : BLACK;
+      tempBoard.updateCell(cell);
+    });
+
+    ensured?.forEach(([ x, y, value ]) => {
+      const cell = tempBoard.getCell(x, y);
+      tempBoard.openCell(x, y);
+      cell.number = value;
+      tempBoard.updateCell(cell);
+    });
+
+    mine?.forEach(([ x, y ]) => {
+      const cell = tempBoard.getCell(x, y);
+      cell.type = 'ensuredMine';
+      tempBoard.ensureCell(x, y);
+      tempBoard.updateCell(cell);
+    });
+
+    if (me) {
+      tempBoard.me.moveTo(me[0], me[1]);
+    }
+
+    $div.elem.appendChild(tempCanvas.canvas);
+  }
+
+  paintTutorialButton(prev, next) {
+    const [ y, width, height, fontSize, lineWidth ] = [
+      this.board.bottomCenterY,
+      this.FONT_SIZE * 3, this.FONT_SIZE * 3/2,
+      this.FONT_SIZE, 1
+    ];
+    if (prev) {
+      this.createButton(BUTTON.prev, {
+        x: this.board.x - width*3/4,
+        y,
+        width,
+        height,
+        fontSize,
+        lineWidth,
+        page: this.getTutorialPage(prev)
+      });
+    }
+    if (next) {
+      this.createButton(BUTTON.next, {
+        x: this.board.x + this.board.width + width*3/4,
+        y,
+        width,
+        height,
+        fontSize,
+        lineWidth,
+        page: this.getTutorialPage(next)
+      });
+    }
+    this.paintAllButton();
+  }
+
+  paintBottomText(textInfo) {
+    const { text, linebreak } = textInfo;
+    const box = new Rect(this.CENTER, this.board.bottomCenterY);
+    box.setFillInfo(
+      this.board.width, this.board.bottomHeight, WHITE_ALPHA2
+    );
+    this.fillRect(box);
+
+    const fontSize = this.board.bottomHeight / 5;
+    if (linebreak) {
+      const [text1, text2] = [...text].join('').split('\n');
+      const textRect = new Rect(this.CENTER, this.board.bottomCenterY - fontSize*3/4);
+      textRect.setTextInfo(text1, fontSize);
+      this.fillText(textRect);
+      this.strokeRect(textRect);
+      textRect.contextInfo.y = this.board.bottomCenterY + fontSize*3/4;
+      textRect.text = text2;
+      this.fillText(textRect);
+    } else {
+      const textRect = new Rect(this.CENTER, this.board.bottomCenterY);
+      textRect.setTextInfo(text, fontSize);
+      this.fillText(textRect);
+    }
+  }
+
+  paintGamePage(stageInfo) {
+    this.page = 'game';
+    this.gameInfo.stage++;
+    if (this.mode === 'CHALLENGE') {
+      this.gameInfo.life = 0;
+    }
+    this.clearPage();
+    this.clearTimer();
+    this.clearElement();
+    this.paintGameBoard(stageInfo);
+    this.paintBottomBar();
+    this.gameTimer = setInterval(this.setTimer.bind(this), 1000);
+  }
+
+  paintBottomBar() {
+    const { stage, life, score, item1, item3, item2 } = this.gameInfo;
+    const { bottomBarHeight, bottomCenterY, remainingMine } = this.board;
+    const { time } = this.board.boardSetting;
+    const { movement } = this.board.me;
+    const [ minute, second ] = [ Math.floor(time/60), time%60 ];
+    const [ width, height ] = [ this.width/2, bottomBarHeight ];
+    let mine = 0;
+    this.board.forEachCell(v => {
+      if (v.isMine) {
+        mine++;
+      }
+    });
+    const background = new Rect(this.CENTER, bottomCenterY);
+    background
+      .setFillInfo(width, height, WHITE)
+      .setStrokeInfo();
+    this.fillRect(background, true);
+
+    this.paintDivisionLine(background);
+    
+    if (this.mode === 'CLASSIC') {
+      const bottomValues = [
+        `${stage}`,
+        `${score}`,
+        `${life}`,
+        `${remainingMine}/${mine}`,
+        `${minute}:${second<10 ? '0'+second : second}`,
+        `${item1}개`,
+        `${item2}개`,
+        `${item3}개`
+      ];
+
+      const fontSize = bottomBarHeight/4;
+      const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
+      bottomValues.forEach((value, idx) => {
+        const top = new Rect(this.CENTER + width*(idx*2-7)/16, topY);
+        top.setTextInfo(TEXT[`bottomBar0${idx+1}`], fontSize);
+        this.fillText(top);
+
+        let textColor = BLACK;
+        if ((idx === 2 && life === 0) || (idx === 4 && time < 30)) {
+          textColor = TOMATO;
+        }
+        const bottom = new Rect(this.CENTER + width*(idx*2-7)/16, bottomY);
+        bottom.setTextInfo(value, fontSize, textColor);
+        this.fillText(bottom);
+      });
+    } else if (this.mode === 'CHALLENGE') {
+      const bottomValues = [
+        `${remainingMine}/${mine}`,
+        `${minute}:${second<10 ? '0'+second : second}`,
+        `${movement}회`,
+      ];
+
+      const fontSize = bottomBarHeight/4;
+      const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
+      bottomValues.forEach((value, idx) => {
+        const top = new Rect(this.CENTER + width*(idx-1)/3, topY);
+        top.setTextInfo(TEXT[`bottomBarCh0${idx+1}`], fontSize);
+        this.fillText(top);
+
+        let textColor = BLACK;
+        if (idx === 1 && time < 30) {
+          textColor = TOMATO;
+        }
+        const bottom = new Rect(this.CENTER + width*(idx-1)/3, bottomY);
+        bottom.setTextInfo(value, fontSize, textColor);
+        this.fillText(bottom);
+      });
+    }
+  }
+
+  paintDivisionLine(box) {
+    const x = box.contextInfo.x - box.width / 2;
+    const y = box.contextInfo.y;
+    if (this.mode === 'CLASSIC') {
+      for (let i=0; i<7; i++) {
+        const line = new Rect(x + box.width*(i+1)/8, y);
+        line.setFillInfo(0, box.height*3/4);
+        line.setStrokeInfo(LIGHTGRAY, 3);
+        this.strokeRect(line);
+      }
+    } else if (this.mode === 'CHALLENGE') {
+      for (let i=0; i<2; i++) {
+        const line = new Rect(x + box.width*(i+1)/3, y);
+        line.setFillInfo(0, box.height*3/4);
+        line.setStrokeInfo(LIGHTGRAY, 3);
+        this.strokeRect(line);
+      }
+    }
+    
+  }
+
+  setTimer() {
+    const { time } = this.board.boardSetting;
+
+    if (time <= 30 && !this.gameInfo.timerSoundSwitch) {
+      this.gameInfo.timerSoundSwitch = true;
+      this.playSound('stopwatch');
+    }
+
+    if (time > 0) {
+      this.board.boardSetting.time--;
+      this.paintBottomBar();
+    } else {
+      clearInterval(this.gameTimer);
+      if (this.mode === 'CLASSIC') {
+        this.showGameResult();
+      } else if (this.mode === 'CHALLENGE') {
+        this.showChallengeFail();
+      }
+    }
+  }
+
+  // 메세지 박스 그리기
+  showMsgBox(text, color=RED, sound='explosion') {
+    if (this.msgTimer) {
+      clearInterval(this.msgTimer);
+      this.$msgBox.hide();
+      this.$msgBox.opacity = 1;
+    }
+
+    this.$msgBox.innerHTML = text;
+    this.$msgBox.font = this.FONT_SIZE/2;
+    this.$msgBox.width = this.board.maxHeight;
+    this.$msgBox.height = this.FONT_SIZE*3/4;
+    this.$msgBox.borderRadius = this.FONT_SIZE/8
+    this.$msgBox.backgroundColor = color;
+  
+    this.playSound(sound);
+    this.$msgBox.show();
+
+    let opacity = 1000;
+    let delay = 40;
+    const setOpacity = () => {
+      if (delay > 0) {
+        delay--;
+      } else {
+        this.$msgBox.opacity = opacity/1000;
+        opacity -= 17;
+        if (opacity < 0) {
+          this.$msgBox.hide();
+          clearInterval(this.msgTimer);
+        }
+      }
+    }
+    this.msgTimer = setInterval(setOpacity, 10);
+  }
+
+  initPage(page) {
+    this.page = page;
+    this.clearElement();
+    this.clearTimer();
+    this.sound['stopwatch'].pause();
+    this.gameInfo.timerSoundSwitch = false;
+  }
+
+  elementDropEffect(element) {
+    let top = 0;
+    let opacity = 0;
+    const dropBox = () => {
+      element.top = ++top/2;
+      element.opacity = ++opacity/100;
+      if (top === 100) {
+        clearInterval(this.boxDropTimer);
+      }
+    };
+    this.boxDropTimer = setInterval(dropBox, 4);
+  }
+
+  showGameResult(isClear = false) {
+    this.initPage('gameResult');
+    const { stage, score } = this.gameInfo;
+    const { $title, $stage, $score, $rank, $back } = this.$gameResult;
+
+    this.$gameResult.backgroundColor = WHITE_ALPHA;
+    this.$gameResult.font = this.TITLE_SIZE;
+    this.$gameResult.width = this.board.maxWidth;
+    this.$gameResult.height = this.height;
+
+    if (!isClear) {
+      $title.innerHTML = 'GAME OVER';
+      this.playSound('fail');
+    } else {
+      $title.innerHTML = '🎉 GAME CLEAR 🎉';
+      this.playSound('clear');
+    }
+
+    $stage.innerHTML = stage;
+    $score.innerHTML = `${score}점`;
+    let rank;
+    if (score > 300000) {
+      rank = 'S';
+    } else if (score > 200000) {
+      rank = 'A';
+    } else if (score > 100000) {
+      rank = 'B';
+    } else if (score > 50000) {
+      rank = 'C';
+    } else if (score > 10000) {
+      rank = 'D';
+    } else {
+      rank = 'F';
+    }
+    $rank.innerHTML = rank;
+
+    const tempCanvas = new Canvas($back.elem, false);
+    $back.elem.addEventListener('click', tempCanvas.getCallback('clickButton'));
+    $back.elem.addEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+    $back.width = this.canvas.height * BOARD_HEIGHT_RATIO;
+    $back.height = this.TITLE_SIZE*3/2;
+    tempCanvas.createButton(BUTTON.back, {
+      x: $back.width/2,
+      y: $back.height/2,
+      fontSize: this.FONT_SIZE,
+      width: $back.width*0.9,
+      height: $back.height*0.9,
+      page: (() => {
+        const originalCanvas = this;
+        return function () {
+          this.canvas.removeEventListener('click', this.getCallback('clickButton'));
+          this.canvas.removeEventListener('mousemove', this.getCallback('mousemove'));
+          originalCanvas.clearPage();
+          originalCanvas.clearElement();
+          originalCanvas.clearTimer();
+          originalCanvas.initValues();
+          originalCanvas.canvas.addEventListener('click', originalCanvas.getCallback('clickButton'));
+          originalCanvas.paintMainPage();
+        };
+      })()
+    });
+    tempCanvas.paintAllButton();
+
+    const userInfo = {
+      rank,
+      name: this.gameInfo.name,
+      score: this.gameInfo.score,
+      stage: this.gameInfo.stage,
+      log: this.gameInfo.log
+    }
+
+    this.postClassicLeaderBoard(userInfo);
+    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
+  }
+
+  showStageResult() {
+    this.initPage('stageResult');
+    const { isItemUsed, accessable, shortest } = this.board;
+    const { time } = this.board.boardSetting;
+    const { movement, isDead } = this.board.me
+    const { stage } = this.gameInfo;
+    const { $title, $cellCount, $time, $moveOpt, $item, $perfectClear, $totalScore, $footer } = this.$stageResult;
+    const cellCount = this.board.cellArr.flat()
+    .reduce((count, cell) => {
+      if (cell.isEnsured && cell.type !== 'ensuredMine') {
+        return count + 1;
+      } else {
+        return count;
+      }
+    }, 0);
+    const isAllEnsured = accessable.every(cell => cell.isEnsured);
+  
+    this.$stageResult.backgroundColor = WHITE_ALPHA;
+    this.$stageResult.font = this.FONT_SIZE;
+    this.$stageResult.width = this.board.maxWidth;
+    this.$stageResult.height = this.height;
+
+    $title.innerHTML = `STAGE ${stage} 결과`;
+    $cellCount.innerHTML = cellCount * CELL_COUNT_SCORE;
+    $time.innerHTML = time * REMAINING_TIME_SCORE;
+    $footer.innerHTML = 'F를 누르면 다음 스테이지로 이동합니다.';
+  
+    let movementRatio = 1;
+    if (stage > 5) {
+      let rank;
+      if (movement <= shortest + (accessable.length-shortest)*1.2) {
+        movementRatio = MOVEMENT_PERFECT_RATIO;
+        rank = `Perfect +${Math.floor(movementRatio*100-100)}%`;
+        $moveOpt.color = YELLOWGREEN;
+      } else if (movement <= shortest + (accessable.length-shortest)*1.5) {
+        movementRatio = MOVEMENT_EXCELLENT_RATIO;
+        rank = `Excellent +${Math.floor(movementRatio*100-100)}%`;
+        $moveOpt.color = YELLOWGREEN;
+      } else if (movement <= shortest + (accessable.length-shortest)*2) {
+        movementRatio = MOVEMENT_GREAT_RATIO;
+        rank = `Great +${Math.floor(movementRatio*100-100)}%`;
+        $moveOpt.color = NAVY;
+      } else if (movement <= shortest + (accessable.length-shortest)*2.5) {
+        movementRatio = MOVEMENT_GOOD_RATIO;
+        rank = `Good +${Math.floor(movementRatio*100-100)}%`;
+        $moveOpt.color = NAVY;
+      } else {
+        movementRatio = 1;
+        rank = `Bad`;
+        $moveOpt.color = BLACK;
+      }
+      $moveOpt.innerHTML = rank;
+      this.$stageResult.$movementDiv.show();
+    }
+  
+    let itemRatio = 1;
+    if (stage > 1) {
+      if (!isItemUsed) {
+        itemRatio = RESERVED_ITEM_RATIO
+        $item.color = YELLOWGREEN;
+        $item.innerHTML = `CLEAR +${Math.floor(itemRatio*100-100)}%`;
+      } else {
+        $item.color = BLACK;
+        $item.innerHTML = 'FAIL';
+      }
+      this.$stageResult.$itemDiv.show();
+    }
+  
+    let perfectClearRatio = 1;
+    if (stage > 4) {
+      if (!isDead && isAllEnsured) {
+        perfectClearRatio = PERFECT_CLEAR_RATIO;
+        $perfectClear.color = YELLOWGREEN;
+        $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
+      } else {
+        $perfectClear.color = BLACK;
+        $perfectClear.innerHTML = 'FAIL';
+      }
+      this.$stageResult.$perfectClearDiv.show();
+    }
+  
+    this.gameInfo.tempScore = Math.floor(
+      (cellCount * CELL_COUNT_SCORE + time * REMAINING_TIME_SCORE)
+      * movementRatio
+      * itemRatio
+      * perfectClearRatio
+    );
+    $totalScore.innerHTML = this.gameInfo.tempScore;
+    
+    this.playSound('clear');
+    this.saveClassicLog(cellCount, movement, isItemUsed, isDead, isAllEnsured);
+    this.sendClassicLogToServer();
+    this.$stageResult.show();
+    this.elementDropEffect(this.$stageResult);
+  }
+
+  showInformation(info) {
+    const { layout, title, half1, half2, article, arrow, header, footer, bonus } = info;
+    const { $title, $header, $left, $right, $arrow, $article, $footer } = this.$information;
+    this.initPage('information');
+    this.gameInfo.bonus = bonus;
+
+    this.$information.backgroundColor = WHITE_ALPHA;
+    this.$information.font = this.FONT_SIZE*3/5;
+    this.$information.width = this.board.maxWidth;
+    this.$information.height = this.height;
+
+    $title.innerHTML = title ?? '';
+    $title.font = this.FONT_SIZE;
+    $header.innerHTML = header ?? '';
+    $footer.innerHTML = footer ?? '';
+
+    if (layout === 'leftRight') {
+      if (half1.type === 'board') {
+        this.paintInfoBoard(half1, $left);
+      } else if (half1.type === 'text') {
+        $left.innerHTML = half1.text;
+      }
+      if (half2.type === 'board') {
+        this.paintInfoBoard(half2, $right);
+      } else if (half2.type === 'text') {
+        $right.innerHTML = half2.text;
+      }
+      if (arrow) {
+        $arrow.font = this.FONT_SIZE*2;
+        $arrow.innerHTML = '☞';
+        $arrow.show();
+      } else {
+        $arrow.hide();
+      }
+    } else if (layout === 'article') {
+      if (article.type === 'text') {
+        $article.innerHTML = article.text;
+      } else if (article.type === 'board') {
+        this.paintInfoBoard(article, $article, 7/10, 1/2);
+      }
+    }
+
+    this.$information.show();
+  }
+
+  showInputId() {
+    this.initPage('inputId');
+    const { $header, $input, $submit } = this.$inputId;
+
+    this.$inputId.backgroundColor = WHITE_ALPHA;
+    this.$inputId.font = this.FONT_SIZE;
+    this.$inputId.width = this.width * BOARD_WIDTH_RATIO;
+    this.$inputId.height = this.height;
+
+    $header.font = this.FONT_SIZE*2/3;
+
+    const tempCanvas = new Canvas($submit.elem, false);
+    $submit.elem.addEventListener('click', tempCanvas.getCallback('clickButton'));
+    $submit.elem.addEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+    $submit.width = this.canvas.height * BOARD_HEIGHT_RATIO;
+    $submit.height = this.TITLE_SIZE*3;
+    tempCanvas.createButton(BUTTON.submit, {
+      x: $submit.width/2,
+      y: $submit.height/2,
+      fontSize: this.FONT_SIZE,
+      width: $submit.width*0.5,
+      height: $submit.height*0.5,
+      page: (() => {
+        const originalCanvas = this;
+        return function () {
+          const value = $input.elem.value.trim();
+          if (value.length > 0
+            && !/[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/.test(value)) {
+            this.canvas.removeEventListener('click', tempCanvas.getCallback('clickButton'));
+            this.canvas.removeEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+            originalCanvas.gameInfo.name = value;
+            originalCanvas.paintPage();
+          } else {
+            alert('잘못된 입력입니다');
+          }
+        };
+      })()
+    });
+    tempCanvas.paintAllButton();
+
+    this.$inputId.$input.value = '';
+    this.$inputId.show();
+  }
+
+  showLeaderBoard() {
+    this.initPage('leaderboard');
+    const { $list, $footer, $mode01, $mode02, $classic, $challenge } = this.$leaderboard;
+
+    this.$leaderboard.backgroundColor = WHITE_ALPHA;
+    this.$leaderboard.font = this.FONT_SIZE;
+    this.$leaderboard.width = this.width * BOARD_WIDTH_RATIO;
+    this.$leaderboard.height = this.height;
+
+    $list.font = this.FONT_SIZE/2;
+    $list.fontWeight = 500;
+    $footer.font = this.FONT_SIZE/2;
+    $footer.fontWeight = 500;
+    $mode01.font = this.FONT_SIZE/2;
+    $mode01.fontWeight = 500;
+    $mode01.width = 587;
+    $mode02.font = this.FONT_SIZE/2;
+    $mode02.fontWeight = 500;
+    $mode02.width = 587;
+
+    this.leaderboardInfo.page = 1;
+    if ($classic.elem.checked) {
+      this.setClassicLeaderboard();
+    } else if ($challenge.elem.checked) {
+      this.setChallengeLeaderboard();
+    }
+  }
+
+  showUpdateLog() {
+    this.initPage('updateLog');
+    const { $footer } = this.$updateLog;
+
+    this.$updateLog.backgroundColor = WHITE_ALPHA;
+    this.$updateLog.font = this.FONT_SIZE;
+    this.$updateLog.width = this.width * BOARD_WIDTH_RATIO;
+    this.$updateLog.height = this.height;
+
+    $footer.font = this.FONT_SIZE/2;
+
+    this.setUpdateLog();
+    this.$updateLog.show();
+  }
+
+  showChallengeMode() {
+    this.initPage('challenge');
+    const { $footer } = this.$challenge;
+
+    this.$challenge.backgroundColor = WHITE_ALPHA;
+    this.$challenge.font = this.FONT_SIZE;
+    this.$challenge.width = this.width * BOARD_WIDTH_RATIO;
+    this.$challenge.height = this.height;
+
+    $footer.font = this.FONT_SIZE/2;
+
+    this.setChallengeModeList();
+    this.$challenge.show();
+  }
+
+  showChallengeResult() {
+    this.initPage('challengeResult');
+    const { accessable, shortest } = this.board;
+    const { time } = this.board.boardSetting;
+    const { movement } = this.board.me
+    const { $title, $cellCount, $time, $moveOpt, $perfectClear, $totalScore, $footer } = this.$stageResult;
+    const cellCount = this.board.cellArr.flat()
+    .reduce((count, cell) => {
+      if (cell.isEnsured && cell.type !== 'ensuredMine') {
+        return count + 1;
+      } else {
+        return count;
+      }
+    }, 0);
+    const isAllEnsured = accessable.every(cell => cell.isEnsured);
+  
+    this.$stageResult.backgroundColor = WHITE_ALPHA;
+    this.$stageResult.font = this.FONT_SIZE;
+    this.$stageResult.width = this.board.maxWidth;
+    this.$stageResult.height = this.height;
+
+    $title.innerHTML = `🎉 도전 모드 클리어 🎉`;
+    $cellCount.innerHTML = cellCount * CELL_COUNT_SCORE;
+    $time.innerHTML = time * REMAINING_TIME_SCORE;
+    $footer.innerHTML = 'F를 누르면 메인 화면으로 이동합니다.';
+  
+    let movementRatio = 1;
+    let rank;
+    if (movement <= shortest + (accessable.length-shortest)*1.2) {
+      movementRatio = MOVEMENT_PERFECT_RATIO;
+      rank = `Perfect +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = YELLOWGREEN;
+    } else if (movement <= shortest + (accessable.length-shortest)*1.5) {
+      movementRatio = MOVEMENT_EXCELLENT_RATIO;
+      rank = `Excellent +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = YELLOWGREEN;
+    } else if (movement <= shortest + (accessable.length-shortest)*2) {
+      movementRatio = MOVEMENT_GREAT_RATIO;
+      rank = `Great +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = NAVY;
+    } else if (movement <= shortest + (accessable.length-shortest)*2.5) {
+      movementRatio = MOVEMENT_GOOD_RATIO;
+      rank = `Good +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = NAVY;
+    } else {
+      movementRatio = 1;
+      rank = `Bad`;
+      $moveOpt.color = BLACK;
+    }
+    $moveOpt.innerHTML = rank;
+    this.$stageResult.$movementDiv.show();
+  
+    let perfectClearRatio = 1;
+    if (isAllEnsured) {
+      perfectClearRatio = PERFECT_CLEAR_RATIO;
+      $perfectClear.color = YELLOWGREEN;
+      $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
+    } else {
+      $perfectClear.color = BLACK;
+      $perfectClear.innerHTML = 'FAIL';
+    }
+    this.$stageResult.$perfectClearDiv.show();
+  
+    this.gameInfo.tempScore = Math.floor(
+      (cellCount * CELL_COUNT_SCORE + time * REMAINING_TIME_SCORE)
+      * movementRatio
+      * perfectClearRatio
+    );
+    $totalScore.innerHTML = this.gameInfo.tempScore;
+    
+    this.playSound('clear');
+    this.saveChallengeLog(cellCount, movement, isAllEnsured);
+    this.sendChallengeLogToServer();
+    this.$stageResult.show();
+    this.elementDropEffect(this.$stageResult);
+
+    const userInfo = {
+      name: this.gameInfo.name,
+      score: this.gameInfo.tempScore,
+      time: this.board.boardSetting.time,
+      cellCount,
+      log: this.gameInfo.log
+    }
+
+    this.postChallengeLeaderBoard(userInfo);
+    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
+  }
+
+  showChallengeFail() {
+    this.initPage('challengeFail');
+
+    this.$challengeFail.backgroundColor = WHITE_ALPHA;
+    this.$challengeFail.font = this.FONT_SIZE;
+    this.$challengeFail.width = this.board.maxWidth;
+    this.$challengeFail.height = this.height;
+
+    this.playSound('fail');
+    this.sendChallengeFailLogToServer();
+    this.$challengeFail.show();
+    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
+  }
+
+  showShape() {
+    if (this.gameInfo.shapeSwitch) {
+      this.showMsgBox(TEXT.msgBox09, TOMATO, 'shape');
+    } else {
+      this.showMsgBox(TEXT.msgBox10, YELLOWGREEN, 'shape');
+    }
+    this.gameInfo.shapeSwitch = !this.gameInfo.shapeSwitch;
+    this.board.showShapeSwitch = this.gameInfo.shapeSwitch;
+    this.board.updateCanvas();
+    this.board.me.updateCanvas();
+  }
+
+  useItem1() {
+    const { board } = this;
+    const { me } = board;
+    if (this.gameInfo.item1 > 0) {
+      const cellArr = board.getCell(me.x, me.y).getSurroundingCell(2)
+        .filter(cell => !cell.isDetected);
+      if (cellArr.length) {
+        const rand = randRange(0, cellArr.length-1);
+        const ensuredCell = cellArr[rand];
+        board.openCell(ensuredCell.x, ensuredCell.y);
+        board.updateCell(ensuredCell);
+        this.gameInfo.item1--;
+        board.isItemUsed = true;
+        this.paintBottomBar();
+        this.showMsgBox(TEXT.msgBox02, YELLOWGREEN, 'item');
+      } else {
+        this.showMsgBox(TEXT.msgBox08, TOMATO, 'cannotUseItem');
+      }
+    } else {
+      this.showMsgBox(TEXT.msgBox03, TOMATO, 'cannotUseItem');
+    }
+  }
+
+  useItem2() {
+    const { board } = this;
+    const { me } = board;
+    if (this.gameInfo.item2 > 0) {
+      const cellArr = board.getCell(me.x, me.y).getSurroundingCell(2)
+        .filter(cell => !cell.isDetected && cell.type !== 'destination');
+      if (cellArr.length) {
+        const rand = randRange(0, cellArr.length-1);
+        const safeCell = cellArr[rand];
+        board.ensureCell(safeCell.x, safeCell.y);
+        board.clearCheck(safeCell);
+        board.updateCell(safeCell);
+        this.gameInfo.item2--;
+        board.isItemUsed = true;
+        this.paintBottomBar();
+        this.showMsgBox(TEXT.msgBox04, YELLOWGREEN, 'item');
+      } else {
+        this.showMsgBox(TEXT.msgBox08, TOMATO, 'cannotUseItem');
+      }
+    } else {
+      this.showMsgBox(TEXT.msgBox05, TOMATO, 'cannotUseItem');
+    }
+  }
+
+  useItem3() {
+    const { board } = this;
+    const { me } = board;
+    if (this.gameInfo.item3 > 0) {
+      const cellArr = board.getCell(me.x, me.y).getSurroundingCell()
+        .filter(cell => !cell.isEnsured && cell.type !== 'destination');
+      if (cellArr.length) {
+        const rand = randRange(0, cellArr.length-1);
+        const safeCell = cellArr[rand];
+        board.ensureCell(safeCell.x, safeCell.y);
+        board.clearCheck(safeCell);
+        board.updateCell(safeCell);
+        this.gameInfo.item3--;
+        board.isItemUsed = true;
+        this.paintBottomBar();
+        this.showMsgBox(TEXT.msgBox06, YELLOWGREEN, 'item');
+      } else {
+        this.showMsgBox(TEXT.msgBox08, TOMATO, 'cannotUseItem');
+      }
+    } else {
+      this.showMsgBox(TEXT.msgBox07, TOMATO, 'cannotUseItem');
+    }
+  }
+
+  getCallback(type) {
+    if (!this.callback[type]) {
+      const thisBindedCallback = this[`${type}Callback`].bind(this);
+      this.callback[type] = thisBindedCallback;
+    }
+    return this.callback[type];
+  }
+
+  clickButtonCallback({ offsetX, offsetY }) {
+    this.button.forEach(btn => {
+      if (btn.contextInfo.isCollision(offsetX, offsetY)) {
+        btn.callback.bind(this)();
+      }
+    });
+  }
+
+  clickCellCallback({ offsetX, offsetY }) {
+    if (this.page === 'game') {
+      const { x, y, cellSize, cellCount } = this.board;
+      const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
+      if (this.board.isValid(cx, cy)
+        && !this.board.getCell(cx, cy).isEnsured
+        && this.board.getIdx(cx, cy) !== cellCount-1 ) {
+        const cell = this.board.getCell(cx, cy);
+        switch (cell.check) {
+          case 0:
+            cell.check = 1;
+            cell.checkColor = TOMATO;
+            this.board.updateRemainingMine();
+            break;
+          case 1:
+            cell.check = 2;
+            cell.checkColor = YELLOWGREEN;
+            this.board.updateRemainingMine();
+            break;
+          case 2:
+            cell.check = 0;
+            cell.checkColor = '';
+            break;
+        }
+        this.board.updateCell(cell);
+        this.board.me.updateCanvas();
+      }
+    }
+  }
+
+  mousemoveCallback({ offsetX, offsetY }) {
+    this.button.forEach(btn => {
+      if (btn.contextInfo.isCollision(offsetX, offsetY)) {
+        const tempInfo = btn.contextInfo;
+        btn.contextInfo = btn.hoverContextInfo;
+        this.fillRect(btn, true);
+        this.fillText(btn);
+        btn.contextInfo = tempInfo;
+        if (btn.caption) {
+          this.fillRect(btn.caption);
+          this.fillText(btn.caption);
+        }
+      } else {
+        this.fillRect(btn, true);
+        this.fillText(btn);
+        if (btn.caption) {
+          const { y } = btn.caption.contextInfo;
+          const { fontSize } = btn.caption;
+          this.ctx.clearRect(0, y - fontSize/2, this.width, y + fontSize/2);
+        }
+      }
+    });
+  }
+
+  keydownCallback({ keyCode }) {
+    if (this.page === 'game' || this.page === 'tutorial') {
+      if (!this.board) return;
+      const { me, xCount, yCount } = this.board;
+      const { x, y } = me;
+      switch (keyCode) {
+        case 65: // 좌 A
+          if (x > 0) {
+            me.moveX(-1);
+          }
+          break;
+  
+        case 87: // 상 W
+          if (y > 0) {
+            me.moveY(-1);
+          }
+          break;
+        
+        case 68: // 우 D
+          if (x < xCount-1) {
+            me.moveX(1);
+          }
+          break;
+  
+        case 83: // 하 S
+          if (y < yCount-1) {
+            me.moveY(1);
+          }
+          break;
+  
+        case 49: // 아이템 1
+          this.useItem1();
+          break;
+  
+        case 50: // 아이템 2
+          this.useItem2();
+          break;
+  
+        case 51: // 아이템 3
+          this.useItem3();
+          break;
+  
+        case 82: // R
+          this.showShape();
+          break;
+      }
+
+    } else if (this.page === 'stageResult') {
+      if (keyCode === 70) {  // F
+        this.gameInfo.score += this.gameInfo.tempScore;
+        this.gameInfo.tempScore = 0;
+        this.paintPage();
+      } 
+    } else if (this.page === 'information') {
+      if (keyCode === 70) {  // F
+        if (this.gameInfo.bonus) {
+          this.gameInfo.life += this.gameInfo.bonus.life ?? 0;
+          this.gameInfo.item1 += this.gameInfo.bonus.item1 ?? 0;
+          this.gameInfo.item2 += this.gameInfo.bonus.item2 ?? 0;
+          this.gameInfo.item3 += this.gameInfo.bonus.item3 ?? 0;
+        }
+        this.paintPage();
+      }
+    } else if (this.page === 'leaderboard') {
+      const { page, lastPage } = this.leaderboardInfo;
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.leaderboardInfo.record = [];
+        this.$leaderboard.hide();
+      } else if (keyCode === 65) { // A
+        if (page > 1) {
+          this.leaderboardInfo.page--;
+          if (this.$leaderboard.$classic.elem.checked) {
+            this.setClassicLeaderboard();
+          } else if (this.$leaderboard.$challenge.elem.checked) {
+            this.setChallengeLeaderboard();
+          }
+        }
+      } else if (keyCode === 68) { // D
+        if (lastPage >= page) {
+          this.leaderboardInfo.page++;
+          if (this.$leaderboard.$classic.elem.checked) {
+            this.setClassicLeaderboard();
+          } else if (this.$leaderboard.$challenge.elem.checked) {
+            this.setChallengeLeaderboard();
+          }
+        }
+      }
+    } else if (this.page === 'updateLog') {
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.$updateLog.hide();
+        this.$updateLog.$article.clear();
+      }
+    } else if (this.page === 'challenge') {
+      if (keyCode === 70) { // F
+        this.page = 'selectGame';
+        this.$challenge.hide();
+        this.$challenge.$article.clear();
+      }
+    } else if (this.page === 'challengeResult') {
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.clearPage();
+        this.clearElement();
+        this.clearTimer();
+        this.initValues();
+        this.canvas.addEventListener('click', this.getCallback('clickButton'));
+        this.paintMainPage();
+      }
+    } else if (this.page === 'challengeFail') {
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.clearPage();
+        this.clearElement();
+        this.clearTimer();
+        this.initValues();
+        this.canvas.addEventListener('click', this.getCallback('clickButton'));
+        this.paintMainPage();
+      } else if (keyCode === 82) { // R
+        this.clearPage();
+        this.clearElement();
+        this.clearTimer();
+        const mode = this.mode;
+        this.initValues();
+        this.getGamePage(mode).bind(this)();
+      }
+    }
+  }
+
+  changeCallback() {
+    if (this.page === 'leaderboard') {
+      this.leaderboardInfo.page = 1;
+      this.leaderboardInfo.record = [];
+      if (this.$leaderboard.$classic.elem.checked) {
+        this.setClassicLeaderboard();
+      } else if (this.$leaderboard.$challenge.elem.checked) {
+        this.setChallengeLeaderboard();
+      }
+    }
+  }
+
+  paintPage() {
+    const gameMode = MODE[this.mode];
+    let procedure;
+    if (this.mode === 'CLASSIC') {
+      procedure = gameMode[this.gameInfo.procedure++];
+    } else if (this.mode === 'CHALLENGE') {
+      const { modeId } = this.gameInfo;
+      procedure = gameMode[modeId][this.gameInfo.procedure++];
+    }
+    if (procedure) {
+      const { type } = procedure;
+      if (type === 'game') {
+        this.paintGamePage(procedure);
+      } else if (type === 'info') {
+        this.showInformation(procedure);
+      } else if (type === 'input') {
+        this.showInputId();
+      }
+    } else {
+      if (this.mode === 'CLASSIC') {
+        this.showGameResult(true);
+      } else if (this.mode === 'CHALLENGE') {
+        this.showChallengeResult();
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------------------------
+// 기타 클래스들
+
+class ContextInfo {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.fontWeight = 700;
+  }
+
+  get x1() {
+    return this.x - this.width/2;
+  }
+
+  get x2() {
+    return this.x + this.width/2;
+  }
+
+  get y1() {
+    return this.y - this.height/2;
+  }
+
+  get y2() {
+    return this.y + this.height/2;
+  }
+
+  get font() {
+    return `${this.fontWeight} ${this.fontSize}px sans-serif`;
+  }
+
+  isCollision(x, y) {
+    return x >= this.x1 && x <= this.x2 && y >= this.y1 && y <= this.y2;
+  }
+}
+
+class Element {
+  constructor(elem) {
+    this.elem = document.getElementById(elem);
+  }
+
+  hide() {
+    this.elem.classList.add('hidden');
+  }
+
+  show() {
+    this.elem.classList.remove('hidden');
+  }
+
+  clear() {
+    this.elem.innerHTML = '';
+  }
+
+  set top(value) {
+    this.elem.style.top = `${value}%`;
+  }
+
+  set opacity(value) {
+    this.elem.style.opacity = `${value}`;
+  }
+
+  get opacity() {
+    return +this.elem.style.opacity;
+  }
+
+  set innerHTML(value) {
+    this.elem.innerHTML = value;
+  }
+
+  get innerHTML() {
+    return this.elem.innerHTML;
+  }
+
+  set font(value) {
+    this.elem.style.font = `600 ${value}px sans-serif`;
+  }
+
+  set fontWeight(value) {
+    this.elem.style.fontWeight = value;
+  }
+
+  set width(value) {
+    this.elem.style.width = `${value}px`;
+  }
+
+  get width() {
+    return +[...this.elem.style.width.trim()].slice(0, -2).join('');
+  }
+
+  set height(value) {
+    this.elem.style.height = `${value}px`;
+  }
+  get height() {
+    return +[...this.elem.style.height.trim()].slice(0, -2).join('');
+  }
+
+  set borderRadius(value) {
+    this.elem.style.borderRadius = `${value}px`;
+  }
+
+  set color(value) {
+    this.elem.style.color = value;
+  }
+
+  set backgroundColor(value) {
+    this.elem.style.backgroundColor = value;
+  }
+}
+
+class Rect {
+  constructor(x, y) {
+    this.contextInfo = new ContextInfo(x, y);
+  }
+
+  setFillInfo(width, height, fillColor = BLACK) {
+    this.width = width;
+    this.height = height ?? width;
+    this.fillColor = fillColor;
+    return this;
+  }
+
+  setStrokeInfo(strokeColor = BLACK, lineWidth = 1) {
+    this.strokeColor = strokeColor;
+    this.lineWidth = lineWidth;
+    return this;
+  }
+
+  setTextInfo(text, fontSize, textColor = BLACK) {
+    this.text = text;
+    this.fontSize = fontSize;
+    this.textColor = textColor;
+    return this;
+  }
+
+  set width(value) {
+    this.contextInfo.width = value;
+  }
+
+  get width() {
+    return this.contextInfo.width;
+  }
+
+  set height(value) {
+    this.contextInfo.height = value;
+  }
+
+  get height() {
+    return this.contextInfo.height;
+  }
+
+  set fillColor(value) {
+    this.contextInfo.fillColor = value;
+  }
+
+  get fillColor() {
+    return this.contextInfo.fillColor;
+  }
+
+  set strokeColor(value) {
+    this.contextInfo.strokeColor = value;
+  }
+
+  get strokeColor() {
+    return this.contextInfo.strokeColor;
+  }
+
+  set lineWidth(value) {
+    this.contextInfo.lineWidth = value;
+  }
+
+  get lineWidth() {
+    return this.contextInfo.lineWidth;
+  }
+
+  set text(value) {
+    this.contextInfo.text = value;
+  }
+
+  get text() {
+    return this.contextInfo.text;
+  }
+
+  set fontSize(value) {
+    this.contextInfo.fontSize = value;
+  }
+
+  get fontSize() {
+    return this.contextInfo.fontSize;
+  }
+
+  set textColor(value) {
+    this.contextInfo.textColor = value;
+  }
+
+  get textColor() {
+    return this.contextInfo.textColor;
+  }
+
+  set fontWeight(value) {
+    this.contextInfo.fontWeight = value;
+  }
+
+  get fontWeight() {
+    return this.contextInfo.fontWeight;
+  }
+}
+
+class Button extends Rect {
+  constructor(x, y, callback) {
+    super(x, y);
+    this.callback = callback;
+    this.caption = null;
+    this.hoverContextInfo = this.contextInfo;
+  }
+};
+
+// cell 클래스 선언
+class Cell extends Rect {
+  constructor(x, y, board) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.board = board;
+    this.canvas = board.canvas;
+    this.initStatus();
+    this.initCellInfo();
+    this.initCheckInfo();
+    this.initContextInfo();
+  }
+
+  get value() {
+    if (this.type === 'ensuredMine') {
+      return TEXT.ensuredMine;
+    }
+    switch (this.textType) {
+      case 'normal':
+        return this.number;
+      case 'oddEven':
+        return this.number % 2 ? '홀' : '짝';
+      case 'high':
+        return '▲';
+      case 'low':
+        return '▼';
+    }
+  }
+
+  initStatus() {
+    this.isDetected = false;
+    this.isEnsured = false;
+  }
+
+  initCellInfo() {
+    this.type = 'normal';
+    this.hintType = 'normal';
+    this.shape = [...new Array(9)].map((_, i) => i);
+    this.textType = 'normal';
+    this.number = 0;
+    this.graphIndex = null;
+  }
+
+  initCheckInfo() {
+    this.check = 0;
+    this.checkColor = '';
+  }
+
+  initContextInfo() {
+    const { x, y, cellSize } = this.board;
+    this.contextInfo.x = x + (this.x + 0.5) * cellSize;
+    this.contextInfo.y = y + (this.y + 0.5) * cellSize;
+    this.setFillInfo(cellSize, cellSize, CHARCOAL);
+    this.setTextInfo(this.value, cellSize/2, BLACK);
+  }
+
+  get isMine() {
+    return this.type === 'mine' || this.type === 'ensuredMine';
+  }
+
+  getSurroundingCell(diameter = 1) {
+    let range, offsetX, offsetY;
+    if (diameter === 1) {
+      range = [...new Array(9)].map((_, i) => i);
+      [ offsetX, offsetY ] = [ OFFSET_X, OFFSET_Y ];
+    } else if (diameter === 2) {
+      range = [...new Array(25)].map((_, i) => i);
+      [ offsetX, offsetY ] = [ OFFSET5_X, OFFSET5_Y ];
+    }
+    const cellArr = [];
+    range.forEach(i => {
+      const [dx, dy] = [this.x + offsetX[i], this.y + offsetY[i]];
+      if (this.board.isValid(dx, dy)) {
+        cellArr.push(this.board.getCell(dx, dy));
+      }
+    });
+    return cellArr;
+  } 
+
+  stroke(strokeColor = BLACK, lineWidth = 1) {
+    this.setStrokeInfo(strokeColor, lineWidth);
+    this.canvas.strokeRect(this);
+  }
+
+  strokeText(strokeColor = BLACK, lineWidth = 1) {
+    this.text = this.value;
+    this.strokeColor = strokeColor;
+    this.lineWidth = lineWidth;
+    this.canvas.strokeText(this);
+  }
+
+  fill(fillColor) {
+    if (this.check) {
+      this.fillColor = this.checkColor;
+    } else {
+      this.fillColor = fillColor;
+    }
+    this.canvas.fillRect(this);
+    if (this.hintType !== 'normal' && this.isDetected && this.type !== 'ensuredMine') {
+      if (this.board.showShapeSwitch) {
+        this.fillShape(colorMatch[this.hintType]);
+      } else if (this.hintType === 'purple') {
+        this.fillShape(PURPLE);
+      }
+    }
+  }
+
+  fillText() {
+    this.text = this.value;
+    this.canvas.fillText(this);
+  }
+
+  fillShape(fillColor) {
+    let cellSize, offsetX, offsetY;
+    if (this.hintType === 'red' || this.hintType === 'orange') {
+      cellSize = this.board.cellSize / 5;
+      offsetX = OFFSET5_X;
+      offsetY = OFFSET5_Y;
+    } else {
+      cellSize = this.board.cellSize / 3;
+      offsetX = OFFSET_X;
+      offsetY = OFFSET_Y;
+    }
+    const cell = new Rect(this.x, this.y);
+    cell.setFillInfo(cellSize, cellSize, fillColor);
+    this.shape.forEach(i => {
+      cell.contextInfo.x = this.contextInfo.x + offsetX[i] * cellSize;
+      cell.contextInfo.y = this.contextInfo.y + offsetY[i] * cellSize;
+      this.canvas.fillRect(cell);
+    });
+  }
+   
+}
+
+class Me extends Rect {
+  constructor(board) {
+    super();
+    this.board = board;
+    this.canvas = board.canvas;
+    this.movement = 0;
+    this.isDead = false;
+    this.initCoord();
+    this.initContextInfo();
+  }
+
+  initCoord() {
+    this.x = 0;
+    this.y = 0;
+  }
+
+  initContextInfo() {
+    const { x, y, cellSize } = this.board;
+    this.contextInfo.x = x + 0.5 * cellSize;
+    this.contextInfo.y = y + 0.5 * cellSize;
+    this.setFillInfo(cellSize*3/4, cellSize*3/4, SKYBLUE_ALPHA);
+    this.setStrokeInfo();
+  }
+
+  moveX(x) {
+    this.board.updateCell([this.x, this.y]);
+    this.x += x;
+    this.contextInfo.x += this.board.cellSize * x;
+    this.movement++;
+    this.updateCanvas();
+  }
+
+  moveY(y) {
+    this.board.updateCell([this.x, this.y]);
+    this.y += y;
+    this.contextInfo.y += this.board.cellSize * y;
+    this.movement++;
+    this.updateCanvas();
+  }
+
+  moveTo(x, y) {
+    const { cellSize } = this.board;
+    this.board.updateCell([this.x, this.y]);
+    this.x = x;
+    this.y = y;
+    this.contextInfo.x = this.board.x + (x + 0.5) * cellSize;
+    this.contextInfo.y = this.board.y + (y + 0.5) * cellSize;
+    this.updateCanvas();
+  }
+
+  paint() {
+    this.canvas.fillRect(this, true);
+  }
+
+  updateCanvas() {
+    const cell = this.board.getCell(this.x, this.y);
+    const offset = [0, 1, 2, 3, 5, 6, 7, 8];
+
+    offset.forEach(i => {
+      const [ dx, dy ] = [ this.x + OFFSET_X[i], this.y + OFFSET_Y[i] ];
+      if (this.board.isValid(dx, dy)) {
+        this.board.openCell(dx, dy);
+        this.board.updateCell([dx, dy]);
+      }
+    });
+    this.board.ensureCell(cell);
+    this.board.clearCheck(cell);
+    this.board.updateCell(cell);
+    this.paint();
+
+    if (cell.type === 'mine' || cell.type === 'ensuredMine') {
+      this.mineExplosion();
+    } else if (cell.type === 'destination') {
+      if (this.canvas.page === 'tutorial') {
+        alert(TEXT.destination);
+        this.canvas.paintMainPage();
+      } else if (this.canvas.page === 'game') {
+        if (this.canvas.mode === 'CLASSIC') {
+          this.canvas.showStageResult();
+        } else if (this.canvas.mode === 'CHALLENGE') {
+          this.canvas.showChallengeResult();
+        }
+      }
+    }
+  }
+
+  mineExplosion() {
+    this.board.updateCell([this.x, this.y]);
+    this.moveTo(0, 0);
+    this.canvas.showMsgBox(TEXT.msgBox01);
+    if (this.canvas.page === 'game') {
+      this.isDead = true;
+      this.canvas.decreaseLife();
+    }
+  }
+}
+
+class Board {
+  constructor(canvas, xCount, yCount, init = true, sizeValues) {
+    this.canvas = canvas;
+    this.xCount = xCount;
+    this.yCount = yCount;
+    this.cellCount = xCount * yCount;
+    this.showShapeSwitch = canvas.gameInfo.shapeSwitch;
+    this.isItemUsed = false;
+    this.initSizeValue(sizeValues);
+    this.initBoardSetting();
+    if (init) {
+      this.initCellProperty();
+    }
+  }
+
+  initSizeValue(sizeValues) {
+    if (sizeValues) {
+      const { maxWidth, maxHeight, cellSize } = sizeValues;
+      this.maxWidth = maxWidth;
+      this.maxHeight = maxHeight;
+      this.cellSize = cellSize;
+    } else {
+      this.maxWidth = this.canvas.width * BOARD_WIDTH_RATIO;
+      this.maxHeight = this.canvas.height * BOARD_HEIGHT_RATIO;
+      this.bottomBarHeight = this.canvas.height * BOARD_BOTTOM_GAP_RATIO;
+      this.cellSize = Math.min(this.maxWidth / this.xCount, this.maxHeight*0.98 / this.yCount);
+    }
+
+    this.x = (this.canvas.width - this.cellSize * this.xCount) / 2;
+    this.y = (this.maxHeight - this.cellSize * this.yCount) / 2;
+    this.width = this.xCount * this.cellSize;
+    this.height = this.yCount * this.cellSize;
+    this.bottomHeight = this.canvas.height - this.maxHeight;
+    this.bottomCenterY = this.canvas.height - this.bottomHeight / 2;
+  }
+
+  initBoardSetting() {
+    this.cellArr = [...Array(this.yCount)].map((_, y) => [...Array(this.xCount)].map((_, x) => new Cell(x, y, this)));
+    this.boardSetting = null;
+    this.remainingMine = 0;
+    this.accessable = [];
+    this.minePlantable = this.getMinePlantable();
+    this.shortest = 0;
+    this.me = new Me(this);
+  }
+
+  initCellProperty() {
+    [
+      [0, 0], [0, 1], [0, 2],
+      [1, 0], [1, 1], [1, 2],
+      [2, 0], [2, 1], [2, 2]
+    ].forEach(coord => this.ensureCell(...coord));
+    if (this.canvas.mode === 'CHALLENGE') {
+      [
+        [0, 3], [1, 3], [2, 3],
+        [3, 0], [3, 1], [3, 2], [3, 3]
+      ].forEach(coord => this.ensureCell(...coord));
+    }
+    const destCell = this.cellArr[this.yCount-1][this.xCount-1];
+    destCell.type = 'destination';
+    this.ensureCell(destCell.x, destCell.y);
+    destCell.isDetected = false;
+  }
+
+  getMinePlantable() {
+    const arr = this.cellArr.flat();
+    arr.pop();
+    arr.shift();
+    return arr;
+  }
+
+  getXY(idx) {
+    return [idx % this.xCount, Math.floor(idx / this.xCount)];
+  }
+
+  getIdx(x, y) {
+    if (x instanceof Cell) {
+      const cell = x;
+      return cell.x + cell.y * this.xCount;
+    }
+    return x + y * this.xCount;
+  }
+
+  getCell(x, y = null) {
+    if (y === null) {
+      const [ dx, dy ] = this.getXY(x);
+      return this.cellArr[dy][dx];
+    }
+    return this.cellArr[y][x];
+  }
+
+  isValid(x, y) {
+    return x >= 0 && x < this.xCount && y >= 0 && y < this.yCount;
+  }
+
+  forEachCell(callback, ...args) {
+    this.cellArr.forEach(
+      row => row.forEach(cell => {
+        callback.bind(this)(cell, ...args);
+      })
+    );
+  }
+
+  clearCheck(cell) {
+    cell.check = 0;
+    cell.checkColor = '';
+    if(this.canvas.page === 'game') {
+      this.updateRemainingMine();
+    }
+  }
+
+  setAccessable() {
+    const graph = [];
+    const visited = new Array(this.cellCount).fill(false);
+    
+    const setGraph = () => {
+      const stack = [0];
+      while (stack.length) {
+        const idx = stack.pop();
+        if (!visited[idx]) {
+          visited[idx] = true;
+          const cell = this.getCell(idx);
+          graph.push(cell);
+
+          [1, 3, 5, 7].forEach(i => {
+            const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+            const newIdx = this.getIdx(dx, dy);
+            if (this.isValid(dx, dy)
+                && !visited[newIdx]
+                && this.getCell(dx, dy).type !== 'mine'
+                && this.getCell(dx, dy).type !== 'destination') {
+                  stack.push(newIdx);
+            }
+          });
+        }
+      }
+    };
+
+    setGraph();
+    graph.push(this.getCell(this.cellCount-1));
+    this.accessable = graph;
+  }
+
+  // 지뢰 배치 단계 1 - 시작점과 도착점을 제외한 칸에 지뢰를 지정된 개수만큼 랜덤하게 배치
+  arrangeMine(mine) {
+    let randArr = [...new Array(this.cellCount-2)].map((_, i) => i+1);
+    while (mine--) {
+      const randIdx = randRange(0, randArr.length-1);
+      this.getCell(randArr.splice(randIdx, 1)[0]).type = 'mine';
+    }
+  }
+
+  // 지뢰 배치 단계 2 - value가 9인 칸이 있다면, 주변포함 9칸 중 랜덤하게 하나 제거
+  relaxMineDensity() {
+    const removedMineArr = [];
+    this.forEachCell(cell => {
+      this.setNormalCellNumber(cell);
+      if (cell.number === 9) {
+        const rand = randRange(0, 8);
+        const [ dx, dy ] = [ x + OFFSET_X[rand], y + OFFSET_Y[rand] ];
+        const mine = this.getCell(dx, dy);
+        mine.type = 'normal';
+        removedMineArr.push(mine);
+      }
+    });
+    return removedMineArr;
+    // 어차피 게임판을 그리기 전에 updateCellProperty()를 실행하기 때문에 cell들의 value값은 정정하지 않고 놔둠
+  }
+
+  // 지뢰 배치 단계 3 - 인접한 safe칸들로 구성된 구간과 인접한 mine으로 구성된 구간을 분류
+  getConnectedComponent() {
+    const visited = new Array(this.cellCount).fill(false);
+    const safeGraph = [];
+
+    const getGraph = start => {
+      const stack = [start];
+      const graph = [];
+
+      while (stack.length) {
+        const idx = stack.pop();
+        if (!visited[idx]) {
+          visited[idx] = true;
+          graph.push(idx);
+          const cell = this.getCell(idx);
+          cell.graphIndex = safeGraph.length;
+
+          [1, 3, 5, 7].forEach(i => {
+            const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+            if (this.isValid(dx, dy) && this.getCell(dx, dy).type !== 'mine') {
+              const newIdx = this.getIdx(dx, dy);
+              if (!visited[newIdx]) {
+                stack.push(newIdx);
+              }
+            }
+          });
+        }
+      }
+      return graph;
+    };
+    
+    visited.forEach((v, i) => {
+      if (!v && this.getCell(i).type !== 'mine') {
+        safeGraph.push(getGraph(i));
+      }
+    });
+    return safeGraph;
+  }
+
+  // mineMap 생성
+  getMineMap() {
+    const mineMap = new Map();
+    this.forEachCell(cell => {
+      if (cell.type === 'mine') {
+        let key = [];
+        [1, 3, 5, 7].forEach(i => {
+          const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+          if (this.isValid(dx, dy) && this.getCell(dx, dy).type !== 'mine') {
+            const idx = this.getCell(dx, dy).graphIndex;
+            key.push(idx);
+          }
+        });
+
+        if (key.length > 0) {
+          key = [...new Set(key)].sort((a, b) => a - b).join();
+          if (mineMap.has(key)) {
+            mineMap.get(key).push(cell);
+          } else {
+            mineMap.set(key, [cell]);
+          }
+        }
+      }
+    });
+
+    const keys = [...mineMap.keys()];
+
+    // 단 1개의 safe graph와 접하는 부분들은 제외
+    keys.forEach(key => {
+      if (key.length <= 2) {
+        mineMap.delete(key);
+      }
+    });
+
+    // subset 제거
+    keys.forEach(key1 => {
+      keys.forEach(key2 => {
+        if (key1 !== key2) {
+          const set1 = new Set([...key1.split(',')]);
+          const set2 = new Set([...key1.split(','), ...key2.split(',')]);
+          if (set1.size === set2.size) {
+            mineMap.delete(key2);
+          }
+        }
+      });
+    });
+
+    return mineMap;
+  }
+
+  // 제거되는 지뢰와 인접한 safe graph 찾기
+  getAdjacentSafeCell(cell) {
+    const idx = new Set();
+    [1, 3, 5, 7].forEach(i => {
+      const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+      if (this.isValid(dx, dy)) {
+        const safeCell = this.getCell(dx, dy);
+        if (safeCell.type !== 'mine') {
+          idx.add(safeCell.graphIndex);
+        }
+      }
+    });
+
+    return [...idx];
+  }
+
+  getMineArr(graph) {
+    const mineArr = new Set();
+    graph.forEach(idx => {
+      const cell = this.getCell(idx);
+      [1, 3, 5, 7].forEach(i => {
+        const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+        if (this.isValid(dx, dy)) {
+          const targetCell = this.getCell(dx, dy);
+          if (targetCell.type === 'mine') {
+            mineArr.add(targetCell);
+          }
+        }
+      });
+    });
+
+    return [...mineArr];
+  }
+
+  // 지뢰 배치 단계 4 - 안전 구역 연결
+  connectSafeGraph() {
+    const removedMineArr = [];
+    while (true) {
+      const safeGraph = this.getConnectedComponent();
+      if (safeGraph.length === 1) break;
+
+      // mineMap의 각각의 value에 속한 cell중 무작위로 하나 골라서 삭제
+      // 삭제되면서 연결된 safe graph는 graphIndexArr에서 삭제
+      const graphIndexArr = [...new Array(safeGraph.length)].map((_, i) => i);
+      const mineMap = this.getMineMap();
+      for (const value of mineMap.values()) {
+        const rand = randRange(0, value.length-1);
+        const removedMine = value.splice(rand, 1)[0];
+        this.getAdjacentSafeCell(removedMine).forEach(idx => {
+          if (graphIndexArr.includes(idx)) {
+            graphIndexArr.splice(graphIndexArr.indexOf(idx), 1);
+          }
+        })
+        removedMine.type = 'normal';
+        removedMineArr.push(removedMine);
+      }
+
+      // graphIndexArr에 아직도 남아 있는 safe graph는 고립된 구역임.
+      // 고립된 safe graph와 인접한 지뢰 중 무작위로 하나 삭제
+      graphIndexArr.forEach(idx => {
+        const mineArr = this.getMineArr(safeGraph[idx]);
+        const rand = randRange(0, mineArr.length-1);
+        const removedMine = mineArr.splice(rand, 1)[0];
+        removedMine.type = 'normal';
+        removedMineArr.push(removedMine);
+      });
+    }
+    return removedMineArr;
+  }
+
+  // 지뢰 배치 단계 5 - 여분 지뢰 재배치
+  relocateMine(mineArr) {
+    let count = mineArr.length;
+    const candidate = this.minePlantable.filter(cell => !mineArr.includes(cell)); // 제거된 지뢰 자리 제외
+
+    const isPossible = () => {
+      const visited = new Array(this.cellCount).fill(false);
+      const stack = [0];
+      let isPossible = false;
+
+      while (stack.length) {
+        const idx = stack.pop();
+        if (idx === this.cellCount-1) {
+          isPossible = true;
+          break;
+        }
+        if (!visited[idx]) {
+          visited[idx] = true;
+          const cell = this.getCell(idx);
+          [1, 3, 5, 7].forEach(i => {
+            const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+            if (this.isValid(dx, dy)) {
+              const newIdx = this.getIdx(dx, dy);
+              if (this.getCell(newIdx).type !== 'mine') {
+                stack.push(newIdx);
+              }
+            }
+          });
+        }
+      }
+      return isPossible;
+    };
+
+    while (candidate.length && count) {
+      const rand = randRange(0, candidate.length-1);
+      const cell = candidate.splice(rand, 1)[0];
+      cell.type = 'mine';
+      if (isPossible()) {
+        count--;
+      } else {
+        cell.type = 'normal';
+      }
+    }
+  }
+
+  // 최단거리 구하기
+  getShortest(start = 0) {
+    const visited = new Array(this.cellCount).fill(false);
+    const count = new Array(this.cellCount).fill(0);
+    const queue = [start];
+    
+    while (queue.length) {
+      const idx = queue.shift();
+      if (idx === this.cellCount-1) {
+        return count[idx];
+      }
+      if (!visited[idx]) {
+        visited[idx] = true;
+        const cell = this.getCell(idx);
+        [1, 3, 5, 7].forEach(i => {
+          const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+          if (this.isValid(dx, dy)) {
+            const newIdx = this.getIdx(dx, dy);
+            if (!visited[newIdx] && !this.getCell(newIdx).isMine) {
+              queue.push(newIdx);
+              count[newIdx] = count[idx] + 1;
+            }
+          }
+        });
+      }
+    }
+    return 0;
+  }
+
+  setBoard(mine) {
+    const removedMineArr = [];
+    this.arrangeMine(mine);
+    removedMineArr.push(...this.relaxMineDensity());
+    removedMineArr.push(...this.connectSafeGraph());
+    this.relocateMine(removedMineArr);
+    this.setAccessable();
+    this.shortest = this.getShortest();
+    this.updateCellProperty();
+  }
+
+  setNormalCellNumber(cell) {
+    let count = 0;
+    cell.shape.forEach(i => {
+      const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+      if (this.isValid(dx, dy) && this.getCell(dx, dy).isMine) {
+        count++;
+      }
+    });
+    cell.number = count;
+  }
+
+  setSpecialCellNumber(cell) {
+    let count = 0;
+    let offsetX = OFFSET_X;
+    let offsetY = OFFSET_Y;
+    if (cell.hintType === 'red' || cell.hintType === 'orange') {
+      offsetX = OFFSET5_X;
+      offsetY = OFFSET5_Y;
+    }
+    cell.shape.forEach(i => {
+      const [ dx, dy ] = [ cell.x + offsetX[i], cell.y + offsetY[i] ];
+      if (this.isValid(dx, dy) && this.getCell(dx, dy).isMine) {
+        count++;
+      }
+    });
+    cell.number = count;
+  }
+
+  setProperty(cell) {
+    if (cell.hintType === 'normal') {
+      this.setNormalCellNumber(cell);
+    } else {
+      this.setSpecialCellNumber(cell);
+    }
+  }
+
+  setSpecialHint() {
+    if (!this.boardSetting) return;
+    const candidate = [...this.minePlantable];
+    RAINBOW.forEach(type => {
+      let count = this.boardSetting[type] ?? 0;
+      while (count--) {
+        const rand = randRange(0, candidate.length-1);
+        const cell = candidate.splice(rand, 1)[0];
+        cell.hintType = type;
+        cell.textColor = colorMatch[type];
+        if (type === 'purple') {
+          const shape = [...new Array(9)].map((_, i) => i);
+          let range = randRange(1, 7);
+          while (range) {
+            const rand = randRange(0, shape.length-1);
+            shape.splice(rand, 1);
+            range--;
+          }
+          cell.shape = shape;
+        } else {
+          cell.shape = shapeMatch[type];
+        }
+      }
+    });
+  }
+
+  setSpecialText() {
+    if (!this.boardSetting) return;
+    let { oddEven, highLow } = this.boardSetting;
+    const candidate = [...this.minePlantable];
+
+    while (oddEven) {
+      const rand = randRange(0, candidate.length-1);
+      const cell = candidate.splice(rand, 1)[0];
+      cell.textType = 'oddEven';
+      oddEven--;
+    }
+    while (candidate.length && highLow) {
+      const rand = randRange(0, candidate.length-1);
+      const cell = candidate.splice(rand, 1)[0];
+      const numArr = cell.getSurroundingCell().map(surCell => surCell.number);
+      if (cell.number === Math.max(...numArr)) {
+        cell.textType = 'high';
+        highLow--;
+      } else if (cell.number === Math.min(...numArr)) {
+        cell.textType = 'low';
+        highLow--;
+      }
+    }
+  }
+
+  // 모든 cell의 value값 설정
+  updateCellProperty() {
+    this.setSpecialHint();
+    this.forEachCell(this.setProperty);
+    this.setSpecialText();
+  }
+
+  // 안전한 칸 표시
+  ensureCell(x, y) {
+    const cell = x instanceof Cell ? x : this.getCell(x, y);
+    cell.isEnsured = true;
+    this.openCell(x, y);
+  }
+
+  ensureWholeCell() {
+    this.forEachCell(this.ensureCell);
+    this.forEachCell(this.updateCell, true);
+    this.paintBorder();
+  }
+
+  // 칸 공개
+  openCell(x, y) {
+    const cell = x instanceof Cell ? x : this.getCell(x, y);
+    cell.isDetected = true;
+  }
+
+  // 전체 게임판 업데이트
+  updateCanvas() {
+    this.forEachCell(this.updateCell, true);
+    this.paintBorder();
+  }
+
+  // 단일 셀 업데이트
+  updateCell(cell, isCallback=false) {
+    if (!(cell instanceof Cell)) {
+      cell = this.getCell(...cell);
+    }
+    this.fillCell(cell);
+    this.fillCellText(cell);
+    if (!isCallback) {
+      this.paintBorder();
+    }
+  }
+
+  updateRemainingMine() {
+    let mine = 0;
+    this.forEachCell(v => {
+      if (v.type === 'ensuredMine') {
+        mine++;
+      } else if (v.check === 1) {
+        mine++;
+      }
+    });
+    this.remainingMine = mine;
+    this.canvas.paintBottomBar();
+  }
+
+  fillCell(cell) {
+    if (cell.isEnsured) {
+      switch (cell.type) {
+        case 'normal':
+          cell.fill(LIGHTGRAY);
+          break;
+        case 'mine':
+          cell.type = 'ensuredMine';
+          if(this.canvas.page === 'game') {
+            this.updateRemainingMine();
+          }
+        case 'ensuredMine':
+          cell.fill(TOMATO);
+          break;
+        case 'destination':
+          cell.fill(YELLOWGREEN);
+          break;
+      }
+    } else {
+      cell.fill(CHARCOAL);
+    }
+  }
+
+  fillCellText(cell) {
+    if (cell.isDetected) {
+      cell.fillText();
+      if (cell.hintType !== 'normal' && cell.type !== 'ensuredMine') {
+        cell.strokeText(cell.hintType !== 'navy' ? BLACK : WHITE_ALPHA);
+      }
+    }
+  }
+
+  paintBorder() {
+    const line = new Rect(this.canvas.CENTER, this.y - this.cellSize);
+    line.setStrokeInfo();
+    line.setFillInfo(this.width, 0);
+    for (let i = 0; i <= this.yCount; i++) {
+      line.contextInfo.y += this.cellSize;
+      this.canvas.strokeLine(line);
+    }
+
+    line.contextInfo.x = this.x - this.cellSize;
+    line.contextInfo.y = this.y + this.height/2;
+    line.setFillInfo(0, this.height);
+    for (let i = 0; i <= this.xCount; i++) {
+      line.contextInfo.x += this.cellSize;
+      this.canvas.strokeLine(line);
+    }
+  }
+}
+
+//--------------------------------------------------------------------------------------------------
+// main
+let curCanvas;
+const mainCanvas = new Canvas(document.getElementById('canvas'));
+curCanvas = mainCanvas;
+curCanvas.paintMainPage();
+curCanvas = null;
