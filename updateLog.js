@@ -85,7 +85,7 @@ const UPDATE_LOG = [
             ]
           },
           {
-            "title": "일부 UI가 변경되었습니다.",
+            "title": "약간의 UI가 변경되었습니다.",
             "log": []
           }
         ]
