@@ -1727,19 +1727,21 @@ const CHALLENGE_ARR = [
 ]
 
 const MODE_CHALLENGE = [
-  {
-    type: 'input'
-  },
+  [
+    {
+      type: 'input'
+    },
 
-  {
-    type: 'game',
-    xCount: 8,
-    yCount: 8,
-    mine: 20,
-    boardSetting: {
-      time: 90
+    {
+      type: 'game',
+      xCount: 8,
+      yCount: 8,
+      mine: 20,
+      boardSetting: {
+        time: 90
+      }
     }
-  }
+  ]
 ];
 
 const MODE = {

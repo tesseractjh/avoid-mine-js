@@ -326,7 +326,10 @@ class Canvas {
 
       [top, left, right, bottom].forEach(elem => div.appendChild(elem));
       div.addEventListener('click', this.getGamePage('CHALLENGE').bind(this));
-      div.addEventListener('click', () => this.$challenge.hide());
+      div.addEventListener('click', () => {
+        this.gameInfo.modeId = i;
+        this.$challenge.hide();
+      });
       this.$challenge.$article.elem.appendChild(div);
     })
   }
@@ -1881,7 +1884,14 @@ class Canvas {
   }
 
   paintPage() {
-    const procedure = MODE[this.mode][this.gameInfo.procedure++];
+    const gameMode = MODE[this.mode];
+    let procedure;
+    if (this.mode === 'CLASSIC') {
+      procedure = gameMode[this.gameInfo.procedure++];
+    } else if (this.mode === 'CHALLENGE') {
+      const { modeId } = this.gameInfo;
+      procedure = gameMode[modeId][this.gameInfo.procedure++];
+    }
     if (procedure) {
       const { type } = procedure;
       if (type === 'game') {
