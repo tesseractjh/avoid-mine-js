@@ -53,6 +53,10 @@ const RAINBOW = [
   'green', 'blue', 'navy', 'purple'
 ];
 
+const TEXT_HINT = [
+  'oddEven', 'highLow'
+]
+
 const shapeMatch = {
   red: [10, 11, 12, 13, 14],
   orange: [2, 7, 12, 17, 22],
@@ -61,6 +65,11 @@ const shapeMatch = {
   blue: [0, 2, 3, 4, 5, 6, 8],
   navy: [0, 1, 2, 4, 6, 7, 8]
 };
+
+const textHintMatch = {
+  oddEven: '홀짝',
+  highLow: '▲▼'
+}
 
 const BOARD_WIDTH_RATIO         = 2/3;
 const BOARD_HEIGHT_RATIO        = 0.85;
@@ -1698,62 +1707,53 @@ const MODE_CLASSIC = [
 	},
 ];
 
-const CHALLENGE_ARR = [
-
-  {
-    name: '초급 01',
-    width: 8,
-    height: 8,
-    mine: 20,
-    time: 90,
-    colorType: [],
-    textType: [],
-    condition: '',
-    difficulty: 1
-  },
-
-  //{
-  //  name: '초급 02',
-  //  width: 9,
-  //  height: 9,
-  //  mine: 25,
-  //  time: 90,
-  //  colorType: [ 'red', 'orange' ],
-  //  textType: [],
-  //  condition: '클래식 모드 STAGE 15',
-  //  difficulty: 1
-  //}
-
-]
+const getProcedure = (modeId) => {
+  return [
+    { type: 'input' },
+    MODE_CHALLENGE[modeId]
+  ];
+};
 
 const MODE_CHALLENGE = [
-  [
-    {
-      type: 'input'
+
+  {
+    type: 'game',
+    xCount: 8,
+    yCount: 8,
+    mine: 20,
+    boardSetting: {
+      time: 90
     },
-
-    {
-      type: 'game',
-      xCount: 8,
-      yCount: 8,
-      mine: 20,
-      boardSetting: {
-        time: 90
-      }
+    selectInfo: {
+      name: '초급 01',
+      condition: '',
+      difficulty: 1
     }
-  ]
-];
+  },
 
-const MODE = {
-  CLASSIC: MODE_CLASSIC,
-  CHALLENGE: MODE_CHALLENGE
-};
+  {
+    type: 'game',
+    xCount: 8,
+    yCount: 8,
+    mine: 20,
+    boardSetting: {
+      time: 90,
+      red: randRange(2, 3),
+      orange: randRange(2, 3)
+    },
+    selectInfo: {
+      name: '초급 01',
+      condition: '클래식 모드 STAGE 15',
+      difficulty: 1
+    }
+  }
+
+];
 
 [
   colorMatch, RAINBOW,
   OFFSET_X, OFFSET_Y, 
   OFFSET5_X, OFFSET5_Y, 
   TEXT, BUTTON, TUTORIAL, 
-  MODE_CLASSIC,
-  MODE
+  MODE_CLASSIC, MODE_CHALLENGE
 ].forEach(obj => Object.freeze(obj));

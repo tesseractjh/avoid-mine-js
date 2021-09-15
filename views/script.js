@@ -20,7 +20,7 @@ class Canvas {
 
   initValues() {
     this.page = 'main';
-    this.mode = '';
+    this.mode = 'CLASSIC';
     this.button = [];
     this.callback = [];
     this.sound = this.sound ?? {};
@@ -29,7 +29,7 @@ class Canvas {
       name: '',
       stage: 0,
       modeId: 0,
-      life: 5,
+      life: 0,
       score: 0,
       item1: 0,
       item2: 0,
@@ -145,23 +145,9 @@ class Canvas {
       });
   }
 
-  sendClassicLogToServer() {
-    const { name, stage, tempScore, score } = this.gameInfo;
-    const userInfo = {
-      name, stage, tempScore,
-      score: score + tempScore
-    };
-    fetch('/log/classic', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(userInfo)
-    })
-  }
-
-  sendChallengeLogToServer() {
-    const { name, tempScore, modeId } = this.gameInfo;
-    const userInfo = { name, tempScore, modeId };
-    fetch('/log/challenge', {
+  sendLogToServer() {
+    const userInfo = this.crossMode('sendLog');
+    fetch(`/log/${this.mode.toLowerCase()}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)
@@ -276,8 +262,12 @@ class Canvas {
   }
 
   setChallengeModeList() {
-    CHALLENGE_ARR.forEach((chal, i) => {
-      const { name, width, height, mine, time, colorType, textType, condition, difficulty } = chal;
+    MODE_CHALLENGE.forEach((chal, i) => {
+      const { xCount, yCount, mine, boardSetting, selectInfo } = chal;
+      const { time } = boardSetting;
+      const colorType = RAINBOW.filter(color => boardSetting[color]);
+      const textType = TEXT_HINT.filter(text => boardSetting[text]).map(v => textHintMatch[v]);
+      const { name, condition, difficulty } = selectInfo;
       const div = document.createElement('div');
       const top = document.createElement('div');
       const bottom = document.createElement('div');
@@ -297,7 +287,7 @@ class Canvas {
       this.setText(top, `${name}`);
 
       this.appendNodeWithText(left, '🧩 맵 크기:　');
-      this.appendNodeWithText(right, `${width}X${height}`);
+      this.appendNodeWithText(right, `${xCount}X${yCount}`);
 
       const minute = Math.floor(time / 60) ? `${Math.floor(time / 60)}분 ` : '';
       const second = time % 60 ? `${time % 60}초` : '';
@@ -305,7 +295,7 @@ class Canvas {
       this.appendNodeWithText(right, `${minute}${second}`);
 
       this.appendNodeWithText(left, '💣 지뢰비율:　');
-      this.appendNodeWithText(right, `${Math.floor(mine * 100 / (width * height))}%`);
+      this.appendNodeWithText(right, `${Math.floor(mine * 100 / (xCount * yCount))}%`);
 
       this.appendNodeWithText(left, '🎨 색깔힌트:　');
       if (colorType.length) {
@@ -334,68 +324,44 @@ class Canvas {
     })
   }
 
-  initClassicLabel() {
-    this.$leaderboard.$list.innerHTML = 
-    `<div class="border-bottom">순위</div>
-    <div class="border-bottom">이름</div>
-    <div class="border-bottom">점수</div>
-    <div class="border-bottom">랭크</div>
-    <div class="border-bottom">스테이지</div>`;
+  initHead() {
+    this.$leaderboard.$list.innerHTML = this.crossMode('initHead');
   }
 
-  initChallengeLabel() {
-    this.$leaderboard.$list.innerHTML = 
-    `<div class="border-bottom">순위</div>
-    <div class="border-bottom">이름</div>
-    <div class="border-bottom">점수</div>
-    <div class="border-bottom">남은시간</div>
-    <div class="border-bottom">밟은칸수</div>`;
-  }
-
-  appendToClassicList(users) {
-    this.$leaderboard.$list.elem.classList.add('classic-grid');
-    this.$leaderboard.$list.elem.classList.remove('challenge-grid');
-    this.initClassicLabel();
+  appendToList(users) {
+    this.initHead();
     const $fragment = document.createDocumentFragment();
-    users.forEach(user => this.createClassicUserInfo($fragment, user));
+    users.forEach(user => this.createUserInfo($fragment, user));
     this.$leaderboard.$list.elem.appendChild($fragment);
   }
 
-  appendToChallengeList(users) {
-    this.$leaderboard.$list.elem.classList.add('challenge-grid');
-    this.$leaderboard.$list.elem.classList.remove('classic-grid');
-    this.initChallengeLabel();
-    const $fragment = document.createDocumentFragment();
-    users.forEach(user => this.createChallengeUserInfo($fragment, user));
-    this.$leaderboard.$list.elem.appendChild($fragment);
-  }
-
-  setClassicLeaderboard() {
+  setLeaderboard() {
     this.page = 'fetching';
     const { page, record } = this.leaderboardInfo;
 
     if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
-      this.appendToClassicList(record.slice((page - 1) * 10, page * 10));
+      this.appendToList(record.slice((page - 1) * 10, page * 10));
       this.$leaderboard.show();
       this.page = 'leaderboard';
     } else { // GET요청
-      fetch(`/leaderboard/classic/${Math.floor(page / 10)}`)
+      fetch(`/leaderboard/${this.mode.toLowerCase()}/${Math.floor(page / 10)}`)
       .then(res => res.json())
       .then(users => {
         if (record.length === users.length) {
           this.leaderboardInfo.page--;
           if (users.length === 0) { // 초기에 목록이 0개인 상태 대비
-            this.initClassicLabel();
+            this.initHead();
+            this.$leaderboard.show();
           }
           return;
         }
         this.leaderboardInfo.record = users;
         const curList = users.slice((page - 1) * 10, page * 10);
         if (curList.length > 0) {
-          this.appendToClassicList(curList);
+          this.appendToList(curList);
         } else {
           const curPage = --this.leaderboardInfo.page;
-          this.appendToClassicList(users.slice((curPage - 1) * 10, curPage * 10));
+          this.appendToList(users.slice((curPage - 1) * 10, curPage * 10));
         }
         
         this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
@@ -406,70 +372,21 @@ class Canvas {
     }
   }
 
-  setChallengeLeaderboard() {
-    this.page = 'fetching';
-    const { page, record } = this.leaderboardInfo;
-
-    if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
-      this.appendToChallengeList(record.slice((page - 1) * 10, page * 10));
-      this.$leaderboard.show();
-      this.page = 'leaderboard';
-    } else { // GET요청
-      fetch(`/leaderboard/challenge/${Math.floor(page / 10)}`)
-      .then(res => res.json())
-      .then(users => {
-        if (record.length === users.length) {
-          this.leaderboardInfo.page--;
-          if (users.length === 0) { // 초기에 목록이 0개인 상태 대비
-            this.initChallengeLabel();
-          }
-          return;
-        }
-        this.leaderboardInfo.record = users;
-        const curList = users.slice((page - 1) * 10, page * 10);
-        if (curList.length > 0) {
-          this.appendToChallengeList(curList);
-        } else {
-          const curPage = --this.leaderboardInfo.page;
-          this.appendToChallengeList(users.slice((curPage - 1) * 10, curPage * 10));
-        }
-        
-        this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
-        this.$leaderboard.show();
-      })
-      .then(() => this.page = 'leaderboard')
-      .catch(console.error);
-    }
-  }
-
-  postClassicLeaderBoard(userInfo) {
-    fetch('/save/classic', {
+  postLeaderBoard(userInfo) {
+    const $elem = this.crossMode('post');
+    $elem.show();
+    this.elementDropEffect($elem);
+    fetch(`/save/${this.mode.toLowerCase()}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)
     })
-      .then(() => {
-        this.$gameResult.show();
-        this.elementDropEffect(this.$gameResult);
-      })
       .catch(console.error);
   }
 
-  postChallengeLeaderBoard(userInfo) {
-    fetch('/save/challenge', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(userInfo)
-    })
-      .then(() => {
-        this.$stageResult.show();
-      })
-      .catch(console.error);
-  }
-
-  createClassicUserInfo(fragment, user) {
-    const { ranking, name, score, rank, stage } = user;
-    [ranking, name, score, rank, stage].forEach(v => {
+  createUserInfo(fragment, user) {
+    const keys = this.crossMode('userInfo', user);
+    keys.forEach(v => {
       const div = document.createElement('div');
       const text = document.createTextNode(v);
       div.appendChild(text);
@@ -478,34 +395,8 @@ class Canvas {
     });
   }
 
-  createChallengeUserInfo(fragment, user) {
-    const { ranking, name, score, time, cellCount } = user;
-    [ranking, name, score, time, cellCount].forEach(v => {
-      const div = document.createElement('div');
-      const text = document.createTextNode(v);
-      div.appendChild(text);
-      div.classList.add('border-bottom2');
-      fragment.appendChild(div);
-    });
-  }
-
-  saveClassicLog(cellCount, movement, isItemUsed, isDead, isAllEnsured) {
-    const { stage, life, item1, item2, item3, tempScore } = this.gameInfo;
-    const { time } = this.board.boardSetting;
-    this.gameInfo.log.push({
-      stage, cellCount, time, movement, isItemUsed, isDead, isAllEnsured,
-      life, item1, item2, item3,
-      score: tempScore
-    });
-  }
-
-  saveChallengeLog(cellCount, movement, isAllEnsured) {
-    const { modeId, tempScore } = this.gameInfo;
-    const { time } = this.board.boardSetting;
-    this.gameInfo.log.push({
-      modeId, cellCount, time, movement, isAllEnsured,
-      score: tempScore
-    });
+  saveLog() {
+    this.gameInfo.log.push(this.crossMode('saveLog'));
   }
 
   getTutorialPage(number) {
@@ -564,11 +455,7 @@ class Canvas {
   decreaseLife() {
     if (this.gameInfo.life === 0) {
       this.board.ensureWholeCell();
-      if (this.mode === 'CLASSIC') {
-        this.showGameResult();
-      } else if (this.mode === 'CHALLENGE') {
-        this.showChallengeFail();
-      }
+      this.crossMode('fail');
     } else {
       this.gameInfo.life--;
       this.paintBottomBar();
@@ -986,30 +873,20 @@ class Canvas {
   paintGamePage(stageInfo) {
     this.page = 'game';
     this.gameInfo.stage++;
-    if (this.mode === 'CHALLENGE') {
-      this.gameInfo.life = 0;
-    }
     this.clearPage();
     this.clearTimer();
     this.clearElement();
+    this.crossMode('ready');
     this.paintGameBoard(stageInfo);
     this.paintBottomBar();
     this.gameTimer = setInterval(this.setTimer.bind(this), 1000);
   }
 
   paintBottomBar() {
-    const { stage, life, score, item1, item3, item2 } = this.gameInfo;
-    const { bottomBarHeight, bottomCenterY, remainingMine } = this.board;
+    const { life } = this.gameInfo;
+    const { bottomBarHeight, bottomCenterY } = this.board;
     const { time } = this.board.boardSetting;
-    const { movement } = this.board.me;
-    const [ minute, second ] = [ Math.floor(time/60), time%60 ];
     const [ width, height ] = [ this.width/2, bottomBarHeight ];
-    let mine = 0;
-    this.board.forEachCell(v => {
-      if (v.isMine) {
-        mine++;
-      }
-    });
     const background = new Rect(this.CENTER, bottomCenterY);
     background
       .setFillInfo(width, height, WHITE)
@@ -1018,77 +895,35 @@ class Canvas {
 
     this.paintDivisionLine(background);
     
-    if (this.mode === 'CLASSIC') {
-      const bottomValues = [
-        `${stage}`,
-        `${score}`,
-        `${life}`,
-        `${remainingMine}/${mine}`,
-        `${minute}:${second<10 ? '0'+second : second}`,
-        `${item1}개`,
-        `${item2}개`,
-        `${item3}개`
-      ];
+    const { bottomValues, textType, lifeIdx, timeIdx, multi, plus } = this.crossMode('paintBar');
 
-      const fontSize = bottomBarHeight/4;
-      const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
-      bottomValues.forEach((value, idx) => {
-        const top = new Rect(this.CENTER + width*(idx*2-7)/16, topY);
-        top.setTextInfo(TEXT[`bottomBar0${idx+1}`], fontSize);
-        this.fillText(top);
+    const fontSize = bottomBarHeight/4;
+    const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
+    bottomValues.forEach((value, idx) => {
+      const top = new Rect(this.CENTER + width*(idx*multi + plus), topY);
+      top.setTextInfo(TEXT[`${textType}${idx+1}`], fontSize);
+      this.fillText(top);
 
-        let textColor = BLACK;
-        if ((idx === 2 && life === 0) || (idx === 4 && time < 30)) {
-          textColor = TOMATO;
-        }
-        const bottom = new Rect(this.CENTER + width*(idx*2-7)/16, bottomY);
-        bottom.setTextInfo(value, fontSize, textColor);
-        this.fillText(bottom);
-      });
-    } else if (this.mode === 'CHALLENGE') {
-      const bottomValues = [
-        `${remainingMine}/${mine}`,
-        `${minute}:${second<10 ? '0'+second : second}`,
-        `${movement}회`,
-      ];
-
-      const fontSize = bottomBarHeight/4;
-      const [ topY, bottomY ] = [ bottomCenterY - bottomBarHeight/5, bottomCenterY + bottomBarHeight/5 ];
-      bottomValues.forEach((value, idx) => {
-        const top = new Rect(this.CENTER + width*(idx-1)/3, topY);
-        top.setTextInfo(TEXT[`bottomBarCh0${idx+1}`], fontSize);
-        this.fillText(top);
-
-        let textColor = BLACK;
-        if (idx === 1 && time < 30) {
-          textColor = TOMATO;
-        }
-        const bottom = new Rect(this.CENTER + width*(idx-1)/3, bottomY);
-        bottom.setTextInfo(value, fontSize, textColor);
-        this.fillText(bottom);
-      });
-    }
+      let textColor = BLACK;
+      if ((idx === lifeIdx && life === 0) || (idx === timeIdx && time < 30)) {
+        textColor = TOMATO;
+      }
+      const bottom = new Rect(this.CENTER + width*(idx*multi + plus), bottomY);
+      bottom.setTextInfo(value, fontSize, textColor);
+      this.fillText(bottom);
+    });
   }
 
   paintDivisionLine(box) {
     const x = box.contextInfo.x - box.width / 2;
     const y = box.contextInfo.y;
-    if (this.mode === 'CLASSIC') {
-      for (let i=0; i<7; i++) {
-        const line = new Rect(x + box.width*(i+1)/8, y);
-        line.setFillInfo(0, box.height*3/4);
-        line.setStrokeInfo(LIGHTGRAY, 3);
-        this.strokeRect(line);
-      }
-    } else if (this.mode === 'CHALLENGE') {
-      for (let i=0; i<2; i++) {
-        const line = new Rect(x + box.width*(i+1)/3, y);
-        line.setFillInfo(0, box.height*3/4);
-        line.setStrokeInfo(LIGHTGRAY, 3);
-        this.strokeRect(line);
-      }
+    const count = this.crossMode('paintLine');
+    for (let i=0; i<count; i++) {
+      const line = new Rect(x + box.width*(i+1)/(count+1), y);
+      line.setFillInfo(0, box.height*3/4);
+      line.setStrokeInfo(LIGHTGRAY, 3);
+      this.strokeRect(line);
     }
-    
   }
 
   setTimer() {
@@ -1104,11 +939,7 @@ class Canvas {
       this.paintBottomBar();
     } else {
       clearInterval(this.gameTimer);
-      if (this.mode === 'CLASSIC') {
-        this.showGameResult();
-      } else if (this.mode === 'CHALLENGE') {
-        this.showChallengeFail();
-      }
+      this.crossMode('fail');
     }
   }
 
@@ -1239,7 +1070,7 @@ class Canvas {
       log: this.gameInfo.log
     }
 
-    this.postClassicLeaderBoard(userInfo);
+    this.postLeaderBoard(userInfo);
     this.canvas.removeEventListener('click', this.getCallback('clickCell'));
   }
 
@@ -1333,8 +1164,8 @@ class Canvas {
     $totalScore.innerHTML = this.gameInfo.tempScore;
     
     this.playSound('clear');
-    this.saveClassicLog(cellCount, movement, isItemUsed, isDead, isAllEnsured);
-    this.sendClassicLogToServer();
+    this.saveLog();
+    this.sendLogToServer();
     this.$stageResult.show();
     this.elementDropEffect(this.$stageResult);
   }
@@ -1449,11 +1280,7 @@ class Canvas {
     $mode02.width = 587;
 
     this.leaderboardInfo.page = 1;
-    if ($classic.elem.checked) {
-      this.setClassicLeaderboard();
-    } else if ($challenge.elem.checked) {
-      this.setChallengeLeaderboard();
-    }
+    this.setLeaderboard();
   }
 
   showUpdateLog() {
@@ -1557,10 +1384,8 @@ class Canvas {
     $totalScore.innerHTML = this.gameInfo.tempScore;
     
     this.playSound('clear');
-    this.saveChallengeLog(cellCount, movement, isAllEnsured);
-    this.sendChallengeLogToServer();
-    this.$stageResult.show();
-    this.elementDropEffect(this.$stageResult);
+    this.saveLog();
+    this.sendLogToServer();
 
     const userInfo = {
       name: this.gameInfo.name,
@@ -1570,7 +1395,7 @@ class Canvas {
       log: this.gameInfo.log
     }
 
-    this.postChallengeLeaderBoard(userInfo);
+    this.postLeaderBoard(userInfo);
     this.canvas.removeEventListener('click', this.getCallback('clickCell'));
   }
 
@@ -1813,20 +1638,12 @@ class Canvas {
       } else if (keyCode === 65) { // A
         if (page > 1) {
           this.leaderboardInfo.page--;
-          if (this.$leaderboard.$classic.elem.checked) {
-            this.setClassicLeaderboard();
-          } else if (this.$leaderboard.$challenge.elem.checked) {
-            this.setChallengeLeaderboard();
-          }
+          this.setLeaderboard();
         }
       } else if (keyCode === 68) { // D
         if (lastPage >= page) {
           this.leaderboardInfo.page++;
-          if (this.$leaderboard.$classic.elem.checked) {
-            this.setClassicLeaderboard();
-          } else if (this.$leaderboard.$challenge.elem.checked) {
-            this.setChallengeLeaderboard();
-          }
+          this.setLeaderboard();
         }
       }
     } else if (this.page === 'updateLog') {
@@ -1876,22 +1693,174 @@ class Canvas {
       this.leaderboardInfo.page = 1;
       this.leaderboardInfo.record = [];
       if (this.$leaderboard.$classic.elem.checked) {
-        this.setClassicLeaderboard();
+        this.mode = 'CLASSIC';
       } else if (this.$leaderboard.$challenge.elem.checked) {
-        this.setChallengeLeaderboard();
+        this.mode = 'CHALLENGE';
+      }
+      this.setLeaderboard();
+    }
+  }
+
+  crossMode(status, ...args) {
+    if (this.mode === 'CLASSIC') {
+      switch (status) {
+        case 'sendLog': {
+          const { name, stage, tempScore, score } = this.gameInfo;
+          return {
+            name, stage, tempScore,
+            score: score + tempScore
+          };
+        }
+
+        case 'initHead': {
+          return `<div class="border-bottom">순위</div>
+          <div class="border-bottom">이름</div>
+          <div class="border-bottom">점수</div>
+          <div class="border-bottom">랭크</div>
+          <div class="border-bottom">스테이지</div>`;
+        }
+
+        case 'userInfo': {
+          const [ user ] = args;
+          const { ranking, name, score, rank, stage } = user;
+          return [ ranking, name, score, rank, stage ];
+        }
+
+        case 'post':
+          return this.$gameResult;
+
+        case 'saveLog': {
+          const { isItemUsed, ensuredCellCount, isAllEnsured } = this.board;
+          const { time } = this.board.boardSetting;
+          const { movement, isDead } = this.board.me;
+          const { stage, life, item1, item2, item3, tempScore } = this.gameInfo;
+          return {
+            stage, time, movement, isItemUsed, isDead, isAllEnsured,
+            life, item1, item2, item3,
+            cellCount: ensuredCellCount,
+            score: tempScore
+          };
+        }
+
+        case 'paintLine':
+          return 7;
+
+        case 'paintBar': {
+          const { stage, life, score, item1, item2, item3 } = this.gameInfo;
+          const { remainingMine, mine } = this.board;
+          const { time } = this.board.boardSetting;
+          const [ minute, second ] = [ Math.floor(time/60), time%60 ];
+          const bottomValues = [
+            `${stage}`,
+            `${score}`,
+            `${life}`,
+            `${remainingMine}/${mine}`,
+            `${minute}:${second<10 ? '0'+second : second}`,
+            `${item1}개`,
+            `${item2}개`,
+            `${item3}개`
+          ];
+          const textType = 'bottomBar0';
+          const lifeIdx = 2;
+          const timeIdx = 4;
+          const multi = 1/8;
+          const plus = -7/16;
+          return { bottomValues, textType, lifeIdx, timeIdx, multi, plus };
+        }
+
+        case 'ready':
+          this.gameInfo.life = 5;
+          break;
+
+        case 'fail':
+          this.showGameResult();
+          break;
+
+        case 'clear':
+          this.showGameResult(true);
+          break;
+
+        case 'procedure':
+          return MODE_CLASSIC[this.gameInfo.procedure++];
+          
+      }
+    } else if (this.mode === 'CHALLENGE') {
+      switch (status) {
+        case 'sendLog': {
+          const { name, tempScore, modeId } = this.gameInfo;
+          return { name, tempScore, modeId };
+        }
+
+        case 'initHead': {
+          return `<div class="border-bottom">순위</div>
+          <div class="border-bottom">이름</div>
+          <div class="border-bottom">점수</div>
+          <div class="border-bottom">남은시간</div>
+          <div class="border-bottom">밟은칸수</div>`;
+        }
+
+        case 'userInfo': {
+          const [ user ] = args;
+          const { ranking, name, score, time, cellCount } = user;
+          return [ ranking, name, score, time, cellCount ];
+        }
+
+        case 'post':
+          return this.$stageResult;
+
+        case 'saveLog': {
+          const { ensuredCellCount, isAllEnsured } = this.board;
+          const { time } = this.board.boardSetting;
+          const { movement } = this.board.me;
+          const { modeId, tempScore } = this.gameInfo;
+          return {
+            modeId, time, movement, isAllEnsured,
+            cellCount: ensuredCellCount,
+            score: tempScore
+          };
+        }
+
+        case 'paintLine':
+          return 2;
+
+        case 'paintBar': {
+          const { remainingMine, mine } = this.board;
+          const { time } = this.board.boardSetting;
+          const [ minute, second ] = [ Math.floor(time/60), time%60 ];
+          const { movement } = this.board.me;
+          const bottomValues = [
+            `${remainingMine}/${mine}`,
+            `${minute}:${second<10 ? '0'+second : second}`,
+            `${movement}회`
+          ];
+          const textType = 'bottomBarCh0';
+          const timeIdx = 1;
+          const multi = 1/3;
+          const plus = -1/3;
+          return { bottomValues, textType, timeIdx, multi, plus };
+        }
+
+        case 'ready':
+          this.gameInfo.life = 0;
+          break;
+
+        case 'fail':
+          this.showChallengeFail();
+          break;
+
+        case 'clear':
+          this.showChallengeResult();
+          break;
+
+        case 'procedure':
+          return getProcedure(this.gameInfo.modeId)[this.gameInfo.procedure++];
+
       }
     }
   }
 
   paintPage() {
-    const gameMode = MODE[this.mode];
-    let procedure;
-    if (this.mode === 'CLASSIC') {
-      procedure = gameMode[this.gameInfo.procedure++];
-    } else if (this.mode === 'CHALLENGE') {
-      const { modeId } = this.gameInfo;
-      procedure = gameMode[modeId][this.gameInfo.procedure++];
-    }
+    const procedure = this.crossMode('procedure');
     if (procedure) {
       const { type } = procedure;
       if (type === 'game') {
@@ -1902,11 +1871,7 @@ class Canvas {
         this.showInputId();
       }
     } else {
-      if (this.mode === 'CLASSIC') {
-        this.showGameResult(true);
-      } else if (this.mode === 'CHALLENGE') {
-        this.showChallengeResult();
-      }
+      this.crossMode('clear');
     }
   }
 }
@@ -2420,6 +2385,30 @@ class Board {
     destCell.type = 'destination';
     this.ensureCell(destCell.x, destCell.y);
     destCell.isDetected = false;
+  }
+
+  get mine() {
+    let mine = 0;
+    this.forEachCell(v => {
+      if (v.isMine) {
+        mine++;
+      }
+    });
+    return mine;
+  }
+
+  get ensuredCellCount() {
+    let count = 0;
+    this.forEachCell(cell => {
+      if (cell.isEnsured && cell.type !== 'ensuredMine') {
+        count++;
+      }
+    });
+    return count;
+  }
+
+  get isAllEnsured() {
+    return this.accessable.every(cell => cell.isEnsured);
   }
 
   getMinePlantable() {

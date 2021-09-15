@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>지뢰피하기</title>
-    <link rel="stylesheet" href="/dist/main.css">
+    <link rel="stylesheet" href="/views/main.css">
     <link rel="shortcut icon" href="/images/favicon.ico">
 </head>
 <body>
     <div id="canvas-container" class="flex">
         <div id="msg-box" class="elem flex hidden"></div>
-        <div id="game-result" class="elem flex-column hidden">
+        <div id="game-result" class="drop flex-column hidden">
             <div id="game-result-title" class="title margin"></div>
             <div class="flex">
                 <div class="game-result-left">STAGE</div>
@@ -28,7 +28,7 @@
             </div>
             <canvas id="back"></canvas>
         </div>
-        <div id="stage-result" class="elem flex-column hidden">
+        <div id="stage-result" class="drop flex-column hidden">
             <div id="stage-result-title" class="title margin"></div>
             <div class="flex">
                 <div class="stage-result-left">밟은 칸 수 x50</div>
@@ -110,7 +110,7 @@
             <div id="challenge-article" class="grid2 overflow border-bottom3"></div>
             <div id="challenge-footer" class="margin">F를 누르면 창을 닫습니다.</div>
         </div>
-        <div id="challenge-fail" class="elem flex-column hidden align-center">
+        <div id="challenge-fail" class="drop flex-column hidden align-center">
             <div id="challenge-fail-title" class="title margin">도전 실패</div>
             <div id="challenge-fail-article" class="margin2">
                 F키를 누르면 메인 화면으로 돌아갑니다.<br>

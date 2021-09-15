@@ -8,13 +8,21 @@ li {
     list-style-position: inside;
 }
 
-.elem {
+.drop {
     position: absolute;
     top: 0%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: 1px solid black;
     opacity: 0;
+}
+
+.elem {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
 }
 
 .flex {
@@ -102,7 +110,6 @@ li {
 .grid {
     display: grid;
     grid-template-columns: 2fr 7fr 5fr 3fr 2fr;
-    grid-template-rows: repeat(4, 1fr);
     row-gap: 10px;  
 }
 
@@ -181,22 +188,23 @@ li {
     border: 1px solid black;
 }
 
-.radio-span {
-    display:inline-block;
-    background:none;
-    border:1px solid #dfdfdf;  
-    padding:0px 10px;
+.box-radio-input input[type="radio"] {
+    display:none;
+}
+  
+.box-radio-input input[type="radio"] + span{
+    display:block;
+    background:none; 
     text-align:center;
-    height:35px;
-    line-height:33px;
+    height:50px;
     font-weight:500;
     cursor:pointer;
 }
-
-.radio-span:checked {
-    border:1px solid #23a3a7;
-    background:#23a3a7;
-    color:#fff;
+  
+.box-radio-input input[type="radio"]:checked + span {
+    border:1px solid tomato;
+    background:tomato;
+    color:white;
 }
 
 #msg-box {
@@ -212,11 +220,6 @@ li {
 
 #stage-result-footer {
     font-size: 20px;
-}
-
-#information, #input-id, #leaderboard, #update-log, #challenge, #challenge-fail {
-    top: 50%;
-    opacity: 1;
 }
 
 #input-id-input {
@@ -235,10 +238,6 @@ li {
 #leaderboard-list {
     padding: 15px;
     border: 3px solid tomato;
-}
-
-#input[type="radio"] {
-    display: none;
 }
 
 #canvas {

@@ -8,13 +8,21 @@ li {
     list-style-position: inside;
 }
 
-.elem {
+.drop {
     position: absolute;
     top: 0%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: 1px solid black;
     opacity: 0;
+}
+
+.elem {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
 }
 
 .flex {
@@ -99,13 +107,7 @@ li {
     height: 100%;
 }
 
-.classic-grid {
-    display: grid;
-    grid-template-columns: 2fr 7fr 5fr 3fr 2fr;
-    row-gap: 10px;  
-}
-
-.challenge-grid {
+.grid {
     display: grid;
     grid-template-columns: 2fr 7fr 5fr 3fr 2fr;
     row-gap: 10px;  
@@ -218,11 +220,6 @@ li {
 
 #stage-result-footer {
     font-size: 20px;
-}
-
-#information, #input-id, #leaderboard, #update-log, #challenge, #challenge-fail {
-    top: 50%;
-    opacity: 1;
 }
 
 #input-id-input {
