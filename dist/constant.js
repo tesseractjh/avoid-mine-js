@@ -1,1 +1,1759 @@
-function _0x52e1(_0x4bb5c8,_0x1367d2){const _0x3613bf=_0x3613();return _0x52e1=function(_0x52e1ef,_0x4a921a){_0x52e1ef=_0x52e1ef-0x1e8;let _0x313fc4=_0x3613bf[_0x52e1ef];return _0x313fc4;},_0x52e1(_0x4bb5c8,_0x1367d2);}const _0x383302=_0x52e1;(function(_0x4395ff,_0x3044b2){const _0x278da1=_0x52e1,_0x1e6977=_0x4395ff();while(!![]){try{const _0x5bb73d=parseInt(_0x278da1(0x1ee))/0x1*(-parseInt(_0x278da1(0x271))/0x2)+parseInt(_0x278da1(0x237))/0x3*(-parseInt(_0x278da1(0x24f))/0x4)+-parseInt(_0x278da1(0x1ef))/0x5+-parseInt(_0x278da1(0x236))/0x6+parseInt(_0x278da1(0x258))/0x7+-parseInt(_0x278da1(0x230))/0x8+parseInt(_0x278da1(0x26a))/0x9;if(_0x5bb73d===_0x3044b2)break;else _0x1e6977['push'](_0x1e6977['shift']());}catch(_0x3ba05c){_0x1e6977['push'](_0x1e6977['shift']());}}}(_0x3613,0xc474e));const BLACK=_0x383302(0x278),WHITE=_0x383302(0x1f5),CHARCOAL=_0x383302(0x1f1),INVERTED_CHARCOAL=_0x383302(0x223),LIGHTGRAY=_0x383302(0x23f),YELLOWGREEN=_0x383302(0x23d),INVERTED_YELLOWGREEN=_0x383302(0x200),TOMATO=_0x383302(0x24d),INVERTED_TOMATO=_0x383302(0x270),SKYBLUE=_0x383302(0x247),INVERTED_SKYBLUE=_0x383302(0x277),RED=_0x383302(0x22b),ORANGE=_0x383302(0x262),YELLOW='rgb(255,\x20255,\x20\x20\x200)',GREEN=_0x383302(0x218),BLUE='rgb(\x2051,\x20153,\x20255)',INVERTED_BLUE=_0x383302(0x26e),NAVY='rgb(\x20\x200,\x20\x20\x200,\x20128)',PURPLE=_0x383302(0x27c),WHITE_ALPHA=_0x383302(0x280),WHITE_ALPHA2=_0x383302(0x287),RED_ALPHA=_0x383302(0x1f4),ORANGE_ALPHA=_0x383302(0x21f),YELLOW_ALPHA=_0x383302(0x1f8),GREEN_ALPHA=_0x383302(0x260),BLUE_ALPHA='rgba(\x2051,\x20153,\x20255,\x200.75)',NAVY_ALPHA='rgba(\x20\x200,\x20\x20\x200,\x20128,\x200.75)',PURPLE_ALPHA='rgba(127,\x20\x20\x200,\x20255,\x200.75)',SKYBLUE_ALPHA=_0x383302(0x27d),colorMatch={'red':RED,'orange':ORANGE,'yellow':YELLOW,'green':GREEN,'blue':BLUE,'navy':NAVY,'purple':PURPLE,[RED]:RED_ALPHA,[ORANGE]:ORANGE_ALPHA,[YELLOW]:YELLOW_ALPHA,[GREEN]:GREEN_ALPHA,[BLUE]:BLUE_ALPHA,[NAVY]:NAVY_ALPHA,[PURPLE]:PURPLE_ALPHA},RAINBOW=['red',_0x383302(0x252),'yellow','green',_0x383302(0x20d),_0x383302(0x1f9),'purple'],shapeMatch={'red':[0xa,0xb,0xc,0xd,0xe],'orange':[0x2,0x7,0xc,0x11,0x16],'yellow':[0x1,0x3,0x4,0x5,0x7],'green':[0x0,0x2,0x4,0x6,0x8],'blue':[0x0,0x2,0x3,0x4,0x5,0x6,0x8],'navy':[0x0,0x1,0x2,0x4,0x6,0x7,0x8]},BOARD_WIDTH_RATIO=0x2/0x3,BOARD_HEIGHT_RATIO=0.85,BOARD_BOTTOM_GAP_RATIO=0.12,CELL_COUNT_SCORE=0x32,REMAINING_TIME_SCORE=0x1,MOVEMENT_GOOD_RATIO=1.1,MOVEMENT_GREAT_RATIO=1.2,MOVEMENT_EXCELLENT_RATIO=1.3,MOVEMENT_PERFECT_RATIO=1.5,RESERVED_ITEM_RATIO=1.25,PERFECT_CLEAR_RATIO=0x2,OFFSET_X=[-0x1,0x0,0x1,-0x1,0x0,0x1,-0x1,0x0,0x1],OFFSET_Y=[-0x1,-0x1,-0x1,0x0,0x0,0x0,0x1,0x1,0x1],OFFSET5_X=[-0x2,-0x1,0x0,0x1,0x2,-0x2,-0x1,0x0,0x1,0x2,-0x2,-0x1,0x0,0x1,0x2,-0x2,-0x1,0x0,0x1,0x2,-0x2,-0x1,0x0,0x1,0x2],OFFSET5_Y=[-0x2,-0x2,-0x2,-0x2,-0x2,-0x1,-0x1,-0x1,-0x1,-0x1,0x0,0x0,0x0,0x0,0x0,0x1,0x1,0x1,0x1,0x1,0x2,0x2,0x2,0x2,0x2],randRange=(_0x3d0c9e,_0x356483)=>{const _0x20dcf3=_0x383302;return Math[_0x20dcf3(0x1f6)](Math[_0x20dcf3(0x205)]()*(_0x356483-_0x3d0c9e+0x1))+_0x3d0c9e;},TEXT={'mainTitle':_0x383302(0x248),'selectGameTitle':_0x383302(0x240),'mainButton01':_0x383302(0x235),'mainButton02':_0x383302(0x201),'mainButton03':_0x383302(0x23e),'mainButton04':'패치노트','modeClassic':_0x383302(0x21c),'modeChallenge':_0x383302(0x21d),'backToMainPage':_0x383302(0x222),'tutorialButton01':'이전','tutorialButton02':'다음','backButton':_0x383302(0x21b),'submitButton':'확인','tutorial01':_0x383302(0x21e),'tutorial02':_0x383302(0x251),'tutorial03':_0x383302(0x22a),'tutorial04':_0x383302(0x215),'tutorial05':'숫자\x203키를\x20누르면\x20파란색\x20네모\x20주변에\x20아직\x20밟지\x20않은\x20칸들\x0a중\x20무작위로\x20하나를\x20공개하는\x20아이템을\x20사용할\x20수\x20있습니다.','tutorial06':'이\x20외에도\x20숫자\x201키,\x202키로\x20무작위\x20칸을\x20공개하는\x0a아이템을\x20사용할\x20수\x20있고\x20횟수\x20제한이\x20있습니다.','tutorial07':_0x383302(0x26d),'bottomBar01':_0x383302(0x22d),'bottomBar02':'점수','bottomBar03':'💖','bottomBar04':'💣','bottomBar05':'⏱','bottomBar06':_0x383302(0x284),'bottomBar07':_0x383302(0x207),'bottomBar08':_0x383302(0x24b),'bottomBarCh01':'💣','bottomBarCh02':'⏱','bottomBarCh03':'🏃','destination':_0x383302(0x269),'ensuredMine':'💣','msgBox01':'지뢰를\x20밟았습니다!','msgBox02':_0x383302(0x25d),'msgBox03':_0x383302(0x249),'msgBox04':_0x383302(0x234),'msgBox05':_0x383302(0x1fb),'msgBox06':_0x383302(0x288),'msgBox07':_0x383302(0x259),'msgBox08':_0x383302(0x23a),'msgBox09':_0x383302(0x27b),'msgBox10':_0x383302(0x216),'clickCell01':_0x383302(0x1ed),'clickCell02':_0x383302(0x225),'clickCell03':_0x383302(0x25a),'introduceItem101':_0x383302(0x284),'introduceItem102':_0x383302(0x232),'introduceItem103':_0x383302(0x221),'introduceItem201':'🔭[2]','introduceItem202':_0x383302(0x20f),'introduceItem203':_0x383302(0x26b),'introduceItemL01':_0x383302(0x24b),'introduceItemL02':_0x383302(0x250),'introduceItemL03':'F를\x20눌러\x20📡\x203개를\x20받으세요!','perfectClear01':_0x383302(0x255),'perfectClear02':_0x383302(0x25f),'movementOpt01':_0x383302(0x22e),'movementOpt02':_0x383302(0x1fa),'stage10Bonus01':'STAGE\x2010\x20클리어\x20보너스','stage10Bonus02':'💖\x20+3<br>🔍[1]\x20+10<br>🔭[2]\x20+5<br>📡[3]\x20+3','stage20Bonus01':_0x383302(0x20e),'stage20Bonus02':_0x383302(0x286),'stage30Bonus01':'STAGE\x2030\x20클리어\x20보너스','stage30Bonus02':'💖\x20+2<br>🔍[1]\x20+5<br>🔭[2]\x20+3<br>📡[3]\x20+2','stage40Bonus01':'STAGE\x2040\x20클리어\x20보너스','stage40Bonus02':'💖\x20+1<br>🔍[1]\x20+3<br>🔭[2]\x20+1<br>📡[3]\x20+1','stageBonusHeader':_0x383302(0x264),'newHintTitle':_0x383302(0x229),'newHintRed':_0x383302(0x242),'newHintOrange':'<span\x20style=\x22color:rgb(255,\x20128,\x200);\x22\x20class=\x22stroke\x22>주황색\x20숫자</span>는\x20위\x20아래\x202칸과\x20자기\x20자신을\x20포함한<br>세로\x205칸\x20내의\x20지뢰\x20개수를\x20의미합니다.','newHintYellow':'<span\x20style=\x22color:rgb(255,\x20255,\x200);\x22\x20class=\x22stroke\x22>노란색\x20숫자</span>는\x20상하좌우\x204칸과\x20자기\x20자신을\x20포함한<br>십자가\x20모양\x205칸\x20내의\x20지뢰\x20개수를\x20의미합니다.','newHintGreen':_0x383302(0x213),'newHintBlue':'<span\x20style=\x22color:rgb(51,\x20153,\x20255);\x22\x20class=\x22stroke\x22>파란색\x20숫자</span>는\x20H자\x20모양\x207칸\x20내의\x20지뢰\x20개수를\x20의미합니다.','newHintNavy':_0x383302(0x238),'newHintPurple':'<span\x20style=\x22color:rgb(127,\x200,\x20255);\x22\x20class=\x22stroke\x22>보라색\x20숫자</span>는\x202~8칸의\x20무작위\x20모양\x20내의\x20지뢰\x20개수를\x20의미합니다.<br>어떤\x20모양인지는\x20숫자가\x20밝혀질\x20때\x20표시됩니다.','showShape01':_0x383302(0x257),'showShape02':_0x383302(0x272),'oddEven01':_0x383302(0x220),'oddEven02':_0x383302(0x25e),'highLow01':_0x383302(0x1ff),'highLow02':'일부\x20칸의\x20숫자\x20힌트가\x20최대/최소\x20힌트로\x20전환됩니다.<br>주변\x208칸\x20숫자들의\x20최댓값보다\x20크거나\x20같다면\x20▲,<br>주변\x208칸\x20숫자들의\x20최솟값보다\x20작거나\x20같다면\x20▼으로\x20표시됩니다.','pressH':_0x383302(0x233)},BUTTON={'tutorial':{'text':TEXT[_0x383302(0x20b)],'fillColor':YELLOWGREEN,'hover':{'fillColor':INVERTED_YELLOWGREEN,'textColor':WHITE}},'start':{'text':TEXT[_0x383302(0x1fc)],'fillColor':TOMATO,'hover':{'fillColor':INVERTED_TOMATO,'textColor':WHITE}},'leaderboard':{'text':TEXT[_0x383302(0x274)],'fillColor':SKYBLUE,'hover':{'fillColor':INVERTED_SKYBLUE,'textColor':WHITE}},'updateLog':{'text':TEXT[_0x383302(0x266)],'fillColor':BLUE,'hover':{'fillColor':INVERTED_BLUE,'textColor':WHITE}},'modeClassic':{'text':TEXT['modeClassic'],'fillColor':YELLOWGREEN,'hover':{'fillColor':INVERTED_YELLOWGREEN,'textColor':WHITE},'caption':_0x383302(0x276)},'modeChallenge':{'text':TEXT['modeChallenge'],'fillColor':TOMATO,'hover':{'fillColor':INVERTED_TOMATO,'textColor':WHITE},'caption':_0x383302(0x210)},'backToMainPage':{'text':TEXT[_0x383302(0x283)],'textColor':WHITE,'fillColor':CHARCOAL,'hover':{'fillColor':INVERTED_CHARCOAL,'textColor':BLACK}},'prev':{'text':TEXT[_0x383302(0x26f)],'fillColor':TOMATO,'hover':{'fillColor':INVERTED_TOMATO,'textColor':WHITE}},'next':{'text':TEXT[_0x383302(0x1eb)],'fillColor':TOMATO,'hover':{'fillColor':INVERTED_TOMATO,'textColor':WHITE}},'back':{'text':TEXT[_0x383302(0x253)],'fillColor':YELLOWGREEN,'hover':{'fillColor':INVERTED_YELLOWGREEN,'textColor':WHITE}},'submit':{'text':TEXT[_0x383302(0x20a)],'fillColor':SKYBLUE,'hover':{'fillColor':INVERTED_SKYBLUE,'textColor':WHITE}}},tutorialClearPage=function(_0x38aa29){const _0x368e4e=_0x383302;this['ctx']['clearRect'](0x0,0x0,this[_0x368e4e(0x209)],this[_0x368e4e(0x24a)]['maxHeight']),this['paintTutorialBoard'](_0x38aa29);},TUTORIAL={'tutorial01':{'next':0x2,'board':{},'bottomText':{'text':TEXT['tutorial01'],'linebreak':!![]},'timer':{'getTimer':function(){const _0x1af6c3=()=>{const _0x2c990c=_0x52e1;tutorialClearPage[_0x2c990c(0x22c)](this)({}),this[_0x2c990c(0x24a)][_0x2c990c(0x226)](0x0,0x0)[_0x2c990c(0x212)](NAVY,0xa),this[_0x2c990c(0x24a)]['getCell'](0x4,0x4)[_0x2c990c(0x212)](NAVY,0xa);},_0x2b1fe6=()=>{const _0x3e8f4d=_0x52e1;tutorialClearPage[_0x3e8f4d(0x22c)](this)({});};let _0x3755a4=0x2;return()=>{switch(_0x3755a4){case 0x2:_0x1af6c3();break;case 0x1:_0x2b1fe6();break;}--_0x3755a4===0x0&&(_0x3755a4=0x2);};},'delay':0x1f4}},'tutorial02':{'prev':0x1,'next':0x3,'board':{},'bottomText':{'text':TEXT[_0x383302(0x265)],'linebreak':!![]},'timer':{'getTimer':function(){const _0x114924=()=>{const _0x128fef=_0x52e1;tutorialClearPage['bind'](this)({}),this[_0x128fef(0x24a)]['getCell'](0x1,0x1)[_0x128fef(0x212)](NAVY,0xa);},_0x1e01b6=()=>{const _0x1e35c3=_0x52e1;tutorialClearPage['bind'](this)({});const _0x578567=this[_0x1e35c3(0x24a)][_0x1e35c3(0x226)](0x0,0x0),_0x1aac0d=this[_0x1e35c3(0x24a)][_0x1e35c3(0x226)](0x2,0x2);this['strokeCells'](_0x578567,_0x1aac0d,NAVY,0xa),this[_0x1e35c3(0x24a)][_0x1e35c3(0x226)](0x2,0x2)[_0x1e35c3(0x212)](ORANGE,0xa);},_0x862e67=()=>{const _0x1a4425=_0x52e1;tutorialClearPage[_0x1a4425(0x22c)](this)({}),this['board'][_0x1a4425(0x226)](0x0,0x1)[_0x1a4425(0x212)](NAVY,0xa);},_0x47a2e9=()=>{const _0x33cb1b=_0x52e1;tutorialClearPage[_0x33cb1b(0x22c)](this)({});const _0x1a2c1c=this['board']['getCell'](0x0,0x0),_0xadca29=this['board'][_0x33cb1b(0x226)](0x1,0x2);this[_0x33cb1b(0x243)](_0x1a2c1c,_0xadca29,NAVY,0xa);};let _0xa42ac2=0xc;return()=>{switch(_0xa42ac2){case 0xc:case 0xa:case 0x8:_0x114924();break;case 0xb:case 0x9:case 0x7:_0x1e01b6();break;case 0x6:case 0x4:case 0x2:_0x862e67();break;case 0x5:case 0x3:case 0x1:_0x47a2e9();break;}--_0xa42ac2===0x0&&(_0xa42ac2=0xc);};},'delay':0x258}},'tutorial03':{'prev':0x2,'next':0x4,'board':{'me':!![]},'bottomText':{'text':TEXT[_0x383302(0x211)],'linebreak':!![]},'timer':{'getTimer':function(){const _0x2d110e=()=>{const _0x5c807c=_0x52e1;this[_0x5c807c(0x24a)]['me'][_0x5c807c(0x228)](0x1);},_0x2995b5=()=>{const _0x84f7e1=_0x52e1;this[_0x84f7e1(0x24a)]['me'][_0x84f7e1(0x273)](0x1);},_0x483b90=()=>{const _0x10aca5=_0x52e1;tutorialClearPage[_0x10aca5(0x22c)](this)({});const _0x3dedec=this[_0x10aca5(0x24a)][_0x10aca5(0x226)](0x0,0x0),_0x5db20e=this[_0x10aca5(0x24a)][_0x10aca5(0x226)](0x2,0x2);this[_0x10aca5(0x243)](_0x3dedec,_0x5db20e,NAVY,0xa);},_0x2db504=()=>{const _0x319cd7=_0x52e1;tutorialClearPage[_0x319cd7(0x22c)](this)({});};let _0x3e0f3b=0xb;return()=>{const _0x449091=_0x52e1;switch(_0x3e0f3b){case 0xb:tutorialClearPage[_0x449091(0x22c)](this)({'me':!![]});break;case 0xa:case 0x9:case 0x8:_0x2d110e();break;case 0x7:case 0x6:_0x2995b5();break;case 0x4:case 0x2:_0x483b90();break;case 0x3:case 0x1:_0x2db504();break;}--_0x3e0f3b===0x0&&(_0x3e0f3b=0xb);};},'delay':0x1f4}},'tutorial04':{'prev':0x3,'next':0x5,'board':{'me':!![]},'bottomText':{'text':TEXT[_0x383302(0x24e)],'linebreak':!![]},'timer':{'getTimer':function(){const _0x36b058=()=>{const _0x5c6695=_0x52e1;this['board']['me'][_0x5c6695(0x228)](0x1);},_0x288830=()=>{const _0x14b1ac=_0x52e1;this[_0x14b1ac(0x24a)]['me'][_0x14b1ac(0x228)](-0x1);},_0x4efc21=()=>{const _0xab912d=_0x52e1;this['board']['me'][_0xab912d(0x273)](0x1);},_0x3201e3=()=>{const _0x3ec4da=_0x52e1;this[_0x3ec4da(0x24a)]['me'][_0x3ec4da(0x273)](-0x1);};let _0xbcd46d=0x11;return animation=()=>{const _0x2bb080=_0x52e1;switch(_0xbcd46d){case 0x11:tutorialClearPage[_0x2bb080(0x22c)](this)({'me':!![]});break;case 0xd:case 0xc:case 0x6:case 0x5:case 0x1:_0x36b058();break;case 0x9:_0x288830();break;case 0x10:case 0xf:case 0xe:case 0xb:case 0x3:case 0x2:_0x4efc21();break;case 0xa:case 0x8:case 0x7:case 0x4:_0x3201e3();break;}--_0xbcd46d===0x0&&clearInterval(animation);};},'delay':0x7d}},'tutorial05':{'prev':0x4,'next':0x6,'board':{'me':!![],'meX':0x4,'meY':0x2,'ensured':[[0x0,0x3],[0x1,0x3],[0x2,0x3],[0x2,0x4],[0x3,0x0],[0x3,0x1],[0x3,0x2],[0x3,0x3],[0x4,0x2]],'detected':[[0x0,0x4],[0x1,0x4],[0x3,0x4],[0x4,0x0],[0x4,0x1],[0x4,0x3]]},'bottomText':{'text':TEXT[_0x383302(0x22f)],'linebreak':!![]}},'tutorial06':{'prev':0x5,'next':0x7,'board':{'me':!![],'meX':0x4,'meY':0x2,'ensured':[[0x0,0x3],[0x1,0x3],[0x2,0x3],[0x2,0x4],[0x3,0x0],[0x3,0x1],[0x3,0x2],[0x3,0x3],[0x4,0x2]],'detected':[[0x0,0x4],[0x1,0x4],[0x3,0x4],[0x4,0x0],[0x4,0x1],[0x4,0x3]]},'bottomText':{'text':TEXT['tutorial06'],'linebreak':!![]}},'tutorial07':{'board':{'me':!![]},'bottomText':{'text':TEXT[_0x383302(0x231)],'linebreak':!![]},'addition':function(){const _0x425359=_0x383302;this[_0x425359(0x1e9)]=_0x425359(0x263);}}},MODE_CLASSIC=[{'type':_0x383302(0x1ea)},{'type':_0x383302(0x239),'layout':_0x383302(0x1ec),'title':TEXT[_0x383302(0x227)],'half1':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x4,'safe':[[0x0,0x0,0x0],[0x0,0x1,0x0],[0x0,0x2,0x1],[0x1,0x0,0x1],[0x1,0x1,0x1],[0x1,0x2,0x1],[0x1,0x3,0x1]],'ensured':[[0x0,0x3,0x1],[0x2,0x0,0x1],[0x2,0x1,0x1],[0x2,0x2,0x0],[0x2,0x3,0x0]],'me':[0x1,0x2]},'half2':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x4,'tomato':[[0x0,0x3],[0x2,0x0]],'yellowgreen':[[0x2,0x1],[0x2,0x2],[0x2,0x3]],'safe':[[0x0,0x0,0x0],[0x0,0x1,0x0],[0x0,0x2,0x1],[0x1,0x0,0x1],[0x1,0x1,0x1],[0x1,0x2,0x1],[0x1,0x3,0x1]],'ensured':[[0x0,0x3,0x1],[0x2,0x0,0x1],[0x2,0x1,0x1],[0x2,0x2,0x0],[0x2,0x3,0x0]],'me':[0x1,0x2]},'arrow':!![],'header':TEXT[_0x383302(0x281)],'footer':TEXT[_0x383302(0x27f)]},{'type':_0x383302(0x204),'xCount':0x6,'yCount':0x6,'mine':0x4,'boardSetting':{'time':0x96}},{'type':_0x383302(0x239),'layout':_0x383302(0x1ec),'title':TEXT[_0x383302(0x261)],'half1':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x4,'safe':[[0x0,0x1,0x1],[0x1,0x0,0x1],[0x1,0x1,0x1]],'me':[0x0,0x0]},'half2':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x4,'safe':[[0x0,0x1,0x1],[0x1,0x0,0x1],[0x1,0x1,0x1]],'ensured':[[0x1,0x2,0x3]],'me':[0x0,0x0]},'arrow':!![],'header':TEXT[_0x383302(0x1f3)],'footer':TEXT[_0x383302(0x244)],'bonus':{'item1':0xa}},{'type':'game','xCount':0x6,'yCount':0x6,'mine':0x5,'boardSetting':{'time':0x96}},{'type':'info','layout':_0x383302(0x1ec),'title':TEXT[_0x383302(0x1fd)],'half1':{'type':'board','xCount':0x3,'yCount':0x4,'safe':[[0x0,0x1,0x1],[0x1,0x0,0x1],[0x1,0x1,0x1]],'me':[0x0,0x0]},'half2':{'type':'board','xCount':0x3,'yCount':0x4,'safe':[[0x0,0x1,0x1],[0x1,0x0,0x1],[0x1,0x1,0x1],[0x1,0x2,0x3]],'me':[0x0,0x0]},'arrow':!![],'header':TEXT['introduceItem202'],'footer':TEXT[_0x383302(0x254)],'bonus':{'item2':0x5}},{'type':_0x383302(0x204),'xCount':0x6,'yCount':0x6,'mine':0x6,'boardSetting':{'time':0x96}},{'type':'info','layout':'leftRight','title':TEXT[_0x383302(0x268)],'half1':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x4,'safe':[[0x0,0x0,0x0],[0x0,0x1,0x1],[0x1,0x0,0x1],[0x1,0x1,0x1]],'ensured':[[0x0,0x2,0x3],[0x1,0x2,0x4],[0x2,0x0,0x1],[0x2,0x1,0x1],[0x2,0x1,0x3],[0x2,0x2,0x3]],'me':[0x1,0x1]},'half2':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x4,'safe':[[0x0,0x0,0x0],[0x0,0x1,0x1],[0x1,0x0,0x1],[0x1,0x1,0x1],[0x2,0x1,0x1]],'ensured':[[0x0,0x2,0x3],[0x1,0x2,0x4],[0x2,0x0,0x1],[0x2,0x1,0x3],[0x2,0x2,0x3]],'me':[0x1,0x1]},'arrow':!![],'header':TEXT[_0x383302(0x246)],'footer':TEXT[_0x383302(0x23c)],'bonus':{'item3':0x3}},{'type':_0x383302(0x204),'xCount':0x6,'yCount':0x6,'mine':0x7,'boardSetting':{'time':0x96}},{'type':_0x383302(0x239),'layout':_0x383302(0x208),'title':TEXT['perfectClear01'],'article':{'type':_0x383302(0x267),'text':TEXT[_0x383302(0x279)]},'footer':TEXT['pressH']},{'type':'game','xCount':0x7,'yCount':0x6,'mine':0x8,'boardSetting':{'time':0x96}},{'type':_0x383302(0x239),'layout':_0x383302(0x208),'title':TEXT['movementOpt01'],'article':{'type':_0x383302(0x267),'text':TEXT[_0x383302(0x275)]},'footer':TEXT[_0x383302(0x23b)]},{'type':_0x383302(0x204),'xCount':0x5,'yCount':0x5,'mine':0x8,'boardSetting':{'time':0xb4}},{'type':_0x383302(0x204),'xCount':0x5,'yCount':0x6,'mine':0x9,'boardSetting':{'time':0xb4}},{'type':_0x383302(0x204),'xCount':0x5,'yCount':0x7,'mine':0x9,'boardSetting':{'time':0xb4}},{'type':'game','xCount':0x5,'yCount':0x8,'mine':0xa,'boardSetting':{'time':0xb4}},{'type':_0x383302(0x204),'xCount':0x8,'yCount':0x5,'mine':0xa,'boardSetting':{'time':0xb4}},{'type':'info','layout':'article','title':TEXT[_0x383302(0x202)],'article':{'type':_0x383302(0x267),'text':TEXT['stage10Bonus02']},'header':TEXT['stageBonusHeader'],'bonus':{'life':0x3,'item1':0xa,'item2':0x5,'item3':0x3}},{'type':_0x383302(0x239),'layout':_0x383302(0x208),'title':TEXT[_0x383302(0x1f7)],'article':{'type':_0x383302(0x24a),'xCount':0x7,'yCount':0x3,'safe':[[0x2,0x1,0x1],[0x3,0x1,0x2,'red'],[0x5,0x1,0x3]],'mine':[[0x1,0x1],[0x4,0x1]]},'header':TEXT[_0x383302(0x285)],'footer':TEXT[_0x383302(0x23b)]},{'type':_0x383302(0x204),'xCount':0x8,'yCount':0x6,'mine':0xc,'boardSetting':{'time':0xd2,'red':0x3}},{'type':'game','xCount':0x7,'yCount':0x7,'mine':0xc,'boardSetting':{'time':0xd2,'red':0x3}},{'type':_0x383302(0x204),'xCount':0x7,'yCount':0x7,'mine':0xd,'boardSetting':{'time':0xd2,'red':0x4}},{'type':_0x383302(0x204),'xCount':0x8,'yCount':0x7,'mine':0xe,'boardSetting':{'time':0xd2,'red':0x4}},{'type':_0x383302(0x239),'layout':_0x383302(0x208),'title':TEXT[_0x383302(0x1f7)],'article':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x5,'safe':[[0x1,0x1,0x1],[0x1,0x2,0x2,_0x383302(0x252)],[0x1,0x4,0x3]],'mine':[[0x1,0x0],[0x1,0x3]]},'header':TEXT['newHintOrange'],'footer':TEXT[_0x383302(0x23b)]},{'type':_0x383302(0x239),'layout':_0x383302(0x1ec),'title':TEXT[_0x383302(0x26c)],'half1':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x5,'safe':[[0x0,0x0,0x0,'red'],[0x1,0x0,0x1],[0x2,0x0,0x0],[0x1,0x1,0x2],[0x2,0x1,0x2],[0x0,0x2,0x2],[0x1,0x2,0x1,_0x383302(0x252)],[0x1,0x3,0x3],[0x2,0x3,0x2],[0x0,0x4,0x2],[0x2,0x4,0x1]],'mine':[[0x0,0x1],[0x2,0x2],[0x0,0x3],[0x1,0x4]]},'half2':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x5,'safe':[[0x0,0x0,0x0,_0x383302(0x25b)],[0x1,0x0,0x1],[0x2,0x0,0x0],[0x1,0x1,0x2],[0x2,0x1,0x2],[0x0,0x2,0x2],[0x1,0x2,0x1,_0x383302(0x252)],[0x1,0x3,0x3],[0x2,0x3,0x2],[0x0,0x4,0x2],[0x2,0x4,0x1]],'mine':[[0x0,0x1],[0x2,0x2],[0x0,0x3],[0x1,0x4]],'showShape':!![]},'arrow':!![],'header':TEXT[_0x383302(0x27a)],'footer':TEXT[_0x383302(0x23b)]},{'type':_0x383302(0x204),'xCount':0x9,'yCount':0x7,'mine':0xf,'boardSetting':{'time':0xd2,'red':0x3,'orange':0x2}},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0x6,'mine':0xf,'boardSetting':{'time':0xf0,'red':0x2,'orange':0x4}},{'type':_0x383302(0x204),'xCount':0xd,'yCount':0x5,'mine':0x10,'boardSetting':{'time':0xf0,'red':0x2,'orange':0x5}},{'type':_0x383302(0x204),'xCount':0xb,'yCount':0x6,'mine':0x10,'boardSetting':{'time':0xf0,'red':0x2,'orange':0x5}},{'type':_0x383302(0x239),'layout':_0x383302(0x1ec),'title':TEXT[_0x383302(0x206)],'half1':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x3,'safe':[[0x0,0x1,0x2],[0x0,0x2,0x0],[0x1,0x1,'홀'],[0x1,0x2,0x1],[0x2,0x0,0x1],[0x2,0x1,0x2]],'mine':[[0x0,0x0],[0x1,0x0],[0x2,0x2]]},'half2':{'type':'board','xCount':0x3,'yCount':0x3,'safe':[[0x0,0x1,'짝'],[0x0,0x2,'짝'],[0x1,0x1,0x3],[0x1,0x2,0x1],[0x2,0x0,0x1],[0x2,0x1,'짝']],'mine':[[0x0,0x0],[0x1,0x0],[0x2,0x2]]},'header':TEXT[_0x383302(0x282)],'footer':TEXT['pressH']},{'type':'game','xCount':0x8,'yCount':0x8,'mine':0x13,'boardSetting':{'time':0xf0,'red':0x3,'orange':0x5,'oddEven':0x1}},{'type':_0x383302(0x204),'xCount':0x8,'yCount':0x8,'mine':0x13,'boardSetting':{'time':0xf0,'red':0x2,'orange':0x3,'oddEven':0x2}},{'type':_0x383302(0x239),'layout':'article','title':TEXT[_0x383302(0x1f0)],'article':{'type':_0x383302(0x267),'text':TEXT[_0x383302(0x214)]},'header':TEXT[_0x383302(0x1fe)],'bonus':{'life':0x3,'item1':0x7,'item2':0x4,'item3':0x3}},{'type':'game','xCount':0x8,'yCount':0x8,'mine':0x13,'boardSetting':{'time':0xf0,'red':0x2,'orange':0x2,'oddEven':0x3}},{'type':_0x383302(0x204),'xCount':0x9,'yCount':0x8,'mine':0x15,'boardSetting':{'time':0xf0,'red':0x3,'orange':0x3,'oddEven':0x4}},{'type':_0x383302(0x239),'layout':_0x383302(0x208),'title':TEXT[_0x383302(0x1f7)],'article':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x3,'safe':[[0x2,0x0,0x1],[0x1,0x1,0x2,_0x383302(0x1f2)],[0x2,0x1,0x2],[0x1,0x2,0x3]],'mine':[[0x0,0x0],[0x1,0x0],[0x0,0x1],[0x0,0x2],[0x2,0x2]]},'header':TEXT[_0x383302(0x27e)],'footer':TEXT[_0x383302(0x23b)]},{'type':_0x383302(0x204),'xCount':0x9,'yCount':0x8,'mine':0x15,'boardSetting':{'time':0xf0,'red':0x2,'orange':0x2,'yellow':0x5,'oddEven':0x2}},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0x8,'mine':0x18,'boardSetting':{'time':0xf0,'red':0x2,'orange':0x2,'yellow':0x6,'oddEven':0x4}},{'type':_0x383302(0x204),'xCount':0x9,'yCount':0x9,'mine':0x18,'boardSetting':{'time':0x10e,'red':0x3,'orange':0x3,'yellow':0x4,'oddEven':0x4}},{'type':'game','xCount':0x9,'yCount':0x9,'mine':0x18,'boardSetting':{'time':0x10e,'red':0x2,'orange':0x2,'yellow':0x5,'oddEven':0x5}},{'type':_0x383302(0x239),'layout':'article','title':TEXT[_0x383302(0x1f7)],'article':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x3,'safe':[[0x2,0x0,0x1],[0x1,0x1,0x3,_0x383302(0x24c)],[0x2,0x1,0x2],[0x1,0x2,0x3]],'mine':[[0x0,0x0],[0x1,0x0],[0x0,0x1],[0x0,0x2],[0x2,0x2]]},'header':TEXT[_0x383302(0x224)],'footer':TEXT[_0x383302(0x23b)]},{'type':_0x383302(0x204),'xCount':0x9,'yCount':0x9,'mine':0x18,'boardSetting':{'time':0x10e,'red':0x2,'orange':0x2,'yellow':0x2,'green':0x4,'oddEven':0x2}},{'type':'game','xCount':0x9,'yCount':0x9,'mine':0x18,'boardSetting':{'time':0x10e,'red':0x1,'orange':0x1,'yellow':0x2,'green':0x6,'oddEven':0x2}},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0x9,'mine':0x1b,'boardSetting':{'time':0x10e,'red':0x1,'orange':0x1,'yellow':0x3,'green':0x5,'oddEven':0x3}},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0x9,'mine':0x1b,'boardSetting':{'time':0x10e,'red':0x2,'orange':0x2,'yellow':0x2,'green':0x5,'oddEven':0x4}},{'type':_0x383302(0x239),'layout':_0x383302(0x208),'title':TEXT['stage30Bonus01'],'article':{'type':_0x383302(0x267),'text':TEXT[_0x383302(0x1e8)]},'header':TEXT[_0x383302(0x1fe)],'bonus':{'life':0x2,'item1':0x5,'item2':0x3,'item3':0x2}},{'type':_0x383302(0x239),'layout':_0x383302(0x1ec),'title':TEXT[_0x383302(0x21a)],'half1':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x6,'safe':[[0x1,0x0,0x3],[0x0,0x1,0x2],[0x1,0x1,0x5],[0x2,0x1,0x3],[0x0,0x3,0x2],[0x1,0x3,0x3],[0x2,0x3,0x2],[0x0,0x4,0x1],[0x1,0x4,0x1],[0x2,0x4,0x1],[0x0,0x5,0x1],[0x2,0x5,0x1]],'mine':[[0x0,0x0],[0x2,0x0],[0x0,0x2],[0x1,0x2],[0x2,0x2],[0x1,0x5]]},'half2':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x6,'safe':[[0x1,0x0,0x3],[0x0,0x1,0x2],[0x1,0x1,'▲'],[0x2,0x1,0x3],[0x0,0x3,0x2],[0x1,0x3,0x3],[0x2,0x3,0x2],[0x0,0x4,0x1],[0x1,0x4,'▼'],[0x2,0x4,0x1],[0x0,0x5,0x1],[0x2,0x5,0x1]],'mine':[[0x0,0x0],[0x2,0x0],[0x0,0x2],[0x1,0x2],[0x2,0x2],[0x1,0x5]]},'header':TEXT[_0x383302(0x25c)],'footer':TEXT[_0x383302(0x23b)]},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0x9,'mine':0x1b,'boardSetting':{'time':0x12c,'red':0x1,'orange':0x1,'yellow':0x2,'green':0x2,'oddEven':0x2,'highLow':0x3}},{'type':'game','xCount':0xa,'yCount':0x9,'mine':0x1b,'boardSetting':{'time':0x12c,'red':0x1,'orange':0x1,'yellow':0x2,'green':0x3,'oddEven':0x1,'highLow':0x4}},{'type':_0x383302(0x204),'xCount':0xb,'yCount':0x9,'mine':0x1d,'boardSetting':{'time':0x12c,'red':0x2,'orange':0x2,'yellow':0x3,'green':0x3,'oddEven':0x3,'highLow':0x4}},{'type':_0x383302(0x239),'layout':_0x383302(0x208),'title':TEXT[_0x383302(0x1f7)],'article':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x3,'safe':[[0x2,0x0,0x2],[0x1,0x1,0x3,'blue'],[0x0,0x2,0x2],[0x2,0x2,0x2]],'mine':[[0x0,0x0],[0x1,0x0],[0x0,0x1],[0x2,0x1],[0x1,0x2]]},'header':TEXT[_0x383302(0x219)],'footer':TEXT['pressH']},{'type':_0x383302(0x204),'xCount':0xb,'yCount':0x9,'mine':0x1d,'boardSetting':{'time':0x12c,'red':0x2,'orange':0x2,'yellow':0x2,'green':0x2,'blue':0x4,'oddEven':0x2,'highLow':0x2}},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0xa,'mine':0x1e,'boardSetting':{'time':0x12c,'red':0x1,'orange':0x1,'yellow':0x2,'green':0x2,'blue':0x6,'oddEven':0x4,'highLow':0x2}},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0xa,'mine':0x1e,'boardSetting':{'time':0x168,'red':randRange(0x1,0x2),'orange':randRange(0x1,0x2),'yellow':randRange(0x1,0x3),'green':randRange(0x1,0x3),'blue':randRange(0x3,0x5),'oddEven':randRange(0x3,0x5),'highLow':randRange(0x2,0x4)}},{'type':_0x383302(0x239),'layout':'article','title':TEXT['newHintTitle'],'article':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x3,'safe':[[0x1,0x0,0x3],[0x2,0x0,0x2],[0x1,0x1,0x2,_0x383302(0x1f9)],[0x0,0x2,0x2],[0x2,0x2,0x2]],'mine':[[0x0,0x0],[0x0,0x1],[0x2,0x1],[0x1,0x2]]},'header':TEXT[_0x383302(0x203)],'footer':TEXT[_0x383302(0x23b)]},{'type':'game','xCount':0xa,'yCount':0xa,'mine':0x1e,'boardSetting':{'time':0x168,'red':randRange(0x1,0x2),'orange':randRange(0x1,0x2),'yellow':randRange(0x1,0x2),'green':randRange(0x1,0x2),'blue':randRange(0x1,0x2),'navy':randRange(0x5,0x6),'oddEven':randRange(0x2,0x4),'highLow':randRange(0x1,0x3)}},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0xa,'mine':0x1e,'boardSetting':{'time':0x168,'red':randRange(0x1,0x3),'orange':randRange(0x1,0x3),'yellow':randRange(0x1,0x3),'green':randRange(0x1,0x3),'blue':randRange(0x1,0x3),'navy':randRange(0x4,0x6),'oddEven':randRange(0x3,0x5),'highLow':randRange(0x2,0x4)}},{'type':'game','xCount':0xa,'yCount':0xa,'mine':0x1e,'boardSetting':{'time':0x168,'red':randRange(0x2,0x3),'orange':randRange(0x2,0x3),'yellow':randRange(0x3,0x4),'green':randRange(0x3,0x4),'blue':randRange(0x4,0x5),'navy':randRange(0x4,0x5),'oddEven':randRange(0x5,0x6),'highLow':randRange(0x3,0x5)}},{'type':_0x383302(0x204),'xCount':0xa,'yCount':0xa,'mine':0x1e,'boardSetting':{'time':0x168,'red':randRange(0x2,0x3),'orange':randRange(0x2,0x3),'yellow':randRange(0x3,0x4),'green':randRange(0x3,0x4),'blue':randRange(0x4,0x5),'navy':randRange(0x4,0x5),'oddEven':randRange(0x5,0x7),'highLow':randRange(0x4,0x6)}},{'type':_0x383302(0x239),'layout':_0x383302(0x208),'title':TEXT[_0x383302(0x217)],'article':{'type':'text','text':TEXT[_0x383302(0x256)]},'header':TEXT['stageBonusHeader'],'bonus':{'life':0x1,'item1':0x3,'item2':0x1,'item3':0x1}},{'type':_0x383302(0x239),'layout':'article','title':TEXT['newHintTitle'],'article':{'type':_0x383302(0x24a),'xCount':0x3,'yCount':0x3,'safe':[[0x0,0x0,0x2],[0x1,0x1,0x0,_0x383302(0x20c),[0x0,0x4,0x6,0x8]],[0x0,0x2,0x2],[0x2,0x2,0x2]],'mine':[[0x1,0x0],[0x2,0x0],[0x0,0x1],[0x2,0x1],[0x1,0x2]]},'header':TEXT[_0x383302(0x245)],'footer':TEXT['pressH']},{'type':'game','xCount':0xa,'yCount':0xa,'mine':0x23,'boardSetting':{'time':0x1a4,'red':randRange(0x1,0x3),'orange':randRange(0x1,0x3),'yellow':randRange(0x3,0x4),'green':randRange(0x3,0x4),'blue':randRange(0x4,0x5),'navy':randRange(0x4,0x5),'purple':randRange(0x3,0x4),'oddEven':randRange(0x4,0x6),'highLow':randRange(0x4,0x6)}},{'type':'game','xCount':0xc,'yCount':0xa,'mine':0x2a,'boardSetting':{'time':0x1e0,'red':randRange(0x1,0x3),'orange':randRange(0x1,0x3),'yellow':randRange(0x3,0x4),'green':randRange(0x3,0x4),'blue':randRange(0x3,0x4),'navy':randRange(0x3,0x4),'purple':randRange(0x4,0x6),'oddEven':randRange(0x5,0x7),'highLow':randRange(0x5,0x6)}},{'type':_0x383302(0x204),'xCount':0xe,'yCount':0xa,'mine':0x31,'boardSetting':{'time':0x1e0,'red':randRange(0x2,0x5),'orange':randRange(0x2,0x5),'yellow':randRange(0x4,0x5),'green':randRange(0x4,0x5),'blue':randRange(0x4,0x5),'navy':randRange(0x4,0x5),'purple':randRange(0x6,0x8),'oddEven':randRange(0x6,0x8),'highLow':randRange(0x5,0x6)}},{'type':_0x383302(0x204),'xCount':0x10,'yCount':0xa,'mine':0x3c,'boardSetting':{'time':0x258,'red':randRange(0x2,0x5),'orange':randRange(0x2,0x5),'yellow':randRange(0x4,0x6),'green':randRange(0x4,0x6),'blue':randRange(0x4,0x6),'navy':randRange(0x4,0x6),'purple':randRange(0x6,0x8),'oddEven':randRange(0x6,0x8),'highLow':randRange(0x5,0x6)}},{'type':_0x383302(0x204),'xCount':0x14,'yCount':0xa,'mine':0x5a,'boardSetting':{'time':0x384,'red':randRange(0x4,0x7),'orange':randRange(0x4,0x7),'yellow':randRange(0x5,0x7),'green':randRange(0x5,0x7),'blue':randRange(0x6,0x7),'navy':randRange(0x6,0x7),'purple':randRange(0x7,0xa),'oddEven':randRange(0xa,0xc),'highLow':randRange(0x8,0xb)}}],CHALLENGE_ARR=[{'name':'초급\x2001','width':0x8,'height':0x8,'mine':0x14,'time':0x5a,'colorType':[],'textType':[],'condition':'','difficulty':0x1}],MODE_CHALLENGE=[{'type':'input'},{'type':_0x383302(0x204),'xCount':0x8,'yCount':0x8,'mine':0x14,'boardSetting':{'time':0x5a}}],MODE={'CLASSIC':MODE_CLASSIC,'CHALLENGE':MODE_CHALLENGE};function _0x3613(){const _0x427251=['🔍[1]','newHintRed','💖\x20+3<br>🔍[1]\x20+7<br>🔭[2]\x20+4<br>📡[3]\x20+3','rgba(255,\x20255,\x20255,\x200.70)','📡[3]\x20아이템을\x20사용했습니다','stage30Bonus02','page','input','tutorialButton02','leftRight','색깔\x20표시','1weEeYD','3563930IhIiSM','stage20Bonus01','rgb(\x2070,\x20\x2070,\x20\x2070)','yellow','introduceItem102','rgba(255,\x20\x20\x200,\x20\x20\x200,\x200.75)','rgb(255,\x20255,\x20255)','floor','newHintTitle','rgba(255,\x20255,\x20\x20\x200,\x200.75)','navy','최대한\x20적게\x20움직이세요!<br>STAGE\x206부터는\x20움직임을\x20최소화하면\x20보너스\x20점수를\x20얻습니다.','🔭[2]\x20아이템이\x20없습니다!','mainButton02','introduceItem201','stageBonusHeader','최대/최소\x20힌트','rgb(101,\x20\x2050,\x20205)','게임시작','stage10Bonus01','newHintNavy','game','random','oddEven01','🔭[2]','article','width','submitButton','mainButton01','purple','blue','STAGE\x2020\x20클리어\x20보너스','숫자\x202키를\x20눌러\x20주변\x202칸\x20이내에\x20있는\x20칸\x20중에서<br>공개되지\x20않은\x20무작위\x20칸을\x20공개할\x20수\x20있습니다.<br>만약\x20그\x20칸이\x20지뢰가\x20아니면\x20숫자\x20힌트를,\x20지뢰라면\x20지뢰를\x20표시합니다.','아이템\x20없이\x20단\x20하나의\x20목숨으로\x20개별\x20미션에\x20도전하는\x20모드','tutorial03','stroke','<span\x20style=\x22color:rgb(0,\x20255,\x200);\x22\x20class=\x22stroke\x22>초록색\x20숫자</span>는\x20대각선\x204칸과\x20자기\x20자신을\x20포함한<br>X자\x20모양\x205칸\x20내의\x20지뢰\x20개수를\x20의미합니다.','stage20Bonus02','숫자\x20힌트로는\x20여기까지가\x20한계입니다.\x0a이렇게\x20운에\x20의존해야\x20하는\x20상황이\x20종종\x20발생할\x20것입니다.','색깔\x20힌트의\x20지뢰\x20범위를\x20표시합니다.','stage40Bonus01','rgb(\x20\x200,\x20255,\x20\x20\x200)','newHintBlue','highLow01','메인\x20화면으로\x20돌아가기','클래식\x20모드','도전\x20모드','지뢰피하기는\x20좌측\x20상단\x20시작점에서\x20우측\x20하단\x20도착점까지\x0a지뢰를\x20피해서\x20도달하면\x20승리하는\x20게임입니다.','rgba(255,\x20128,\x20\x20\x200,\x200.75)','홀짝\x20힌트','F를\x20눌러\x20🔍\x2010개를\x20받으세요!','메인\x20메뉴','rgb(185,\x20185,\x20185)','newHintGreen','칸을\x20클릭하여\x20색깔\x20표시를\x20할\x20수\x20있습니다.<br>한\x20번\x20누르면\x20빨간색,\x20두\x20번\x20누르면\x20초록색,\x20세\x20번\x20누르면\x20사라집니다.<br>눈으로만\x20추측하면\x20실수하기\x20쉽습니다.\x20색깔\x20표시를\x20적극적으로\x20활용하세요!','getCell','clickCell01','moveX','새로운\x20힌트','파란색\x20네모를\x20움직이면\x20주변\x20칸들의\x20숫자가\x20공개됩니다.\x0a시작점\x20근처\x20칸들의\x20숫자와\x20지뢰는\x20시작할\x20때\x20공개됩니다.','rgb(255,\x20\x20\x200,\x20\x20\x200)','bind','STAGE','움직임\x20최적화','tutorial05','7973672XJgMIj','tutorial07','숫자\x201키를\x20눌러\x20내\x20주변\x202칸\x20이내에\x20있는\x20칸\x20중에서<br>공개되지\x20않은\x20무작위\x20칸의\x20숫자\x20힌트를\x20공개할\x20수\x20있습니다.','F를\x20누르면\x20다음\x20스테이지로\x20이동합니다.','🔭[2]\x20아이템을\x20사용했습니다','게임설명','2389194JoLDUq','1977108qxaPdT','<span\x20style=\x22color:rgb(0,\x2050,\x20128);\x22>남색\x20숫자</span>는\x20工자\x20모양\x207칸\x20내의\x20지뢰\x20개수를\x20의미합니다.','info','더\x20이상\x20공개할\x20수\x20있는\x20칸이\x20없습니다!','pressH','introduceItemL03','rgb(154,\x20205,\x20\x2050)','순위표','rgb(220,\x20220,\x20220)','게임\x20선택','forEach','<span\x20style=\x22color:red;\x22\x20class=\x22stroke\x22>빨간색\x20숫자</span>는\x20양\x20옆\x202칸과\x20자기\x20자신을\x20포함한<br>가로\x205칸\x20내의\x20지뢰\x20개수를\x20의미합니다.','strokeCells','introduceItem103','newHintPurple','introduceItemL02','rgb(135,\x20206,\x20235)','지\u3000뢰\u3000피\u3000하\u3000기','🔍[1]\x20아이템이\x20없습니다!','board','📡[3]','green','rgb(255,\x20\x2099,\x20\x2071)','tutorial04','8EyHYax','숫자\x203키를\x20눌러\x20내\x20주변\x201칸\x20이내에\x20있는\x20칸\x20중에서<br>아직\x20밟지\x20않은\x20칸을\x20공개합니다.\x20만약\x20그\x20칸이\x20지뢰가\x20아니면<br>색칠하여\x20지뢰가\x20아님을\x20표시하고,\x20지뢰라면\x20지뢰를\x20표시합니다.','칸에\x20적힌\x20숫자는\x20해당\x20칸과\x20주변\x208칸을\x20포함한\x0a9칸\x20내에\x20존재하는\x20지뢰의\x20개수입니다.','orange','backButton','introduceItem203','퍼펙트\x20클리어','stage40Bonus02','색깔\x20힌트\x20모양\x20표시','7741629jFDJSI','📡[3]\x20아이템이\x20없습니다!','F를\x20누르면\x20게임을\x20시작합니다.','red','highLow02','🔍[1]\x20아이템을\x20사용했습니다','일부\x20칸의\x20숫자\x20힌트가\x20홀짝\x20힌트로\x20전환됩니다.<br>1,\x203,\x205,\x207,\x209는\x20\x22홀\x22로,<br>0,\x202,\x204,\x206,\x208은\x20\x22짝\x22으로\x20표시됩니다.','밟을\x20수\x20있는\x20모든\x20칸을\x20다\x20밟으세요!<br>STAGE\x205부터는\x20한\x20번도\x20죽지\x20않고<br>모든\x20안전한\x20칸을\x20밟으면\x20보너스\x20점수를\x20얻습니다.','rgba(\x20\x200,\x20255,\x20\x20\x200,\x200.75)','introduceItem101','rgb(255,\x20128,\x20\x20\x200)','tutorial','F를\x20눌러\x20보너스를\x20받으세요!','tutorial02','mainButton04','text','introduceItemL01','도착!\x20메인화면으로\x20이동합니다.','39216006BAPilQ','F를\x20눌러\x20🔭\x205개를\x20받으세요!','showShape01','파란색\x20네모를\x20WASD키로\x20조작하여\x20움직일\x20수\x20있습니다.\x0a도착점까지\x20직접\x20들어가보세요!','rgb(204,\x20102,\x20\x20\x200)','tutorialButton01','rgb(\x2020,\x20175,\x20207)','2465658XTnNRd','앞으로\x20새로운\x20색깔\x20힌트가\x20계속\x20등장할\x20것입니다.<br>모양이\x20헷갈린다면\x20R키를\x20눌러\x20각\x20색깔\x20힌트의\x20모양을\x20확인할\x20수\x20있습니다.<br>R키를\x20한\x20번\x20더\x20누르면\x20해제할\x20수\x20있습니다.','moveY','mainButton03','movementOpt02','스테이지를\x20하나씩\x20클리어하며\x20지뢰피하기\x20룰을\x20익힐\x20수\x20있는\x20기본\x20모드','rgb(120,\x20\x2049,\x20\x2020)','rgb(\x20\x200,\x20\x20\x200,\x20\x20\x200)','perfectClear02','showShape02','색깔\x20힌트의\x20지뢰\x20범위를\x20표시를\x20해제합니다.','rgb(127,\x20\x20\x200,\x20255)','rgba(135,\x20206,\x20235,\x200.75)','newHintYellow','clickCell03','rgba(255,\x20255,\x20255,\x200.95)','clickCell02','oddEven02','backToMainPage'];_0x3613=function(){return _0x427251;};return _0x3613();}[colorMatch,RAINBOW,OFFSET_X,OFFSET_Y,OFFSET5_X,OFFSET5_Y,TEXT,BUTTON,TUTORIAL,MODE_CLASSIC,MODE][_0x383302(0x241)](_0xc99b77=>Object['freeze'](_0xc99b77));
+// Constant Values
+const BACKGROUND_COLOR     = 'rgb( 90,  96, 116)';
+const BLACK                = 'rgb(  0,   0,   0)';
+const WHITE                = 'rgb(255, 255, 255)';
+const CHARCOAL             = 'rgb( 70,  70,  70)';
+const INVERTED_CHARCOAL    = 'rgb(185, 185, 185)';
+const LIGHTGRAY            = 'rgb(220, 220, 220)';
+const YELLOWGREEN          = 'rgb(154, 205,  50)';
+const INVERTED_YELLOWGREEN = 'rgb(101,  50, 205)';
+const TOMATO               = 'rgb(255,  99,  71)';
+const INVERTED_TOMATO      = 'rgb( 20, 175, 207)';
+const SKYBLUE              = 'rgb(135, 206, 235)';
+const INVERTED_SKYBLUE     = 'rgb(120,  49,  20)';
+const RED                  = 'rgb(255,   0,   0)';
+const ORANGE               = 'rgb(255, 128,   0)';
+const YELLOW               = 'rgb(255, 255,   0)';
+const GREEN                = 'rgb(  0, 255,   0)';
+const BLUE                 = 'rgb( 51, 153, 255)';
+const INVERTED_BLUE        = 'rgb(204, 102,   0)';
+const NAVY                 = 'rgb(  0,   0, 128)';
+const PURPLE               = 'rgb(127,   0, 255)';
+
+const WHITE_ALPHA          = 'rgba(255, 255, 255, 0.95)';
+const WHITE_ALPHA2         = 'rgba(255, 255, 255, 0.70)';
+const RED_ALPHA            = 'rgba(255,   0,   0, 0.75)';
+const ORANGE_ALPHA         = 'rgba(255, 128,   0, 0.75)';
+const YELLOW_ALPHA         = 'rgba(255, 255,   0, 0.75)';
+const GREEN_ALPHA          = 'rgba(  0, 255,   0, 0.75)';
+const BLUE_ALPHA           = 'rgba( 51, 153, 255, 0.75)';
+const NAVY_ALPHA           = 'rgba(  0,   0, 128, 0.75)';
+const PURPLE_ALPHA         = 'rgba(127,   0, 255, 0.75)';
+const SKYBLUE_ALPHA        = 'rgba(135, 206, 235, 0.75)';
+
+const colorMatch = {
+  red: RED,
+  orange: ORANGE,
+  yellow: YELLOW,
+  green: GREEN,
+  blue: BLUE,
+  navy: NAVY,
+  purple: PURPLE,
+  [RED]: RED_ALPHA,
+  [ORANGE]: ORANGE_ALPHA,
+  [YELLOW]: YELLOW_ALPHA,
+  [GREEN]: GREEN_ALPHA,
+  [BLUE]: BLUE_ALPHA,
+  [NAVY]: NAVY_ALPHA,
+  [PURPLE]: PURPLE_ALPHA
+};
+
+const RAINBOW = [
+  'red', 'orange', 'yellow',
+  'green', 'blue', 'navy', 'purple'
+];
+
+const shapeMatch = {
+  red: [10, 11, 12, 13, 14],
+  orange: [2, 7, 12, 17, 22],
+  yellow: [1, 3, 4, 5, 7],
+  green: [0, 2, 4, 6, 8],
+  blue: [0, 2, 3, 4, 5, 6, 8],
+  navy: [0, 1, 2, 4, 6, 7, 8]
+};
+
+const BOARD_WIDTH_RATIO         = 2/3;
+const BOARD_HEIGHT_RATIO        = 0.85;
+const BOARD_BOTTOM_GAP_RATIO    = 0.12;
+
+const CELL_COUNT_SCORE          = 50;
+const REMAINING_TIME_SCORE      = 1;
+const MOVEMENT_GOOD_RATIO       = 1.1;
+const MOVEMENT_GREAT_RATIO      = 1.2;
+const MOVEMENT_EXCELLENT_RATIO  = 1.3;
+const MOVEMENT_PERFECT_RATIO    = 1.5;
+const RESERVED_ITEM_RATIO       = 1.25;
+const PERFECT_CLEAR_RATIO       = 2;
+
+const OFFSET_X = [-1, 0, 1, -1, 0, 1, -1, 0, 1];
+const OFFSET_Y = [-1, -1, -1, 0, 0, 0, 1, 1, 1];
+const OFFSET5_X = [
+  -2, -1, 0, 1, 2,
+  -2, -1, 0, 1, 2,
+  -2, -1, 0, 1, 2,
+  -2, -1, 0, 1, 2,
+  -2, -1, 0, 1, 2,
+];
+const OFFSET5_Y = [
+  -2, -2, -2, -2, -2,
+  -1, -1, -1, -1, -1,
+  0, 0, 0, 0, 0,
+  1, 1, 1, 1, 1,
+  2, 2, 2, 2, 2
+];
+
+const randRange = (start, end) => {
+  return Math.floor(Math.random()*(end-start+1)) + start;
+};
+
+const TEXT = {
+	mainTitle: '지　뢰　피　하　기',
+  selectGameTitle: '게임 선택',
+  mainButton01: '게임설명',
+  mainButton02: '게임시작',
+  mainButton03: '순위표',
+  mainButton04: '패치노트',
+  modeClassic: '클래식 모드',
+  modeChallenge: '도전 모드',
+  backToMainPage: '메인 메뉴',
+  tutorialButton01: '이전',
+  tutorialButton02: '다음',
+  backButton: '메인 화면으로 돌아가기',
+  submitButton: '확인',
+  tutorial01: '지뢰피하기는 좌측 상단 시작점에서 우측 하단 도착점까지\n지뢰를 피해서 도달하면 승리하는 게임입니다.',
+  tutorial02: '칸에 적힌 숫자는 해당 칸과 주변 8칸을 포함한\n9칸 내에 존재하는 지뢰의 개수입니다.',
+  tutorial03: '파란색 네모를 움직이면 주변 칸들의 숫자가 공개됩니다.\n시작점 근처 칸들의 숫자와 지뢰는 시작할 때 공개됩니다.',
+  tutorial04: '숫자 힌트로는 여기까지가 한계입니다.\n이렇게 운에 의존해야 하는 상황이 종종 발생할 것입니다.',
+  tutorial05: '숫자 3키를 누르면 파란색 네모 주변에 아직 밟지 않은 칸들\n중 무작위로 하나를 공개하는 아이템을 사용할 수 있습니다.',
+  tutorial06: '이 외에도 숫자 1키, 2키로 무작위 칸을 공개하는\n아이템을 사용할 수 있고 횟수 제한이 있습니다.',
+  tutorial07: '파란색 네모를 WASD키로 조작하여 움직일 수 있습니다.\n도착점까지 직접 들어가보세요!',
+  bottomBar01: 'STAGE',
+  bottomBar02: '점수',
+  bottomBar03: '💖',
+  bottomBar04: '💣',
+  bottomBar05: '⏱',
+  bottomBar06: '🔍[1]',
+  bottomBar07: '🔭[2]',
+  bottomBar08: '📡[3]',
+  bottomBarCh01: '💣',
+  bottomBarCh02: '⏱',
+  bottomBarCh03: '🏃',
+  destination: '도착! 메인화면으로 이동합니다.',
+  ensuredMine: '💣',
+  msgBox01: '지뢰를 밟았습니다!',
+  msgBox02: '🔍[1] 아이템을 사용했습니다',
+  msgBox03: '🔍[1] 아이템이 없습니다!',
+  msgBox04: '🔭[2] 아이템을 사용했습니다',
+  msgBox05: '🔭[2] 아이템이 없습니다!',
+  msgBox06: '📡[3] 아이템을 사용했습니다',
+  msgBox07: '📡[3] 아이템이 없습니다!',
+  msgBox08: '더 이상 공개할 수 있는 칸이 없습니다!',
+  msgBox09: '색깔 힌트의 지뢰 범위를 표시를 해제합니다.',
+  msgBox10: '색깔 힌트의 지뢰 범위를 표시합니다.',
+  clickCell01: '색깔 표시',
+  clickCell02: '칸을 클릭하여 색깔 표시를 할 수 있습니다.<br>한 번 누르면 빨간색, 두 번 누르면 초록색, 세 번 누르면 사라집니다.<br>눈으로만 추측하면 실수하기 쉽습니다. 색깔 표시를 적극적으로 활용하세요!',
+  clickCell03: 'F를 누르면 게임을 시작합니다.',
+  introduceItem101: '🔍[1]',
+  introduceItem102: '숫자 1키를 눌러 내 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸의 숫자 힌트를 공개할 수 있습니다.',
+  introduceItem103: 'F를 눌러 🔍 10개를 받으세요!',
+  introduceItem201: '🔭[2]',
+  introduceItem202: '숫자 2키를 눌러 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸을 공개할 수 있습니다.<br>만약 그 칸이 지뢰가 아니면 숫자 힌트를, 지뢰라면 지뢰를 표시합니다.',
+  introduceItem203: 'F를 눌러 🔭 5개를 받으세요!',
+  introduceItemL01: '📡[3]',
+  introduceItemL02: '숫자 3키를 눌러 내 주변 1칸 이내에 있는 칸 중에서<br>아직 밟지 않은 칸을 공개합니다. 만약 그 칸이 지뢰가 아니면<br>색칠하여 지뢰가 아님을 표시하고, 지뢰라면 지뢰를 표시합니다.',
+  introduceItemL03: 'F를 눌러 📡 3개를 받으세요!',
+  perfectClear01: '퍼펙트 클리어',
+  perfectClear02: '밟을 수 있는 모든 칸을 다 밟으세요!<br>STAGE 5부터는 한 번도 죽지 않고<br>모든 안전한 칸을 밟으면 보너스 점수를 얻습니다.',
+  movementOpt01: '움직임 최적화',
+  movementOpt02: '최대한 적게 움직이세요!<br>STAGE 6부터는 움직임을 최소화하면 보너스 점수를 얻습니다.',
+  stage10Bonus01: 'STAGE 10 클리어 보너스',
+  stage10Bonus02: '💖 +3<br>🔍[1] +10<br>🔭[2] +5<br>📡[3] +3',
+  stage20Bonus01: 'STAGE 20 클리어 보너스',
+  stage20Bonus02: '💖 +3<br>🔍[1] +7<br>🔭[2] +4<br>📡[3] +3',
+  stage30Bonus01: 'STAGE 30 클리어 보너스',
+  stage30Bonus02: '💖 +2<br>🔍[1] +5<br>🔭[2] +3<br>📡[3] +2',
+  stage40Bonus01: 'STAGE 40 클리어 보너스',
+  stage40Bonus02: '💖 +1<br>🔍[1] +3<br>🔭[2] +1<br>📡[3] +1',
+  stageBonusHeader: 'F를 눌러 보너스를 받으세요!',
+
+  newHintTitle: '새로운 힌트',
+  newHintRed: '<span style="color:red;" class="stroke">빨간색 숫자</span>는 양 옆 2칸과 자기 자신을 포함한<br>가로 5칸 내의 지뢰 개수를 의미합니다.',
+  newHintOrange: '<span style="color:rgb(255, 128, 0);" class="stroke">주황색 숫자</span>는 위 아래 2칸과 자기 자신을 포함한<br>세로 5칸 내의 지뢰 개수를 의미합니다.',
+  newHintYellow: '<span style="color:rgb(255, 255, 0);" class="stroke">노란색 숫자</span>는 상하좌우 4칸과 자기 자신을 포함한<br>십자가 모양 5칸 내의 지뢰 개수를 의미합니다.',
+  newHintGreen: '<span style="color:rgb(0, 255, 0);" class="stroke">초록색 숫자</span>는 대각선 4칸과 자기 자신을 포함한<br>X자 모양 5칸 내의 지뢰 개수를 의미합니다.',
+  newHintBlue: '<span style="color:rgb(51, 153, 255);" class="stroke">파란색 숫자</span>는 H자 모양 7칸 내의 지뢰 개수를 의미합니다.',
+  newHintNavy: '<span style="color:rgb(0, 50, 128);">남색 숫자</span>는 工자 모양 7칸 내의 지뢰 개수를 의미합니다.',
+  newHintPurple: '<span style="color:rgb(127, 0, 255);" class="stroke">보라색 숫자</span>는 2~8칸의 무작위 모양 내의 지뢰 개수를 의미합니다.<br>어떤 모양인지는 숫자가 밝혀질 때 표시됩니다.',
+
+  showShape01: '색깔 힌트 모양 표시',
+  showShape02: '앞으로 새로운 색깔 힌트가 계속 등장할 것입니다.<br>모양이 헷갈린다면 R키를 눌러 각 색깔 힌트의 모양을 확인할 수 있습니다.<br>R키를 한 번 더 누르면 해제할 수 있습니다.',
+  oddEven01: '홀짝 힌트',
+  oddEven02: '일부 칸의 숫자 힌트가 홀짝 힌트로 전환됩니다.<br>1, 3, 5, 7, 9는 "홀"로,<br>0, 2, 4, 6, 8은 "짝"으로 표시됩니다.',
+  highLow01: '최대/최소 힌트',
+  highLow02: '일부 칸의 숫자 힌트가 최대/최소 힌트로 전환됩니다.<br>주변 8칸 숫자들의 최댓값보다 크거나 같다면 ▲,<br>주변 8칸 숫자들의 최솟값보다 작거나 같다면 ▼으로 표시됩니다.',
+
+  pressH: 'F를 누르면 다음 스테이지로 이동합니다.',
+};
+
+const BUTTON = {
+  tutorial: {
+    text: TEXT.mainButton01,
+    fillColor: YELLOWGREEN,
+    hover: {
+      fillColor: INVERTED_YELLOWGREEN,
+      textColor: WHITE
+    }
+  },
+
+  start: {
+    text: TEXT.mainButton02,
+    fillColor: TOMATO,
+    hover: {
+      fillColor: INVERTED_TOMATO,
+      textColor: WHITE
+    }
+  },
+
+  leaderboard: {
+    text: TEXT.mainButton03,
+    fillColor: SKYBLUE,
+    hover: {
+      fillColor: INVERTED_SKYBLUE,
+      textColor: WHITE
+    }
+  },
+
+  updateLog: {
+    text: TEXT.mainButton04,
+    fillColor: BLUE,
+    hover: {
+      fillColor: INVERTED_BLUE,
+      textColor: WHITE
+    }
+  },
+
+  modeClassic: {
+    text: TEXT.modeClassic,
+    fillColor: YELLOWGREEN,
+    hover: {
+      fillColor: INVERTED_YELLOWGREEN,
+      textColor: WHITE
+    },
+    caption: '스테이지를 하나씩 클리어하며 지뢰피하기 룰을 익힐 수 있는 기본 모드'
+  },
+
+  modeChallenge: {
+    text: TEXT.modeChallenge,
+    fillColor: TOMATO,
+    hover: {
+      fillColor: INVERTED_TOMATO,
+      textColor: WHITE
+    },
+    caption: '아이템 없이 단 하나의 목숨으로 개별 미션에 도전하는 모드'
+  },
+
+  backToMainPage: {
+    text: TEXT.backToMainPage,
+    textColor: WHITE,
+    fillColor: CHARCOAL,
+    hover: {
+      fillColor: INVERTED_CHARCOAL,
+      textColor: BLACK
+    }
+  },
+
+  prev: {
+    text: TEXT.tutorialButton01,
+    fillColor: TOMATO,
+    hover: {
+      fillColor: INVERTED_TOMATO,
+      textColor: WHITE
+    }
+  },
+
+  next: {
+    text: TEXT.tutorialButton02,
+    fillColor: TOMATO,
+    hover: {
+      fillColor: INVERTED_TOMATO,
+      textColor: WHITE
+    }
+  },
+
+  back: {
+    text: TEXT.backButton,
+    fillColor: YELLOWGREEN,
+    hover: {
+      fillColor: INVERTED_YELLOWGREEN,
+      textColor: WHITE
+    }
+  },
+
+  submit: {
+    text: TEXT.submitButton,
+    fillColor: SKYBLUE,
+    hover: {
+      fillColor: INVERTED_SKYBLUE,
+      textColor: WHITE
+    }
+  }
+};
+
+const tutorialClearPage = function(boardInfo) {
+  this.ctx.clearRect(0, 0, this.width, this.board.maxHeight);
+  this.paintTutorialBoard(boardInfo);
+};
+
+const TUTORIAL = {
+  tutorial01: {
+    next: 2,
+    board: {},
+    bottomText: {
+      text: TEXT.tutorial01,
+      linebreak: true
+    },
+    timer: {
+      getTimer: function() {
+        const frame01 = () => {
+          tutorialClearPage.bind(this)({});
+          this.board.getCell(0, 0).stroke(NAVY, 10);
+          this.board.getCell(4, 4).stroke(NAVY, 10);
+        };
+
+        const frame02 = () => {
+          tutorialClearPage.bind(this)({});
+        }
+
+        let frame = 2;
+
+        return () => {
+          switch (frame) {
+            case 2:
+              frame01();
+              break;
+            case 1:
+              frame02();
+              break;
+          }
+          if (--frame === 0) {
+            frame = 2;
+          }
+        };
+      },
+      delay: 500
+    }
+  },
+
+  tutorial02: {
+    prev: 1,
+    next: 3,
+    board: {},
+    bottomText: {
+      text: TEXT.tutorial02,
+      linebreak: true
+    },
+    timer: {
+      getTimer: function() {
+        const frame01 = () => {
+          tutorialClearPage.bind(this)({});
+          this.board.getCell(1, 1).stroke(NAVY, 10);
+        };
+      
+        const frame02 = () => {
+          tutorialClearPage.bind(this)({});
+          const startCell = this.board.getCell(0, 0);
+          const endCell = this.board.getCell(2, 2);
+          this.strokeCells(startCell, endCell, NAVY, 10);
+          this.board.getCell(2, 2).stroke(ORANGE, 10);
+        };
+      
+        const frame03 = () => {
+          tutorialClearPage.bind(this)({});
+          this.board.getCell(0, 1).stroke(NAVY, 10);
+        };
+      
+        const frame04 = () => {
+          tutorialClearPage.bind(this)({});
+          const startCell = this.board.getCell(0, 0);
+          const endCell = this.board.getCell(1, 2);
+          this.strokeCells(startCell, endCell, NAVY, 10);
+        }
+
+        let frame = 12;
+
+        return () => {
+          switch (frame) {
+            case 12: case 10: case 8:
+              frame01();
+              break;
+            case 11: case 9: case 7:
+              frame02();
+              break;
+            case 6: case 4: case 2:
+              frame03();
+              break;
+            case 5: case 3: case 1:
+              frame04();
+              break;
+          }
+          if (--frame === 0) {
+            frame = 12;
+          }
+        };
+      },
+      delay: 600
+    }
+  },
+
+  tutorial03: {
+    prev: 2,
+    next: 4,
+    board: {
+      me: true
+    },
+    bottomText: {
+      text: TEXT.tutorial03,
+      linebreak: true
+    },
+    timer: {
+      getTimer: function() {
+        const frame01 = () => {
+          this.board.me.moveX(1);
+        };
+      
+        const frame02 = () => {
+          this.board.me.moveY(1);
+        };
+      
+        const frame03 = () => {
+          tutorialClearPage.bind(this)({});
+          const startCell = this.board.getCell(0, 0);
+          const endCell = this.board.getCell(2, 2);
+          this.strokeCells(startCell, endCell, NAVY, 10);
+        }
+
+        const frame04 = () => {
+          tutorialClearPage.bind(this)({});
+        }
+
+        let frame = 11;
+
+        return () => {
+          switch (frame) {
+            case 11:
+              tutorialClearPage.bind(this)({ me: true });
+              break;
+            case 10: case 9: case 8:
+              frame01();
+              break;
+            case 7: case 6:
+              frame02();
+              break;
+            case 4: case 2:
+              frame03();
+              break;
+            case 3: case 1:
+              frame04();
+              break;
+          }
+          if (--frame === 0) {
+            frame = 11;
+          }
+        };
+      },
+      delay: 500
+    }
+  },
+
+  tutorial04: {
+    prev: 3,
+    next: 5,
+    board: {
+      me: true
+    },
+    bottomText: {
+      text: TEXT.tutorial04,
+      linebreak: true
+    },
+    timer: {
+      getTimer: function() {
+        const frame01 = () => {
+          this.board.me.moveX(1);
+        };
+      
+        const frame02 = () => {
+          this.board.me.moveX(-1);
+        };
+      
+        const frame03 = () => {
+          this.board.me.moveY(1);
+        };
+      
+        const frame04 = () => {
+          this.board.me.moveY(-1);
+        };
+
+        let frame = 17;
+
+        return animation = () => {
+          switch (frame) {
+            case 17:
+              tutorialClearPage.bind(this)({ me: true });
+              break;
+            case 13: case 12: case 6: case 5: case 1:
+              frame01();
+              break;
+            case 9:
+              frame02();
+              break;
+            case 16: case 15: case 14: case 11: case 3: case 2:
+              frame03();
+              break;
+            case 10: case 8: case 7: case 4:
+              frame04();
+              break;
+          }
+          if (--frame === 0) {
+            clearInterval(animation);
+          }
+        }
+      },
+      delay: 125
+    }
+  },
+  
+  tutorial05: {
+    prev: 4,
+    next: 6,
+    board: {
+      me: true,
+      meX: 4,
+      meY: 2,
+      ensured: [
+        [0, 3], [1, 3], [2, 3], [2, 4],
+        [3, 0], [3, 1], [3, 2], [3, 3], [4, 2]
+      ],
+      detected: [
+        [0, 4], [1, 4], [3, 4],
+        [4, 0], [4, 1], [4, 3]
+      ]
+    },
+    bottomText: {
+      text: TEXT.tutorial05,
+      linebreak: true
+    }
+  },
+
+  tutorial06: {
+    prev: 5,
+    next: 7,
+    board: {
+      me: true,
+      meX: 4,
+      meY: 2,
+      ensured: [
+        [0, 3], [1, 3], [2, 3], [2, 4],
+        [3, 0], [3, 1], [3, 2], [3, 3], [4, 2]
+      ],
+      detected: [
+        [0, 4], [1, 4], [3, 4],
+        [4, 0], [4, 1], [4, 3]
+      ]
+    },
+    bottomText: {
+      text: TEXT.tutorial06,
+      linebreak: true
+    }
+  },
+
+  tutorial07: {
+    board: {
+      me: true
+    },
+    bottomText: {
+      text: TEXT.tutorial07,
+      linebreak: true
+    },
+    addition: function () {
+      this.page = 'tutorial';
+    }
+  }
+}
+
+const MODE_CLASSIC = [
+
+  {
+    type: 'input'
+  },
+
+	{
+	  type: 'info',
+	  layout: 'leftRight',
+	  title: TEXT.clickCell01,
+	  half1: {
+		  type: 'board',
+		  xCount: 3,
+		  yCount: 4,
+		  safe:[
+			  [0, 0, 0], [0, 1, 0], [0, 2, 1],
+        [1, 0, 1], [1, 1, 1], [1, 2, 1], [1, 3, 1]
+			],
+      ensured: [
+        [0, 3, 1], [2, 0, 1],
+        [2, 1, 1], [2, 2, 0], [2, 3, 0]
+      ],
+		  me: [1, 2],
+	  },
+	  half2: {
+		  type: 'board',
+		  xCount: 3,
+		  yCount: 4,
+      tomato: [
+        [0, 3], [2, 0]
+      ],
+      yellowgreen: [
+        [2, 1], [2, 2], [2, 3]
+      ],
+		  safe:[
+			  [0, 0, 0], [0, 1, 0], [0, 2, 1],
+        [1, 0, 1], [1, 1, 1], [1, 2, 1], [1, 3, 1]
+			],
+      ensured: [
+        [0, 3, 1], [2, 0, 1],
+        [2, 1, 1], [2, 2, 0], [2, 3, 0]
+      ],
+		  me: [1, 2],
+	  },
+    arrow: true,
+    header: TEXT.clickCell02,
+    footer: TEXT.clickCell03,
+	},
+
+	{ //  6 6 4 150
+	  type: 'game',
+	  xCount: 6,
+	  yCount: 6,
+	  mine: 4,
+	  boardSetting: {
+		  time: 150
+	  }
+	},
+
+	{
+	  type: 'info',
+	  layout: 'leftRight',
+	  title: TEXT.introduceItem101,
+	  half1: {
+		  type: 'board',
+		  xCount: 3,
+		  yCount: 4,
+		  safe:[
+			  [0, 1, 1], [1, 0, 1], [1, 1, 1]
+			], 
+		  me: [0, 0],
+	  },
+	  half2: {
+		  type: 'board',
+		  xCount: 3,
+		  yCount: 4,
+		  safe: [
+			  [0, 1, 1], [1, 0, 1], [1, 1, 1]
+			],
+		  ensured: [
+        [1, 2, 3]
+      ],
+      me: [0, 0]
+		},
+    arrow: true,
+    header: TEXT.introduceItem102,
+    footer: TEXT.introduceItem103,
+    bonus: {
+    	item1: 10
+    }
+	},
+
+	{
+		type: 'game',
+		xCount: 6,
+		yCount: 6,
+		mine: 5,
+		boardSetting: {
+			time: 150
+		}
+	},
+  
+	{
+	  type: 'info',
+    layout: 'leftRight',
+    title: TEXT.introduceItem201,
+	  half1: {
+      type: 'board',
+      xCount: 3,
+      yCount: 4,
+      safe: [
+        [0, 1, 1], [1, 0, 1], [1, 1, 1]
+      ],
+      me: [0, 0]
+    },
+	  half2: {
+      type: 'board',
+      xCount: 3,
+      yCount: 4,
+      safe: [
+        [0, 1, 1], [1, 0, 1],
+        [1, 1, 1], [1, 2, 3]
+      ],
+      me: [0, 0]
+    },
+    arrow: true,
+	  header: TEXT.introduceItem202,
+    footer: TEXT.introduceItem203,
+    bonus: {
+      item2: 5
+    }
+  },
+
+	{
+	  type: 'game',
+	  xCount: 6,
+	  yCount: 6,
+	  mine: 6,
+	  boardSetting: {
+		  time: 150
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'leftRight',
+    title: TEXT.introduceItemL01,
+	  half1: {
+      type: 'board',
+      xCount: 3,
+      yCount: 4,
+      safe: [
+        [0, 0, 0], [0, 1, 1],
+        [1, 0, 1], [1, 1, 1]
+      ],
+      ensured: [
+        [0, 2, 3], [1, 2, 4], [2, 0, 1],
+        [2, 1, 1], [2, 1, 3], [2, 2, 3]
+      ],
+      me: [1, 1]
+    },
+	  half2: {
+      type: 'board',
+      xCount: 3,
+      yCount: 4,
+      safe: [
+        [0, 0, 0], [0, 1, 1], [1, 0, 1],
+        [1, 1, 1], [2, 1, 1]
+      ],
+      ensured: [
+        [0, 2, 3], [1, 2, 4], [2, 0, 1],
+        [2, 1, 3], [2, 2, 3]
+      ],
+      me: [1, 1]
+    },
+    arrow: true,
+	  header: TEXT.introduceItemL02,
+    footer: TEXT.introduceItemL03,
+    bonus: {
+      item3: 3
+    }
+  },
+
+	{
+	  type: 'game',
+	  xCount: 6,
+	  yCount: 6,
+	  mine: 7,
+	  boardSetting: {
+		  time: 150
+	  }
+	},
+  
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.perfectClear01,
+	  article: {
+      type: 'text',
+      text: TEXT.perfectClear02
+    },
+    footer: TEXT.pressH
+	},
+
+	// STAGE 5
+	{
+	  type: 'game',
+	  xCount: 7,
+	  yCount: 6,
+	  mine: 8,
+	  boardSetting: {
+		  time: 150
+	  }
+	},
+  
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.movementOpt01,
+	  article: {
+      type: 'text',
+      text: TEXT.movementOpt02
+    },
+    footer: TEXT.pressH
+	},
+  
+	{
+	  type: 'game',
+	  xCount: 5,
+	  yCount: 5,
+	  mine: 8,
+	  boardSetting: {
+		  time: 180
+	  }
+	},
+	
+	{
+	  type: 'game',
+	  xCount: 5,
+	  yCount: 6,
+	  mine: 9,
+	  boardSetting: {
+		  time: 180
+	  }
+	},
+	
+	{
+	  type: 'game',
+	  xCount: 5,
+	  yCount: 7,
+	  mine: 9,
+	  boardSetting: {
+		  time: 180
+	  }
+	},
+	
+	{
+	  type: 'game',
+	  xCount: 5,
+	  yCount: 8,
+	  mine: 10,
+	  boardSetting: {
+		  time: 180
+	  }
+	},
+	
+	// STAGE 10
+	{
+	  type: 'game',
+	  xCount: 8,
+	  yCount: 5,
+	  mine: 10,
+	  boardSetting: {
+		  time: 180
+	  }
+	},
+	
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.stage10Bonus01,
+	  article: {
+      type: 'text', 
+      text: TEXT.stage10Bonus02
+    },
+	  header: TEXT.stageBonusHeader,
+    bonus: {
+      life: 3, 
+      item1: 10, 
+      item2: 5,
+      item3: 3
+    }
+  },
+  
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.newHintTitle,
+	  article: {
+      type: 'board',
+      xCount: 7,
+      yCount: 3,
+      safe: [
+        [2, 1, 1], [3, 1, 2, 'red'], [5, 1, 3]
+      ],
+      mine: [
+        [1, 1], [4, 1]
+      ],
+    },
+	  header: TEXT.newHintRed,
+    footer: TEXT.pressH,
+  },
+	
+  {
+	  type: 'game',
+	  xCount: 8,
+	  yCount: 6,
+	  mine: 12,
+	  boardSetting: {
+		  time: 210,
+      red: 3
+	  }
+	},
+	
+  {
+	  type: 'game',
+	  xCount: 7,
+	  yCount: 7,
+	  mine: 12,
+	  boardSetting: {
+		  time: 210,
+      red: 3
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 7,
+	  yCount: 7,
+	  mine: 13,
+	  boardSetting: {
+		  time: 210,
+      red: 4
+	  }
+	},
+	
+  {
+	  type: 'game',
+	  xCount: 8,
+	  yCount: 7,
+	  mine: 14,
+	  boardSetting: {
+		  time: 210,
+      red: 4
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.newHintTitle,
+	  article: {
+      type: 'board',
+      xCount: 3,
+      yCount: 5,
+      safe: [
+        [1, 1, 1], [1, 2, 2, 'orange'], [1, 4, 3]
+      ],
+      mine: [
+        [1, 0], [1, 3]
+      ],
+    },
+	  header: TEXT.newHintOrange,
+    footer: TEXT.pressH,
+  },
+
+	{
+	  type: 'info',
+    layout: 'leftRight',
+    title: TEXT.showShape01,
+	  half1: {
+      type: 'board',
+      xCount: 3,
+      yCount: 5,
+      safe: [
+        [0, 0, 0, 'red'], [1, 0, 1], [2, 0, 0], [1, 1, 2],
+        [2, 1, 2], [0, 2, 2], [1, 2, 1, 'orange'], [1, 3, 3],
+        [2, 3, 2], [0, 4, 2], [2, 4, 1]
+      ],
+      mine: [
+        [0, 1], [2, 2],
+        [0, 3], [1, 4]
+      ]
+    },
+    half2: {
+      type: 'board',
+      xCount: 3,
+      yCount: 5,
+      safe: [
+        [0, 0, 0, 'red'], [1, 0, 1], [2, 0, 0], [1, 1, 2],
+        [2, 1, 2], [0, 2, 2], [1, 2, 1, 'orange'], [1, 3, 3],
+        [2, 3, 2], [0, 4, 2], [2, 4, 1]
+      ],
+      mine: [
+        [0, 1], [2, 2],
+        [0, 3], [1, 4]
+      ],
+      showShape: true
+    },
+    arrow: true,
+	  header: TEXT.showShape02,
+    footer: TEXT.pressH,
+  },
+
+  // STAGE 15
+  {
+	  type: 'game',
+	  xCount: 9,
+	  yCount: 7,
+	  mine: 15,
+	  boardSetting: {
+		  time: 210,
+      red: 3,
+      orange: 2
+	  }
+	},
+	
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 6,
+	  mine: 15,
+	  boardSetting: {
+		  time: 240,
+      red: 2,
+      orange: 4
+	  }
+	},
+	
+  {
+	  type: 'game',
+	  xCount: 13,
+	  yCount: 5,
+	  mine: 16,
+	  boardSetting: {
+		  time: 240,
+      red: 2,
+      orange: 5
+	  }
+	},
+	
+  {
+	  type: 'game',
+	  xCount: 11,
+	  yCount: 6,
+	  mine: 16,
+	  boardSetting: {
+		  time: 240,
+      red: 2,
+      orange: 5
+	  }
+	},
+
+  {
+	  type: 'info',
+	  layout: 'leftRight',
+	  title: TEXT.oddEven01,
+	  half1: {
+	  	type: 'board',
+	  	xCount: 3,
+	  	yCount: 3,
+	  	safe: [
+	  		[0, 1, 2], [0, 2, 0], [1, 1, '홀'],
+	  		[1, 2, 1], [2, 0, 1], [2, 1, 2]
+	  	],
+	  	mine: [[0, 0], [1, 0], [2, 2]]
+	  },
+	  half2: {
+	  	type: 'board',
+	  	xCount: 3,
+	  	yCount: 3,
+	  	safe: [
+	  		[0, 1, '짝'], [0, 2, '짝'], [1, 1, 3],
+	  		[1, 2, 1], [2, 0, 1], [2, 1, '짝']
+	  	],
+	  	mine: [
+	  		[0, 0], [1, 0], [2, 2]
+	  	],
+	  },
+	  header: TEXT.oddEven02,
+	  footer: TEXT.pressH,
+  },
+
+  {
+	  type: 'game',
+	  xCount: 8,
+	  yCount: 8,
+	  mine: 19,
+	  boardSetting: {
+		  time: 240,
+      red: 3,
+      orange: 5,
+      oddEven: 1
+	  }
+	},
+
+  // STAGE 20
+  {
+	  type: 'game',
+	  xCount: 8,
+	  yCount: 8,
+	  mine: 19,
+	  boardSetting: {
+		  time: 240,
+      red: 2,
+      orange: 3,
+      oddEven: 2
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.stage20Bonus01,
+	  article: {
+      type: 'text', 
+      text: TEXT.stage20Bonus02
+    },
+	  header: TEXT.stageBonusHeader,
+    bonus: {
+      life: 3, 
+      item1: 7, 
+      item2: 4,
+      item3: 3
+    }
+  },
+
+  {
+	  type: 'game',
+	  xCount: 8,
+	  yCount: 8,
+	  mine: 19,
+	  boardSetting: {
+		  time: 240,
+      red: 2,
+      orange: 2,
+      oddEven: 3
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 9,
+	  yCount: 8,
+	  mine: 21,
+	  boardSetting: {
+		  time: 240,
+      red: 3,
+      orange: 3,
+      oddEven: 4
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.newHintTitle,
+	  article: {
+      type: 'board',
+      xCount: 3,
+      yCount: 3,
+      safe: [
+        [2, 0, 1], [1, 1, 2, 'yellow'],
+        [2, 1, 2], [1, 2, 3]
+      ],
+      mine: [
+        [0, 0], [1, 0], [0, 1],
+        [0, 2], [2, 2]
+      ],
+    },
+	  header: TEXT.newHintYellow,
+    footer: TEXT.pressH,
+  },
+
+  {
+	  type: 'game',
+	  xCount: 9,
+	  yCount: 8,
+	  mine: 21,
+	  boardSetting: {
+		  time: 240,
+      red: 2,
+      orange: 2,
+      yellow: 5,
+      oddEven: 2
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 8,
+	  mine: 24,
+	  boardSetting: {
+		  time: 240,
+      red: 2,
+      orange: 2,
+      yellow: 6,
+      oddEven: 4
+	  }
+	},
+
+  // STAGE 25
+  {
+	  type: 'game',
+	  xCount: 9,
+	  yCount: 9,
+	  mine: 24,
+	  boardSetting: {
+		  time: 270,
+      red: 3,
+      orange: 3,
+      yellow: 4,
+      oddEven: 4
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 9,
+	  yCount: 9,
+	  mine: 24,
+	  boardSetting: {
+		  time: 270,
+      red: 2,
+      orange: 2,
+      yellow: 5,
+      oddEven: 5
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.newHintTitle,
+	  article: {
+      type: 'board',
+      xCount: 3,
+      yCount: 3,
+      safe: [
+        [2, 0, 1], [1, 1, 3, 'green'],
+        [2, 1, 2], [1, 2, 3]
+      ],
+      mine: [
+        [0, 0], [1, 0], [0, 1],
+        [0, 2], [2, 2]
+      ],
+    },
+	  header: TEXT.newHintGreen,
+    footer: TEXT.pressH,
+  },
+
+  {
+	  type: 'game',
+	  xCount: 9,
+	  yCount: 9,
+	  mine: 24,
+	  boardSetting: {
+		  time: 270,
+      red: 2,
+      orange: 2,
+      yellow: 2,
+      green: 4,
+      oddEven: 2
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 9,
+	  yCount: 9,
+	  mine: 24,
+	  boardSetting: {
+		  time: 270,
+      red: 1,
+      orange: 1,
+      yellow: 2,
+      green: 6,
+      oddEven: 2
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 9,
+	  mine: 27,
+	  boardSetting: {
+		  time: 270,
+      red: 1,
+      orange: 1,
+      yellow: 3,
+      green: 5,
+      oddEven: 3
+	  }
+	},
+
+  // STAGE 30
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 9,
+	  mine: 27,
+	  boardSetting: {
+		  time: 270,
+      red: 2,
+      orange: 2,
+      yellow: 2,
+      green: 5,
+      oddEven: 4
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.stage30Bonus01,
+	  article: {
+      type: 'text', 
+      text: TEXT.stage30Bonus02
+    },
+	  header: TEXT.stageBonusHeader,
+    bonus: {
+      life: 2, 
+      item1: 5, 
+      item2: 3,
+	    item3: 2
+    }
+  },
+
+  {
+	  type: 'info',
+	  layout: 'leftRight',
+	  title: TEXT.highLow01,
+	  half1: {
+	  	type: 'board',
+	  	xCount: 3,
+	  	yCount: 6,
+	  	safe: [
+	  		[1, 0, 3], [0, 1, 2], [1, 1, 5],
+        [2, 1, 3], [0, 3, 2], [1, 3, 3],
+        [2, 3, 2], [0, 4, 1], [1, 4, 1],
+        [2, 4, 1], [0, 5, 1], [2, 5, 1]
+	  	],
+	  	mine: [
+        [0, 0], [2, 0], [0, 2],
+        [1, 2], [2, 2], [1, 5]
+      ]
+	  },
+	  half2: {
+	  	type: 'board',
+	  	xCount: 3,
+	  	yCount: 6,
+	  	safe: [
+	  		[1, 0, 3], [0, 1, 2], [1, 1, '▲'],
+        [2, 1, 3], [0, 3, 2], [1, 3, 3],
+        [2, 3, 2], [0, 4, 1], [1, 4, '▼'],
+        [2, 4, 1], [0, 5, 1], [2, 5, 1]
+	  	],
+	  	mine: [
+        [0, 0], [2, 0], [0, 2],
+        [1, 2], [2, 2], [1, 5]
+      ]
+	  },
+	  header: TEXT.highLow02,
+	  footer: TEXT.pressH,
+  },
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 9,
+	  mine: 27,
+	  boardSetting: {
+		  time: 300,
+      red: 1,
+      orange: 1,
+      yellow: 2,
+      green: 2,
+      oddEven: 2,
+      highLow: 3
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 9,
+	  mine: 27,
+	  boardSetting: {
+		  time: 300,
+      red: 1,
+      orange: 1,
+      yellow: 2,
+      green: 3,
+      oddEven: 1,
+      highLow: 4
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 11,
+	  yCount: 9,
+	  mine: 29,
+	  boardSetting: {
+		  time: 300,
+      red: 2,
+      orange: 2,
+      yellow: 3,
+      green: 3,
+      oddEven: 3,
+      highLow: 4
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.newHintTitle,
+	  article: {
+      type: 'board',
+      xCount: 3,
+      yCount: 3,
+      safe: [
+        [2, 0, 2], [1, 1, 3, 'blue'],
+        [0, 2, 2], [2, 2, 2]
+      ],
+      mine: [
+        [0, 0], [1, 0], [0, 1],
+        [2, 1], [1, 2]
+      ],
+    },
+	  header: TEXT.newHintBlue,
+    footer: TEXT.pressH,
+  },
+
+  {
+	  type: 'game',
+	  xCount: 11,
+	  yCount: 9,
+	  mine: 29,
+	  boardSetting: {
+		  time: 300,
+      red: 2,
+      orange: 2,
+      yellow: 2,
+      green: 2,
+      blue: 4,
+      oddEven: 2,
+      highLow: 2
+	  }
+	},
+
+  // STAGE 35
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 10,
+	  mine: 30,
+	  boardSetting: {
+		  time: 300,
+      red: 1,
+      orange: 1,
+      yellow: 2,
+      green: 2,
+      blue: 6,
+      oddEven: 4,
+      highLow: 2
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 10,
+	  mine: 30,
+	  boardSetting: {
+		  time: 360,
+      red: randRange(1, 2),
+      orange: randRange(1, 2),
+      yellow: randRange(1, 3),
+      green: randRange(1, 3),
+      blue: randRange(3, 5),
+      oddEven: randRange(3, 5),
+      highLow: randRange(2, 4)
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.newHintTitle,
+	  article: {
+      type: 'board',
+      xCount: 3,
+      yCount: 3,
+      safe: [
+        [1, 0, 3], [2, 0, 2], [1, 1, 2, 'navy'],
+        [0, 2, 2], [2, 2, 2]
+      ],
+      mine: [
+        [0, 0], [0, 1],
+        [2, 1], [1, 2]
+      ],
+    },
+	  header: TEXT.newHintNavy,
+    footer: TEXT.pressH,
+  },
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 10,
+	  mine: 30,
+	  boardSetting: {
+		  time: 360,
+      red: randRange(1, 2),
+      orange: randRange(1, 2),
+      yellow: randRange(1, 2),
+      green: randRange(1, 2),
+      blue: randRange(1, 2),
+      navy: randRange(5, 6),
+      oddEven: randRange(2, 4),
+      highLow: randRange(1, 3)
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 10,
+	  mine: 30,
+	  boardSetting: {
+		  time: 360,
+      red: randRange(1, 3),
+      orange: randRange(1, 3),
+      yellow: randRange(1, 3),
+      green: randRange(1, 3),
+      blue: randRange(1, 3),
+      navy: randRange(4, 6),
+      oddEven: randRange(3, 5),
+      highLow: randRange(2, 4)
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 10,
+	  mine: 30,
+	  boardSetting: {
+		  time: 360,
+      red: randRange(2, 3),
+      orange: randRange(2, 3),
+      yellow: randRange(3, 4),
+      green: randRange(3, 4),
+      blue: randRange(4, 5),
+      navy: randRange(4, 5),
+      oddEven: randRange(5, 6),
+      highLow: randRange(3, 5)
+	  }
+	},
+
+  // STAGE 40
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 10,
+	  mine: 30,
+	  boardSetting: {
+		  time: 360,
+      red: randRange(2, 3),
+      orange: randRange(2, 3),
+      yellow: randRange(3, 4),
+      green: randRange(3, 4),
+      blue: randRange(4, 5),
+      navy: randRange(4, 5),
+      oddEven: randRange(5, 7),
+      highLow: randRange(4, 6)
+	  }
+	},
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.stage40Bonus01,
+	  article: {
+      type: 'text', 
+      text: TEXT.stage40Bonus02
+    },
+	  header: TEXT.stageBonusHeader,
+    bonus: {
+      life: 1, 
+      item1: 3,
+      item2: 1,
+	  item3: 1
+    }
+  },
+
+	{
+	  type: 'info',
+    layout: 'article',
+    title: TEXT.newHintTitle,
+	  article: {
+      type: 'board',
+      xCount: 3,
+      yCount: 3,
+      safe: [
+        [0, 0, 2], [1, 1, 0, 'purple', [0, 4, 6, 8]],
+        [0, 2, 2], [2, 2, 2]
+      ],
+      mine: [
+        [1, 0], [2, 0], [0, 1],
+        [2, 1], [1, 2]
+      ],
+    },
+	  header: TEXT.newHintPurple,
+    footer: TEXT.pressH,
+  },
+
+  {
+	  type: 'game',
+	  xCount: 10,
+	  yCount: 10,
+	  mine: 35,
+	  boardSetting: {
+		  time: 420,
+      red: randRange(1, 3),
+      orange: randRange(1, 3),
+      yellow: randRange(3, 4),
+      green: randRange(3, 4),
+      blue: randRange(4, 5),
+      navy: randRange(4, 5),
+      purple: randRange(3, 4),
+      oddEven: randRange(4, 6),
+      highLow: randRange(4, 6)
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 12,
+	  yCount: 10,
+	  mine: 42,
+	  boardSetting: {
+		  time: 480,
+      red: randRange(1, 3),
+      orange: randRange(1, 3),
+      yellow: randRange(3, 4),
+      green: randRange(3, 4),
+      blue: randRange(3, 4),
+      navy: randRange(3, 4),
+      purple: randRange(4, 6),
+      oddEven: randRange(5, 7),
+      highLow: randRange(5, 6)
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 14,
+	  yCount: 10,
+	  mine: 49,
+	  boardSetting: {
+		  time: 480,
+      red: randRange(2, 5),
+      orange: randRange(2, 5),
+      yellow: randRange(4, 5),
+      green: randRange(4, 5),
+      blue: randRange(4, 5),
+      navy: randRange(4, 5),
+      purple: randRange(6, 8),
+      oddEven: randRange(6, 8),
+      highLow: randRange(5, 6)
+	  }
+	},
+
+  {
+	  type: 'game',
+	  xCount: 16,
+	  yCount: 10,
+	  mine: 60,
+	  boardSetting: {
+		  time: 600,
+      red: randRange(2, 5),
+      orange: randRange(2, 5),
+      yellow: randRange(4, 6),
+      green: randRange(4, 6),
+      blue: randRange(4, 6),
+      navy: randRange(4, 6),
+      purple: randRange(6, 8),
+      oddEven: randRange(6, 8),
+      highLow: randRange(5, 6)
+	  }
+	},
+  
+  // STAGE 45
+  {
+	  type: 'game',
+	  xCount: 20,
+	  yCount: 10,
+	  mine: 90,
+	  boardSetting: {
+		  time: 900,
+      red: randRange(4, 7),
+      orange: randRange(4, 7),
+      yellow: randRange(5, 7),
+      green: randRange(5, 7),
+      blue: randRange(6, 7),
+      navy: randRange(6, 7),
+      purple: randRange(7, 10),
+      oddEven: randRange(10, 12),
+      highLow: randRange(8, 11)
+	  }
+	},
+];
+
+const CHALLENGE_ARR = [
+
+  {
+    name: '초급 01',
+    width: 8,
+    height: 8,
+    mine: 20,
+    time: 90,
+    colorType: [],
+    textType: [],
+    condition: '',
+    difficulty: 1
+  },
+
+  //{
+  //  name: '초급 02',
+  //  width: 9,
+  //  height: 9,
+  //  mine: 25,
+  //  time: 90,
+  //  colorType: [ 'red', 'orange' ],
+  //  textType: [],
+  //  condition: '클래식 모드 STAGE 15',
+  //  difficulty: 1
+  //}
+
+]
+
+const MODE_CHALLENGE = [
+  [
+    {
+      type: 'input'
+    },
+
+    {
+      type: 'game',
+      xCount: 8,
+      yCount: 8,
+      mine: 20,
+      boardSetting: {
+        time: 90
+      }
+    }
+  ]
+];
+
+const MODE = {
+  CLASSIC: MODE_CLASSIC,
+  CHALLENGE: MODE_CHALLENGE
+};
+
+[
+  colorMatch, RAINBOW,
+  OFFSET_X, OFFSET_Y, 
+  OFFSET5_X, OFFSET5_Y, 
+  TEXT, BUTTON, TUTORIAL, 
+  MODE_CLASSIC,
+  MODE
+].forEach(obj => Object.freeze(obj));
