@@ -1756,7 +1756,7 @@ const MODE_CHALLENGE = [
     selectInfo: {
       name: '초급 01',
       difficulty: 1,
-      item: [3, 2, 1]
+      item: [5, 3, 1]
     }
   },
 
@@ -1773,7 +1773,7 @@ const MODE_CHALLENGE = [
     selectInfo: {
       name: '초급 02',
       difficulty: 1,
-      item: [3, 2, 1]
+      item: [5, 3, 1]
     }
   },
 
@@ -1791,7 +1791,7 @@ const MODE_CHALLENGE = [
     selectInfo: {
       name: '초급 03',
       difficulty: 1,
-      item: [3, 2, 1],
+      item: [5, 3, 1]
     }
   },
 
@@ -1810,7 +1810,7 @@ const MODE_CHALLENGE = [
     selectInfo: {
       name: '초급 04',
       difficulty: 1,
-      item: [3, 2, 1],
+      item: [5, 3, 1]
     }
   },
 
@@ -1827,7 +1827,7 @@ const MODE_CHALLENGE = [
     selectInfo: {
       name: '초급 05',
       difficulty: 1,
-      item: [3, 2, 1],
+      item: [5, 3, 1]
     }
   },
 
@@ -1845,7 +1845,7 @@ const MODE_CHALLENGE = [
     selectInfo: {
       name: '초급 06',
       difficulty: 1,
-      item: [3, 2, 1],
+      item: [5, 3, 1],
     }
   }
 
