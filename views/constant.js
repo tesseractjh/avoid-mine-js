@@ -1,4 +1,5 @@
 // Constant Values
+const BACKGROUND_COLOR     = 'rgb( 90,  96, 116)';
 const BLACK                = 'rgb(  0,   0,   0)';
 const WHITE                = 'rgb(255, 255, 255)';
 const CHARCOAL             = 'rgb( 70,  70,  70)';

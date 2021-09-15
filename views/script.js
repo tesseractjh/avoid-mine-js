@@ -650,15 +650,17 @@ class Canvas {
     hoverInfo.fillColor = hover.fillColor;
     hoverInfo.textColor = hover.textColor;
     button.hoverContextInfo = hoverInfo;
-    this.button.push(button);
 
     if (caption) {
       const bottomText = new Rect(x, y + height*3/4);
-      bottomText.setTextInfo(caption, fontSize/2, WHITE);
+      bottomText
+        .setFillInfo(this.width, fontSize/2, BACKGROUND_COLOR)
+        .setTextInfo(caption, fontSize/2, WHITE);
       bottomText.fontWeight = 500;
-      this.fillText(bottomText);
+      button.caption = bottomText;
     }
 
+    this.button.push(button);
     return button;
   }
 
@@ -1720,9 +1722,18 @@ class Canvas {
         this.fillRect(btn, true);
         this.fillText(btn);
         btn.contextInfo = tempInfo;
+        if (btn.caption) {
+          this.fillRect(btn.caption);
+          this.fillText(btn.caption);
+        }
       } else {
         this.fillRect(btn, true);
         this.fillText(btn);
+        if (btn.caption) {
+          const { y } = btn.caption.contextInfo;
+          const { fontSize } = btn.caption;
+          this.ctx.clearRect(0, y - fontSize/2, this.width, y + fontSize/2);
+        }
       }
     });
   }
@@ -2100,6 +2111,7 @@ class Button extends Rect {
   constructor(x, y, callback) {
     super(x, y);
     this.callback = callback;
+    this.caption = null;
     this.hoverContextInfo = this.contextInfo;
   }
 };
