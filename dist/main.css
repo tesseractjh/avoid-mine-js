@@ -107,13 +107,23 @@ li {
     height: 100%;
 }
 
-.grid {
+.classic-grid {
+    width: 95%;
+    margin: 15px auto;
     display: grid;
-    grid-template-columns: 2fr 7fr 5fr 3fr 2fr;
-    row-gap: 10px;  
+    grid-template-columns: 10% 35% 25% 15% 15%;
+    row-gap: 10px;
 }
 
-.grid2 {
+.challenge-grid {
+    width: 95%;
+    margin: 15px auto;
+    display: grid;
+    grid-template-columns: 9% 35% 20% 6% 6% 6% 6% 6% 6%;
+    row-gap: 10px;
+}
+
+.grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
@@ -128,6 +138,15 @@ li {
 
 .border-bottom3 {
     border-bottom: 3px dotted gray;
+}
+
+.border-bottom4 {
+    border-bottom: 3px solid tomato;
+    margin-bottom: 5px;
+}
+
+.border-top {
+    border-top: 2px solid gray;
 }
 
 .overflow {
@@ -187,24 +206,35 @@ li {
     height: 25px;
     border: 1px solid black;
 }
+  
+.radio {
+    display: block;
+    background: none; 
+    text-align: center;
+    height: 50px;
+    font-weight: 500;
+    cursor: pointer;
+}
+  
+input[type="radio"]:checked + div {
+    border: 1px solid tomato;
+    background: tomato;
+    color: white;
+}
 
-.box-radio-input input[type="radio"] {
-    display:none;
+.half {
+    width: 50%;
 }
-  
-.box-radio-input input[type="radio"] + span{
-    display:block;
-    background:none; 
-    text-align:center;
-    height:50px;
-    font-weight:500;
-    cursor:pointer;
-}
-  
-.box-radio-input input[type="radio"]:checked + span {
-    border:1px solid tomato;
-    background:tomato;
-    color:white;
+
+.select {
+    margin: 15px auto;
+    padding: 5px;
+    display: block;
+    width: 80%;
+    height: 40px;
+    font-size: 25px;
+    border-radius: 3px;
+    text-align: center;
 }
 
 #msg-box {
@@ -235,9 +265,10 @@ li {
     width: 10%;
 }
 
-#leaderboard-list {
-    padding: 15px;
+#leaderboard-container {
     border: 3px solid tomato;
+    width: 95%;
+    
 }
 
 #canvas {

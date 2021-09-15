@@ -134,9 +134,23 @@ const TEXT = {
   bottomBar06: '🔍[1]',
   bottomBar07: '🔭[2]',
   bottomBar08: '📡[3]',
-  bottomBarCh01: '💣',
-  bottomBarCh02: '⏱',
-  bottomBarCh03: '🏃',
+  bottomBarCh01: '🧩',
+  bottomBarCh02: '🏃',
+  bottomBarCh03: '💣',
+  bottomBarCh04: '⏱',
+  bottomBarCh05: '🔍[1]',
+  bottomBarCh06: '🔭[2]',
+  bottomBarCh07: '📡[3]',
+  challengeList01: '🧩 맵 크기:　',
+  challengeList02: '⏱ 제한시간:　',
+  challengeList03: '💣 지뢰비율:　',
+  challengeList04: '🎨 색깔힌트:　',
+  challengeList05: '📝 글자힌트:　',
+  challengeList06: '🧷 아이템:　',
+  challengeList07: '🔍',
+  challengeList08: '🔭',
+  challengeList09: '📡',
+  challengeList10: '⭐',
   destination: '도착! 메인화면으로 이동합니다.',
   ensuredMine: '💣',
   msgBox01: '지뢰를 밟았습니다!',
@@ -192,6 +206,21 @@ const TEXT = {
   highLow02: '일부 칸의 숫자 힌트가 최대/최소 힌트로 전환됩니다.<br>주변 8칸 숫자들의 최댓값보다 크거나 같다면 ▲,<br>주변 8칸 숫자들의 최솟값보다 작거나 같다면 ▼으로 표시됩니다.',
 
   pressH: 'F를 누르면 다음 스테이지로 이동합니다.',
+
+  classicHead: `<div class="border-bottom">순위</div>
+  <div class="border-bottom">이름</div>
+  <div class="border-bottom">점수</div>
+  <div class="border-bottom">랭크</div>
+  <div class="border-bottom">스테이지</div>`,
+  challengeHead: `<div class="border-bottom">순위</div>
+  <div class="border-bottom">이름</div>
+  <div class="border-bottom">점수</div>
+  <div class="border-bottom">⏱</div>
+  <div class="border-bottom">🧩</div>
+  <div class="border-bottom">🏃</div>
+  <div class="border-bottom">🔍</div>
+  <div class="border-bottom">🔭</div>
+  <div class="border-bottom">📡</div>`
 };
 
 const BUTTON = {
@@ -248,7 +277,7 @@ const BUTTON = {
       fillColor: INVERTED_TOMATO,
       textColor: WHITE
     },
-    caption: '아이템 없이 단 하나의 목숨으로 개별 미션에 도전하는 모드'
+    caption: '단 하나의 목숨으로 개별 맵 클리어에 도전하는 모드'
   },
 
   backToMainPage: {
@@ -1726,8 +1755,8 @@ const MODE_CHALLENGE = [
     },
     selectInfo: {
       name: '초급 01',
-      condition: '',
-      difficulty: 1
+      difficulty: 1,
+      item: [3, 2, 1]
     }
   },
 
@@ -1742,9 +1771,27 @@ const MODE_CHALLENGE = [
       orange: randRange(2, 3)
     },
     selectInfo: {
-      name: '초급 01',
-      condition: '클래식 모드 STAGE 15',
-      difficulty: 1
+      name: '초급 02',
+      difficulty: 1,
+      item: [3, 2, 1]
+    }
+  },
+
+  {
+    type: 'game',
+    xCount: 8,
+    yCount: 8,
+    mine: 20,
+    boardSetting: {
+      time: 100,
+      red: randRange(2, 4),
+      orange: randRange(2, 4),
+      oddEven: randRange(2, 3)
+    },
+    selectInfo: {
+      name: '초급 03',
+      difficulty: 1,
+      item: [3, 2, 1],
     }
   }
 

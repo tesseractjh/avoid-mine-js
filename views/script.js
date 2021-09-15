@@ -113,6 +113,8 @@ class Canvas {
     this.$leaderboard.$mode02 = new Element('leaderboard-mode02');
     this.$leaderboard.$classic = new Element('classic-check');
     this.$leaderboard.$challenge = new Element('challenge-check');
+    this.$leaderboard.$select = new Element('leaderboard-select');
+    this.appendComboBox();
     this.$leaderboard.$classic.elem.addEventListener('change', this.getCallback('change'));
     this.$leaderboard.$challenge.elem.addEventListener('change', this.getCallback('change'));
 
@@ -267,7 +269,8 @@ class Canvas {
       const { time } = boardSetting;
       const colorType = RAINBOW.filter(color => boardSetting[color]);
       const textType = TEXT_HINT.filter(text => boardSetting[text]).map(v => textHintMatch[v]);
-      const { name, condition, difficulty } = selectInfo;
+      const { name, item, difficulty } = selectInfo;
+      const [ item1, item2, item3 ] = item;
       const div = document.createElement('div');
       const top = document.createElement('div');
       const bottom = document.createElement('div');
@@ -279,25 +282,26 @@ class Canvas {
       right.classList.add('inline-block');
       right.classList.add('align-left');
       top.classList.add('align-center');
-      top.classList.add('border-bottom')
+      top.classList.add('border-bottom');
       top.classList.add('margin');
       bottom.classList.add('align-center');
+      bottom.classList.add('border-top');
       bottom.classList.add('margin');
 
       this.setText(top, `${name}`);
 
-      this.appendNodeWithText(left, '🧩 맵 크기:　');
+      this.appendNodeWithText(left, TEXT.challengeList01);
       this.appendNodeWithText(right, `${xCount}X${yCount}`);
 
       const minute = Math.floor(time / 60) ? `${Math.floor(time / 60)}분 ` : '';
       const second = time % 60 ? `${time % 60}초` : '';
-      this.appendNodeWithText(left, '⏱ 제한시간:　');
+      this.appendNodeWithText(left, TEXT.challengeList02);
       this.appendNodeWithText(right, `${minute}${second}`);
 
-      this.appendNodeWithText(left, '💣 지뢰비율:　');
+      this.appendNodeWithText(left, TEXT.challengeList03);
       this.appendNodeWithText(right, `${Math.floor(mine * 100 / (xCount * yCount))}%`);
 
-      this.appendNodeWithText(left, '🎨 색깔힌트:　');
+      this.appendNodeWithText(left, TEXT.challengeList04);
       if (colorType.length) {
         const colorBar = document.createElement('div');
         this.setColorBar(colorBar, colorType);
@@ -306,20 +310,24 @@ class Canvas {
         this.appendNodeWithText(right, '없음');
       }
 
-      this.appendNodeWithText(left, '📝 글자힌트:　');
+      this.appendNodeWithText(left, TEXT.challengeList05);
       this.appendNodeWithText(right, `${textType.length ? textType.join(', ') : '없음'}`);
 
-      this.appendNodeWithText(left, '⭐ 난이도:　');
-      this.appendNodeWithText(right, `${'★'.repeat(Math.floor(difficulty / 2))}${difficulty % 2 ? '☆' : ''}`);
+      this.appendNodeWithText(left, TEXT.challengeList06);
+      this.appendNodeWithText(right, `
+      ${item1 ? TEXT.challengeList07 + item1 + ' ' : ''}
+      ${item2 ? TEXT.challengeList08 + item2 + ' ' : ''}
+      ${item3 ? TEXT.challengeList09 + item3 : ''}
+      `);
 
-      this.setText(bottom, `${condition ? condition+'클리어 후 도전 권장' : '　'}`);
+      this.setText(bottom, `난이도 ${TEXT.challengeList10.repeat(difficulty)}`);
 
       [top, left, right, bottom].forEach(elem => div.appendChild(elem));
       div.addEventListener('click', this.getGamePage('CHALLENGE').bind(this));
-      div.addEventListener('click', () => {
+      div.addEventListener('click', (() => function () {
         this.gameInfo.modeId = i;
         this.$challenge.hide();
-      });
+      })().bind(this));
       this.$challenge.$article.elem.appendChild(div);
     })
   }
@@ -335,22 +343,28 @@ class Canvas {
     this.$leaderboard.$list.elem.appendChild($fragment);
   }
 
-  setLeaderboard() {
+  setLeaderboard(id) {
     this.page = 'fetching';
     const { page, record } = this.leaderboardInfo;
 
     if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
       this.appendToList(record.slice((page - 1) * 10, page * 10));
+      this.crossMode('grid');
       this.$leaderboard.show();
       this.page = 'leaderboard';
     } else { // GET요청
-      fetch(`/leaderboard/${this.mode.toLowerCase()}/${Math.floor(page / 10)}`)
+      let uri = id ?? '';
+      if (uri !== '') {
+        uri = '/' + uri;
+      }
+      fetch(`/leaderboard/${this.mode.toLowerCase()}${uri}/${Math.floor(page / 10)}`)
       .then(res => res.json())
       .then(users => {
         if (record.length === users.length) {
           this.leaderboardInfo.page--;
           if (users.length === 0) { // 초기에 목록이 0개인 상태 대비
             this.initHead();
+            this.crossMode('grid');
             this.$leaderboard.show();
           }
           return;
@@ -365,6 +379,7 @@ class Canvas {
         }
         
         this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
+        this.crossMode('grid');
         this.$leaderboard.show();
       })
       .then(() => this.page = 'leaderboard')
@@ -373,10 +388,10 @@ class Canvas {
   }
 
   postLeaderBoard(userInfo) {
-    const $elem = this.crossMode('post');
+    const [ $elem, uri ] = this.crossMode('post');
     $elem.show();
     this.elementDropEffect($elem);
-    fetch(`/save/${this.mode.toLowerCase()}`, {
+    fetch(`/save/${this.mode.toLowerCase()}${uri}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)
@@ -397,6 +412,24 @@ class Canvas {
 
   saveLog() {
     this.gameInfo.log.push(this.crossMode('saveLog'));
+  }
+
+  appendComboBox() {
+    const select = document.createElement('select');
+    MODE_CHALLENGE.forEach((chal, i) => {
+      const { name } = chal.selectInfo;
+      const option = document.createElement('option');
+      this.setText(option, name);
+      option.value = i;
+      if (i === 0) {
+        option.selected = true;
+      }
+      select.appendChild(option);
+    });
+    select.addEventListener('change', this.getCallback('change'));
+    select.classList.add('select');
+    this.$leaderboard.$select.comboBox = select;
+    this.$leaderboard.$select.elem.appendChild(select);
   }
 
   getTutorialPage(number) {
@@ -873,6 +906,9 @@ class Canvas {
   paintGamePage(stageInfo) {
     this.page = 'game';
     this.gameInfo.stage++;
+    if (stageInfo.selectInfo) {
+      stageInfo.selectInfo.item.forEach((v, i) => this.gameInfo[`item${i+1}`] = v);
+    }
     this.clearPage();
     this.clearTimer();
     this.clearElement();
@@ -1076,21 +1112,13 @@ class Canvas {
 
   showStageResult() {
     this.initPage('stageResult');
-    const { isItemUsed, accessable, shortest } = this.board;
+    const { isItemUsed, accessable, shortest, ensuredCellCount, isAllEnsured } = this.board;
     const { time } = this.board.boardSetting;
     const { movement, isDead } = this.board.me
     const { stage } = this.gameInfo;
     const { $title, $cellCount, $time, $moveOpt, $item, $perfectClear, $totalScore, $footer } = this.$stageResult;
-    const cellCount = this.board.cellArr.flat()
-    .reduce((count, cell) => {
-      if (cell.isEnsured && cell.type !== 'ensuredMine') {
-        return count + 1;
-      } else {
-        return count;
-      }
-    }, 0);
-    const isAllEnsured = accessable.every(cell => cell.isEnsured);
-  
+    const cellCount = ensuredCellCount;
+
     this.$stageResult.backgroundColor = WHITE_ALPHA;
     this.$stageResult.font = this.FONT_SIZE;
     this.$stageResult.width = this.board.maxWidth;
@@ -1261,25 +1289,16 @@ class Canvas {
 
   showLeaderBoard() {
     this.initPage('leaderboard');
-    const { $list, $footer, $mode01, $mode02, $classic, $challenge } = this.$leaderboard;
+    const { $title } = this.$leaderboard;
 
     this.$leaderboard.backgroundColor = WHITE_ALPHA;
-    this.$leaderboard.font = this.FONT_SIZE;
+    this.$leaderboard.font = this.FONT_SIZE/2;
     this.$leaderboard.width = this.width * BOARD_WIDTH_RATIO;
     this.$leaderboard.height = this.height;
+    this.$leaderboard.fontWeight = 500;
 
-    $list.font = this.FONT_SIZE/2;
-    $list.fontWeight = 500;
-    $footer.font = this.FONT_SIZE/2;
-    $footer.fontWeight = 500;
-    $mode01.font = this.FONT_SIZE/2;
-    $mode01.fontWeight = 500;
-    $mode01.width = 587;
-    $mode02.font = this.FONT_SIZE/2;
-    $mode02.fontWeight = 500;
-    $mode02.width = 587;
+    $title.font = this.FONT_SIZE;
 
-    this.leaderboardInfo.page = 1;
     this.setLeaderboard();
   }
 
@@ -1315,19 +1334,12 @@ class Canvas {
 
   showChallengeResult() {
     this.initPage('challengeResult');
-    const { accessable, shortest } = this.board;
+    const { item1, item2, item3 } = this.gameInfo;
+    const { accessable, shortest, ensuredCellCount, isAllEnsured } = this.board;
     const { time } = this.board.boardSetting;
     const { movement } = this.board.me
     const { $title, $cellCount, $time, $moveOpt, $perfectClear, $totalScore, $footer } = this.$stageResult;
-    const cellCount = this.board.cellArr.flat()
-    .reduce((count, cell) => {
-      if (cell.isEnsured && cell.type !== 'ensuredMine') {
-        return count + 1;
-      } else {
-        return count;
-      }
-    }, 0);
-    const isAllEnsured = accessable.every(cell => cell.isEnsured);
+    const cellCount = ensuredCellCount;
   
     this.$stageResult.backgroundColor = WHITE_ALPHA;
     this.$stageResult.font = this.FONT_SIZE;
@@ -1391,7 +1403,8 @@ class Canvas {
       name: this.gameInfo.name,
       score: this.gameInfo.tempScore,
       time: this.board.boardSetting.time,
-      cellCount,
+      ensuredCell: ensuredCellCount,
+      movement, item1, item2, item3,
       log: this.gameInfo.log
     }
 
@@ -1633,7 +1646,14 @@ class Canvas {
       const { page, lastPage } = this.leaderboardInfo;
       if (keyCode === 70) { // F
         this.page = 'main';
+        this.mode = 'CLASSIC';
         this.leaderboardInfo.record = [];
+        this.leaderboardInfo.page = 1;
+        this.$leaderboard.$challenge.elem.checked = false;
+        this.$leaderboard.$classic.elem.checked = true;
+        this.$leaderboard.$list.elem.classList.add('classic-grid');
+        this.$leaderboard.$list.elem.classList.remove('challenge-grid');
+        this.$leaderboard.$select.hide();
         this.$leaderboard.hide();
       } else if (keyCode === 65) { // A
         if (page > 1) {
@@ -1688,16 +1708,25 @@ class Canvas {
     }
   }
 
-  changeCallback() {
-    if (this.page === 'leaderboard') {
-      this.leaderboardInfo.page = 1;
-      this.leaderboardInfo.record = [];
+  changeCallback({ currentTarget }) {
+    if (this.page !== 'leaderboard') return;
+
+    const { tagName } = currentTarget;
+    this.leaderboardInfo.page = 1;
+    this.leaderboardInfo.record = [];
+
+    if (tagName === 'INPUT') {
       if (this.$leaderboard.$classic.elem.checked) {
         this.mode = 'CLASSIC';
+        this.setLeaderboard();
       } else if (this.$leaderboard.$challenge.elem.checked) {
         this.mode = 'CHALLENGE';
+        this.$leaderboard.$select.comboBox.options[0].selected = true;
+        this.setLeaderboard(0);
       }
-      this.setLeaderboard();
+    } else if (tagName === 'SELECT') {
+      const { options } = currentTarget;
+      this.setLeaderboard(options.selectedIndex);
     }
   }
 
@@ -1713,11 +1742,7 @@ class Canvas {
         }
 
         case 'initHead': {
-          return `<div class="border-bottom">순위</div>
-          <div class="border-bottom">이름</div>
-          <div class="border-bottom">점수</div>
-          <div class="border-bottom">랭크</div>
-          <div class="border-bottom">스테이지</div>`;
+          return TEXT.classicHead;
         }
 
         case 'userInfo': {
@@ -1727,7 +1752,13 @@ class Canvas {
         }
 
         case 'post':
-          return this.$gameResult;
+          return [ this.$gameResult, '' ];
+
+        case 'grid':
+          this.$leaderboard.$list.elem.classList.add('classic-grid');
+          this.$leaderboard.$list.elem.classList.remove('challenge-grid');
+          this.$leaderboard.$select.hide();
+          break;
 
         case 'saveLog': {
           const { isItemUsed, ensuredCellCount, isAllEnsured } = this.board;
@@ -1792,51 +1823,60 @@ class Canvas {
         }
 
         case 'initHead': {
-          return `<div class="border-bottom">순위</div>
-          <div class="border-bottom">이름</div>
-          <div class="border-bottom">점수</div>
-          <div class="border-bottom">남은시간</div>
-          <div class="border-bottom">밟은칸수</div>`;
+          return TEXT.challengeHead;
         }
 
         case 'userInfo': {
           const [ user ] = args;
-          const { ranking, name, score, time, cellCount } = user;
-          return [ ranking, name, score, time, cellCount ];
+          const { ranking, name, score, time, ensuredCell, movement, item1, item2, item3 } = user;
+          return [ ranking, name, score, time, ensuredCell, movement, item1, item2, item3 ];
         }
 
         case 'post':
-          return this.$stageResult;
+          return [ this.$stageResult, '/' + this.gameInfo.modeId ];
+
+        case 'grid':
+          this.$leaderboard.$list.elem.classList.remove('classic-grid');
+          this.$leaderboard.$list.elem.classList.add('challenge-grid');
+          this.$leaderboard.$select.show();
+          break;
 
         case 'saveLog': {
-          const { ensuredCellCount, isAllEnsured } = this.board;
+          const { item1, item2, item3 } = this.gameInfo;
+          const { ensuredCellCount, mine } = this.board;
           const { time } = this.board.boardSetting;
           const { movement } = this.board.me;
-          const { modeId, tempScore } = this.gameInfo;
+          const { tempScore } = this.gameInfo;
           return {
-            modeId, time, movement, isAllEnsured,
-            cellCount: ensuredCellCount,
+            time, movement,
+            item1, item2, item3, mine,
+            ensuredCell: ensuredCellCount,
             score: tempScore
           };
         }
 
         case 'paintLine':
-          return 2;
+          return 6;
 
         case 'paintBar': {
-          const { remainingMine, mine } = this.board;
+          const { item1, item2, item3 } = this.gameInfo;
+          const { remainingMine, mine, ensuredCellCount } = this.board;
           const { time } = this.board.boardSetting;
           const [ minute, second ] = [ Math.floor(time/60), time%60 ];
           const { movement } = this.board.me;
           const bottomValues = [
+            `${ensuredCellCount}칸`,
+            `${movement}회`,
             `${remainingMine}/${mine}`,
             `${minute}:${second<10 ? '0'+second : second}`,
-            `${movement}회`
+            `${item1}개`,
+            `${item2}개`,
+            `${item3}개`
           ];
           const textType = 'bottomBarCh0';
-          const timeIdx = 1;
-          const multi = 1/3;
-          const plus = -1/3;
+          const timeIdx = 3;
+          const multi = 1/7;
+          const plus = -6/14;
           return { bottomValues, textType, timeIdx, multi, plus };
         }
 
