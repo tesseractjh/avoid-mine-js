@@ -24,7 +24,39 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
 });
 
+// 이전 버전
 app.post('/save/classic', (req, res) => {
+  const { name, score, rank, stage } = req.body;
+  const user = new User();
+  user.name = name;
+  user.score = score;
+  user.rank = rank;
+  user.stage = stage;
+
+  if (user.score <= 0) {
+    res.send('fail');
+  } else {
+    User.find({}, 'id').sort({ id: -1 }).limit(1)
+      .then(arr => {
+        const lastUser = arr[0];
+        user.id = lastUser ? lastUser.id + 1 : 1;
+      })
+      .then(() => User.find({}, 'score').sort({ score: -1 }))
+      .then(users => binSearch(users.map(u => u.score).sort((a, b) => b - a), score))
+      .then(ranking => {
+        user.ranking = ranking;
+        return ranking;
+      })
+      .then(ranking => User.updateMany({ ranking: { $gte: ranking }}, { $inc: { ranking: 1} }))
+      .then(() => user.save())
+      .then(() => res.send('success'))
+      .then(() => console.log(`name: ${name}, score: ${score}, rank: ${rank}, stage: ${stage}`))
+      .catch(console.error);
+  }
+});
+
+// 현재 버전
+app.post('/v100/save/classic', (req, res) => {
   const user = new User();
   for (const [ key, value ] of Object.entries(req.body)) {
     user[key] = value;
@@ -59,7 +91,18 @@ app.post('/save/classic', (req, res) => {
   }
 });
 
-app.get('/leaderboard/classic', (req, res) => {
+// 이전 버전
+app.get('/leaderboard/classic/:page', (req, res) => {
+  const { page } = req.params;
+  const end = (+page + 1) * 100;
+  User.find({ ranking: { $gte: 1, $lte: end } }, '-_id ranking name score rank stage')
+    .sort({ ranking: 1 }).exec()
+    .then(users => res.json(users))
+    .catch(console.error);
+});
+
+// 현재 버전
+app.get('/v100/leaderboard/classic', (req, res) => {
   User.find({}, '-_id name score stage')
     .sort({ score: -1, createdAt: 1 }).exec()
     .then(users => res.json(users))

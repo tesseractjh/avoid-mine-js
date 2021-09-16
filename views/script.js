@@ -359,7 +359,7 @@ class Canvas {
       if (uri !== '') {
         uri = '/' + uri;
       }
-      fetch(`/leaderboard/${this.mode.toLowerCase()}${uri}`)
+      fetch(`/v${VERSION}/leaderboard/${this.mode.toLowerCase()}${uri}`)
       .then(res => res.json())
       .then(users => {
         this.leaderboardInfo.record = users;
@@ -379,7 +379,7 @@ class Canvas {
     const [ $elem, uri ] = this.crossMode('post');
     $elem.show();
     this.elementDropEffect($elem);
-    fetch(`/save/${this.mode.toLowerCase()}${uri}`, {
+    fetch(`/v${VERSION}/save/${this.mode.toLowerCase()}${uri}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)
@@ -1736,9 +1736,22 @@ class Canvas {
         }
 
         case 'userInfo': {
-          const [ user, ranking ] = args;
-          const { name, score, stage } = user;
+          const [ user, idx ] = args;
+          const { name, score } = user;
+          let ranking = idx;
+          switch (idx) {
+            case 1:
+              ranking = '🥇';
+              break;
+            case 2:
+              ranking = '🥈';
+              break;
+            case 3:
+              ranking = '🥉';
+              break;
+          }
           const rank = getRank(score);
+          const stage = user.stage < 46 ? user.stage : 'CLEAR';
           return [ ranking, name, score, rank, stage ];
         }
 
@@ -1808,8 +1821,20 @@ class Canvas {
         }
 
         case 'userInfo': {
-          const [ user, ranking ] = args;
+          const [ user, idx ] = args;
           const { name, score, time, ensuredCell, movement, item1, item2, item3 } = user;
+          let ranking = idx;
+          switch (idx) {
+            case 1:
+              ranking = '🥇';
+              break;
+            case 2:
+              ranking = '🥈';
+              break;
+            case 3:
+              ranking = '🥉';
+              break;
+          }
           return [ ranking, name, score, time, ensuredCell, movement, item1, item2, item3 ];
         }
 

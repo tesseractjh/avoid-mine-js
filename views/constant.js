@@ -1869,9 +1869,67 @@ const MODE_CHALLENGE = [
       difficulty: 1,
       item: [5, 3, 1],
     }
+  },
+
+  {
+    type: 'game',
+    xCount: 8,
+    yCount: 8,
+    mine: 23,
+    boardSetting: {
+      time: 135,
+      red: 31,
+      orange: 31
+    },
+    selectInfo: {
+      name: '중급 01',
+      difficulty: 2,
+      item: [5, 3, 1],
+    }
+  },
+
+  {
+    type: 'game',
+    xCount: 8,
+    yCount: 8,
+    mine: 23,
+    boardSetting: {
+      time: 150,
+      blue: 31,
+      navy: 31
+    },
+    selectInfo: {
+      name: '중급 02',
+      difficulty: 2,
+      item: [5, 3, 1],
+    }
+  },
+
+  {
+    type: 'game',
+    xCount: 10,
+    yCount: 10,
+    mine: 35,
+    boardSetting: {
+      time: 210,
+      red: randRange(2, 4),
+      orange: randRange(2, 4),
+      yellow: randRange(3, 5),
+      green: randRange(3, 5),
+      blue: randRange(3, 5),
+      navy: randRange(3, 5),
+      oddEven: randRange(4, 6)
+    },
+    selectInfo: {
+      name: '중급 03',
+      difficulty: 2,
+      item: [10, 5, 2],
+    }
   }
 
 ];
+
+const VERSION = 100;
 
 [
   colorMatch, RAINBOW,
