@@ -1047,10 +1047,10 @@ class Canvas {
 
     if (!isClear) {
       $title.innerHTML = 'GAME OVER';
-      this.gameInfo.stage++;
       this.playSound('fail');
     } else {
       $title.innerHTML = '🎉 GAME CLEAR 🎉';
+      this.gameInfo.stage++;
       this.playSound('clear');
     }
 
