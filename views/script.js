@@ -338,9 +338,9 @@ class Canvas {
   }
 
   appendToList(users) {
-    this.initHead();
+    const { page } = this.leaderboardInfo;
     const $fragment = document.createDocumentFragment();
-    users.forEach(user => this.createUserInfo($fragment, user));
+    users.forEach((user, ranking) => this.createUserInfo($fragment, user, (page - 1) * 10 + ranking + 1));
     this.$leaderboard.$list.elem.appendChild($fragment);
   }
 
@@ -349,8 +349,9 @@ class Canvas {
     const { page, record } = this.leaderboardInfo;
 
     if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
-      this.appendToList(record.slice((page - 1) * 10, page * 10));
+      this.initHead();
       this.crossMode('grid');
+      this.appendToList(record.slice((page - 1) * 10, page * 10));
       this.$leaderboard.show();
       this.page = 'leaderboard';
     } else { // GET요청
@@ -358,32 +359,18 @@ class Canvas {
       if (uri !== '') {
         uri = '/' + uri;
       }
-      fetch(`/leaderboard/${this.mode.toLowerCase()}${uri}/${Math.floor(page / 10)}`)
+      fetch(`/leaderboard/${this.mode.toLowerCase()}${uri}`)
       .then(res => res.json())
       .then(users => {
-        if (record.length === users.length) {
-          this.leaderboardInfo.page--;
-          if (users.length === 0) { // 초기에 목록이 0개인 상태 대비
-            this.initHead();
-            this.crossMode('grid');
-            this.$leaderboard.show();
-          }
-          return;
-        }
         this.leaderboardInfo.record = users;
         const curList = users.slice((page - 1) * 10, page * 10);
-        if (curList.length > 0) {
-          this.appendToList(curList);
-        } else {
-          const curPage = --this.leaderboardInfo.page;
-          this.appendToList(users.slice((curPage - 1) * 10, curPage * 10));
-        }
-        
         this.leaderboardInfo.lastPage = Math.floor((users.length - 1) / 10) + 1;
+        this.initHead();
         this.crossMode('grid');
+        this.appendToList(curList);
         this.$leaderboard.show();
+        this.page = 'leaderboard';
       })
-      .then(() => this.page = 'leaderboard')
       .catch(console.error);
     }
   }
@@ -400,8 +387,8 @@ class Canvas {
       .catch(console.error);
   }
 
-  createUserInfo(fragment, user) {
-    const keys = this.crossMode('userInfo', user);
+  createUserInfo(fragment, user, ranking) {
+    const keys = this.crossMode('userInfo', user, ranking);
     keys.forEach(v => {
       const div = document.createElement('div');
       const text = document.createTextNode(v);
@@ -412,7 +399,19 @@ class Canvas {
   }
 
   saveLog() {
-    this.gameInfo.log.push(this.crossMode('saveLog'));
+    const { isItemUsed, accessable, shortest, ensuredCellCount, isAllEnsured, mine } = this.board;
+    const { time } = this.board.boardSetting;
+    const { movement, isDead } = this.board.me;
+    const { stage, life, item1, item2, item3, tempScore } = this.gameInfo;
+    const log = {
+      stage, time, movement, isItemUsed, isDead, isAllEnsured,
+      life, item1, item2, item3,
+      shortest, mine,
+      ensuredCell: ensuredCellCount,
+      score: tempScore,
+      accessableLength: accessable.length
+    };
+    this.gameInfo.log.push(log);
   }
 
   appendComboBox() {
@@ -1048,6 +1047,7 @@ class Canvas {
 
     if (!isClear) {
       $title.innerHTML = 'GAME OVER';
+      this.gameInfo.stage++;
       this.playSound('fail');
     } else {
       $title.innerHTML = '🎉 GAME CLEAR 🎉';
@@ -1056,20 +1056,7 @@ class Canvas {
 
     $stage.innerHTML = stage;
     $score.innerHTML = `${score}점`;
-    let rank;
-    if (score > 300000) {
-      rank = 'S';
-    } else if (score > 200000) {
-      rank = 'A';
-    } else if (score > 100000) {
-      rank = 'B';
-    } else if (score > 50000) {
-      rank = 'C';
-    } else if (score > 10000) {
-      rank = 'D';
-    } else {
-      rank = 'F';
-    }
+    const rank = getRank(score);
     $rank.innerHTML = rank;
 
     const tempCanvas = new Canvas($back.elem, false);
@@ -1100,7 +1087,6 @@ class Canvas {
     tempCanvas.paintAllButton();
 
     const userInfo = {
-      rank,
       name: this.gameInfo.name,
       score: this.gameInfo.score,
       stage: this.gameInfo.stage,
@@ -1336,9 +1322,9 @@ class Canvas {
   showChallengeResult() {
     this.initPage('challengeResult');
     const { item1, item2, item3 } = this.gameInfo;
-    const { accessable, shortest, ensuredCellCount, isAllEnsured } = this.board;
+    const { isItemUsed, accessable, shortest, ensuredCellCount, isAllEnsured, mine } = this.board;
     const { time } = this.board.boardSetting;
-    const { movement } = this.board.me
+    const { movement, isDead } = this.board.me
     const { $title, $cellCount, $time, $moveOpt, $perfectClear, $totalScore, $footer } = this.$stageResult;
     const cellCount = ensuredCellCount;
   
@@ -1397,16 +1383,16 @@ class Canvas {
     $totalScore.innerHTML = this.gameInfo.tempScore;
     
     this.playSound('clear');
-    this.saveLog();
     this.sendLogToServer();
 
     const userInfo = {
       name: this.gameInfo.name,
       score: this.gameInfo.tempScore,
       time: this.board.boardSetting.time,
+      accessableLength: accessable.length,
       ensuredCell: ensuredCellCount,
       movement, item1, item2, item3,
-      log: this.gameInfo.log
+      mine, isItemUsed, isDead
     }
 
     this.postLeaderBoard(userInfo);
@@ -1662,7 +1648,7 @@ class Canvas {
           this.setLeaderboard();
         }
       } else if (keyCode === 68) { // D
-        if (lastPage >= page) {
+        if (lastPage > page) {
           this.leaderboardInfo.page++;
           const id = this.crossMode('id');
           this.setLeaderboard(id);
@@ -1750,8 +1736,9 @@ class Canvas {
         }
 
         case 'userInfo': {
-          const [ user ] = args;
-          const { ranking, name, score, rank, stage } = user;
+          const [ user, ranking ] = args;
+          const { name, score, stage } = user;
+          const rank = getRank(score);
           return [ ranking, name, score, rank, stage ];
         }
 
@@ -1763,19 +1750,6 @@ class Canvas {
           this.$leaderboard.$list.elem.classList.remove('challenge-grid');
           this.$leaderboard.$select.hide();
           break;
-
-        case 'saveLog': {
-          const { isItemUsed, ensuredCellCount, isAllEnsured } = this.board;
-          const { time } = this.board.boardSetting;
-          const { movement, isDead } = this.board.me;
-          const { stage, life, item1, item2, item3, tempScore } = this.gameInfo;
-          return {
-            stage, time, movement, isItemUsed, isDead, isAllEnsured,
-            life, item1, item2, item3,
-            cellCount: ensuredCellCount,
-            score: tempScore
-          };
-        }
 
         case 'paintLine':
           return 7;
@@ -1834,8 +1808,8 @@ class Canvas {
         }
 
         case 'userInfo': {
-          const [ user ] = args;
-          const { ranking, name, score, time, ensuredCell, movement, item1, item2, item3 } = user;
+          const [ user, ranking ] = args;
+          const { name, score, time, ensuredCell, movement, item1, item2, item3 } = user;
           return [ ranking, name, score, time, ensuredCell, movement, item1, item2, item3 ];
         }
 
@@ -1847,20 +1821,6 @@ class Canvas {
           this.$leaderboard.$list.elem.classList.add('challenge-grid');
           this.$leaderboard.$select.show();
           break;
-
-        case 'saveLog': {
-          const { item1, item2, item3 } = this.gameInfo;
-          const { ensuredCellCount, mine } = this.board;
-          const { time } = this.board.boardSetting;
-          const { movement } = this.board.me;
-          const { tempScore } = this.gameInfo;
-          return {
-            time, movement,
-            item1, item2, item3, mine,
-            ensuredCell: ensuredCellCount,
-            score: tempScore
-          };
-        }
 
         case 'paintLine':
           return 6;
@@ -3006,8 +2966,7 @@ class Board {
 
 //--------------------------------------------------------------------------------------------------
 // main
-let curCanvas;
-const mainCanvas = new Canvas(document.getElementById('canvas'));
-curCanvas = mainCanvas;
-curCanvas.paintMainPage();
-curCanvas = null;
+
+let mainCanvas = new Canvas(document.getElementById('canvas'));
+mainCanvas.paintMainPage();
+mainCanvas = null;

@@ -3,12 +3,28 @@ const { Schema } = mongoose;
 
 const User = new Schema(
   {
-    id: Number,
-    ranking: Number,
     name: String,
-    rank: String,
     score: Number,
-    stage: Number
+    stage: Number,
+    log: [
+      {
+        stage: Number,
+        ensuredCell: Number,
+        time: Number,
+        movement: Number,
+        life: Number,
+        item1: Number,
+        item2: Number,
+        item3: Number,
+        score: Number,
+        mine: Number,
+        accessableLength: Number,
+        shortest: Number,
+        isItemUsed: Boolean,
+        isDead: Boolean,
+        isAllEnsured: Boolean,
+      }
+    ]
   },
 
   {

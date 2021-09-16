@@ -84,6 +84,28 @@ const MOVEMENT_PERFECT_RATIO    = 1.5;
 const RESERVED_ITEM_RATIO       = 1.25;
 const PERFECT_CLEAR_RATIO       = 2;
 
+const RANK_S = 300000;
+const RANK_A = 200000;
+const RANK_B = 100000;
+const RANK_C = 50000;
+const RANK_D = 10000;
+
+const getRank = value => {
+  if (value > RANK_S) {
+    return 'S';
+  } else if (value > RANK_A) {
+    return 'A';
+  } else if (value > RANK_B) {
+    return 'B';
+  } else if (value > RANK_C) {
+    return 'C';
+  } else if (value > RANK_D) {
+    return 'D';
+  } else {
+    return 'F';
+  }
+}
+
 const OFFSET_X = [-1, 0, 1, -1, 0, 1, -1, 0, 1];
 const OFFSET_Y = [-1, -1, -1, 0, 0, 0, 1, 1, 1];
 const OFFSET5_X = [

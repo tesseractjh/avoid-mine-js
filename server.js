@@ -5,7 +5,6 @@ require('dotenv').config({ path: 'variables.env' });
 const app = express();
 const PORT = process.env.PORT || 5000;
 const User = require('./models/User');
-const Log = require('./models/Log');
 const challengeRoute = require('./routes/challengeRoute');
 
 app.use(cors());
@@ -25,94 +24,44 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/dist/index.html');
 });
 
-// 
-const binSearch = (arr, n) => {
-  let [ low, high ] = [ 0, arr.length - 1 ];
-  while (low <= high) {
-    const mid = Math.floor((low + high) / 2);
-    if (arr[mid] < n) {
-      high = mid - 1;
-    } else {
-      low = mid + 1;
-    }
-  }
-  return low + 1;
-};
-
-// 아직 이전 버전에서 플레이 중인 사람들의 기록 저장을 위함
-app.post('/save-record', (req, res) => {
-  const { name, score, rank, stage, log } = req.body;
-  const user = new User();
-  const curLog = new Log();
-  user.name = name;
-  user.score = score;
-  user.rank = rank;
-  user.stage = stage;
-  curLog.log = log;
-
-  if (user.score <= 0) {
-    res.send('fail');
-  } else {
-    User.find({}, 'id').sort({ id: -1 }).limit(1)
-      .then(arr => {
-        const lastUser = arr[0];
-        user.id = lastUser ? lastUser.id + 1 : 1;
-        curLog.id = lastUser ? lastUser.id + 1 : 1;
-      })
-      .then(() => User.find({}, 'score').sort({ score: -1 }))
-      .then(users => binSearch(users.map(u => u.score).sort((a, b) => b - a), score))
-      .then(ranking => {
-        user.ranking = ranking;
-        return ranking;
-      })
-      .then(ranking => User.updateMany({ ranking: { $gte: ranking }}, { $inc: { ranking: 1} }))
-      .then(() => user.save())
-      .then(() => curLog.save())
-      .then(() => res.send('success'))
-      .then(() => console.log(`name: ${name}, score: ${score}, rank: ${rank}, stage: ${stage}`))
-      .catch(console.error);
-  }
-});
-
 app.post('/save/classic', (req, res) => {
-  const { name, score, rank, stage, log } = req.body;
   const user = new User();
-  const curLog = new Log();
-  user.name = name;
-  user.score = score;
-  user.rank = rank;
-  user.stage = stage;
-  curLog.log = log;
+  for (const [ key, value ] of Object.entries(req.body)) {
+    user[key] = value;
+  }
 
   if (user.score <= 0) {
     res.send('fail');
   } else {
-    User.find({}, 'id').sort({ id: -1 }).limit(1)
-      .then(arr => {
-        const lastUser = arr[0];
-        user.id = lastUser ? lastUser.id + 1 : 1;
-        curLog.id = lastUser ? lastUser.id + 1 : 1;
+    User.find({}, '_id score').sort({ score: -1, createdAt: 1 })
+      .then(users => {
+        const len = users.length;
+        if (len < 500) {
+          user.save();
+        } else {
+          const lastUser = users[len-1];
+          const { _id, score } = lastUser;
+          if (user.score <= score) {
+            console.log(`500위 점수 ${score}점 이하라서 저장되지 않습니다.`)
+            return;
+          }
+
+          Promise.all([
+            user.save(),
+            new Promise(resolve => resolve(User.deleteOne({ _id }))),
+          ])
+          .then(() => console.log(`_id ${_id}, score ${score} document 삭제됨`));
+        }
       })
-      .then(() => User.find({}, 'score').sort({ score: -1 }))
-      .then(users => binSearch(users.map(u => u.score).sort((a, b) => b - a), score))
-      .then(ranking => {
-        user.ranking = ranking;
-        return ranking;
-      })
-      .then(ranking => User.updateMany({ ranking: { $gte: ranking }}, { $inc: { ranking: 1} }))
-      .then(() => user.save())
-      .then(() => curLog.save())
       .then(() => res.send('success'))
-      .then(() => console.log(`name: ${name}, score: ${score}, rank: ${rank}, stage: ${stage}`))
+      .then(() => console.log(`name: ${user.name}, score: ${user.score}, rank: ${user.rank}, stage: ${user.stage}`))
       .catch(console.error);
   }
 });
 
-app.get('/leaderboard/classic/:page', (req, res) => {
-  const { page } = req.params;
-  const end = (+page + 1) * 100;
-  User.find({ ranking: { $gte: 1, $lte: end } }, '-_id ranking name score rank stage')
-    .sort({ ranking: 1 }).exec()
+app.get('/leaderboard/classic', (req, res) => {
+  User.find({}, '-_id name score stage')
+    .sort({ score: -1, createdAt: 1 }).exec()
     .then(users => res.json(users))
     .catch(console.error);
 });
