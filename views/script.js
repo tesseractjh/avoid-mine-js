@@ -134,7 +134,7 @@ class Canvas {
 
   initEventListener() {
     this.canvas.addEventListener('click', this.getCallback('clickButton'));
-    this.canvas.addEventListener('mousemove', this.getCallback('mousemove'));
+    this.canvas.addEventListener('mousemove', this.getCallback('buttonHover'));
     window.addEventListener('keydown', this.getCallback('keydown'));
   }
 
@@ -1063,7 +1063,7 @@ class Canvas {
 
     const tempCanvas = new Canvas($back.elem, false);
     $back.elem.addEventListener('click', tempCanvas.getCallback('clickButton'));
-    $back.elem.addEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+    $back.elem.addEventListener('mousemove', tempCanvas.getCallback('buttonHover'));
     $back.width = this.canvas.height * BOARD_HEIGHT_RATIO;
     $back.height = this.TITLE_SIZE*3/2;
     tempCanvas.createButton(BUTTON.back, {
@@ -1076,7 +1076,7 @@ class Canvas {
         const originalCanvas = this;
         return function () {
           this.canvas.removeEventListener('click', this.getCallback('clickButton'));
-          this.canvas.removeEventListener('mousemove', this.getCallback('mousemove'));
+          this.canvas.removeEventListener('mousemove', this.getCallback('buttonHover'));
           originalCanvas.clearPage();
           originalCanvas.clearModal();
           originalCanvas.clearTimer();
@@ -1245,7 +1245,7 @@ class Canvas {
 
     const tempCanvas = new Canvas($submit.elem, false);
     $submit.elem.addEventListener('click', tempCanvas.getCallback('clickButton'));
-    $submit.elem.addEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+    $submit.elem.addEventListener('mousemove', tempCanvas.getCallback('buttonHover'));
     $submit.width = this.canvas.height * BOARD_HEIGHT_RATIO;
     $submit.height = this.TITLE_SIZE*3;
     tempCanvas.createButton(BUTTON.submit, {
@@ -1261,7 +1261,7 @@ class Canvas {
           if (value.length > 0
             && !/[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/.test(value)) {
             this.canvas.removeEventListener('click', tempCanvas.getCallback('clickButton'));
-            this.canvas.removeEventListener('mousemove', tempCanvas.getCallback('mousemove'));
+            this.canvas.removeEventListener('mousemove', tempCanvas.getCallback('buttonHover'));
             originalCanvas.gameInfo.name = value;
             originalCanvas.paintPage();
           } else {
@@ -1545,7 +1545,7 @@ class Canvas {
     }
   }
 
-  mousemoveCallback({ offsetX, offsetY }) {
+  buttonHoverCallback({ offsetX, offsetY }) {
     this.button.forEach(btn => {
       if (btn.contextInfo.isCollision(offsetX, offsetY)) {
         const tempInfo = btn.contextInfo;
