@@ -466,6 +466,7 @@ class Canvas {
       this.canvas.removeEventListener('click', this.getCallback('clickButton'));
       this.canvas.addEventListener('mousedown', this.getCallback('startPaint'));
       this.canvas.addEventListener('mouseup', this.getCallback('finishPaint'));
+      this.canvas.addEventListener('mousemove', this.getCallback('mineProperty', true));
     }
   }
 
@@ -1100,6 +1101,7 @@ class Canvas {
     this.postLeaderBoard(userInfo);
     this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
     this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
+    this.canvas.removeEventListener('mousemove', this.getCallback('mineProperty', true));
   }
 
   showStageResult() {
@@ -1403,6 +1405,7 @@ class Canvas {
     this.postLeaderBoard(userInfo);
     this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
     this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
+    this.canvas.removeEventListener('mousemove', this.getCallback('mineProperty', true));
   }
 
   showChallengeFail() {
@@ -1419,6 +1422,8 @@ class Canvas {
     this.elementDropEffect(this.$challengeFail);
     this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
     this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
+    this.canvas.removeEventListener('mousemove', this.getCallback('mineProperty', true));
+    
   }
 
   showShape() {
@@ -1504,11 +1509,28 @@ class Canvas {
     }
   }
 
-  getCallback(type) {
+  getCallback(type, throttling = false, delay = 30) {
     if (!this.callback[type]) {
-      const thisBindedCallback = this[`${type}Callback`].bind(this);
-      this.callback[type] = thisBindedCallback;
+      if (throttling) {
+        const callback = this[`${type}Callback`].bind(this);
+        const thisBindedThrottlingCallback = (() => {
+          let timer;
+          return e => {
+            if (!timer) {
+              timer = setTimeout((function() {
+                timer = null;
+                callback(e);
+              }).bind(this), delay);
+            }
+          };
+        })();
+        this.callback[type] = thisBindedThrottlingCallback;
+      } else {
+        const thisBindedCallback = this[`${type}Callback`].bind(this);
+        this.callback[type] = thisBindedCallback;
+      }
     }
+
     return this.callback[type];
   }
 
@@ -1606,6 +1628,27 @@ class Canvas {
       }
       this.board.updateRemainingMine();
       this.board.updateCell(cell);
+      this.board.me.updateCanvas();
+    }
+  }
+
+  minePropertyCallback({ offsetX, offsetY }) {
+    if (this.page !== 'game') return;
+
+    const { x, y, cellSize } = this.board;
+    const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
+    if (this.board.isValid(cx, cy)) {
+      if (this.board.selectedCell) {
+        this.board.selectedCell.isSelected = false;
+        this.board.selectedCell = null;
+      }
+      const cell = this.board.getCell(cx, cy);
+      if (cell.isSelected) return;
+      if (this.board.getCell(cx, cy).type === 'ensuredMine') {
+        cell.isSelected = true;
+        this.board.selectedCell = cell;
+      }
+      this.board.updateCanvas();
       this.board.me.updateCanvas();
     }
   }
@@ -2185,7 +2228,7 @@ class Cell extends Rect {
   }
 
   get value() {
-    if (this.type === 'ensuredMine') {
+    if (this.type === 'ensuredMine' && !this.isSelected) {
       return TEXT.ensuredMine;
     }
     switch (this.textType) {
@@ -2203,6 +2246,7 @@ class Cell extends Rect {
   initStatus() {
     this.isDetected = false;
     this.isEnsured = false;
+    this.isSelected = false;
   }
 
   initCellInfo() {
@@ -2269,7 +2313,7 @@ class Cell extends Rect {
       this.fillColor = fillColor;
     }
     this.canvas.fillRect(this);
-    if (this.hintType !== 'normal' && this.isDetected && this.type !== 'ensuredMine') {
+    if (this.hintType !== 'normal' && (this.isDetected && this.type !== 'ensuredMine' || this.isSelected)) {
       if (this.board.showShapeSwitch) {
         this.fillShape(colorMatch[this.hintType]);
       } else if (this.hintType === 'purple') {
@@ -2363,13 +2407,15 @@ class Me extends Rect {
     const cell = this.board.getCell(this.x, this.y);
     const offset = [0, 1, 2, 3, 5, 6, 7, 8];
 
-    offset.forEach(i => {
-      const [ dx, dy ] = [ this.x + OFFSET_X[i], this.y + OFFSET_Y[i] ];
-      if (this.board.isValid(dx, dy)) {
-        this.board.openCell(dx, dy);
-        this.board.updateCell([dx, dy]);
-      }
-    });
+    if (!cell.isMine) {
+      offset.forEach(i => {
+        const [ dx, dy ] = [ this.x + OFFSET_X[i], this.y + OFFSET_Y[i] ];
+        if (this.board.isValid(dx, dy)) {
+          this.board.openCell(dx, dy);
+          this.board.updateCell([dx, dy]);
+        }
+      });
+    }
     this.board.ensureCell(cell);
     this.board.clearCheck(cell);
     this.board.updateCell(cell);
@@ -2410,6 +2456,7 @@ class Board {
     this.cellCount = xCount * yCount;
     this.showShapeSwitch = canvas.gameInfo.shapeSwitch;
     this.isItemUsed = false;
+    this.selectedCell = null;
     this.initSizeValue(sizeValues);
     this.initBoardSetting();
     if (init) {
@@ -3009,7 +3056,7 @@ class Board {
   fillCellText(cell) {
     if (cell.isDetected) {
       cell.fillText();
-      if (cell.hintType !== 'normal' && cell.type !== 'ensuredMine') {
+      if (cell.hintType !== 'normal' && cell.type !== 'ensuredMine' || cell.isSelected) {
         cell.strokeText(cell.hintType !== 'navy' ? BLACK : WHITE_ALPHA);
       }
     }
