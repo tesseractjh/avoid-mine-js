@@ -21,6 +21,7 @@ class Canvas {
   initValues() {
     this.page = 'main';
     this.mode = 'CLASSIC';
+    this.checkStatus = 0;
     this.button = [];
     this.callback = [];
     this.sound = this.sound ?? {};
@@ -463,7 +464,8 @@ class Canvas {
       this.board = new Board(this, 1, 1, false);
       this.paintPage();
       this.canvas.removeEventListener('click', this.getCallback('clickButton'));
-      this.canvas.addEventListener('click', this.getCallback('clickCell'));
+      this.canvas.addEventListener('mousedown', this.getCallback('startPaint'));
+      this.canvas.addEventListener('mouseup', this.getCallback('finishPaint'));
     }
   }
 
@@ -1096,7 +1098,8 @@ class Canvas {
     }
 
     this.postLeaderBoard(userInfo);
-    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
+    this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
+    this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
   }
 
   showStageResult() {
@@ -1398,7 +1401,8 @@ class Canvas {
     }
 
     this.postLeaderBoard(userInfo);
-    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
+    this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
+    this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
   }
 
   showChallengeFail() {
@@ -1413,7 +1417,8 @@ class Canvas {
     this.sendChallengeFailLogToServer();
     this.$challengeFail.show();
     this.elementDropEffect(this.$challengeFail);
-    this.canvas.removeEventListener('click', this.getCallback('clickCell'));
+    this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
+    this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
   }
 
   showShape() {
@@ -1515,34 +1520,41 @@ class Canvas {
     });
   }
 
-  clickCellCallback({ offsetX, offsetY }) {
-    if (this.page === 'game') {
-      const { x, y, cellSize, cellCount } = this.board;
-      const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
-      if (this.board.isValid(cx, cy)
-        && !this.board.getCell(cx, cy).isEnsured
-        && this.board.getIdx(cx, cy) !== cellCount-1 ) {
-        const cell = this.board.getCell(cx, cy);
-        switch (cell.check) {
-          case 0:
-            cell.check = 1;
-            cell.checkColor = TOMATO;
-            this.board.updateRemainingMine();
-            break;
-          case 1:
-            cell.check = 2;
-            cell.checkColor = YELLOWGREEN;
-            this.board.updateRemainingMine();
-            break;
-          case 2:
-            cell.check = 0;
-            cell.checkColor = '';
-            break;
-        }
-        this.board.updateCell(cell);
-        this.board.me.updateCanvas();
+  startPaintCallback({ offsetX, offsetY }) {
+    if (this.page !== 'game') return;
+
+    const { x, y, cellSize, cellCount } = this.board;
+    const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
+    if (this.board.isValid(cx, cy)
+      && !this.board.getCell(cx, cy).isEnsured
+      && this.board.getIdx(cx, cy) !== cellCount-1 ) {
+      const cell = this.board.getCell(cx, cy);
+      switch (cell.check) {
+        case 0:
+          cell.check = 1;
+          cell.checkColor = TOMATO;
+          this.checkStatus = 1;
+          break;
+        case 1:
+          cell.check = 2;
+          cell.checkColor = YELLOWGREEN;
+          this.checkStatus = 2;
+          break;
+        case 2:
+          cell.check = 0;
+          cell.checkColor = '';
+          this.checkStatus = 0;
+          break;
       }
+      this.board.updateRemainingMine();
+      this.board.updateCell(cell);
+      this.board.me.updateCanvas();
+      this.canvas.addEventListener('mousemove', this.getCallback('paintCell'));
     }
+  }
+
+  finishPaintCallback() {
+    this.canvas.removeEventListener('mousemove', this.getCallback('paintCell'));
   }
 
   buttonHoverCallback({ offsetX, offsetY }) {
@@ -1567,6 +1579,35 @@ class Canvas {
         }
       }
     });
+  }
+
+  paintCellCallback({ offsetX, offsetY }) {
+    if (this.page !== 'game') return;
+
+    const { x, y, cellSize, cellCount } = this.board;
+    const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
+    if (this.board.isValid(cx, cy)
+      && !this.board.getCell(cx, cy).isEnsured
+      && this.board.getIdx(cx, cy) !== cellCount-1 ) {
+      const cell = this.board.getCell(cx, cy);
+      switch (this.checkStatus) {
+        case 0:
+          cell.check = 0;
+          cell.checkColor = '';
+          break;
+        case 1:
+          cell.check = 1;
+          cell.checkColor = TOMATO;
+          break;
+        case 2:
+          cell.check = 2;
+          cell.checkColor = YELLOWGREEN;
+          break;
+      }
+      this.board.updateRemainingMine();
+      this.board.updateCell(cell);
+      this.board.me.updateCanvas();
+    }
   }
 
   keydownCallback({ keyCode }) {
