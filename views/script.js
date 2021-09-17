@@ -5,6 +5,7 @@ class Canvas {
     this.canvas = canvas;
     this.width = +canvas.clientWidth;
     this.height = +canvas.clientHeight;
+    this.soundVolume = 100;
     this.CENTER = Math.floor(canvas.width/2);
     this.TITLE_SIZE = Math.floor(this.width/24);
     this.FONT_SIZE = Math.floor(this.TITLE_SIZE*3/4);
@@ -433,6 +434,74 @@ class Canvas {
     this.$leaderboard.$select.elem.appendChild(select);
   }
 
+  setMovementDiv() {
+    const { $moveOpt } = this.$stageResult;
+    const { accessable, shortest } = this.board;
+    const { movement } = this.board.me;
+    let rank;
+    let movementRatio;
+    if (movement <= shortest + (accessable.length-shortest)*1.2) {
+      movementRatio = MOVEMENT_PERFECT_RATIO;
+      rank = `Perfect +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = YELLOWGREEN;
+    } else if (movement <= shortest + (accessable.length-shortest)*1.5) {
+      movementRatio = MOVEMENT_EXCELLENT_RATIO;
+      rank = `Excellent +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = YELLOWGREEN;
+    } else if (movement <= shortest + (accessable.length-shortest)*2) {
+      movementRatio = MOVEMENT_GREAT_RATIO;
+      rank = `Great +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = NAVY;
+    } else if (movement <= shortest + (accessable.length-shortest)*2.5) {
+      movementRatio = MOVEMENT_GOOD_RATIO;
+      rank = `Good +${Math.floor(movementRatio*100-100)}%`;
+      $moveOpt.color = NAVY;
+    } else {
+      movementRatio = 1;
+      rank = `Bad`;
+      $moveOpt.color = BLACK;
+    }
+    $moveOpt.innerHTML = rank;
+    this.$stageResult.$movementDiv.show();
+
+    return movementRatio;
+  }
+
+  setItemDiv() {
+    const { $item } = this.$stageResult;
+    const { isItemUsed } = this.board;
+    let itemRatio;
+    if (!isItemUsed) {
+      itemRatio = RESERVED_ITEM_RATIO
+      $item.color = YELLOWGREEN;
+      $item.innerHTML = `CLEAR +${Math.floor(itemRatio*100-100)}%`;
+    } else {
+      itemRatio = 1;
+      $item.color = BLACK;
+      $item.innerHTML = 'FAIL';
+    }
+    this.$stageResult.$itemDiv.show();
+    return itemRatio;
+  }
+
+  setPerfectClearDiv() {
+    const { $perfectClear } = this.$stageResult;
+    const { isAllEnsured } = this.board;
+    const { isDead } = this.board.me;
+    let perfectClearRatio;
+    if (!isDead && isAllEnsured) {
+      perfectClearRatio = PERFECT_CLEAR_RATIO;
+      $perfectClear.color = YELLOWGREEN;
+      $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
+    } else {
+      perfectClearRatio = 1;
+      $perfectClear.color = BLACK;
+      $perfectClear.innerHTML = 'FAIL';
+    }
+    this.$stageResult.$perfectClearDiv.show();
+    return perfectClearRatio;
+  }
+
   getTutorialPage(number) {
     const page = TUTORIAL[`tutorial0${number}`];
     return function() {
@@ -467,6 +536,7 @@ class Canvas {
       this.canvas.addEventListener('mousedown', this.getCallback('startPaint'));
       this.canvas.addEventListener('mouseup', this.getCallback('finishPaint'));
       this.canvas.addEventListener('mousemove', this.getCallback('mineProperty', true));
+      this.canvas.addEventListener('mousewheel', this.getCallback('wheel', true));
     }
   }
 
@@ -999,7 +1069,9 @@ class Canvas {
     this.$msgBox.borderRadius = this.FONT_SIZE/8
     this.$msgBox.backgroundColor = color;
   
-    this.playSound(sound);
+    if (sound) {
+      this.playSound(sound);
+    }
     this.$msgBox.show();
 
     let opacity = 1000;
@@ -1102,16 +1174,15 @@ class Canvas {
     this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
     this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
     this.canvas.removeEventListener('mousemove', this.getCallback('mineProperty', true));
+    this.canvas.removeEventListener('mousewheel', this.getCallback('wheel', true));
   }
 
   showStageResult() {
     this.initPage('stageResult');
-    const { isItemUsed, accessable, shortest, ensuredCellCount, isAllEnsured } = this.board;
+    const { ensuredCellCount } = this.board;
     const { time } = this.board.boardSetting;
-    const { movement, isDead } = this.board.me
     const { stage } = this.gameInfo;
-    const { $title, $cellCount, $time, $moveOpt, $item, $perfectClear, $totalScore, $footer } = this.$stageResult;
-    const cellCount = ensuredCellCount;
+    const { $title, $cellCount, $time, $totalScore, $footer } = this.$stageResult;
 
     this.$stageResult.backgroundColor = WHITE_ALPHA;
     this.$stageResult.font = this.FONT_SIZE;
@@ -1119,66 +1190,27 @@ class Canvas {
     this.$stageResult.height = this.height;
 
     $title.innerHTML = `STAGE ${stage} 결과`;
-    $cellCount.innerHTML = cellCount * CELL_COUNT_SCORE;
+    $cellCount.innerHTML = ensuredCellCount * CELL_COUNT_SCORE;
     $time.innerHTML = time * REMAINING_TIME_SCORE;
     $footer.innerHTML = 'F를 누르면 다음 스테이지로 이동합니다.';
   
     let movementRatio = 1;
     if (stage > 5) {
-      let rank;
-      if (movement <= shortest + (accessable.length-shortest)*1.2) {
-        movementRatio = MOVEMENT_PERFECT_RATIO;
-        rank = `Perfect +${Math.floor(movementRatio*100-100)}%`;
-        $moveOpt.color = YELLOWGREEN;
-      } else if (movement <= shortest + (accessable.length-shortest)*1.5) {
-        movementRatio = MOVEMENT_EXCELLENT_RATIO;
-        rank = `Excellent +${Math.floor(movementRatio*100-100)}%`;
-        $moveOpt.color = YELLOWGREEN;
-      } else if (movement <= shortest + (accessable.length-shortest)*2) {
-        movementRatio = MOVEMENT_GREAT_RATIO;
-        rank = `Great +${Math.floor(movementRatio*100-100)}%`;
-        $moveOpt.color = NAVY;
-      } else if (movement <= shortest + (accessable.length-shortest)*2.5) {
-        movementRatio = MOVEMENT_GOOD_RATIO;
-        rank = `Good +${Math.floor(movementRatio*100-100)}%`;
-        $moveOpt.color = NAVY;
-      } else {
-        movementRatio = 1;
-        rank = `Bad`;
-        $moveOpt.color = BLACK;
-      }
-      $moveOpt.innerHTML = rank;
-      this.$stageResult.$movementDiv.show();
+      movementRatio = this.setMovementDiv();
     }
   
     let itemRatio = 1;
     if (stage > 1) {
-      if (!isItemUsed) {
-        itemRatio = RESERVED_ITEM_RATIO
-        $item.color = YELLOWGREEN;
-        $item.innerHTML = `CLEAR +${Math.floor(itemRatio*100-100)}%`;
-      } else {
-        $item.color = BLACK;
-        $item.innerHTML = 'FAIL';
-      }
-      this.$stageResult.$itemDiv.show();
+      itemRatio = this.setItemDiv();
     }
   
     let perfectClearRatio = 1;
     if (stage > 4) {
-      if (!isDead && isAllEnsured) {
-        perfectClearRatio = PERFECT_CLEAR_RATIO;
-        $perfectClear.color = YELLOWGREEN;
-        $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
-      } else {
-        $perfectClear.color = BLACK;
-        $perfectClear.innerHTML = 'FAIL';
-      }
-      this.$stageResult.$perfectClearDiv.show();
+      perfectClearRatio = this.setPerfectClearDiv();
     }
   
     this.gameInfo.tempScore = Math.floor(
-      (cellCount * CELL_COUNT_SCORE + time * REMAINING_TIME_SCORE)
+      (ensuredCellCount * CELL_COUNT_SCORE + time * REMAINING_TIME_SCORE)
       * movementRatio
       * itemRatio
       * perfectClearRatio
@@ -1332,7 +1364,7 @@ class Canvas {
     const { isItemUsed, accessable, shortest, ensuredCellCount, isAllEnsured, mine } = this.board;
     const { time } = this.board.boardSetting;
     const { movement, isDead } = this.board.me
-    const { $title, $cellCount, $time, $moveOpt, $perfectClear, $totalScore, $footer } = this.$stageResult;
+    const { $title, $cellCount, $time, $totalScore, $footer } = this.$stageResult;
     const cellCount = ensuredCellCount;
   
     this.$stageResult.backgroundColor = WHITE_ALPHA;
@@ -1345,42 +1377,8 @@ class Canvas {
     $time.innerHTML = time * REMAINING_TIME_SCORE;
     $footer.innerHTML = 'F를 누르면 메인 화면으로 이동합니다.';
   
-    let movementRatio = 1;
-    let rank;
-    if (movement <= shortest + (accessable.length-shortest)*1.2) {
-      movementRatio = MOVEMENT_PERFECT_RATIO;
-      rank = `Perfect +${Math.floor(movementRatio*100-100)}%`;
-      $moveOpt.color = YELLOWGREEN;
-    } else if (movement <= shortest + (accessable.length-shortest)*1.5) {
-      movementRatio = MOVEMENT_EXCELLENT_RATIO;
-      rank = `Excellent +${Math.floor(movementRatio*100-100)}%`;
-      $moveOpt.color = YELLOWGREEN;
-    } else if (movement <= shortest + (accessable.length-shortest)*2) {
-      movementRatio = MOVEMENT_GREAT_RATIO;
-      rank = `Great +${Math.floor(movementRatio*100-100)}%`;
-      $moveOpt.color = NAVY;
-    } else if (movement <= shortest + (accessable.length-shortest)*2.5) {
-      movementRatio = MOVEMENT_GOOD_RATIO;
-      rank = `Good +${Math.floor(movementRatio*100-100)}%`;
-      $moveOpt.color = NAVY;
-    } else {
-      movementRatio = 1;
-      rank = `Bad`;
-      $moveOpt.color = BLACK;
-    }
-    $moveOpt.innerHTML = rank;
-    this.$stageResult.$movementDiv.show();
-  
-    let perfectClearRatio = 1;
-    if (isAllEnsured) {
-      perfectClearRatio = PERFECT_CLEAR_RATIO;
-      $perfectClear.color = YELLOWGREEN;
-      $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
-    } else {
-      $perfectClear.color = BLACK;
-      $perfectClear.innerHTML = 'FAIL';
-    }
-    this.$stageResult.$perfectClearDiv.show();
+    const movementRatio = this.setMovementDiv();
+    const perfectClearRatio = this.setPerfectClearDiv();
   
     this.gameInfo.tempScore = Math.floor(
       (cellCount * CELL_COUNT_SCORE + time * REMAINING_TIME_SCORE)
@@ -1399,13 +1397,14 @@ class Canvas {
       accessableLength: accessable.length,
       ensuredCell: ensuredCellCount,
       movement, item1, item2, item3,
-      mine, isItemUsed, isDead
+      mine, shortest, isItemUsed, isDead, isAllEnsured
     }
 
     this.postLeaderBoard(userInfo);
     this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
     this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
     this.canvas.removeEventListener('mousemove', this.getCallback('mineProperty', true));
+    this.canvas.removeEventListener('mousewheel', this.getCallback('wheel', true));
   }
 
   showChallengeFail() {
@@ -1423,6 +1422,7 @@ class Canvas {
     this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
     this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
     this.canvas.removeEventListener('mousemove', this.getCallback('mineProperty', true));
+    this.canvas.removeEventListener('mousewheel', this.getCallback('wheel', true));
     
   }
 
@@ -1651,6 +1651,17 @@ class Canvas {
       this.board.updateCanvas();
       this.board.me.updateCanvas();
     }
+  }
+
+  wheelCallback({ wheelDelta }) {
+    if (this.page !== 'game') return;
+    if (wheelDelta > 0 && this.soundVolume < 100) {
+      this.soundVolume += 5;
+    } else if (wheelDelta < 0 && this.soundVolume > 0) {
+      this.soundVolume -= 5;
+    }
+    [...Object.values(this.sound)].forEach(audio => audio.volume = this.soundVolume/100);
+    this.showMsgBox(`효과음 볼륨: ${this.soundVolume}`, SKYBLUE, false);
   }
 
   keydownCallback({ keyCode }) {
@@ -2632,7 +2643,7 @@ class Board {
       this.setNormalCellNumber(cell);
       if (cell.number === 9) {
         const rand = randRange(0, 8);
-        const [ dx, dy ] = [ x + OFFSET_X[rand], y + OFFSET_Y[rand] ];
+        const [ dx, dy ] = [ cell.x + OFFSET_X[rand], cell.y + OFFSET_Y[rand] ];
         const mine = this.getCell(dx, dy);
         mine.type = 'normal';
         removedMineArr.push(mine);
@@ -2932,6 +2943,7 @@ class Board {
         const cell = candidate.splice(rand, 1)[0];
         cell.hintType = type;
         cell.textColor = colorMatch[type];
+        cell.fontSize = cell.fontSize * 1.1;
         if (type === 'purple') {
           const shape = [...new Array(9)].map((_, i) => i);
           let range = randRange(1, 7);
@@ -3056,7 +3068,7 @@ class Board {
   fillCellText(cell) {
     if (cell.isDetected) {
       cell.fillText();
-      if (cell.hintType !== 'normal' && cell.type !== 'ensuredMine' || cell.isSelected) {
+      if (cell.hintType !== 'normal' && (cell.type !== 'ensuredMine' || cell.isSelected)) {
         cell.strokeText(cell.hintType !== 'navy' ? BLACK : WHITE_ALPHA);
       }
     }

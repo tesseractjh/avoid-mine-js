@@ -84,7 +84,7 @@ const MOVEMENT_PERFECT_RATIO    = 1.5;
 const RESERVED_ITEM_RATIO       = 1.25;
 const PERFECT_CLEAR_RATIO       = 2;
 
-const RANK_S = 300000;
+const RANK_S = 250000;
 const RANK_A = 200000;
 const RANK_B = 100000;
 const RANK_C = 50000;
