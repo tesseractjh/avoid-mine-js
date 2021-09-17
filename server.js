@@ -86,7 +86,7 @@ app.post('/v100/save/classic', (req, res) => {
         }
       })
       .then(() => res.send('success'))
-      .then(() => console.log(`name: ${user.name}, score: ${user.score}, rank: ${user.rank}, stage: ${user.stage}`))
+      .then(() => console.log(`name: ${user.name}, score: ${user.score}, stage: ${user.stage}`))
       .catch(console.error);
   }
 });

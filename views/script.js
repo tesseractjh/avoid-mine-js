@@ -63,73 +63,73 @@ class Canvas {
   }
 
   initElement() {
-    this.$container = new Element('canvas-container');
-    this.$msgBox = new Element('msg-box');
+    Modal.modalList = [];
+    this.$container = new Modal('canvas-container');
+    this.$msgBox = new Modal('msg-box');
 
-    this.$gameResult = new Element('game-result');
-    this.$gameResult.$title = new Element('game-result-title');
-    this.$gameResult.$stage = new Element('stage');
-    this.$gameResult.$score = new Element('score');
-    this.$gameResult.$rank = new Element('rank');
-    this.$gameResult.$space = new Element('space');
-    this.$gameResult.$back = new Element('back');
+    this.$gameResult = new Modal('game-result');
+    this.$gameResult.$title = new Modal('game-result-title');
+    this.$gameResult.$stage = new Modal('stage');
+    this.$gameResult.$score = new Modal('score');
+    this.$gameResult.$rank = new Modal('rank');
+    this.$gameResult.$back = new Modal('back');
     this.$gameResult.$back.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
     this.$gameResult.$back.elem.setAttribute('height', `${this.TITLE_SIZE*3/2}px`);
 
-    this.$stageResult = new Element('stage-result');
-    this.$stageResult.$title = new Element('stage-result-title');
-    this.$stageResult.$cellCount = new Element('cell-count');
-    this.$stageResult.$time = new Element('remaining-time');
-    this.$stageResult.$movementDiv = new Element('movement-div');
-    this.$stageResult.$moveOpt = new Element('movement-optimization');
-    this.$stageResult.$itemDiv = new Element('item-div');
-    this.$stageResult.$item = new Element('reserved-item');
-    this.$stageResult.$perfectClearDiv = new Element('perfect-clear-div');
-    this.$stageResult.$perfectClear = new Element('perfect-clear');
-    this.$stageResult.$totalScore = new Element('total-score');
-    this.$stageResult.$footer = new Element('stage-result-footer');
+    this.$stageResult = new Modal('stage-result');
+    this.$stageResult.$title = new Modal('stage-result-title');
+    this.$stageResult.$cellCount = new Modal('cell-count');
+    this.$stageResult.$time = new Modal('remaining-time');
+    this.$stageResult.$movementDiv = new Modal('movement-div');
+    this.$stageResult.$moveOpt = new Modal('movement-optimization');
+    this.$stageResult.$itemDiv = new Modal('item-div');
+    this.$stageResult.$item = new Modal('reserved-item');
+    this.$stageResult.$perfectClearDiv = new Modal('perfect-clear-div');
+    this.$stageResult.$perfectClear = new Modal('perfect-clear');
+    this.$stageResult.$totalScore = new Modal('total-score');
+    this.$stageResult.$footer = new Modal('stage-result-footer');
 
-    this.$information = new Element('information');
-    this.$information.$title = new Element('information-title');
-    this.$information.$header = new Element('information-header');
-    this.$information.$left = new Element('information-left');
-    this.$information.$right = new Element('information-right');
-    this.$information.$arrow = new Element('arrow');
-    this.$information.$article = new Element('information-article');
-    this.$information.$footer = new Element('information-footer');
+    this.$information = new Modal('information');
+    this.$information.$title = new Modal('information-title');
+    this.$information.$header = new Modal('information-header');
+    this.$information.$left = new Modal('information-left');
+    this.$information.$right = new Modal('information-right');
+    this.$information.$arrow = new Modal('arrow');
+    this.$information.$article = new Modal('information-article');
+    this.$information.$footer = new Modal('information-footer');
 
-    this.$inputId = new Element('input-id');
-    this.$inputId.$title = new Element('input-id-title');
-    this.$inputId.$header = new Element('input-id-header');
-    this.$inputId.$input = new Element('input-id-input');
-    this.$inputId.$submit = new Element('submit');
+    this.$inputId = new Modal('input-id');
+    this.$inputId.$title = new Modal('input-id-title');
+    this.$inputId.$header = new Modal('input-id-header');
+    this.$inputId.$input = new Modal('input-id-input');
+    this.$inputId.$submit = new Modal('submit');
     this.$inputId.$submit.elem.setAttribute('width', `${this.canvas.height * BOARD_HEIGHT_RATIO}px`);
     this.$inputId.$submit.elem.setAttribute('height', `${this.TITLE_SIZE*3}px`);
 
-    this.$leaderboard = new Element('leaderboard');
-    this.$leaderboard.$title = new Element('leaderboard-title');
-    this.$leaderboard.$list = new Element('leaderboard-list');
-    this.$leaderboard.$footer = new Element('leaderboard-footer');
-    this.$leaderboard.$mode01 = new Element('leaderboard-mode01');
-    this.$leaderboard.$mode02 = new Element('leaderboard-mode02');
-    this.$leaderboard.$classic = new Element('classic-check');
-    this.$leaderboard.$challenge = new Element('challenge-check');
-    this.$leaderboard.$select = new Element('leaderboard-select');
+    this.$leaderboard = new Modal('leaderboard');
+    this.$leaderboard.$title = new Modal('leaderboard-title');
+    this.$leaderboard.$list = new Modal('leaderboard-list');
+    this.$leaderboard.$footer = new Modal('leaderboard-footer');
+    this.$leaderboard.$mode01 = new Modal('leaderboard-mode01');
+    this.$leaderboard.$mode02 = new Modal('leaderboard-mode02');
+    this.$leaderboard.$classic = new Modal('classic-check');
+    this.$leaderboard.$challenge = new Modal('challenge-check');
+    this.$leaderboard.$select = new Modal('leaderboard-select');
     this.appendComboBox();
     this.$leaderboard.$classic.elem.addEventListener('change', this.getCallback('change'));
     this.$leaderboard.$challenge.elem.addEventListener('change', this.getCallback('change'));
 
-    this.$updateLog = new Element('update-log');
-    this.$updateLog.$title = new Element('update-log-title');
-    this.$updateLog.$article = new Element('update-log-article');
-    this.$updateLog.$footer = new Element('update-log-footer');
+    this.$updateLog = new Modal('update-log');
+    this.$updateLog.$title = new Modal('update-log-title');
+    this.$updateLog.$article = new Modal('update-log-article');
+    this.$updateLog.$footer = new Modal('update-log-footer');
 
-    this.$challenge = new Element('challenge');
-    this.$challenge.$title = new Element('challenge-title');
-    this.$challenge.$article = new Element('challenge-article');
-    this.$challenge.$footer = new Element('challenge-footer');
+    this.$challenge = new Modal('challenge');
+    this.$challenge.$title = new Modal('challenge-title');
+    this.$challenge.$article = new Modal('challenge-article');
+    this.$challenge.$footer = new Modal('challenge-footer');
 
-    this.$challengeFail = new Element('challenge-fail');
+    this.$challengeFail = new Modal('challenge-fail');
   }
 
   initEventListener() {
@@ -599,14 +599,10 @@ class Canvas {
     clearInterval(this.boxDropTimer);
   }
 
-  clearElement() {
+  clearModal() {
     this.$msgBox.hide();
     this.$gameResult.hide();
-    this.$gameResult.top = 0;
-    this.$gameResult.opacity = 0;
     this.$stageResult.hide();
-    this.$stageResult.top = 0;
-    this.$stageResult.opacity = 0;
     this.$stageResult.$itemDiv.hide();
     this.$information.hide();
     this.$information.$left.clear();
@@ -619,6 +615,12 @@ class Canvas {
     this.$challenge.hide();
     this.$challenge.$article.clear();
     this.$challengeFail.hide();
+    Modal.modalList.forEach(modal => {
+      if (modal.elem.classList.contains('drop')) {
+        modal.top = 0;
+        modal.opacity = 0;
+      }
+    });
   }
 
   paintAllButton() {
@@ -911,7 +913,7 @@ class Canvas {
     }
     this.clearPage();
     this.clearTimer();
-    this.clearElement();
+    this.clearModal();
     this.crossMode('ready');
     this.paintGameBoard(stageInfo);
     this.paintBottomBar();
@@ -1016,7 +1018,7 @@ class Canvas {
 
   initPage(page) {
     this.page = page;
-    this.clearElement();
+    this.clearModal();
     this.clearTimer();
     this.sound['stopwatch'].pause();
     this.gameInfo.timerSoundSwitch = false;
@@ -1076,7 +1078,7 @@ class Canvas {
           this.canvas.removeEventListener('click', this.getCallback('clickButton'));
           this.canvas.removeEventListener('mousemove', this.getCallback('mousemove'));
           originalCanvas.clearPage();
-          originalCanvas.clearElement();
+          originalCanvas.clearModal();
           originalCanvas.clearTimer();
           originalCanvas.initValues();
           originalCanvas.canvas.addEventListener('click', originalCanvas.getCallback('clickButton'));
@@ -1410,6 +1412,7 @@ class Canvas {
     this.playSound('fail');
     this.sendChallengeFailLogToServer();
     this.$challengeFail.show();
+    this.elementDropEffect(this.$challengeFail);
     this.canvas.removeEventListener('click', this.getCallback('clickCell'));
   }
 
@@ -1670,7 +1673,7 @@ class Canvas {
       if (keyCode === 70) { // F
         this.page = 'main';
         this.clearPage();
-        this.clearElement();
+        this.clearModal();
         this.clearTimer();
         this.initValues();
         this.canvas.addEventListener('click', this.getCallback('clickButton'));
@@ -1680,14 +1683,14 @@ class Canvas {
       if (keyCode === 70) { // F
         this.page = 'main';
         this.clearPage();
-        this.clearElement();
+        this.clearModal();
         this.clearTimer();
         this.initValues();
         this.canvas.addEventListener('click', this.getCallback('clickButton'));
         this.paintMainPage();
       } else if (keyCode === 82) { // R
         this.clearPage();
-        this.clearElement();
+        this.clearModal();
         this.clearTimer();
         const modeId = this.gameInfo.modeId;
         this.initValues();
@@ -1945,9 +1948,10 @@ class ContextInfo {
   }
 }
 
-class Element {
+class Modal {
   constructor(elem) {
     this.elem = document.getElementById(elem);
+    Modal.modalList.push(this);
   }
 
   hide() {
