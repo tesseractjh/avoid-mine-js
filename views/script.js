@@ -2924,7 +2924,7 @@ class Board {
                 && !visited[newIdx]
                 && !this.getCell(dx, dy).isMine
                 && this.getCell(dx, dy).type !== 'destination'
-                && (hasBlock && !this.getCell(dx, dy).isBlocked)) {
+                && (!hasBlock || hasBlock && !this.getCell(dx, dy).isBlocked)) {
                   stack.push(newIdx);
             }
           });
