@@ -20,9 +20,15 @@ const User = new Schema(
         mine: Number,
         accessableLength: Number,
         shortest: Number,
-        isItemUsed: Boolean,
         isDead: Boolean,
         isAllEnsured: Boolean,
+        itemInfo: {
+          isItemUsed: Boolean,
+          item1: Number,
+          item2: Number,
+          item3: Number,
+          item4: Number
+        }
       }
     ]
   },

@@ -37,6 +37,7 @@ class Canvas {
       item1: 0,
       item2: 0,
       item3: 0,
+      item4: 0,
       tempScore: 0,
       procedure: 0,
       shapeSwitch: false,
@@ -134,6 +135,9 @@ class Canvas {
 
     this.$challengeFail = new Modal('challenge-fail');
 
+    this.$nav = new Modal('nav');
+    this.$nav.$help = new Modal('nav-help');
+
     this.$help = new Modal('help');
     this.$help.$title = new Modal('help-title');
     this.$help.$article = new Modal('help-article');
@@ -143,11 +147,12 @@ class Canvas {
   initEventListener() {
     this.canvas.addEventListener('click', this.getCallback('clickButton'));
     this.canvas.addEventListener('mousemove', this.getCallback('buttonHover'));
+    this.$nav.$help.elem.addEventListener('click', this.getCallback('clickHelp'));
     window.addEventListener('keydown', this.getCallback('keydown'));
   }
 
   initSound() {
-    ['cannotUseItem', 'clear', 'explosion', 'fail', 'item', 'shape', 'stopwatch']
+    ['cannotUseItem', 'clear', 'explosion', 'fail', 'item', 'shape', 'stopwatch', 'break']
       .forEach(sound => {
         const audio = new Audio();
         audio.src = `/sounds/${sound}.mp3`;
@@ -195,6 +200,7 @@ class Canvas {
     this.setText(div, text);
     div.classList.add('margin');
     elem.appendChild(div);
+    return div;
   }
 
   setUpdateLog() {
@@ -279,7 +285,7 @@ class Canvas {
       const colorType = RAINBOW.filter(color => boardSetting[color]);
       const textType = TEXT_HINT.filter(text => boardSetting[text]).map(v => textHintMatch[v]);
       const { name, item, difficulty } = selectInfo;
-      const [ item1, item2, item3 ] = item;
+      const [ item1, item2, item3, item4 ] = item;
       const div = document.createElement('div');
       const top = document.createElement('div');
       const bottom = document.createElement('div');
@@ -323,13 +329,17 @@ class Canvas {
       this.appendNodeWithText(right, `${textType.length ? textType.join(', ') : '없음'}`);
 
       this.appendNodeWithText(left, TEXT.challengeList06);
-      this.appendNodeWithText(right, `
+      const itemText = this.appendNodeWithText(right, `
       ${item1 ? TEXT.challengeList07 + item1 + ' ' : ''}
       ${item2 ? TEXT.challengeList08 + item2 + ' ' : ''}
-      ${item3 ? TEXT.challengeList09 + item3 : ''}
+      ${item3 ? TEXT.challengeList09 + item3 + ' ' : ''}
+      ${item4 ? TEXT.challengeList10 + item4 : ''}
       `);
+      if (item4) {
+        itemText.style.fontSize = '20px';
+      }
 
-      this.setText(bottom, `난이도 ${TEXT.challengeList10.repeat(difficulty)}`);
+      this.setText(bottom, `난이도 ${TEXT.challengeList11.repeat(difficulty)}`);
 
       [top, left, right, bottom].forEach(elem => div.appendChild(elem));
       div.addEventListener('click', this.getGamePage('CHALLENGE').bind(this));
@@ -415,14 +425,21 @@ class Canvas {
             divList.forEach(div => leftDiv.appendChild(div));
             this.setText(rightDiv, description);
             leftDiv.classList.add('grid-item-example');
-            rightDiv.classList.add('grid-item-description');
+            rightDiv.classList.add('grid-item-description1');
             break;
           
           case 'text1':
             this.setText(leftDiv, text);
             this.setText(rightDiv, description);
             leftDiv.classList.add('grid-item-text1');
-            rightDiv.classList.add('grid-item-description');
+            rightDiv.classList.add('grid-item-description1');
+            break;
+
+          case 'text2':
+            this.setText(leftDiv, text);
+            this.setText(rightDiv, description);
+            leftDiv.classList.add('grid-item-text2');
+            rightDiv.classList.add('grid-item-description2');
             break;
         }
         this.$help.$article.elem.appendChild(leftDiv);
@@ -497,13 +514,13 @@ class Canvas {
   }
 
   saveLog() {
-    const { isItemUsed, accessable, shortest, ensuredCellCount, isAllEnsured, mine } = this.board;
+    const { itemInfo, accessable, shortest, ensuredCellCount, isAllEnsured, mine } = this.board;
     const { time } = this.board.boardSetting;
-    const { movement, isDead } = this.board.me;
-    const { stage, life, item1, item2, item3, tempScore } = this.gameInfo;
+    const { movement, deathCount } = this.board.me;
+    const { stage, life, item1, item2, item3, item4, tempScore } = this.gameInfo;
     const log = {
-      stage, time, movement, isItemUsed, isDead, isAllEnsured,
-      life, item1, item2, item3,
+      stage, time, movement, itemInfo, isAllEnsured,
+      life, item1, item2, item3, item4, deathCount,
       shortest, mine,
       ensuredCell: ensuredCellCount,
       score: tempScore,
@@ -565,7 +582,7 @@ class Canvas {
 
   setItemDiv() {
     const { $item } = this.$stageResult;
-    const { isItemUsed } = this.board;
+    const { isItemUsed } = this.board.itemInfo;
     let itemRatio;
     if (!isItemUsed) {
       itemRatio = RESERVED_ITEM_RATIO
@@ -583,9 +600,9 @@ class Canvas {
   setPerfectClearDiv() {
     const { $perfectClear } = this.$stageResult;
     const { isAllEnsured } = this.board;
-    const { isDead } = this.board.me;
+    const { deathCount } = this.board.me;
     let perfectClearRatio;
-    if (!isDead && isAllEnsured) {
+    if (deathCount === 0 && isAllEnsured) {
       perfectClearRatio = PERFECT_CLEAR_RATIO;
       $perfectClear.color = YELLOWGREEN;
       $perfectClear.innerHTML = `CLEAR x${perfectClearRatio}`;
@@ -726,7 +743,7 @@ class Canvas {
       text, fontSize, textColor,
       width, height, fillColor,
       strokeColor, lineWidth,
-      hover, caption,
+      hover, caption, innerText,
       page
     } = { ...info, ...addition };
     const button = new Button(x, y, page);
@@ -742,6 +759,13 @@ class Canvas {
     hoverInfo.fillColor = hover.fillColor;
     hoverInfo.textColor = hover.textColor;
     button.hoverContextInfo = hoverInfo;
+
+    if (innerText) {
+      const inner = new Rect(x, y + fontSize * 3/4);
+      inner.setTextInfo(innerText, fontSize/4);
+      inner.fontWeight = 500;
+      button.innerText = inner;
+    }
 
     if (caption) {
       const bottomText = new Rect(x, y + height*3/4);
@@ -796,6 +820,9 @@ class Canvas {
     this.button.forEach(btn => {
       this.fillRect(btn, true);
       this.fillText(btn);
+      if (btn.innerText) {
+        this.fillText(btn.innerText);
+      }
     });
   }
 
@@ -895,7 +922,7 @@ class Canvas {
       })
     }
     board.getCell(2, 2).type = 'ensuredMine';
-    board.updateCellProperty();
+    board.updateWholeCellProperty();
     board.updateCanvas();
     if (me) {
       board.me.moveTo(meX ?? 0, meY ?? 0);
@@ -956,7 +983,7 @@ class Canvas {
   }
 
   paintInfoBoard(boardInfo, $div, widthRatio = 2/5, heightRatio = 3/5) {
-    const { xCount, yCount, tomato, yellowgreen, safe, ensured, mine, me, showShape } = boardInfo;
+    const { xCount, yCount, tomato, yellowgreen, ensured, open, mine, block, me, showShape } = boardInfo;
     const canvas = document.createElement('canvas');
     canvas.setAttribute('width', `${this.board.maxWidth * widthRatio}px`);
     canvas.setAttribute('height', `${this.height * heightRatio}px`);
@@ -985,7 +1012,7 @@ class Canvas {
       cell.checkColor = YELLOWGREEN;
     });
 
-    safe?.forEach(([ x, y, value, hintType, shape ]) => {
+    ensured?.forEach(([ x, y, value, hintType, shape ]) => {
       const cell = tempBoard.getCell(x, y);
       tempBoard.ensureCell(x, y);
       cell.number = value;
@@ -997,7 +1024,7 @@ class Canvas {
       tempBoard.updateCell(cell);
     });
 
-    ensured?.forEach(([ x, y, value ]) => {
+    open?.forEach(([ x, y, value ]) => {
       const cell = tempBoard.getCell(x, y);
       tempBoard.openCell(x, y);
       cell.number = value;
@@ -1008,6 +1035,12 @@ class Canvas {
       const cell = tempBoard.getCell(x, y);
       cell.type = 'ensuredMine';
       tempBoard.ensureCell(x, y);
+      tempBoard.updateCell(cell);
+    });
+
+    block?.forEach(([ x, y ]) => {
+      const cell = tempBoard.getCell(x, y);
+      cell.isBlocked = true;
       tempBoard.updateCell(cell);
     });
 
@@ -1456,10 +1489,13 @@ class Canvas {
 
   showChallengeResult() {
     this.initPage('challengeResult');
-    const { item1, item2, item3 } = this.gameInfo;
-    const { isItemUsed, accessable, shortest, ensuredCellCount, isAllEnsured, mine } = this.board;
+    const { item1, item2, item3, item4 } = this.gameInfo;
+    if (this.board.boardSetting.block) {
+      this.board.setAccessable(true);
+    }
+    const { itemInfo, accessable, shortest, ensuredCellCount, isAllEnsured, mine } = this.board;
     const { time } = this.board.boardSetting;
-    const { movement, isDead } = this.board.me
+    const { movement } = this.board.me
     const { $title, $cellCount, $time, $totalScore, $footer } = this.$stageResult;
     const cellCount = ensuredCellCount;
   
@@ -1492,8 +1528,8 @@ class Canvas {
       time: this.board.boardSetting.time,
       accessableLength: accessable.length,
       ensuredCell: ensuredCellCount,
-      movement, item1, item2, item3,
-      mine, shortest, isItemUsed, isDead, isAllEnsured
+      movement, item1, item2, item3, item4,
+      mine, shortest, itemInfo, isAllEnsured
     }
 
     this.postLeaderBoard(userInfo);
@@ -1553,14 +1589,15 @@ class Canvas {
     const { me } = board;
     if (this.gameInfo.item1 > 0) {
       const cellArr = board.getCell(me.x, me.y).getSurroundingCell(2)
-        .filter(cell => !cell.isDetected);
+        .filter(cell => !cell.isDetected && !cell.isBlocked);
       if (cellArr.length) {
         const rand = randRange(0, cellArr.length-1);
         const ensuredCell = cellArr[rand];
         board.openCell(ensuredCell.x, ensuredCell.y);
         board.updateCell(ensuredCell);
         this.gameInfo.item1--;
-        board.isItemUsed = true;
+        board.itemInfo.item1++;
+        board.itemInfo.isItemUsed = true;
         this.paintBottomBar();
         this.showMsgBox(TEXT.msgBox02, YELLOWGREEN, 'item');
       } else {
@@ -1576,7 +1613,7 @@ class Canvas {
     const { me } = board;
     if (this.gameInfo.item2 > 0) {
       const cellArr = board.getCell(me.x, me.y).getSurroundingCell(2)
-        .filter(cell => !cell.isDetected && cell.type !== 'destination');
+        .filter(cell => !cell.isDetected && cell.type !== 'destination' && !cell.isBlocked);
       if (cellArr.length) {
         const rand = randRange(0, cellArr.length-1);
         const safeCell = cellArr[rand];
@@ -1584,7 +1621,8 @@ class Canvas {
         board.clearCheck(safeCell);
         board.updateCell(safeCell);
         this.gameInfo.item2--;
-        board.isItemUsed = true;
+        board.itemInfo.item2++;
+        board.itemInfo.isItemUsed = true;
         this.paintBottomBar();
         this.showMsgBox(TEXT.msgBox04, YELLOWGREEN, 'item');
       } else {
@@ -1600,7 +1638,7 @@ class Canvas {
     const { me } = board;
     if (this.gameInfo.item3 > 0) {
       const cellArr = board.getCell(me.x, me.y).getSurroundingCell()
-        .filter(cell => !cell.isEnsured && cell.type !== 'destination');
+        .filter(cell => !cell.isEnsured && cell.type !== 'destination' && !cell.isBlocked);
       if (cellArr.length) {
         const rand = randRange(0, cellArr.length-1);
         const safeCell = cellArr[rand];
@@ -1608,7 +1646,8 @@ class Canvas {
         board.clearCheck(safeCell);
         board.updateCell(safeCell);
         this.gameInfo.item3--;
-        board.isItemUsed = true;
+        board.itemInfo.item3++;
+        board.itemInfo.isItemUsed = true;
         this.paintBottomBar();
         this.showMsgBox(TEXT.msgBox06, YELLOWGREEN, 'item');
       } else {
@@ -1616,6 +1655,37 @@ class Canvas {
       }
     } else {
       this.showMsgBox(TEXT.msgBox07, TOMATO, 'cannotUseItem');
+    }
+  }
+
+  useItem4() {
+    const { board } = this;
+    const { me } = board;
+    if (this.gameInfo.item4 > 0) {
+      const cellArr = board.getCell(me.x, me.y).getRangeCell(OFFSET4_X, OFFSET4_Y)
+        .filter(cell => cell.isBlocked);
+      if (cellArr.length) {
+        const rand = randRange(0, cellArr.length-1);
+        const brokenCell = cellArr[rand];
+        brokenCell.isBlocked = false;
+        board.openCell(brokenCell.x, brokenCell.y);
+        board.updateCell(brokenCell);
+        this.gameInfo.item4--;
+        board.itemInfo.item4++;
+        board.itemInfo.isItemUsed = true;
+        this.paintBottomBar();
+        this.showMsgBox(TEXT.msgBox11, YELLOWGREEN, 'break');
+
+        if (this.gameInfo.item4 === 0 && !this.board.isPossible) {
+          this.board.ensureWholeCell();
+          this.crossMode('fail');
+        }
+
+      } else {
+        this.showMsgBox(TEXT.msgBox13, TOMATO, 'cannotUseItem');
+      }
+    } else {
+      this.showMsgBox(TEXT.msgBox12, TOMATO, 'cannotUseItem');
     }
   }
 
@@ -1657,10 +1727,9 @@ class Canvas {
 
     const { x, y, cellSize, cellCount } = this.board;
     const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
-    if (this.board.isValid(cx, cy)
-      && !this.board.getCell(cx, cy).isEnsured
-      && this.board.getIdx(cx, cy) !== cellCount-1 ) {
-      const cell = this.board.getCell(cx, cy);
+    if (!this.board.isValid(cx, cy)) return;
+    const cell = this.board.getCell(cx, cy);
+    if((!cell.isEnsured && cell !== cellCount-1) || cell.isBlocked) {
       switch (cell.check) {
         case 0:
           cell.check = 1;
@@ -1689,6 +1758,13 @@ class Canvas {
     this.canvas.removeEventListener('mousemove', this.getCallback('paintCell'));
   }
 
+  clickHelpCallback() {
+    if (!this.isHelpOpen) {
+      this.isHelpOpen = true;
+      this.showHelp();
+    }
+  }
+
   buttonHoverCallback({ offsetX, offsetY }) {
     this.button.forEach(btn => {
       if (btn.contextInfo.isCollision(offsetX, offsetY)) {
@@ -1696,6 +1772,9 @@ class Canvas {
         btn.contextInfo = btn.hoverContextInfo;
         this.fillRect(btn, true);
         this.fillText(btn);
+        if (btn.innerText) {
+          this.fillText(btn.innerText);
+        }
         btn.contextInfo = tempInfo;
         if (btn.caption) {
           this.fillRect(btn.caption);
@@ -1704,6 +1783,9 @@ class Canvas {
       } else {
         this.fillRect(btn, true);
         this.fillText(btn);
+        if (btn.innerText) {
+          this.fillText(btn.innerText);
+        }
         if (btn.caption) {
           const { y } = btn.caption.contextInfo;
           const { fontSize } = btn.caption;
@@ -1718,10 +1800,9 @@ class Canvas {
 
     const { x, y, cellSize, cellCount } = this.board;
     const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
-    if (this.board.isValid(cx, cy)
-      && !this.board.getCell(cx, cy).isEnsured
-      && this.board.getIdx(cx, cy) !== cellCount-1 ) {
-      const cell = this.board.getCell(cx, cy);
+    if (!this.board.isValid(cx, cy)) return;
+    const cell = this.board.getCell(cx, cy);
+    if((!cell.isEnsured && cell !== cellCount-1) || cell.isBlocked) {
       switch (this.checkStatus) {
         case 0:
           cell.check = 0;
@@ -1827,6 +1908,10 @@ class Canvas {
         case 51: // 아이템 3
           this.useItem3();
           break;
+
+        case 52: // 아이템 4
+          this.useItem4();
+          break;
   
         case 82: // R
           this.showShape();
@@ -1859,7 +1944,8 @@ class Canvas {
         this.$leaderboard.$challenge.elem.checked = false;
         this.$leaderboard.$classic.elem.checked = true;
         this.$leaderboard.$list.elem.classList.add('classic-grid');
-        this.$leaderboard.$list.elem.classList.remove('challenge-grid');
+        this.$leaderboard.$list.elem.classList.remove('challenge-grid1');
+        this.$leaderboard.$list.elem.classList.remove('challenge-grid2');
         this.$leaderboard.$select.hide();
         this.$leaderboard.hide();
       } else if (keyCode === 65) { // A
@@ -1979,8 +2065,9 @@ class Canvas {
           return [ this.$gameResult, '' ];
 
         case 'grid':
+          this.$leaderboard.$list.elem.classList.remove('challenge-grid1');
+          this.$leaderboard.$list.elem.classList.remove('challenge-grid2');
           this.$leaderboard.$list.elem.classList.add('classic-grid');
-          this.$leaderboard.$list.elem.classList.remove('challenge-grid');
           this.$leaderboard.$select.hide();
           break;
 
@@ -2036,12 +2123,15 @@ class Canvas {
         }
 
         case 'initHead': {
-          return TEXT.challengeHead;
+          if (BLOCK_MAPS.includes(this.leaderboardInfo.id)) {
+            return TEXT.challengeHead02;
+          }
+          return TEXT.challengeHead01;
         }
 
         case 'userInfo': {
           const [ user, idx ] = args;
-          const { name, score, time, ensuredCell, movement, item1, item2, item3 } = user;
+          const { name, score, time, ensuredCell, movement, item1, item2, item3, item4 } = user;
           let ranking = idx;
           switch (idx) {
             case 1:
@@ -2054,41 +2144,72 @@ class Canvas {
               ranking = '🥉';
               break;
           }
-          return [ ranking, name, score, time, ensuredCell, movement, item1, item2, item3 ];
+          const userInfo = [ ranking, name, score, time, ensuredCell, movement, item1, item2, item3 ];
+          if (BLOCK_MAPS.includes(this.leaderboardInfo.id)) {
+            userInfo.push(item4);
+          }
+          return userInfo;
         }
 
         case 'post':
           return [ this.$stageResult, '/' + this.gameInfo.modeId ];
 
         case 'grid':
+          if (BLOCK_MAPS.includes(this.leaderboardInfo.id)) {
+            this.$leaderboard.$list.elem.classList.remove('challenge-grid1');
+            this.$leaderboard.$list.elem.classList.add('challenge-grid2');
+          } else {
+            this.$leaderboard.$list.elem.classList.add('challenge-grid1');
+            this.$leaderboard.$list.elem.classList.remove('challenge-grid2');
+          }
           this.$leaderboard.$list.elem.classList.remove('classic-grid');
-          this.$leaderboard.$list.elem.classList.add('challenge-grid');
           this.$leaderboard.$select.show();
           break;
 
         case 'paintLine':
+          const { block } = this.board.boardSetting;
+          if (block) return 7;
           return 6;
 
         case 'paintBar': {
-          const { item1, item2, item3 } = this.gameInfo;
+          const { block } = this.board.boardSetting;
+          const { item1, item2, item3, item4 } = this.gameInfo;
           const { remainingMine, mine, ensuredCellCount } = this.board;
           const { time } = this.board.boardSetting;
           const [ minute, second ] = [ Math.floor(time/60), time%60 ];
           const { movement } = this.board.me;
-          const bottomValues = [
-            `${ensuredCellCount}칸`,
-            `${movement}회`,
-            `${remainingMine}/${mine}`,
-            `${minute}:${second<10 ? '0'+second : second}`,
-            `${item1}개`,
-            `${item2}개`,
-            `${item3}개`
-          ];
-          const textType = 'bottomBarCh0';
-          const timeIdx = 3;
-          const multi = 1/7;
-          const plus = -6/14;
-          return { bottomValues, textType, timeIdx, multi, plus };
+          if (block) {
+            const bottomValues = [
+              `${ensuredCellCount}칸`,
+              `${movement}회`,
+              `${remainingMine}/${mine}`,
+              `${minute}:${second<10 ? '0'+second : second}`,
+              `${item1}개`,
+              `${item2}개`,
+              `${item3}개`,
+              `${item4}개`
+            ];
+            const textType = 'bottomBarCh0';
+            const timeIdx = 3;
+            const multi = 1/8;
+            const plus = -7/16;
+            return { bottomValues, textType, timeIdx, multi, plus };
+          } else {
+            const bottomValues = [
+              `${ensuredCellCount}칸`,
+              `${movement}회`,
+              `${remainingMine}/${mine}`,
+              `${minute}:${second<10 ? '0'+second : second}`,
+              `${item1}개`,
+              `${item2}개`,
+              `${item3}개`
+            ];
+            const textType = 'bottomBarCh0';
+            const timeIdx = 3;
+            const multi = 1/7;
+            const plus = -6/14;
+            return { bottomValues, textType, timeIdx, multi, plus };
+          }
         }
 
         case 'ready':
@@ -2341,6 +2462,7 @@ class Button extends Rect {
     super(x, y);
     this.callback = callback;
     this.caption = null;
+    this.innerText = null;
     this.hoverContextInfo = this.contextInfo;
   }
 };
@@ -2378,6 +2500,7 @@ class Cell extends Rect {
   initStatus() {
     this.isDetected = false;
     this.isEnsured = false;
+    this.isBlocked = false;
     this.isSelected = false;
   }
 
@@ -2407,6 +2530,17 @@ class Cell extends Rect {
     return this.type === 'mine' || this.type === 'ensuredMine';
   }
 
+  getRangeCell(offsetX, offsetY) {
+    const cellArr = [];
+    offsetX.forEach((_, i) => {
+      const [ dx, dy ] = [ this.x + offsetX[i], this.y + offsetY[i] ];
+      if (this.board.isValid(dx, dy)) {
+        cellArr.push(this.board.getCell(dx, dy));
+      }
+    });
+    return cellArr;
+  }
+
   getSurroundingCell(diameter = 1) {
     let range, offsetX, offsetY;
     if (diameter === 1) {
@@ -2424,11 +2558,32 @@ class Cell extends Rect {
       }
     });
     return cellArr;
-  } 
+  }
 
   stroke(strokeColor = BLACK, lineWidth = 1) {
     this.setStrokeInfo(strokeColor, lineWidth);
     this.canvas.strokeRect(this);
+  }
+
+  strokeCross() {
+    const { x, y, cellSize } = this.board;
+    const { ctx } = this.canvas;
+    ctx.strokeStyle = BLACK;
+    ctx.lineWidth = 1;
+
+    const [ cx1, cy1 ] = [ x + this.x * cellSize , y + (this.y + 1) * cellSize ];
+    const [ cx2, cy2 ] = [ x + (this.x + 1) * cellSize , y + this.y * cellSize ];
+    ctx.beginPath();
+    ctx.moveTo(cx1, cy1);
+    ctx.lineTo(cx2, cy2);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx2, cy1);
+    ctx.lineTo(cx1, cy2);
+    ctx.closePath();
+    ctx.stroke();
   }
 
   strokeText(strokeColor = BLACK, lineWidth = 1) {
@@ -2487,7 +2642,7 @@ class Me extends Rect {
     this.board = board;
     this.canvas = board.canvas;
     this.movement = 0;
-    this.isDead = false;
+    this.deathCount = 0;
     this.initCoord();
     this.initContextInfo();
   }
@@ -2506,6 +2661,7 @@ class Me extends Rect {
   }
 
   moveX(x) {
+    if (this.board.getCell(this.x + x, this.y).isBlocked) return;
     this.board.updateCell([this.x, this.y]);
     this.x += x;
     this.contextInfo.x += this.board.cellSize * x;
@@ -2514,6 +2670,7 @@ class Me extends Rect {
   }
 
   moveY(y) {
+    if (this.board.getCell(this.x, this.y + y).isBlocked) return;
     this.board.updateCell([this.x, this.y]);
     this.y += y;
     this.contextInfo.y += this.board.cellSize * y;
@@ -2574,7 +2731,7 @@ class Me extends Rect {
     this.moveTo(0, 0);
     this.canvas.showMsgBox(TEXT.msgBox01);
     if (this.canvas.page === 'game') {
-      this.isDead = true;
+      this.deathCount += 1;
       this.canvas.decreaseLife();
     }
   }
@@ -2587,7 +2744,7 @@ class Board {
     this.yCount = yCount;
     this.cellCount = xCount * yCount;
     this.showShapeSwitch = canvas.gameInfo.shapeSwitch;
-    this.isItemUsed = false;
+    this.itemInfo = { isItemUsed: false, item1: 0, item2: 0, item3: 0, item4: 0 };
     this.selectedCell = null;
     this.initSizeValue(sizeValues);
     this.initBoardSetting();
@@ -2666,7 +2823,38 @@ class Board {
   }
 
   get isAllEnsured() {
+    const { block } = this.boardSetting;
+    if (!block) return this.accessable.every(cell => cell.isEnsured);
+    this.setAccessable(true);
     return this.accessable.every(cell => cell.isEnsured);
+  }
+
+  get isPossible() {
+    const visited = new Array(this.cellCount).fill(false);
+    const stack = [0];
+    let isPossible = false;
+
+    while (stack.length) {
+      const idx = stack.pop();
+      if (idx === this.cellCount-1) {
+        isPossible = true;
+        break;
+      }
+      if (!visited[idx]) {
+        visited[idx] = true;
+        const cell = this.getCell(idx);
+        [1, 3, 5, 7].forEach(i => {
+          const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
+          if (this.isValid(dx, dy)) {
+            const newIdx = this.getIdx(dx, dy);
+            if (!this.getCell(newIdx).isMine && !this.getCell(newIdx).isBlocked) {
+              stack.push(newIdx);
+            }
+          }
+        });
+      }
+    }
+    return isPossible;
   }
 
   getMinePlantable() {
@@ -2716,7 +2904,7 @@ class Board {
     }
   }
 
-  setAccessable() {
+  setAccessable(hasBlock = false) {
     const graph = [];
     const visited = new Array(this.cellCount).fill(false);
     
@@ -2734,8 +2922,9 @@ class Board {
             const newIdx = this.getIdx(dx, dy);
             if (this.isValid(dx, dy)
                 && !visited[newIdx]
-                && this.getCell(dx, dy).type !== 'mine'
-                && this.getCell(dx, dy).type !== 'destination') {
+                && !this.getCell(dx, dy).isMine
+                && this.getCell(dx, dy).type !== 'destination'
+                && (hasBlock && !this.getCell(dx, dy).isBlocked)) {
                   stack.push(newIdx);
             }
           });
@@ -2771,7 +2960,7 @@ class Board {
       }
     });
     return removedMineArr;
-    // 어차피 게임판을 그리기 전에 updateCellProperty()를 실행하기 때문에 cell들의 value값은 정정하지 않고 놔둠
+    // 어차피 게임판을 그리기 전에 updateWholeCellProperty()를 실행하기 때문에 cell들의 value값은 정정하지 않고 놔둠
   }
 
   // 지뢰 배치 단계 3 - 인접한 safe칸들로 구성된 구간과 인접한 mine으로 구성된 구간을 분류
@@ -2938,39 +3127,11 @@ class Board {
     let count = mineArr.length;
     const candidate = this.minePlantable.filter(cell => !mineArr.includes(cell)); // 제거된 지뢰 자리 제외
 
-    const isPossible = () => {
-      const visited = new Array(this.cellCount).fill(false);
-      const stack = [0];
-      let isPossible = false;
-
-      while (stack.length) {
-        const idx = stack.pop();
-        if (idx === this.cellCount-1) {
-          isPossible = true;
-          break;
-        }
-        if (!visited[idx]) {
-          visited[idx] = true;
-          const cell = this.getCell(idx);
-          [1, 3, 5, 7].forEach(i => {
-            const [ dx, dy ] = [ cell.x + OFFSET_X[i], cell.y + OFFSET_Y[i] ];
-            if (this.isValid(dx, dy)) {
-              const newIdx = this.getIdx(dx, dy);
-              if (this.getCell(newIdx).type !== 'mine') {
-                stack.push(newIdx);
-              }
-            }
-          });
-        }
-      }
-      return isPossible;
-    };
-
     while (candidate.length && count) {
       const rand = randRange(0, candidate.length-1);
       const cell = candidate.splice(rand, 1)[0];
       cell.type = 'mine';
-      if (isPossible()) {
+      if (this.isPossible) {
         count--;
       } else {
         cell.type = 'normal';
@@ -3015,7 +3176,7 @@ class Board {
     this.relocateMine(removedMineArr);
     this.setAccessable();
     this.shortest = this.getShortest();
-    this.updateCellProperty();
+    this.updateWholeCellProperty();
   }
 
   setNormalCellNumber(cell) {
@@ -3106,11 +3267,32 @@ class Board {
     }
   }
 
-  // 모든 cell의 value값 설정
-  updateCellProperty() {
+  setBlock() {
+    const { block } = this.boardSetting;
+    if (!block) return;
+
+    let [ randBlock, fixedBlock ] = block;
+
+    fixedBlock.forEach(coord => {
+      const [ x, y ] = this.getXY(coord);
+      const cell = this.getCell(x, y)
+      cell.isBlocked = true;
+    });
+
+    const candidate = [...this.minePlantable].filter(cell => !cell.isBlocked);
+    while (randBlock) {
+      const rand = randRange(0, candidate.length-1);
+      const cell = candidate.splice(rand, 1)[0];
+      cell.isBlocked = true;
+      randBlock--;
+    }
+  }
+
+  updateWholeCellProperty() {
     this.setSpecialHint();
     this.forEachCell(this.setProperty);
     this.setSpecialText();
+    this.setBlock();
   }
 
   // 안전한 칸 표시
@@ -3164,7 +3346,10 @@ class Board {
   }
 
   fillCell(cell) {
-    if (cell.isEnsured) {
+    if (cell.isBlocked) {
+      cell.fill(DARK_CHARCOAL);
+      cell.strokeCross();
+    } else if (cell.isEnsured) {
       switch (cell.type) {
         case 'normal':
           cell.fill(LIGHTGRAY);
@@ -3187,7 +3372,7 @@ class Board {
   }
 
   fillCellText(cell) {
-    if (cell.isDetected) {
+    if (!cell.isBlocked && cell.isDetected) {
       cell.fillText();
       if (cell.hintType !== 'normal' && (cell.type !== 'ensuredMine' || cell.isSelected)) {
         cell.strokeText(cell.hintType !== 'navy' ? BLACK : WHITE_ALPHA);

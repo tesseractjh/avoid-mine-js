@@ -9,6 +9,15 @@
 <body>
     <div id="canvas-container" class="flex">
         <div id="msg-box" class="elem flex hidden"></div>
+        <div id="help" class="elem flex-column hidden align-center">
+            <div id="help-title" class="title margin">도움말</div>
+            <div id="help-article" class="help-grid overflow border-bottom"></div>
+            <div id="help-footer" class="margin">F를 누르면 창을 닫습니다.</div>
+        </div>
+        <div id="nav" class="elem flex-column user-select-none">
+            <div id="nav-help" class="nav-item">도움말(Q)</div>
+            <div id="nav-help" class="nav-item"><a class="remove-line" href="https://discord.gg/T3tFG6G3">버그제보</a></div>
+        </div>
         <div id="game-result" class="drop flex-column hidden">
             <div id="game-result-title" class="title margin"></div>
             <div class="flex">
@@ -106,7 +115,7 @@
         <div id="update-log" class="elem flex-column hidden align-center">
             <div id="update-log-title" class="title margin">🛠 패치 노트 🛠</div>
             <div id ="update-log-article" class="align-left overflow border-bottom3"></div>
-            <div id="update-log-footer" class="margin">F를 누르면 창을 닫습니다. <a href="https://discord.gg/T3tFG6G3">건의사항 및 버그제보</a></div>
+            <div id="update-log-footer" class="margin">F를 누르면 창을 닫습니다.</div>
         </div>
         <div id="challenge" class="elem flex-column hidden align-center">
             <div id="challenge-title" class="title margin">맵 선택</div>
@@ -119,11 +128,6 @@
                 F키를 누르면 메인 화면으로 돌아갑니다.<br>
                 R키를 누르면 재도전합니다.
             </div>
-        </div>
-        <div id="help" class="elem flex-column hidden align-center">
-            <div id="help-title" class="title margin">도움말</div>
-            <div id="help-article" class="help-grid overflow border-bottom"></div>
-            <div id="help-footer" class="margin">F를 누르면 창을 닫습니다.</div>
         </div>
         <canvas id="canvas" width="1920", height="920"></canvas>
     </div>

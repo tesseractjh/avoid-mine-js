@@ -1,9 +1,13 @@
 // Constant Values
+const VERSION = 100;
+const PATCH_DATE = '마지막 업데이트: 09/19 오전 1시'
+
 const BACKGROUND_COLOR     = 'rgb( 90,  96, 116)';
 const BLACK                = 'rgb(  0,   0,   0)';
 const WHITE                = 'rgb(255, 255, 255)';
 const CHARCOAL             = 'rgb( 70,  70,  70)';
 const INVERTED_CHARCOAL    = 'rgb(185, 185, 185)';
+const DARK_CHARCOAL        = 'rgb( 50,  50,  50)';
 const LIGHTGRAY            = 'rgb(220, 220, 220)';
 const YELLOWGREEN          = 'rgb(154, 205,  50)';
 const INVERTED_YELLOWGREEN = 'rgb(101,  50, 205)';
@@ -122,6 +126,8 @@ const OFFSET5_Y = [
   1, 1, 1, 1, 1,
   2, 2, 2, 2, 2
 ];
+const OFFSET4_X = [0, -1, 1, 0];
+const OFFSET4_Y = [-1, 0, 0, 1];
 
 const randRange = (start, end) => {
   return Math.floor(Math.random()*(end-start+1)) + start;
@@ -163,6 +169,7 @@ const TEXT = {
   bottomBarCh05: '🔍[1]',
   bottomBarCh06: '🔭[2]',
   bottomBarCh07: '📡[3]',
+  bottomBarCh08: '🔨[4]',
   challengeList01: '🧩 맵 크기:　',
   challengeList02: '⏱ 제한시간:　',
   challengeList03: '💣 지뢰비율:　',
@@ -172,7 +179,8 @@ const TEXT = {
   challengeList07: '🔍',
   challengeList08: '🔭',
   challengeList09: '📡',
-  challengeList10: '⭐',
+  challengeList10: '🔨',
+  challengeList11: '⭐',
   destination: '도착! 메인화면으로 이동합니다.',
   ensuredMine: '💣',
   msgBox01: '지뢰를 밟았습니다!',
@@ -185,6 +193,9 @@ const TEXT = {
   msgBox08: '더 이상 공개할 수 있는 칸이 없습니다!',
   msgBox09: '색깔 힌트의 지뢰 범위를 표시를 해제합니다.',
   msgBox10: '색깔 힌트의 지뢰 범위를 표시합니다.',
+  msgBox11: '🔨[4] 아이템을 사용했습니다.',
+  msgBox12: '🔨[4] 아이템이 없습니다!',
+  msgBox13: '근처에 벽이 없습니다!',
   clickCell01: '색깔 표시',
   clickCell02: '칸을 클릭하여 색깔 표시를 할 수 있습니다.<br>한 번 누르면 빨간색, 두 번 누르면 초록색, 세 번 누르면 사라집니다.<br>눈으로만 추측하면 실수하기 쉽습니다. 색깔 표시를 적극적으로 활용하세요!',
   clickCell03: 'F를 누르면 게임을 시작합니다.',
@@ -194,9 +205,11 @@ const TEXT = {
   introduceItem201: '🔭[2]',
   introduceItem202: '숫자 2키를 눌러 주변 2칸 이내에 있는 칸 중에서<br>공개되지 않은 무작위 칸을 공개할 수 있습니다.<br>만약 그 칸이 지뢰가 아니면 숫자 힌트를, 지뢰라면 지뢰를 표시합니다.',
   introduceItem203: 'F를 눌러 🔭 5개를 받으세요!',
-  introduceItemL01: '📡[3]',
-  introduceItemL02: '숫자 3키를 눌러 내 주변 1칸 이내에 있는 칸 중에서<br>아직 밟지 않은 칸을 공개합니다. 만약 그 칸이 지뢰가 아니면<br>색칠하여 지뢰가 아님을 표시하고, 지뢰라면 지뢰를 표시합니다.',
-  introduceItemL03: 'F를 눌러 📡 3개를 받으세요!',
+  introduceItem301: '📡[3]',
+  introduceItem302: '숫자 3키를 눌러 내 주변 1칸 이내에 있는 칸 중에서<br>아직 밟지 않은 칸을 공개합니다. 만약 그 칸이 지뢰가 아니면<br>색칠하여 지뢰가 아님을 표시하고, 지뢰라면 지뢰를 표시합니다.',
+  introduceItem303: 'F를 눌러 📡 3개를 받으세요!',
+  introduceItem401: '🔨[4]',
+  introduceItem402: '숫자 4키를 눌러 상하좌우 4칸에 있는 벽 중 무작위로 하나를 제거합니다.',
   perfectClear01: '퍼펙트 클리어',
   perfectClear02: '밟을 수 있는 모든 칸을 다 밟으세요!<br>STAGE 5부터는 한 번도 죽지 않고<br>모든 안전한 칸을 밟으면 보너스 점수를 얻습니다.',
   movementOpt01: '움직임 최적화',
@@ -227,14 +240,23 @@ const TEXT = {
   highLow01: '최대/최소 힌트',
   highLow02: '일부 칸의 숫자 힌트가 최대/최소 힌트로 전환됩니다.<br>범위 내 숫자들의 최댓값보다 크거나 같다면 ▲,<br>범위 내 숫자들의 최솟값보다 작거나 같다면 ▼으로 표시됩니다.',
 
+  newElementTitle01: '새로운 요소',
+  newElementBlock01: 'X가 그려진 칸은 지나갈 수 없는 벽입니다.<br>🔍[1], 🔭[2], 📡[3] 아이템으로 공개할 수 없습니다.',
+  newElementTitle02: '새로운 패배 조건',
+  newElementBlock02: '🔨[4] 아이템은 맵 전체 벽의 개수보다 적습니다.<br>만약 🔨[4] 아이템을 모두 사용했을 때,<br>도착점으로 가는 길이 막혀있다면 즉시 패배합니다.',
+  newElementTitle03: '퍼펙트 클리어 조건',
+  newElementBlock03: '벽이 있는 맵에서 퍼펙트 클리어 조건은<br>지뢰뿐 아니라 벽까지 고려하여<br>밟을 수 있는 모든 칸을 밟는 것입니다.',
+
   pressH: 'F를 누르면 다음 스테이지로 이동합니다.',
+  pressH2: 'F를 누르면 다음 설명으로 이동합니다.',
+  pressH3: 'F를 누르면 게임을 시작합니다.',
 
   classicHead: `<div class="border-bottom">순위</div>
   <div class="border-bottom">이름</div>
   <div class="border-bottom">점수</div>
   <div class="border-bottom">랭크</div>
   <div class="border-bottom">스테이지</div>`,
-  challengeHead: `<div class="border-bottom">순위</div>
+  challengeHead01: `<div class="border-bottom">순위</div>
   <div class="border-bottom">이름</div>
   <div class="border-bottom">점수</div>
   <div class="border-bottom">⏱</div>
@@ -242,7 +264,17 @@ const TEXT = {
   <div class="border-bottom">🏃</div>
   <div class="border-bottom">🔍</div>
   <div class="border-bottom">🔭</div>
-  <div class="border-bottom">📡</div>`
+  <div class="border-bottom">📡</div>`,
+  challengeHead02: `<div class="border-bottom">순위</div>
+  <div class="border-bottom">이름</div>
+  <div class="border-bottom">점수</div>
+  <div class="border-bottom">⏱</div>
+  <div class="border-bottom">🧩</div>
+  <div class="border-bottom">🏃</div>
+  <div class="border-bottom">🔍</div>
+  <div class="border-bottom">🔭</div>
+  <div class="border-bottom">📡</div>
+  <div class="border-bottom">🔨</div>`
 };
 
 const BUTTON = {
@@ -275,6 +307,7 @@ const BUTTON = {
 
   updateLog: {
     text: TEXT.mainButton04,
+    innerText: PATCH_DATE,
     fillColor: BLUE,
     hover: {
       fillColor: INVERTED_BLUE,
@@ -579,7 +612,7 @@ const TUTORIAL = {
       me: true,
       meX: 4,
       meY: 2,
-      ensured: [
+      open: [
         [0, 3], [1, 3], [2, 3], [2, 4],
         [3, 0], [3, 1], [3, 2], [3, 3], [4, 2]
       ],
@@ -601,7 +634,7 @@ const TUTORIAL = {
       me: true,
       meX: 4,
       meY: 2,
-      ensured: [
+      open: [
         [0, 3], [1, 3], [2, 3], [2, 4],
         [3, 0], [3, 1], [3, 2], [3, 3], [4, 2]
       ],
@@ -644,11 +677,11 @@ const MODE_CLASSIC = [
 		  type: 'board',
 		  xCount: 3,
 		  yCount: 4,
-		  safe:[
+		  ensured:[
 			  [0, 0, 0], [0, 1, 0], [0, 2, 1],
         [1, 0, 1], [1, 1, 1], [1, 2, 1], [1, 3, 1]
 			],
-      ensured: [
+      open: [
         [0, 3, 1], [2, 0, 1],
         [2, 1, 1], [2, 2, 0], [2, 3, 0]
       ],
@@ -664,11 +697,11 @@ const MODE_CLASSIC = [
       yellowgreen: [
         [2, 1], [2, 2], [2, 3]
       ],
-		  safe:[
+		  ensured:[
 			  [0, 0, 0], [0, 1, 0], [0, 2, 1],
         [1, 0, 1], [1, 1, 1], [1, 2, 1], [1, 3, 1]
 			],
-      ensured: [
+      open: [
         [0, 3, 1], [2, 0, 1],
         [2, 1, 1], [2, 2, 0], [2, 3, 0]
       ],
@@ -697,7 +730,7 @@ const MODE_CLASSIC = [
 		  type: 'board',
 		  xCount: 3,
 		  yCount: 4,
-		  safe:[
+		  ensured:[
 			  [0, 1, 1], [1, 0, 1], [1, 1, 1]
 			], 
 		  me: [0, 0],
@@ -706,10 +739,10 @@ const MODE_CLASSIC = [
 		  type: 'board',
 		  xCount: 3,
 		  yCount: 4,
-		  safe: [
+		  ensured: [
 			  [0, 1, 1], [1, 0, 1], [1, 1, 1]
 			],
-		  ensured: [
+		  open: [
         [1, 2, 3]
       ],
       me: [0, 0]
@@ -740,7 +773,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 4,
-      safe: [
+      ensured: [
         [0, 1, 1], [1, 0, 1], [1, 1, 1]
       ],
       me: [0, 0]
@@ -749,7 +782,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 4,
-      safe: [
+      ensured: [
         [0, 1, 1], [1, 0, 1],
         [1, 1, 1], [1, 2, 3]
       ],
@@ -776,16 +809,16 @@ const MODE_CLASSIC = [
 	{
 	  type: 'info',
     layout: 'leftRight',
-    title: TEXT.introduceItemL01,
+    title: TEXT.introduceItem301,
 	  half1: {
       type: 'board',
       xCount: 3,
       yCount: 4,
-      safe: [
+      ensured: [
         [0, 0, 0], [0, 1, 1],
         [1, 0, 1], [1, 1, 1]
       ],
-      ensured: [
+      open: [
         [0, 2, 3], [1, 2, 4], [2, 0, 1],
         [2, 1, 1], [2, 1, 3], [2, 2, 3]
       ],
@@ -795,19 +828,19 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 4,
-      safe: [
+      ensured: [
         [0, 0, 0], [0, 1, 1], [1, 0, 1],
         [1, 1, 1], [2, 1, 1]
       ],
-      ensured: [
+      open: [
         [0, 2, 3], [1, 2, 4], [2, 0, 1],
         [2, 1, 3], [2, 2, 3]
       ],
       me: [1, 1]
     },
     arrow: true,
-	  header: TEXT.introduceItemL02,
-    footer: TEXT.introduceItemL03,
+	  header: TEXT.introduceItem302,
+    footer: TEXT.introduceItem303,
     bonus: {
       item3: 3
     }
@@ -932,7 +965,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 7,
       yCount: 3,
-      safe: [
+      ensured: [
         [2, 1, 1], [3, 1, 2, 'red'], [5, 1, 3]
       ],
       mine: [
@@ -995,7 +1028,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 5,
-      safe: [
+      ensured: [
         [1, 1, 1], [1, 2, 2, 'orange'], [1, 4, 3]
       ],
       mine: [
@@ -1014,7 +1047,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 5,
-      safe: [
+      ensured: [
         [0, 0, 0, 'red'], [1, 0, 1], [2, 0, 0], [1, 1, 2],
         [2, 1, 2], [0, 2, 2], [1, 2, 1, 'orange'], [1, 3, 3],
         [2, 3, 2], [0, 4, 2], [2, 4, 1]
@@ -1028,7 +1061,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 5,
-      safe: [
+      ensured: [
         [0, 0, 0, 'red'], [1, 0, 1], [2, 0, 0], [1, 1, 2],
         [2, 1, 2], [0, 2, 2], [1, 2, 1, 'orange'], [1, 3, 3],
         [2, 3, 2], [0, 4, 2], [2, 4, 1]
@@ -1101,7 +1134,7 @@ const MODE_CLASSIC = [
 	  	type: 'board',
 	  	xCount: 3,
 	  	yCount: 3,
-	  	safe: [
+	  	ensured: [
 	  		[0, 1, 2], [0, 2, 0], [1, 1, '홀'],
 	  		[1, 2, 1], [2, 0, 1], [2, 1, 2]
 	  	],
@@ -1111,7 +1144,7 @@ const MODE_CLASSIC = [
 	  	type: 'board',
 	  	xCount: 3,
 	  	yCount: 3,
-	  	safe: [
+	  	ensured: [
 	  		[0, 1, '짝'], [0, 2, '짝'], [1, 1, 3],
 	  		[1, 2, 1], [2, 0, 1], [2, 1, '짝']
 	  	],
@@ -1201,7 +1234,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 3,
-      safe: [
+      ensured: [
         [2, 0, 1], [1, 1, 2, 'yellow'],
         [2, 1, 2], [1, 2, 3]
       ],
@@ -1279,7 +1312,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 3,
-      safe: [
+      ensured: [
         [2, 0, 1], [1, 1, 3, 'green'],
         [2, 1, 2], [1, 2, 3]
       ],
@@ -1378,7 +1411,7 @@ const MODE_CLASSIC = [
 	  	type: 'board',
 	  	xCount: 3,
 	  	yCount: 6,
-	  	safe: [
+	  	ensured: [
 	  		[1, 0, 3], [0, 1, 2], [1, 1, 5],
         [2, 1, 3], [0, 3, 2], [1, 3, 3],
         [2, 3, 2], [0, 4, 1], [1, 4, 1],
@@ -1393,7 +1426,7 @@ const MODE_CLASSIC = [
 	  	type: 'board',
 	  	xCount: 3,
 	  	yCount: 6,
-	  	safe: [
+	  	ensured: [
 	  		[1, 0, 3], [0, 1, 2], [1, 1, '▲'],
         [2, 1, 3], [0, 3, 2], [1, 3, 3],
         [2, 3, 2], [0, 4, 1], [1, 4, '▼'],
@@ -1464,7 +1497,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 3,
-      safe: [
+      ensured: [
         [2, 0, 2], [1, 1, 3, 'blue'],
         [0, 2, 2], [2, 2, 2]
       ],
@@ -1537,7 +1570,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 3,
-      safe: [
+      ensured: [
         [1, 0, 3], [2, 0, 2], [1, 1, 2, 'navy'],
         [0, 2, 2], [2, 2, 2]
       ],
@@ -1648,7 +1681,7 @@ const MODE_CLASSIC = [
       type: 'board',
       xCount: 3,
       yCount: 3,
-      safe: [
+      ensured: [
         [0, 0, 2], [1, 1, 0, 'purple', [0, 4, 6, 8]],
         [0, 2, 2], [2, 2, 2]
       ],
@@ -1759,8 +1792,11 @@ const MODE_CLASSIC = [
 ];
 
 const getProcedure = (modeId) => {
+  const game = MODE_CHALLENGE[modeId];
+  const add = game?.add ?? [];
   return [
     { type: 'input' },
+    ...add,
     MODE_CHALLENGE[modeId]
   ];
 };
@@ -1925,11 +1961,158 @@ const MODE_CHALLENGE = [
       difficulty: 2,
       item: [10, 5, 2],
     }
+  },
+
+  {
+    type: 'game',
+    xCount: 10,
+    yCount: 10,
+    mine: 32,
+    boardSetting: {
+      time: 210,
+      block: [0, [
+        33, 34, 35,
+        36, 46, 56,
+        66, 65, 64,
+        63, 53, 43
+      ]]
+    },
+    selectInfo: {
+      name: '중급 04',
+      difficulty: 2,
+      item: [5, 3, 1, 7],
+    },
+    add: [
+      {
+        type: 'info',
+        layout: 'article',
+        title: TEXT.newElementTitle01,
+        article: {
+          type: 'board',
+          xCount: 4,
+          yCount: 4,
+          ensured: [
+            [1, 1, 1], [1, 2, 1],
+            [2, 1, 1], [2, 2, 1], [0, 2, 1]
+          ],
+          block: [
+            [0, 0], [1, 0], [2, 0],
+            [3, 0], [3, 1], [3, 2],
+            [3, 3], [2, 3], [1, 3],
+            [0, 3], [0, 1]
+          ],
+          me: [2, 1]
+        },
+        header: TEXT.newElementBlock01,
+        footer: TEXT.pressH2,
+      },
+
+      {
+        type: 'info',
+        layout: 'leftRight',
+        title: TEXT.introduceItem401,
+        half1: {
+          type: 'board',
+          xCount: 3,
+          yCount: 4,
+          ensured: [
+            [1, 1, 0], [1, 2, 0]
+          ],
+          block: [
+            [0, 0], [1, 0],
+            [2, 0], [2, 1], [2, 2],
+            [2, 3], [1, 3],
+            [0, 3], [0, 2], [0, 1]
+          ],
+          me: [1, 1],
+        },
+        half2: {
+          type: 'board',
+          xCount: 3,
+          yCount: 4,
+          open: [[2, 1, 1]],
+          ensured: [
+            [1, 1, 0], [1, 2, 0]
+          ],
+          block: [
+            [0, 0], [1, 0],
+            [2, 0], [2, 2],
+            [2, 3], [1, 3],
+            [0, 3], [0, 2], [0, 1]
+          ],
+          me: [1, 1]
+        },
+        arrow: true,
+        header: TEXT.introduceItem402,
+        footer: TEXT.pressH2
+      },
+
+      {
+        type: 'info',
+        layout: 'article',
+        title: TEXT.newElementTitle02,
+        article: {
+          type: 'board',
+          xCount: 4,
+          yCount: 4,
+          yellowgreen: [[3, 3]],
+          ensured: [
+            [0, 0, 1], [0, 1, 1],
+            [1, 0, 1], [1, 1, 1], [3, 3, '']
+          ],
+          mine: [[3, 1]],
+          block: [
+            [2, 2], [2, 3]
+          ],
+          me: [0, 0]
+        },
+        header: TEXT.newElementBlock02,
+        footer: TEXT.pressH2,
+      },
+
+      {
+        type: 'info',
+        layout: 'article',
+        title: TEXT.newElementTitle03,
+        article: {
+          type: 'text',
+          text: TEXT.newElementBlock03
+        },
+        footer: TEXT.pressH3
+      }
+    ]
+  },
+
+  {
+    type: 'game',
+    xCount: 8,
+    yCount: 8,
+    mine: 32,
+    boardSetting: {
+      time: 240,
+      red: randRange(2, 4),
+      orange: randRange(2, 4),
+      oddEven: randRange(4, 6),
+      block: [0, [
+        2, 5, 10, 13,
+        16, 17, 19,
+        20, 22, 23,
+        26, 29, 34, 37,
+        40, 41, 43,
+        44, 46, 47,
+        50, 53, 58, 61
+      ]]
+    },
+    selectInfo: {
+      name: '중급 05',
+      difficulty: 3,
+      item: [10, 5, 2, 12]
+    },
   }
 
 ];
 
-const VERSION = 100;
+const BLOCK_MAPS = [9, 10];
 
 [
   colorMatch, RAINBOW,

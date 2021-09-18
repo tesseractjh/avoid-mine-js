@@ -1,7 +1,7 @@
 const HELP = [
 
   {
-    "title": "색깔 힌트",
+    "title": "🎨 색깔 힌트",
     "content": [
       {
         "type": "example",
@@ -97,7 +97,7 @@ const HELP = [
   },
 
   {
-    "title": "글자 힌트",
+    "title": "📝 글자 힌트",
     "content": [
       {
         "type": "example",
@@ -123,7 +123,7 @@ const HELP = [
   },
 
   {
-    "title": "아이템",
+    "title": "🧷 아이템",
     "content": [
       {
         "type": "text1",
@@ -146,7 +146,42 @@ const HELP = [
   },
 
   {
-    "title": "색깔 표시",
+    "title": "🏓 조작법",
+    "content": [
+      {
+        "type": "text1",
+        "text": "WASD",
+        "description": "내 캐릭터를 움직일 수 있습니다."
+      },
+
+      {
+        "type": "text1",
+        "text": "123",
+        "description": "아이템을 사용합니다."
+      },
+
+      {
+        "type": "text1",
+        "text": "R",
+        "description": "숫자 힌트의 모양을 표시합니다."
+      },
+
+      {
+        "type": "text1",
+        "text": "F",
+        "description": "창을 닫거나 다음 화면으로 넘어갈 수 있습니다."
+      },
+
+      {
+        "type": "text1",
+        "text": "Q",
+        "description": "도움말 창을 엽니다."
+      },
+    ]
+  },
+
+  {
+    "title": "기타",
     "content": [
       {
         "type": "example",
