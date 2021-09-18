@@ -23,6 +23,7 @@ class Canvas {
     this.page = 'main';
     this.mode = 'CLASSIC';
     this.checkStatus = 0;
+    this.isHelpOpen = false;
     this.button = [];
     this.callback = [];
     this.sound = this.sound ?? {};
@@ -31,7 +32,7 @@ class Canvas {
       name: '',
       stage: 0,
       modeId: 0,
-      life: 0,
+      life: 5,
       score: 0,
       item1: 0,
       item2: 0,
@@ -132,6 +133,11 @@ class Canvas {
     this.$challenge.$footer = new Modal('challenge-footer');
 
     this.$challengeFail = new Modal('challenge-fail');
+
+    this.$help = new Modal('help');
+    this.$help.$title = new Modal('help-title');
+    this.$help.$article = new Modal('help-article');
+    this.$help.$footer = new Modal('help-footer');
   }
 
   initEventListener() {
@@ -333,6 +339,96 @@ class Canvas {
       })().bind(this));
       this.$challenge.$article.elem.appendChild(div);
     })
+  }
+
+  setHelpList() {
+    HELP.forEach(doc => {
+      const { title, content } = doc;
+      const div = document.createElement('div');
+      this.setText(div, title);
+      div.classList.add('grid-item-title');
+      this.$help.$article.elem.appendChild(div);
+      content.forEach(obj => {
+        const { type, example, text, description } = obj;
+        const leftDiv = document.createElement('div');
+        const rightDiv = document.createElement('div');
+
+        switch (type) {
+          case 'example':
+            const { size, color, color2, value, values, mine } = example;
+            let divList;
+            if (size === 1) {
+              leftDiv.classList.add('grid-example-size1');
+              divList = [...new Array(9)].map((_, i) => {
+                const div = document.createElement('div');
+                div.classList.add('cell1');
+                if (i % 3 === 2) {
+                  div.classList.add('cell-right');
+                }
+                if (i > 5) {
+                  div.classList.add('cell-bottom');
+                }
+                if (value && i === 4) {
+                  this.setText(div, value);
+                }
+                return div;
+              });
+            } else if (size === 2) {
+              leftDiv.classList.add('grid-example-size2');
+              divList = [...new Array(25)].map((v, i) => {
+                const div = document.createElement('div');
+                div.classList.add('cell2');
+                if (i % 5 === 4) {
+                  div.classList.add('cell-right');
+                }
+                if (i > 19) {
+                  div.classList.add('cell-bottom');
+                }
+                if (value && i === 12) {
+                  this.setText(div, value);
+                }
+                return div;
+              });
+            }
+            if (color) {
+              for (const [ key, value ] of Object.entries(color)) {
+                value.forEach(idx => {
+                  divList[idx].style.backgroundColor = colorMatch[key];
+                });
+              }
+            } else if (color2) {
+              for (const [ key, value ] of Object.entries(color2)) {
+                value.forEach(idx => {
+                  divList[idx].style.backgroundColor = key;
+                });
+              }
+            }
+            if (values) {
+              values.forEach(cell => {
+                const [ idx, val ] = cell;
+                this.setText(divList[idx], val);
+              })
+            }
+            if (mine) {
+              mine.forEach(idx => this.setText(divList[idx], '💣'));
+            }
+            divList.forEach(div => leftDiv.appendChild(div));
+            this.setText(rightDiv, description);
+            leftDiv.classList.add('grid-item-example');
+            rightDiv.classList.add('grid-item-description');
+            break;
+          
+          case 'text1':
+            this.setText(leftDiv, text);
+            this.setText(rightDiv, description);
+            leftDiv.classList.add('grid-item-text1');
+            rightDiv.classList.add('grid-item-description');
+            break;
+        }
+        this.$help.$article.elem.appendChild(leftDiv);
+        this.$help.$article.elem.appendChild(rightDiv);
+      });
+    });
   }
 
   initHead() {
@@ -1426,6 +1522,20 @@ class Canvas {
     
   }
 
+  showHelp() {
+    const { $title } = this.$help;
+
+    this.$help.backgroundColor = WHITE_ALPHA;
+    this.$help.font = this.FONT_SIZE/2;
+    this.$help.width = this.width * BOARD_WIDTH_RATIO;
+    this.$help.height = this.height;
+
+    $title.font = this.FONT_SIZE;
+
+    this.setHelpList();
+    this.$help.show();
+  }
+
   showShape() {
     if (this.gameInfo.shapeSwitch) {
       this.showMsgBox(TEXT.msgBox09, TOMATO, 'shape');
@@ -1665,6 +1775,18 @@ class Canvas {
   }
 
   keydownCallback({ keyCode }) {
+
+    if (keyCode === 81 && !this.isHelpOpen) { // Q
+      this.isHelpOpen = true;
+      this.showHelp();
+      return;
+    } else if (keyCode === 70 && this.isHelpOpen) { // F
+      this.isHelpOpen = false;
+      this.$help.hide();
+      this.$help.$article.clear();
+      return;
+    }
+
     if (this.page === 'game' || this.page === 'tutorial') {
       if (!this.board) return;
       const { me, xCount, yCount } = this.board;
@@ -1889,7 +2011,6 @@ class Canvas {
         }
 
         case 'ready':
-          this.gameInfo.life = 5;
           break;
 
         case 'fail':

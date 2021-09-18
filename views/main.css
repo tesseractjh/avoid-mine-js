@@ -126,6 +126,7 @@ li {
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    padding-bottom: 10px;
 }
 
 .border-bottom {
@@ -235,6 +236,92 @@ input[type="radio"]:checked + div {
     font-size: 25px;
     border-radius: 3px;
     text-align: center;
+}
+
+.help-grid {
+    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 10px;
+    padding-bottom: 10px;
+}
+
+.grid-item-title {
+    border: 3px solid black;
+    border-radius: 10px;
+    grid-column: 1 / 5;
+    margin: 20px 0;
+    padding: 15px 0;
+    background-color: mistyrose;
+}
+
+.grid-item-example {
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    padding-bottom: 20px;
+    border-bottom: 3px solid lightgray;
+}
+
+.grid-item-description {
+    grid-column: 2 / 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    margin: 20px 0;
+    padding-bottom: 20px;
+    border-bottom: 3px solid lightgray;
+}
+
+.grid-item-text1 {
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    padding-bottom: 20px;
+    border-bottom: 3px solid lightgray;
+    font-size: 100px;
+}
+
+.grid-example-size1 {
+    display: grid;
+    grid-template-columns: repeat(3, 70px);
+    grid-template-rows: repeat(3, 70px);
+}
+
+.grid-example-size2 {
+    display: grid;
+    grid-template-columns: repeat(5, 42px);
+    grid-template-rows: repeat(5, 42px);
+}
+
+.cell1 {
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+.cell2 {
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+}
+
+.cell-right {
+    border-right: 2px solid black;
+}
+
+.cell-bottom {
+    border-bottom: 2px solid black;
 }
 
 #msg-box {
