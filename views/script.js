@@ -2017,6 +2017,7 @@ class Canvas {
       } else if (this.$leaderboard.$challenge.elem.checked) {
         this.mode = 'CHALLENGE';
         this.$leaderboard.$select.comboBox.options[0].selected = true;
+        this.leaderboardInfo.id = 0;
         this.setLeaderboard(0);
       }
     } else if (tagName === 'SELECT') {
