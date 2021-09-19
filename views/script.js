@@ -3269,6 +3269,7 @@ class Board {
   }
 
   setBlock() {
+    if (!this.boardSetting) return;
     const { block } = this.boardSetting;
     if (!block) return;
 
