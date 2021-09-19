@@ -2092,7 +2092,7 @@ const MODE_CHALLENGE = [
       time: 240,
       red: randRange(2, 4),
       orange: randRange(2, 4),
-      oddEven: randRange(4, 6),
+      oddEven: randRange(6, 8),
       block: [0, [
         2, 5, 10, 13,
         16, 17, 19,
@@ -2105,7 +2105,7 @@ const MODE_CHALLENGE = [
     },
     selectInfo: {
       name: '중급 05',
-      difficulty: 2,
+      difficulty: 3,
       item: [10, 5, 2, 12]
     },
   },
@@ -2113,28 +2113,17 @@ const MODE_CHALLENGE = [
   {
     type: 'game',
     xCount: 15,
-    yCount: 5,
-    mine: 20,
+    yCount: 6,
+    mine: 30,
     boardSetting: {
-      time: 150,
-      red: randRange(1, 2),
-      orange: randRange(1, 2),
-      yellow: randRange(2, 3),
-      green: randRange(2, 3),
-      blue: randRange(2, 3),
-      navy: randRange(2, 3),
-      oddEven: randRange(4, 6),
-      block: [0, [
-        2, 18, 32, 48, 62,
-        5, 21, 35, 51, 65,
-        8, 24, 38, 54, 68,
-        11, 27, 41, 57, 71
-      ]]
+      time: 180,
+      yellow: 88,
+      oddEven: 88
     },
     selectInfo: {
       name: '중급 06',
-      difficulty: 2,
-      item: [5, 2, 1, 4]
+      difficulty: 3,
+      item: [5, 3, 1]
     },
   }
 

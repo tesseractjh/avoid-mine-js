@@ -2496,6 +2496,8 @@ class Cell extends Rect {
         return '▲';
       case 'low':
         return '▼';
+      case 'middle':
+        return '─';
     }
   }
 
@@ -3248,7 +3250,7 @@ class Board {
 
   setSpecialText() {
     if (!this.boardSetting) return;
-    let { oddEven, highLow } = this.boardSetting;
+    let { oddEven, highLow, middle } = this.boardSetting;
     const candidate = [...this.minePlantable];
 
     while (oddEven) {
@@ -3261,11 +3263,14 @@ class Board {
       const rand = randRange(0, candidate.length-1);
       const cell = candidate.splice(rand, 1)[0];
       const numArr = cell.getSurroundingCell().map(surCell => surCell.number);
-      if (cell.number === Math.max(...numArr)) {
+      if (cell.number >= Math.max(...numArr)) {
         cell.textType = 'high';
         highLow--;
-      } else if (cell.number === Math.min(...numArr)) {
+      } else if (cell.number <= Math.min(...numArr)) {
         cell.textType = 'low';
+        highLow--;
+      } else if (middle) {
+        cell.textType = 'middle'
         highLow--;
       }
     }
