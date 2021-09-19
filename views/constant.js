@@ -2087,7 +2087,7 @@ const MODE_CHALLENGE = [
     type: 'game',
     xCount: 8,
     yCount: 8,
-    mine: 32,
+    mine: 24,
     boardSetting: {
       time: 240,
       red: randRange(2, 4),
@@ -2105,8 +2105,36 @@ const MODE_CHALLENGE = [
     },
     selectInfo: {
       name: '중급 05',
-      difficulty: 3,
+      difficulty: 2,
       item: [10, 5, 2, 12]
+    },
+  },
+
+  {
+    type: 'game',
+    xCount: 15,
+    yCount: 5,
+    mine: 20,
+    boardSetting: {
+      time: 150,
+      red: randRange(1, 2),
+      orange: randRange(1, 2),
+      yellow: randRange(2, 3),
+      green: randRange(2, 3),
+      blue: randRange(2, 3),
+      navy: randRange(2, 3),
+      oddEven: randRange(4, 6),
+      block: [0, [
+        2, 18, 32, 48, 62,
+        5, 21, 35, 51, 65,
+        8, 24, 38, 54, 68,
+        11, 27, 41, 57, 71
+      ]]
+    },
+    selectInfo: {
+      name: '중급 06',
+      difficulty: 2,
+      item: [5, 2, 1, 4]
     },
   }
 

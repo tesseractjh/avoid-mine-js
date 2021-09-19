@@ -1618,7 +1618,6 @@ class Canvas {
         const rand = randRange(0, cellArr.length-1);
         const safeCell = cellArr[rand];
         board.ensureCell(safeCell.x, safeCell.y);
-        board.clearCheck(safeCell);
         board.updateCell(safeCell);
         this.gameInfo.item2--;
         board.itemInfo.item2++;
@@ -1643,7 +1642,6 @@ class Canvas {
         const rand = randRange(0, cellArr.length-1);
         const safeCell = cellArr[rand];
         board.ensureCell(safeCell.x, safeCell.y);
-        board.clearCheck(safeCell);
         board.updateCell(safeCell);
         this.gameInfo.item3--;
         board.itemInfo.item3++;
@@ -1669,6 +1667,9 @@ class Canvas {
         const brokenCell = cellArr[rand];
         brokenCell.isBlocked = false;
         board.openCell(brokenCell.x, brokenCell.y);
+        if (brokenCell.isEnsured) {
+          board.clearCheck(brokenCell);
+        }
         board.updateCell(brokenCell);
         this.gameInfo.item4--;
         board.itemInfo.item4++;
@@ -2601,7 +2602,9 @@ class Cell extends Rect {
       this.fillColor = fillColor;
     }
     this.canvas.fillRect(this);
-    if (this.hintType !== 'normal' && (this.isDetected && this.type !== 'ensuredMine' || this.isSelected)) {
+    if (this.hintType !== 'normal'
+      && !this.isBlocked
+      && (this.isDetected && this.type !== 'ensuredMine' || this.isSelected)) {
       if (this.board.showShapeSwitch) {
         this.fillShape(colorMatch[this.hintType]);
       } else if (this.hintType === 'purple') {
@@ -2707,7 +2710,6 @@ class Me extends Rect {
       });
     }
     this.board.ensureCell(cell);
-    this.board.clearCheck(cell);
     this.board.updateCell(cell);
     this.paint();
 
@@ -2898,9 +2900,10 @@ class Board {
   }
 
   clearCheck(cell) {
+    const prevCheck = cell.check;
     cell.check = 0;
     cell.checkColor = '';
-    if(this.canvas.page === 'game') {
+    if(prevCheck > 0 && this.canvas.page === 'game') {
       this.updateRemainingMine();
     }
   }
@@ -3302,6 +3305,7 @@ class Board {
     const cell = x instanceof Cell ? x : this.getCell(x, y);
     cell.isEnsured = true;
     this.openCell(x, y);
+    this.clearCheck(cell);
   }
 
   ensureWholeCell() {
