@@ -45,7 +45,7 @@
                 <div id="cell-count" class="margin stage-result-right"></div>
             </div>
             <div class="flex">
-                <div class="stage-result-left">남은 시간 x1</div>
+                <div id="remaining-time-text" class="stage-result-left">남은 시간 x1</div>
                 <div class="space">─</div>
                 <div id="remaining-time" class="margin stage-result-right"></div>
             </div>
@@ -80,7 +80,7 @@
                 <div id="information-right" class="flex left-right"></div>
             </div>
             <div id="information-article" class="flex"></div>
-            <div id="information-footer" class="flex"></div>
+            <div id="information-footer" class="flex margin border-top"></div>
         </div>
         <div id="input-id" class="elem flex-column hidden align-center">
             <div id="input-id-title" class="title margin">이름을 입력하세요</div>
@@ -94,16 +94,22 @@
             <div id="leaderboard-title" class="margin">순위표</div>
             <div id="leaderboard-container" class="flex-column">
                 <div id="leaderboard-check" class="flex border-bottom4">
-                    <div class="half">
+                    <div class="select-mode">
                         <label class="box-radio-input">
-                            <input id="classic-check" class="hidden" type="radio" name="cp_item" checked="checked">
+                            <input id="classic-check" class="hidden" type="radio" name="mode" checked="checked">
                             <div id="leaderboard-mode01" class="radio">클래식 모드</div>
                         </label>
                     </div>
-                    <div class="half">
+                    <div class="select-mode">
                         <label id="leaderboard-mode02-label" class="box-radio-input">
-                            <input id="challenge-check" class="hidden" type="radio" name="cp_item">
+                            <input id="challenge-check" class="hidden" type="radio" name="mode">
                             <div id="leaderboard-mode02" class="radio">도전 모드</div>
+                        </label>
+                    </div>
+                    <div class="select-mode">
+                        <label class="box-radio-input">
+                            <input id="survival-check" class="hidden" type="radio" name="mode">
+                            <div id="leaderboard-mode03" class="radio">생존 모드</div>
                         </label>
                     </div>
                 </div>
@@ -128,6 +134,35 @@
                 F키를 누르면 메인 화면으로 돌아갑니다.<br>
                 R키를 누르면 재도전합니다.
             </div>
+        </div>
+        <div id="survival-result" class="drop flex-column hidden">
+            <div id="survival-title" class="title margin">GAME OVER</div>
+            <div class="flex">
+                <div class="game-result-left">점수</div>
+                <div class="space">─</div>
+                <div id="survival-score" class="margin game-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="game-result-left">경과시간</div>
+                <div class="space">─</div>
+                <div id="survival-time" class="margin game-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="game-result-left">속도</div>
+                <div class="space">─</div>
+                <div id="survival-delay" class="margin game-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="game-result-left">밟은 칸 수</div>
+                <div class="space">─</div>
+                <div id="survival-cellCount" class="margin game-result-right"></div>
+            </div>
+            <div class="flex">
+                <div class="game-result-left">RANK</div>
+                <div class="space">─</div>
+                <div id="survival-rank" class="margin game-result-right"></div>
+            </div>
+            <div id="survival-footer" class="margin">F키를 누르면 메인 화면으로 돌아갑니다.</div>
         </div>
         <canvas id="canvas" width="1920", height="920"></canvas>
     </div>

@@ -1,6 +1,6 @@
 // Constant Values
 const VERSION = 100;
-const PATCH_DATE = '마지막 업데이트: 09/20 오전 2시'
+const PATCH_DATE = '마지막 업데이트: 09/25 오후 11시'
 
 const BACKGROUND_COLOR     = 'rgb( 90,  96, 116)';
 const BLACK                = 'rgb(  0,   0,   0)';
@@ -23,6 +23,7 @@ const BLUE                 = 'rgb( 51, 153, 255)';
 const INVERTED_BLUE        = 'rgb(204, 102,   0)';
 const NAVY                 = 'rgb(  0,   0, 128)';
 const PURPLE               = 'rgb(127,   0, 255)';
+const LIGHTPURPLE          = 'rgb(204, 153, 255)';
 
 const WHITE_ALPHA          = 'rgba(255, 255, 255, 0.95)';
 const WHITE_ALPHA2         = 'rgba(255, 255, 255, 0.70)';
@@ -75,6 +76,15 @@ const textHintMatch = {
   highLow: '▲▼'
 }
 
+const itemMatch = {
+  item1: '🔍',
+  item2: '🔭',
+  item3: '📡',
+  item4: '🔨',
+  life: '💖',
+  slow: '⏪'
+}
+
 const BOARD_WIDTH_RATIO         = 2/3;
 const BOARD_HEIGHT_RATIO        = 0.85;
 const BOARD_BOTTOM_GAP_RATIO    = 0.12;
@@ -88,25 +98,35 @@ const MOVEMENT_PERFECT_RATIO    = 1.5;
 const RESERVED_ITEM_RATIO       = 1.25;
 const PERFECT_CLEAR_RATIO       = 2;
 
-const RANK_S = 250000;
-const RANK_A = 200000;
-const RANK_B = 100000;
-const RANK_C = 50000;
-const RANK_D = 10000;
-
-const getRank = value => {
-  if (value > RANK_S) {
-    return 'S';
-  } else if (value > RANK_A) {
-    return 'A';
-  } else if (value > RANK_B) {
-    return 'B';
-  } else if (value > RANK_C) {
-    return 'C';
-  } else if (value > RANK_D) {
-    return 'D';
-  } else {
-    return 'F';
+const getRank = (value, mode) => {
+  if (mode === 'CLASSIC') {
+    if (value > 250000) {
+      return 'S';
+    } else if (value > 200000) {
+      return 'A';
+    } else if (value > 100000) {
+      return 'B';
+    } else if (value > 50000) {
+      return 'C';
+    } else if (value > 10000) {
+      return 'D';
+    } else {
+      return 'F';
+    }
+  } else if (mode === 'SURVIVAL') {
+    if (value > 100000) {
+      return 'S';
+    } else if (value > 75000) {
+      return 'A';
+    } else if (value > 50000) {
+      return 'B';
+    } else if (value > 30000) {
+      return 'C';
+    } else if (value > 10000) {
+      return 'D';
+    } else {
+      return 'F';
+    }
   }
 }
 
@@ -142,6 +162,7 @@ const TEXT = {
   mainButton04: '패치노트',
   modeClassic: '클래식 모드',
   modeChallenge: '도전 모드',
+  modeSurvival: '생존 모드',
   backToMainPage: '메인 메뉴',
   tutorialButton01: '이전',
   tutorialButton02: '다음',
@@ -170,6 +191,15 @@ const TEXT = {
   bottomBarCh06: '🔭[2]',
   bottomBarCh07: '📡[3]',
   bottomBarCh08: '🔨[4]',
+  bottomBarSur01: '점수',
+  bottomBarSur02: '🧩',
+  bottomBarSur03: '💖',
+  bottomBarSur04: '⏩',
+  bottomBarSur05: '⏱',
+  bottomBarSur06: '🔍[1]',
+  bottomBarSur07: '🔭[2]',
+  bottomBarSur08: '📡[3]',
+  bottomBarSur09: '🔨[4]',
   challengeList01: '🧩 맵 크기:　',
   challengeList02: '⏱ 제한시간:　',
   challengeList03: '💣 지뢰비율:　',
@@ -238,7 +268,9 @@ const TEXT = {
   oddEven01: '홀짝 힌트',
   oddEven02: '일부 칸의 숫자 힌트가 홀짝 힌트로 전환됩니다.<br>1, 3, 5, 7, 9는 "홀"로,<br>0, 2, 4, 6, 8은 "짝"으로 표시됩니다.',
   highLow01: '최대/최소 힌트',
-  highLow02: '일부 칸의 숫자 힌트가 최대/최소 힌트로 전환됩니다.<br>범위 내 숫자들의 최댓값보다 크거나 같다면 ▲,<br>범위 내 숫자들의 최솟값보다 작거나 같다면 ▼으로 표시됩니다.',
+  highLow02: '일부 칸의 숫자 힌트가 최대/최소 힌트로 전환됩니다.<br>이 칸의 숫자가 범위 내 모든 숫자들보다 더 크면 ▲,<br>범위 내 모든 숫자들보다 더 작으면 ▼로 표시됩니다.',
+  highLow03: '만약 이 칸의 숫자가 범위 내 숫자들의 최댓값과 같다면 △,<br> 범위 내 숫자들의 최솟값과 같다면 ▽로 표시됩니다.<br>즉 ▲▼는 범위 내 유일한 값이고,<br>△▽는 같은 값을 가지는 칸이 있다는 의미입니다.',
+  highLow04: '범위 내 모든 숫자들이 같다면, △와 ▽ 둘 중에서 △가 우선적으로 표시됩니다.',
 
   newElementTitle01: '새로운 요소',
   newElementBlock01: 'X가 그려진 칸은 지나갈 수 없는 벽입니다.<br>🔍[1], 🔭[2], 📡[3] 아이템으로 공개할 수 없습니다.',
@@ -246,6 +278,13 @@ const TEXT = {
   newElementBlock02: '🔨[4] 아이템은 맵 전체 벽의 개수보다 적습니다.<br>만약 🔨[4] 아이템을 모두 사용했을 때,<br>도착점으로 가는 길이 막혀있다면 즉시 패배합니다.',
   newElementTitle03: '퍼펙트 클리어 조건',
   newElementBlock03: '벽이 있는 맵에서 퍼펙트 클리어 조건은<br>지뢰뿐 아니라 벽까지 고려하여<br>밟을 수 있는 모든 칸을 밟는 것입니다.',
+
+  survivalMode01: '생존 모드',
+  survivalMode02: '생존 모드에서는 맵이 계속 왼쪽으로 움직입니다.<br>만약 맵이 움직일 때, 내 캐릭터가 맨 왼쪽줄에 위치해있다면 즉시 패배합니다.',
+  survivalMode03: '각 칸의 힌트는 현재 보이는 맵을 기준으로 숫자가 결정됩니다.<br>따라서, 맵이 움직이면서 일부 칸들의 힌트가 변경될 수 있습니다.',
+  survivalMode04: '처음 30초 동안은 맵이 움직이지 않으며,<br>30초가 되는 순간 움직이기 시작합니다.<br>처음에는 10초 간격으로 맵이 움직이며, 점점 간격이 짧아집니다.',
+  survivalMode05: '맵 곳곳에 아이템이 흩뿌려져 있습니다.<br>해당 아이템 근처 칸으로 이동하면 아이템을 획득할 수 있습니다.',
+  survivalMode06: '아이템은 🔍🔭📡🔨 아이템들과 라이프(💖), 그리고 ⏪가 있습니다.<br>⏪ 아이템은 획득 즉시 맵이 움직이는 속도를 10% 더 느리게 만듭니다.',
 
   pressH: 'F를 누르면 다음 스테이지로 이동합니다.',
   pressH2: 'F를 누르면 다음 설명으로 이동합니다.',
@@ -274,7 +313,14 @@ const TEXT = {
   <div class="border-bottom">🔍</div>
   <div class="border-bottom">🔭</div>
   <div class="border-bottom">📡</div>
-  <div class="border-bottom">🔨</div>`
+  <div class="border-bottom">🔨</div>`,
+  survivalHead: `<div class="border-bottom">순위</div>
+  <div class="border-bottom">이름</div>
+  <div class="border-bottom">점수</div>
+  <div class="border-bottom">랭크</div>
+  <div class="border-bottom">⏱</div>
+  <div class="border-bottom">⏩</div>
+  <div class="border-bottom">🧩</div>`,
 };
 
 const BUTTON = {
@@ -333,6 +379,16 @@ const BUTTON = {
       textColor: WHITE
     },
     caption: '단 하나의 목숨으로 개별 맵 클리어에 도전하는 모드'
+  },
+
+  modeSurvival: {
+    text: TEXT.modeSurvival,
+    fillColor: SKYBLUE,
+    hover: {
+      fillColor: INVERTED_SKYBLUE,
+      textColor: WHITE
+    },
+    caption: '제한 시간 없이 최대한 오래 살아남는 모드'
   },
 
   backToMainPage: {
@@ -612,11 +668,11 @@ const TUTORIAL = {
       me: true,
       meX: 4,
       meY: 2,
-      open: [
+      ensured: [
         [0, 3], [1, 3], [2, 3], [2, 4],
         [3, 0], [3, 1], [3, 2], [3, 3], [4, 2]
       ],
-      detected: [
+      open: [
         [0, 4], [1, 4], [3, 4],
         [4, 0], [4, 1], [4, 3]
       ]
@@ -634,11 +690,11 @@ const TUTORIAL = {
       me: true,
       meX: 4,
       meY: 2,
-      open: [
+      ensured: [
         [0, 3], [1, 3], [2, 3], [2, 4],
         [3, 0], [3, 1], [3, 2], [3, 3], [4, 2]
       ],
-      detected: [
+      open: [
         [0, 4], [1, 4], [3, 4],
         [4, 0], [4, 1], [4, 3]
       ]
@@ -1413,13 +1469,13 @@ const MODE_CLASSIC = [
 	  	yCount: 6,
 	  	ensured: [
 	  		[1, 0, 3], [0, 1, 2], [1, 1, 5],
-        [2, 1, 3], [0, 3, 2], [1, 3, 3],
-        [2, 3, 2], [0, 4, 1], [1, 4, 1],
-        [2, 4, 1], [0, 5, 1], [2, 5, 1]
+        [2, 1, 3], [1, 3, 5], [1, 5, 1],
+        [2, 3, 3], [0, 4, 1], [1, 4, 2],
+        [0, 5, 0], [2, 5, 1]
 	  	],
 	  	mine: [
-        [0, 0], [2, 0], [0, 2],
-        [1, 2], [2, 2], [1, 5]
+        [0, 0], [2, 0], [0, 2], [0, 3],
+        [1, 2], [2, 2], [2, 4]
       ]
 	  },
 	  half2: {
@@ -1428,16 +1484,79 @@ const MODE_CLASSIC = [
 	  	yCount: 6,
 	  	ensured: [
 	  		[1, 0, 3], [0, 1, 2], [1, 1, '▲'],
-        [2, 1, 3], [0, 3, 2], [1, 3, 3],
-        [2, 3, 2], [0, 4, 1], [1, 4, '▼'],
-        [2, 4, 1], [0, 5, 1], [2, 5, 1]
+        [2, 1, 3], [1, 3, 5], [1, 5, 1],
+        [2, 3, 3], [0, 4, 1], [1, 4, 2],
+        [0, 5, '▼'], [2, 5, 1]
 	  	],
 	  	mine: [
-        [0, 0], [2, 0], [0, 2],
-        [1, 2], [2, 2], [1, 5]
+        [0, 0], [2, 0], [0, 2], [0, 3],
+        [1, 2], [2, 2], [2, 4]
       ]
 	  },
+    arrow: true,
 	  header: TEXT.highLow02,
+	  footer: TEXT.pressH2,
+  },
+
+  {
+	  type: 'info',
+	  layout: 'leftRight',
+	  title: TEXT.highLow01,
+	  half1: {
+	  	type: 'board',
+	  	xCount: 3,
+	  	yCount: 3,
+	  	ensured: [
+	  		[0, 0, 1], [1, 0, 2], [0, 1, 1],
+        [2, 1, 2], [0, 2, 1], [1, 2, 1], [2, 2, 1]
+	  	],
+	  	mine: [
+        [2, 0], [1, 1]
+      ]
+	  },
+	  half2: {
+	  	type: 'board',
+	  	xCount: 3,
+	  	yCount: 3,
+	  	ensured: [
+	  		[0, 0, '▽'], [1, 0, 2], [0, 1, 1],
+        [2, 1, '△'], [0, 2, 1], [1, 2, 1], [2, 2, 1]
+	  	],
+	  	mine: [
+        [2, 0], [1, 1]
+      ]
+	  },
+    arrow: true,
+	  header: TEXT.highLow03,
+	  footer: TEXT.pressH2,
+  },
+
+  {
+	  type: 'info',
+	  layout: 'leftRight',
+	  title: TEXT.highLow01,
+	  half1: {
+	  	type: 'board',
+	  	xCount: 3,
+	  	yCount: 3,
+	  	ensured: [
+	  		[0, 0, 0], [0, 1, 0], [0, 2, 0],
+        [1, 0, 0], [1, 1, 0], [1, 2, 0],
+        [2, 0, 0], [2, 1, 0], [2, 2, 0]
+	  	]
+	  },
+	  half2: {
+	  	type: 'board',
+	  	xCount: 3,
+	  	yCount: 3,
+	  	ensured: [
+	  		[0, 0, '△'], [0, 1, '△'], [0, 2, '△'],
+        [1, 0, '△'], [1, 1, '△'], [1, 2, '△'],
+        [2, 0, '△'], [2, 1, '△'], [2, 2, '△']
+	  	]
+	  },
+    arrow: true,
+	  header: TEXT.highLow04,
 	  footer: TEXT.pressH,
   },
 
@@ -1914,8 +2033,8 @@ const MODE_CHALLENGE = [
     mine: 23,
     boardSetting: {
       time: 135,
-      red: 31,
-      orange: 31
+      red: 32,
+      orange: 32
     },
     selectInfo: {
       name: '중급 01',
@@ -1931,8 +2050,8 @@ const MODE_CHALLENGE = [
     mine: 23,
     boardSetting: {
       time: 150,
-      blue: 31,
-      navy: 31
+      blue: 32,
+      navy: 32
     },
     selectInfo: {
       name: '중급 02',
@@ -2117,14 +2236,264 @@ const MODE_CHALLENGE = [
     mine: 30,
     boardSetting: {
       time: 180,
-      yellow: 88,
-      oddEven: 88
+      yellow: 90,
+      oddEven: 90
     },
     selectInfo: {
       name: '중급 06',
       difficulty: 3,
       item: [5, 3, 1]
+    }
+  },
+
+  {
+    type: 'game',
+    xCount: 9,
+    yCount: 9,
+    mine: 25,
+    boardSetting: {
+      time: 600,
+      red: 13,
+      orange: 13,
+      yellow: 12,
+      green: 12,
+      blue: 11,
+      navy: 11,
+      purple: 9,
+      highLow: 81
     },
+    selectInfo: {
+      name: '고급 01',
+      difficulty: 3,
+      item: [10, 5, 2]
+    }
+  }
+
+];
+
+const MODE_SURVIVAL = [
+
+  {
+    type: 'input'
+  },
+
+  {
+    type: 'info',
+    layout: 'leftRight',
+    title: TEXT.survivalMode01,
+    half1: {
+      type: 'board',
+      xCount: 6,
+      yCount: 3,
+      ensured: [
+        [0, 1, 2], [0, 2, 1], [2, 1, 3],
+        [1, 0, 2], [1, 1, 3], [2, 2, 2],
+        [3, 0, 2], [3, 1, 3], [4, 1, 3],
+        [4, 2, 2], [5, 0, 1], [5, 1, 2]
+      ],
+      mine: [
+        [0, 0], [1, 2], [2, 0], [3, 2], [4, 0], [5, 2]
+      ],
+      me: [2, 1]
+    },
+    half2: {
+      type: 'board',
+      xCount: 6,
+      yCount: 3,
+      ensured: [
+        [0, 0, 1], [0, 1, 2], [1, 1, 3],
+        [1, 2, 2], [2, 0, 2], [2, 1, 3],
+        [3, 1, 3], [3, 2, 2], [4, 0, 1],
+        [4, 1, 3], [5, 0, 0], [5, 1, 2]
+      ],
+      mine: [
+        [0, 2], [1, 0], [2, 2], [3, 0], [4, 2], [5, 2]
+      ],
+      me: [1, 1]
+    },
+    arrow: true,
+    header: TEXT.survivalMode02,
+    footer: TEXT.pressH2,
+  },
+
+  {
+    type: 'info',
+    layout: 'leftRight',
+    title: TEXT.survivalMode01,
+    half1: {
+      type: 'board',
+      xCount: 6,
+      yCount: 3,
+      ensured: [
+        [0, 1, 2], [0, 2, 1], [2, 1, 3],
+        [1, 0, 2], [1, 1, 3], [2, 2, 2],
+        [3, 0, 2], [3, 1, 3], [4, 1, 3],
+        [4, 2, 2], [5, 0, 1], [5, 1, 2]
+      ],
+      mine: [
+        [0, 0], [1, 2], [2, 0], [3, 2], [4, 0], [5, 2]
+      ],
+      me: [2, 1]
+    },
+    half2: {
+      type: 'board',
+      xCount: 6,
+      yCount: 3,
+      ensured: [
+        [0, 0, 1], [0, 1, 2], [1, 1, 3],
+        [1, 2, 2], [2, 0, 2], [2, 1, 3],
+        [3, 1, 3], [3, 2, 2], [4, 0, 1],
+        [4, 1, 3], [5, 0, 0], [5, 1, 2]
+      ],
+      mine: [
+        [0, 2], [1, 0], [2, 2], [3, 0], [4, 2], [5, 2]
+      ],
+      me: [1, 1]
+    },
+    arrow: true,
+    header: TEXT.survivalMode03,
+    footer: TEXT.pressH2,
+  },
+
+  {
+    type: 'info',
+    layout: 'article',
+    title: TEXT.survivalMode01,
+    article: {
+      type: 'text',
+      text: TEXT.survivalMode04
+    },
+    footer: TEXT.pressH2,
+  },
+
+  {
+    type: 'info',
+    layout: 'article',
+    title: TEXT.survivalMode01,
+    article: {
+      type: 'text',
+      text: TEXT.survivalMode05
+    },
+    footer: TEXT.pressH2,
+  },
+
+  {
+    type: 'info',
+    layout: 'article',
+    title: TEXT.survivalMode01,
+    article: {
+      type: 'text',
+      text: TEXT.survivalMode06
+    },
+    footer: TEXT.pressH2,
+  },
+
+  {
+    type: 'survival',
+    xCount: 15,
+    yCount: 7,
+    mine: 30,
+    boardSetting: {
+      time: 0,
+      specialCells: {
+        start: randRange(0, 6) * 15,
+        destination: randRange(1, 7) * 15 - 1
+      },
+      itemDrop: 3
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: 31,
+    boardSetting: {
+      red: randRange(3, 5),
+      orange: randRange(3, 5),
+      oddEven: randRange(3, 5),
+      itemDrop: 4
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: 32,
+    boardSetting: {
+      red: randRange(4, 6),
+      orange: randRange(4, 6),
+      yellow: randRange(5, 7),
+      green: randRange(5, 7),
+      oddEven: randRange(3, 6),
+      itemDrop: 5
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: 33,
+    boardSetting: {
+      red: randRange(4, 6),
+      orange: randRange(4, 6),
+      yellow: randRange(4, 6),
+      green: randRange(4, 6),
+      blue: randRange(5, 7),
+      navy: randRange(5, 7),
+      oddEven: randRange(6, 9),
+      itemDrop: randRange(2, 5)
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: 34,
+    boardSetting: {
+      red: randRange(2, 3),
+      orange: randRange(2, 3),
+      yellow: randRange(4, 6),
+      green: randRange(4, 6),
+      blue: randRange(4, 6),
+      navy: randRange(4, 6),
+      purple: randRange(5, 7),
+      oddEven: randRange(6, 9),
+      highLow: randRange(3, 6),
+      itemDrop: randRange(3, 6)
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: 35,
+    boardSetting: {
+      red: randRange(2, 3),
+      orange: randRange(2, 3),
+      yellow: randRange(3, 5),
+      green: randRange(3, 5),
+      blue: randRange(3, 5),
+      navy: randRange(3, 5),
+      purple: randRange(4, 6),
+      oddEven: randRange(6, 9),
+      highLow: randRange(3, 6),
+      block: [randRange(3, 6), []],
+      itemDrop: randRange(4, 7)
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: randRange(35, 50),
+    isFinalSetting: true,
+    boardSetting: {
+      red: randRange(1, 4),
+      orange: randRange(1, 4),
+      yellow: randRange(2, 6),
+      green: randRange(2, 6),
+      blue: randRange(2, 6),
+      navy: randRange(2, 6),
+      purple: randRange(2, 6),
+      oddEven: randRange(4, 10),
+      highLow: randRange(3, 6),
+      block: [randRange(2, 9), []],
+      itemDrop: randRange(5, 11)
+    }
   }
 
 ];
@@ -2132,9 +2501,9 @@ const MODE_CHALLENGE = [
 const BLOCK_MAPS = [9, 10];
 
 [
-  colorMatch, RAINBOW,
+  colorMatch, itemMatch, shapeMatch, textHintMatch, RAINBOW, TEXT_HINT,
   OFFSET_X, OFFSET_Y, 
   OFFSET5_X, OFFSET5_Y, 
   TEXT, BUTTON, TUTORIAL, 
-  MODE_CLASSIC, MODE_CHALLENGE
+  MODE_CLASSIC, MODE_CHALLENGE, MODE_SURVIVAL
 ].forEach(obj => Object.freeze(obj));

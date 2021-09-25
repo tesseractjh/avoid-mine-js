@@ -62,6 +62,7 @@ class Canvas {
   initTimerID() {
     this.tutorialTimer = null;
     this.gameTimer = null;
+    this.survivalTimer = null;
     this.msgTimer = null;
     this.boxDropTimer = null;
   }
@@ -92,6 +93,7 @@ class Canvas {
     this.$stageResult.$perfectClear = new Modal('perfect-clear');
     this.$stageResult.$totalScore = new Modal('total-score');
     this.$stageResult.$footer = new Modal('stage-result-footer');
+    this.$stageResult.$timeText = new Modal('remaining-time-text');
 
     this.$information = new Modal('information');
     this.$information.$title = new Modal('information-title');
@@ -118,10 +120,10 @@ class Canvas {
     this.$leaderboard.$mode02 = new Modal('leaderboard-mode02');
     this.$leaderboard.$classic = new Modal('classic-check');
     this.$leaderboard.$challenge = new Modal('challenge-check');
+    this.$leaderboard.$survival = new Modal('survival-check');
     this.$leaderboard.$select = new Modal('leaderboard-select');
     this.appendComboBox();
-    this.$leaderboard.$classic.elem.addEventListener('change', this.getCallback('change'));
-    this.$leaderboard.$challenge.elem.addEventListener('change', this.getCallback('change'));
+    this.$leaderboard.elem.addEventListener('change', this.getCallback('change'));
 
     this.$updateLog = new Modal('update-log');
     this.$updateLog.$title = new Modal('update-log-title');
@@ -134,6 +136,15 @@ class Canvas {
     this.$challenge.$footer = new Modal('challenge-footer');
 
     this.$challengeFail = new Modal('challenge-fail');
+
+    this.$survivalResult = new Modal('survival-result');
+    this.$survivalResult.$title = new Modal('survival-title');
+    this.$survivalResult.$score = new Modal('survival-score');
+    this.$survivalResult.$time = new Modal('survival-time');
+    this.$survivalResult.$delay = new Modal('survival-delay');
+    this.$survivalResult.$cellCount = new Modal('survival-cellCount');
+    this.$survivalResult.$rank = new Modal('survival-rank');
+    this.$survivalResult.$footer = new Modal('survival-footer');
 
     this.$nav = new Modal('nav');
     this.$nav.$help = new Modal('nav-help');
@@ -152,7 +163,9 @@ class Canvas {
   }
 
   initSound() {
-    ['cannotUseItem', 'clear', 'explosion', 'fail', 'item', 'shape', 'stopwatch', 'break']
+    ['cannotUseItem', 'clear', 'explosion', 'fail',
+    'item', 'shape', 'stopwatch', 'break',
+    'acquisition', 'changeBoard']
       .forEach(sound => {
         const audio = new Audio();
         audio.src = `/sounds/${sound}.mp3`;
@@ -359,7 +372,7 @@ class Canvas {
       div.classList.add('grid-item-title');
       this.$help.$article.elem.appendChild(div);
       content.forEach(obj => {
-        const { type, example, text, description } = obj;
+        const { type, example, text, description, src } = obj;
         const leftDiv = document.createElement('div');
         const rightDiv = document.createElement('div');
 
@@ -441,6 +454,18 @@ class Canvas {
             leftDiv.classList.add('grid-item-text2');
             rightDiv.classList.add('grid-item-description2');
             break;
+
+          case 'image':
+            const img = document.createElement('img');
+            img.src = `/images/${src}`;
+            img.style.width = '220px';
+            img.style.height = '220px';
+            img.style.border = '2px solid black';
+            leftDiv.appendChild(img);
+            this.setText(rightDiv, description);
+            leftDiv.classList.add('grid-item-text1');
+            rightDiv.classList.add('grid-item-description1');
+
         }
         this.$help.$article.elem.appendChild(leftDiv);
         this.$help.$article.elem.appendChild(rightDiv);
@@ -470,11 +495,11 @@ class Canvas {
       this.$leaderboard.show();
       this.page = 'leaderboard';
     } else { // GET요청
-      let uri = id ?? '';
-      if (uri !== '') {
-        uri = '/' + uri;
+      let url = id ?? '';
+      if (url !== '') {
+        url = '/' + url;
       }
-      fetch(`/v${VERSION}/leaderboard/${this.mode.toLowerCase()}${uri}`)
+      fetch(`/v${VERSION}/leaderboard/${this.mode.toLowerCase()}${url}`)
       .then(res => res.json())
       .then(users => {
         this.leaderboardInfo.record = users;
@@ -491,10 +516,10 @@ class Canvas {
   }
 
   postLeaderBoard(userInfo) {
-    const [ $elem, uri ] = this.crossMode('post');
+    const [ $elem, url ] = this.crossMode('post');
     $elem.show();
     this.elementDropEffect($elem);
-    fetch(`/v${VERSION}/save/${this.mode.toLowerCase()}${uri}`, {
+    fetch(`/v${VERSION}/save/${this.mode.toLowerCase()}${url}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)
@@ -643,7 +668,7 @@ class Canvas {
   getGamePage(mode) {
     return function() {
       this.mode = mode;
-      this.board = new Board(this, 1, 1, false);
+      this.board = new Board(this, 1, 1, false); // 임시 board. 실제 게임판 x
       this.paintPage();
       this.canvas.removeEventListener('click', this.getCallback('clickButton'));
       this.canvas.addEventListener('mousedown', this.getCallback('startPaint'));
@@ -666,9 +691,11 @@ class Canvas {
   }
 
   playSound(sound) {
-    this.sound[sound].pause();
-    this.sound[sound].currentTime = 0;
-    this.sound[sound].play();
+    new Promise(resolve => resolve(this.sound[sound].pause()))
+      .then(() => {
+        this.sound[sound].currentTime = 0;
+        this.sound[sound].play();
+      });
   }
 
   decreaseLife() {
@@ -788,6 +815,7 @@ class Canvas {
 
   clearTimer() {
     clearInterval(this.gameTimer);
+    clearInterval(this.survivalTimer);
     clearInterval(this.msgTimer);
     clearInterval(this.boxDropTimer);
   }
@@ -808,6 +836,7 @@ class Canvas {
     this.$challenge.hide();
     this.$challenge.$article.clear();
     this.$challengeFail.hide();
+    this.$survivalResult.hide();
     Modal.modalList.forEach(modal => {
       if (modal.elem.classList.contains('drop')) {
         modal.top = 0;
@@ -899,7 +928,7 @@ class Canvas {
   }
 
   paintTutorialBoard(boardInfo) {
-    const { me, meX, meY, ensured, detected } = boardInfo;
+    const { me, meX, meY, ensured, open } = boardInfo;
     const board = new Board(this, 5, 5);
     this.board = board;
     [
@@ -915,14 +944,14 @@ class Canvas {
         board.ensureCell(x, y);
       })
     }
-    if (detected) {
-      detected.forEach(coord => {
+    if (open) {
+      open.forEach(coord => {
         const [ x, y ] = coord;
         board.openCell(x, y);
       })
     }
     board.getCell(2, 2).type = 'ensuredMine';
-    board.updateWholeCellProperty();
+    board.setWholeCellProperty();
     board.updateCanvas();
     if (me) {
       board.me.moveTo(meX ?? 0, meY ?? 0);
@@ -944,11 +973,11 @@ class Canvas {
 
   paintSelectGameTypeButton() {
     const [ x, width, height, fontSize ] = [
-      this.CENTER, this.FONT_SIZE * 7, this.FONT_SIZE * 2, this.FONT_SIZE
+      this.CENTER, this.FONT_SIZE * 7, this.FONT_SIZE * 7 / 4, this.FONT_SIZE
     ];
     this.createButton(BUTTON.modeClassic, {
         x,
-        y: this.TITLE_SIZE * 4.5,
+        y: this.TITLE_SIZE * 4,
         width,
         height,
         fontSize,
@@ -956,15 +985,23 @@ class Canvas {
     });
     this.createButton(BUTTON.modeChallenge, {
       x,
-      y: this.TITLE_SIZE * 7,
+      y: this.TITLE_SIZE * 6,
       fontSize,
       width,
       height,
       page: this.getChallengeModePage()
     });
+    this.createButton(BUTTON.modeSurvival, {
+      x,
+      y: this.TITLE_SIZE * 8,
+      fontSize,
+      width,
+      height,
+      page: this.getGamePage('SURVIVAL')
+    });
     this.createButton(BUTTON.backToMainPage, {
       x,
-      y: this.TITLE_SIZE * 9.5,
+      y: this.TITLE_SIZE * 10,
       fontSize,
       width,
       height,
@@ -974,9 +1011,16 @@ class Canvas {
   }
 
   paintGameBoard({ xCount, yCount, mine, boardSetting }) {
-    const board = new Board(this, xCount, yCount);
+    let board;
+    if (this.mode === 'SURVIVAL') {
+      board = new SurvivalBoard(this, xCount, yCount);
+    } else {
+      board = new Board(this, xCount, yCount);
+    }
     this.board = board;
     board.boardSetting = { mine, ...boardSetting };
+    const { start, destination } = board.boardSetting.specialCells ?? {} ;
+    board.setStartAndDestination(start, destination);
     board.setBoard(mine);
     board.updateCanvas();
     board.me.updateCanvas();
@@ -998,8 +1042,35 @@ class Canvas {
       cellSize
     });
     tempBoard.showShapeSwitch = showShape ?? false;
-    tempBoard.updateCanvas();
-    
+
+    ensured?.forEach(([ x, y, value, hintType, shape ]) => {
+      const cell = tempBoard.getCell(x, y);
+      tempBoard.ensureCell(x, y);
+      cell.number = value;
+      cell.hintType = hintType ?? 'normal';
+      if (hintType !== 'normal') {
+        cell.shape = shape ?? shapeMatch[hintType];
+      }
+      cell.textColor = hintType ? colorMatch[hintType] : BLACK;
+    });
+
+    open?.forEach(([ x, y, value ]) => {
+      const cell = tempBoard.getCell(x, y);
+      tempBoard.openCell(x, y);
+      cell.number = value;
+    });
+
+    mine?.forEach(([ x, y ]) => {
+      const cell = tempBoard.getCell(x, y);
+      cell.type = 'ensuredMine';
+      tempBoard.ensureCell(x, y);
+    });
+
+    block?.forEach(([ x, y ]) => {
+      const cell = tempBoard.getCell(x, y);
+      cell.isBlocked = true;
+    });
+
     tomato?.forEach(([ x, y ]) => {
       const cell = tempBoard.getCell(x, y);
       cell.check = 1;
@@ -1012,40 +1083,11 @@ class Canvas {
       cell.checkColor = YELLOWGREEN;
     });
 
-    ensured?.forEach(([ x, y, value, hintType, shape ]) => {
-      const cell = tempBoard.getCell(x, y);
-      tempBoard.ensureCell(x, y);
-      cell.number = value;
-      cell.hintType = hintType ?? 'normal';
-      if (hintType !== 'normal') {
-        cell.shape = shape ?? shapeMatch[hintType];
-      }
-      cell.textColor = hintType ? colorMatch[hintType] : BLACK;
-      tempBoard.updateCell(cell);
-    });
-
-    open?.forEach(([ x, y, value ]) => {
-      const cell = tempBoard.getCell(x, y);
-      tempBoard.openCell(x, y);
-      cell.number = value;
-      tempBoard.updateCell(cell);
-    });
-
-    mine?.forEach(([ x, y ]) => {
-      const cell = tempBoard.getCell(x, y);
-      cell.type = 'ensuredMine';
-      tempBoard.ensureCell(x, y);
-      tempBoard.updateCell(cell);
-    });
-
-    block?.forEach(([ x, y ]) => {
-      const cell = tempBoard.getCell(x, y);
-      cell.isBlocked = true;
-      tempBoard.updateCell(cell);
-    });
+    tempBoard.updateCanvas();
 
     if (me) {
-      tempBoard.me.moveTo(me[0], me[1]);
+      const [ x, y ] = me;
+      tempBoard.me.moveTo(x, y);
     }
 
     $div.elem.appendChild(tempCanvas.canvas);
@@ -1122,11 +1164,22 @@ class Canvas {
     this.gameTimer = setInterval(this.setTimer.bind(this), 1000);
   }
 
+  paintSurvivalModeGamePage(initialValue) {
+    this.page = 'game';
+    this.clearPage();
+    this.clearTimer();
+    this.clearModal();
+    this.crossMode('ready');
+    this.paintGameBoard(initialValue);
+    this.paintBottomBar();
+    this.gameTimer = setInterval(this.setCountUpTimer.bind(this), 1000);
+  }
+
   paintBottomBar() {
     const { life } = this.gameInfo;
     const { bottomBarHeight, bottomCenterY } = this.board;
     const { time } = this.board.boardSetting;
-    const [ width, height ] = [ this.width/2, bottomBarHeight ];
+    const [ width, height ] = [ this.crossMode('barWidth'), bottomBarHeight ];
     const background = new Rect(this.CENTER, bottomCenterY);
     background
       .setFillInfo(width, height, WHITE)
@@ -1181,6 +1234,70 @@ class Canvas {
       clearInterval(this.gameTimer);
       this.crossMode('fail');
     }
+  }
+
+  setCountUpTimer() {
+    this.board.boardSetting.time++;
+    this.crossMode('score', 1);
+    this.paintBottomBar();
+  }
+
+  setSurvivalTimer() {
+    if (this.board.boardSetting.time < 29) return;
+    const { cellArr, nextBoard, cellArrItem, nextBoardItem, me } = this.board;
+    cellArr.forEach((row, y) => {
+      row.shift();
+      const lastCell = nextBoard[y].shift();
+      row.push(lastCell);
+      lastCell.setX(this.board.xCount - 1);
+      row.forEach((cell, x) => {
+        if (x < this.board.xCount - 1) {
+          cell.setX(x);
+          if (nextBoard[y][x]) {
+            nextBoard[y][x].setX(x);
+          }
+        }
+      });
+      nextBoard[y].push(null);
+    });
+
+    const firstItems = cellArrItem.filter(item => item.x === 0);
+    firstItems?.forEach(item => cellArrItem.splice(cellArrItem.indexOf(item), 1));
+    cellArrItem.forEach(item => item.setX(item.x-1));
+
+    const lastItems = nextBoardItem.filter(item => item.x === 0);
+    lastItems?.forEach(item => {
+      nextBoardItem.splice(nextBoardItem.indexOf(item), 1);
+      cellArrItem.push(item);
+      item.setX(this.board.xCount - 2);
+    });
+    nextBoardItem.forEach(item => item.setX(item.x-1));
+
+    this.board.forEachCell(this.board.setProperty);
+    this.board.correctHighLow();
+    this.board.updateCanvas();
+
+    if (me.x === 0) {
+      clearInterval(this.survivalTimer);
+      this.crossMode('fail');
+    } else {
+      me.moveX(-1);
+      me.updateCanvas();
+    }
+
+    this.crossMode('score', Math.floor((100000 / this.board.curDelay)**2));
+
+    if (this.board.nextBoard[0][0] === null) {
+      const { xCount, yCount } = this.board;
+      this.board.setNextBoardSetting();
+      const { mine } = this.board.boardSetting;
+      this.board.nextBoard = [...Array(yCount)].map((_, y) => [...Array(xCount)].map((_, x) => new Cell(x, y, this.board)));
+      this.board.setNextBoard(mine);
+    }
+
+    this.finishPaintCallback();
+    this.paintBottomBar();
+    this.playSound('changeBoard');
   }
 
   // 메세지 박스 그리기
@@ -1262,7 +1379,7 @@ class Canvas {
 
     $stage.innerHTML = stage;
     $score.innerHTML = `${score}점`;
-    const rank = getRank(score);
+    const rank = getRank(score, 'CLASSIC');
     $rank.innerHTML = rank;
 
     const tempCanvas = new Canvas($back.elem, false);
@@ -1361,6 +1478,7 @@ class Canvas {
 
     this.$information.backgroundColor = WHITE_ALPHA;
     this.$information.font = this.FONT_SIZE*3/5;
+    this.$information.fontWeight = 600;
     this.$information.width = this.board.maxWidth;
     this.$information.height = this.height;
 
@@ -1368,6 +1486,7 @@ class Canvas {
     $title.font = this.FONT_SIZE;
     $header.innerHTML = header ?? '';
     $footer.innerHTML = footer ?? '';
+    $footer.font = this.FONT_SIZE * 2/5;
 
     if (layout === 'leftRight') {
       if (half1.type === 'board') {
@@ -1555,7 +1674,47 @@ class Canvas {
     this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
     this.canvas.removeEventListener('mousemove', this.getCallback('mineProperty', true));
     this.canvas.removeEventListener('mousewheel', this.getCallback('wheel', true));
-    
+  }
+
+  showSurvivalResult() {
+    this.initPage('survivalResult');
+    const { score } = this.gameInfo;
+    const { time } = this.board.boardSetting;
+    const [ minute, second ] = [ Math.floor(time/60), time%60 ];
+    const { curDelay, itemInfo } = this.board;
+    const { touchedCount } = this.board.me;
+    const { $title, $score, $time, $delay, $cellCount, $rank, $footer } = this.$survivalResult;
+
+    this.$survivalResult.backgroundColor = WHITE_ALPHA;
+    this.$survivalResult.font = this.FONT_SIZE;
+    this.$survivalResult.width = this.board.maxWidth;
+    this.$survivalResult.height = this.height;
+
+    this.playSound('fail');
+
+    $title.font = this.TITLE_SIZE;
+    $footer.font = this.FONT_SIZE/2;
+    $score.innerHTML = `${score}점`;
+    $time.innerHTML = `${minute}분 ${second}초`;
+    const delay = Math.floor(curDelay / 100)/10;
+    $delay.innerHTML = `${delay}초`;
+    $cellCount.innerHTML = `${touchedCount}`;
+    const rank = getRank(score, 'SURVIVAL');
+    $rank.innerHTML = rank;
+
+
+    const userInfo = {
+      name: this.gameInfo.name,
+      cellCount: touchedCount,
+      score, time, delay, itemInfo
+    }
+
+    this.postLeaderBoard(userInfo);
+
+    this.canvas.removeEventListener('mousedown', this.getCallback('startPaint'));
+    this.canvas.removeEventListener('mouseup', this.getCallback('finishPaint'));
+    this.canvas.removeEventListener('mousemove', this.getCallback('mineProperty', true));
+    this.canvas.removeEventListener('mousewheel', this.getCallback('wheel', true));
   }
 
   showHelp() {
@@ -1677,7 +1836,7 @@ class Canvas {
         this.paintBottomBar();
         this.showMsgBox(TEXT.msgBox11, YELLOWGREEN, 'break');
 
-        if (this.gameInfo.item4 === 0 && !this.board.isPossible) {
+        if (this.gameInfo.item4 === 0 && this.mode !== 'SURVIVAL' && !this.board.isPossible) {
           this.board.ensureWholeCell();
           this.crossMode('fail');
         }
@@ -1726,11 +1885,11 @@ class Canvas {
   startPaintCallback({ offsetX, offsetY }) {
     if (this.page !== 'game') return;
 
-    const { x, y, cellSize, cellCount } = this.board;
+    const { x, y, cellSize } = this.board;
     const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
     if (!this.board.isValid(cx, cy)) return;
     const cell = this.board.getCell(cx, cy);
-    if((!cell.isEnsured && cell !== cellCount-1) || cell.isBlocked) {
+    if(!cell.isEnsured && cell || cell.isBlocked) {
       switch (cell.check) {
         case 0:
           cell.check = 1;
@@ -1799,11 +1958,11 @@ class Canvas {
   paintCellCallback({ offsetX, offsetY }) {
     if (this.page !== 'game') return;
 
-    const { x, y, cellSize, cellCount } = this.board;
+    const { x, y, cellSize } = this.board;
     const [ cx, cy ] = [ Math.floor((offsetX - x) / cellSize), Math.floor((offsetY - y) / cellSize) ];
     if (!this.board.isValid(cx, cy)) return;
     const cell = this.board.getCell(cx, cy);
-    if((!cell.isEnsured && cell !== cellCount-1) || cell.isBlocked) {
+    if(!cell.isEnsured || cell.isBlocked) {
       switch (this.checkStatus) {
         case 0:
           cell.check = 0;
@@ -1947,6 +2106,7 @@ class Canvas {
         this.$leaderboard.$list.elem.classList.add('classic-grid');
         this.$leaderboard.$list.elem.classList.remove('challenge-grid1');
         this.$leaderboard.$list.elem.classList.remove('challenge-grid2');
+        this.$leaderboard.$list.elem.classList.remove('survival-grid');
         this.$leaderboard.$select.hide();
         this.$leaderboard.hide();
       } else if (keyCode === 65) { // A
@@ -2001,13 +2161,23 @@ class Canvas {
         this.gameInfo.modeId = modeId;
         this.getGamePage('CHALLENGE').bind(this)();
       }
+    } else if (this.page === 'survivalResult') {
+      if (keyCode === 70) { // F
+        this.page = 'main';
+        this.clearPage();
+        this.clearModal();
+        this.clearTimer();
+        this.initValues();
+        this.canvas.addEventListener('click', this.getCallback('clickButton'));
+        this.paintMainPage();
+      }
     }
   }
 
-  changeCallback({ currentTarget }) {
+  changeCallback({ target }) {
     if (this.page !== 'leaderboard') return;
 
-    const { tagName } = currentTarget;
+    const { tagName } = target;
     this.leaderboardInfo.page = 1;
     this.leaderboardInfo.record = [];
 
@@ -2020,9 +2190,12 @@ class Canvas {
         this.$leaderboard.$select.comboBox.options[0].selected = true;
         this.leaderboardInfo.id = 0;
         this.setLeaderboard(0);
+      } else if (this.$leaderboard.$survival.elem.checked) {
+        this.mode = 'SURVIVAL';
+        this.setLeaderboard();
       }
     } else if (tagName === 'SELECT') {
-      const { options } = currentTarget;
+      const { options } = target;
       this.leaderboardInfo.id = options.selectedIndex;
       this.setLeaderboard(this.leaderboardInfo.id);
     }
@@ -2058,7 +2231,7 @@ class Canvas {
               ranking = '🥉';
               break;
           }
-          const rank = getRank(score);
+          const rank = getRank(score, 'CLASSIC');
           const stage = user.stage < 46 ? user.stage : 'CLEAR';
           return [ ranking, name, score, rank, stage ];
         }
@@ -2069,6 +2242,7 @@ class Canvas {
         case 'grid':
           this.$leaderboard.$list.elem.classList.remove('challenge-grid1');
           this.$leaderboard.$list.elem.classList.remove('challenge-grid2');
+          this.$leaderboard.$list.elem.classList.remove('survival-grid');
           this.$leaderboard.$list.elem.classList.add('classic-grid');
           this.$leaderboard.$select.hide();
           break;
@@ -2099,6 +2273,9 @@ class Canvas {
           return { bottomValues, textType, lifeIdx, timeIdx, multi, plus };
         }
 
+        case 'barWidth':
+          return this.width/2;
+
         case 'ready':
           break;
 
@@ -2115,7 +2292,11 @@ class Canvas {
 
         case 'id':
           return undefined;
-          
+
+        case 'explosion':
+          const [ me ] = args;
+          me.mineExplosion();
+          break;
       }
     } else if (this.mode === 'CHALLENGE') {
       switch (status) {
@@ -2165,6 +2346,7 @@ class Canvas {
             this.$leaderboard.$list.elem.classList.remove('challenge-grid2');
           }
           this.$leaderboard.$list.elem.classList.remove('classic-grid');
+          this.$leaderboard.$list.elem.classList.remove('survival-grid');
           this.$leaderboard.$select.show();
           break;
 
@@ -2214,6 +2396,9 @@ class Canvas {
           }
         }
 
+        case 'barWidth':
+          return this.width/2;
+
         case 'ready':
           this.gameInfo.life = 0;
           break;
@@ -2231,6 +2416,104 @@ class Canvas {
 
         case 'id':
           return this.leaderboardInfo.id;
+
+        case 'explosion':
+          const [ me ] = args;
+          me.mineExplosion();
+          break;
+      }
+    } else if (this.mode === 'SURVIVAL') {
+      switch (status) {
+        case 'initHead': {
+          return TEXT.survivalHead;
+        }
+
+        case 'userInfo': {
+          const [ user, idx ] = args;
+          const { name, score, time, delay, cellCount } = user;
+          let ranking = idx;
+          switch (idx) {
+            case 1:
+              ranking = '🥇';
+              break;
+            case 2:
+              ranking = '🥈';
+              break;
+            case 3:
+              ranking = '🥉';
+              break;
+          }
+          const rank = getRank(score, 'SURVIVAL');
+          const minute = Math.floor(time / 60);
+          const sec = time % 60;
+          const second = sec > 10 ? sec : '0' + sec;
+          return [ ranking, name, score, rank, `${minute}:${second}`, `${delay}s`, cellCount ];
+        }
+
+        case 'post':
+          return [ this.$survivalResult, '' ];
+
+        case 'grid':
+          this.$leaderboard.$list.elem.classList.remove('classic-grid');
+          this.$leaderboard.$list.elem.classList.remove('challenge-grid1');
+          this.$leaderboard.$list.elem.classList.remove('challenge-grid2');
+          this.$leaderboard.$select.hide();
+          this.$leaderboard.$list.elem.classList.add('survival-grid');
+          break;
+
+        case 'paintLine':
+          return 8;
+
+        case 'paintBar': {
+          const { life, score, item1, item2, item3, item4 } = this.gameInfo;
+          const { curDelay } = this.board;
+          const { touchedCount } = this.board.me;
+          const { time } = this.board.boardSetting;
+          const [ minute, second ] = [ Math.floor(time/60), time%60 ];
+          const bottomValues = [
+            `${score}점`,
+            `${touchedCount}`,
+            `${life}`,
+            `${Math.floor(curDelay / 100)/10}초`,
+            `${minute}:${second<10 ? '0'+second : second}`,
+            `${item1}개`,
+            `${item2}개`,
+            `${item3}개`,
+            `${item4}개`
+          ];
+          const textType = 'bottomBarSur0';
+          const lifeIdx = 2;
+          const multi = 1/9;
+          const plus = -8/18;
+          return { bottomValues, textType, lifeIdx, multi, plus };
+        }
+
+        case 'barWidth':
+          return this.width*2/3;
+
+        case 'ready':
+          this.gameInfo.life = 3;
+          this.gameInfo.item1 = 5;
+          this.gameInfo.item2 = 3;
+          this.gameInfo.item3 = 1;
+          this.gameInfo.item4 = 3;
+          break;
+
+        case 'fail':
+          this.showSurvivalResult();
+          break;
+
+        case 'procedure':
+          return MODE_SURVIVAL[this.gameInfo.procedure++];
+
+        case 'explosion':
+          const [ me ] = args;
+          me.mineExplosion(me.prevX, me.prevY);
+          break;
+
+        case 'score':
+        const [ score ] = args;
+        this.gameInfo.score += score;
       }
     }
   }
@@ -2245,6 +2528,8 @@ class Canvas {
         this.showInformation(procedure);
       } else if (type === 'input') {
         this.showInputId();
+      } else if (type === 'survival') {
+        this.paintSurvivalModeGamePage(procedure);
       }
     } else {
       this.crossMode('clear');
@@ -2492,10 +2777,14 @@ class Cell extends Rect {
         return this.number;
       case 'oddEven':
         return this.number % 2 ? '홀' : '짝';
-      case 'high':
+      case 'highest':
         return '▲';
-      case 'low':
+      case 'lowest':
         return '▼';
+      case 'high':
+        return '△'
+      case 'low':
+        return '▽'
       case 'middle':
         return '─';
     }
@@ -2530,6 +2819,14 @@ class Cell extends Rect {
     this.setTextInfo(this.value, cellSize/2, BLACK);
   }
 
+  setX(value) {
+    this.x = value;
+    const { x, y, cellSize } = this.board;
+    this.contextInfo.x = x + (this.x + 0.5) * cellSize;
+    this.contextInfo.y = y + (this.y + 0.5) * cellSize;
+  }
+
+
   get isMine() {
     return this.type === 'mine' || this.type === 'ensuredMine';
   }
@@ -2545,14 +2842,39 @@ class Cell extends Rect {
     return cellArr;
   }
 
-  getSurroundingCell(diameter = 1) {
+  getSurroundingCell(type = 1) {
     let range, offsetX, offsetY;
-    if (diameter === 1) {
-      range = [...new Array(9)].map((_, i) => i);
-      [ offsetX, offsetY ] = [ OFFSET_X, OFFSET_Y ];
-    } else if (diameter === 2) {
-      range = [...new Array(25)].map((_, i) => i);
-      [ offsetX, offsetY ] = [ OFFSET5_X, OFFSET5_Y ];
+
+    switch (type) {
+      case 1:
+        range = [...new Array(9)].map((_, i) => i);
+        [ offsetX, offsetY ] = [ OFFSET_X, OFFSET_Y ];
+        break;
+      
+      case 2:
+        range = [...new Array(25)].map((_, i) => i);
+        [ offsetX, offsetY ] = [ OFFSET5_X, OFFSET5_Y ];
+        break;
+
+      case 3:
+        if (['red', 'orange'].includes(this.hintType)) {
+          range = this.shape.filter(idx => idx !== 12);
+          [ offsetX, offsetY ] = [ OFFSET5_X, OFFSET5_Y ];
+        } else {
+          range = this.shape.filter(idx => idx !== 4);
+          [ offsetX, offsetY ] = [ OFFSET_X, OFFSET_Y ];
+        }
+        break;
+
+      case 4:
+        if (this.y > 0 && this.y < this.board.yCount - 1) {
+          range = [7, 8, 9, 12, 13, 14, 17, 18, 19];
+        } else if (this.y === 0) {
+          range = [12, 13, 14, 17, 18, 19, 22, 23, 24];
+        } else {
+          range = [2, 3, 4, 7, 8, 9, 12, 13, 14];
+        }
+        [ offsetX, offsetY ] = [ OFFSET5_X, OFFSET5_Y ];
     }
     const cellArr = [];
     range.forEach(i => {
@@ -2607,10 +2929,10 @@ class Cell extends Rect {
     if (this.hintType !== 'normal'
       && !this.isBlocked
       && (this.isDetected && this.type !== 'ensuredMine' || this.isSelected)) {
-      if (this.board.showShapeSwitch) {
+      if (this.board.showShapeSwitch && this.hintType !== 'purple') {
         this.fillShape(colorMatch[this.hintType]);
       } else if (this.hintType === 'purple') {
-        this.fillShape(PURPLE);
+        this.fillShape(LIGHTPURPLE);
       }
     }
   }
@@ -2648,6 +2970,7 @@ class Me extends Rect {
     this.board = board;
     this.canvas = board.canvas;
     this.movement = 0;
+    this.touchedCount = 0;
     this.deathCount = 0;
     this.initCoord();
     this.initContextInfo();
@@ -2656,45 +2979,49 @@ class Me extends Rect {
   initCoord() {
     this.x = 0;
     this.y = 0;
+    this.prevX = 0;
+    this.prevY = 0;
   }
 
   initContextInfo() {
     const { x, y, cellSize } = this.board;
-    this.contextInfo.x = x + 0.5 * cellSize;
-    this.contextInfo.y = y + 0.5 * cellSize;
+    this.contextInfo.x = x + (this.x + 0.5) * cellSize;
+    this.contextInfo.y = y + (this.y + 0.5) * cellSize;
     this.setFillInfo(cellSize*3/4, cellSize*3/4, SKYBLUE_ALPHA);
     this.setStrokeInfo();
   }
 
   moveX(x) {
     if (this.board.getCell(this.x + x, this.y).isBlocked) return;
+    this.prevX = this.x;
+    this.prevY = this.y;
     this.board.updateCell([this.x, this.y]);
     this.x += x;
-    this.contextInfo.x += this.board.cellSize * x;
     this.movement++;
     this.updateCanvas();
   }
 
   moveY(y) {
     if (this.board.getCell(this.x, this.y + y).isBlocked) return;
+    this.prevX = this.x;
+    this.prevY = this.y;
     this.board.updateCell([this.x, this.y]);
     this.y += y;
-    this.contextInfo.y += this.board.cellSize * y;
     this.movement++;
     this.updateCanvas();
   }
 
   moveTo(x, y) {
-    const { cellSize } = this.board;
     this.board.updateCell([this.x, this.y]);
     this.x = x;
     this.y = y;
-    this.contextInfo.x = this.board.x + (x + 0.5) * cellSize;
-    this.contextInfo.y = this.board.y + (y + 0.5) * cellSize;
     this.updateCanvas();
   }
 
   paint() {
+    const { x, y, cellSize } = this.board;
+    this.contextInfo.x = x + (this.x + 0.5) * cellSize;
+    this.contextInfo.y = y + (this.y + 0.5) * cellSize;
     this.canvas.fillRect(this, true);
   }
 
@@ -2711,12 +3038,31 @@ class Me extends Rect {
         }
       });
     }
-    this.board.ensureCell(cell);
+    if (!cell.isEnsured) {
+      this.touchedCount++;
+      this.canvas.crossMode('score', 50);
+      this.board.ensureCell(cell);
+    }
+
+    if (this.canvas.mode === 'SURVIVAL') {
+      const { cellArrItem } = this.board;
+      cellArrItem.forEach(item => {
+        const { x, y } = item;
+        if ((this.x === x || this.x === x + 1) && (this.y === y || this.y === y + 1)) {
+          item.acquireItem();
+        }
+      });
+    }
+
+    if (this.canvas.page === 'game') {
+      this.canvas.paintBottomBar();
+    }
+
     this.board.updateCell(cell);
     this.paint();
 
     if (cell.type === 'mine' || cell.type === 'ensuredMine') {
-      this.mineExplosion();
+      this.canvas.crossMode('explosion', this);
     } else if (cell.type === 'destination') {
       if (this.canvas.page === 'tutorial') {
         alert(TEXT.destination);
@@ -2731,9 +3077,9 @@ class Me extends Rect {
     }
   }
 
-  mineExplosion() {
+  mineExplosion(x = 0, y = 0) {
     this.board.updateCell([this.x, this.y]);
-    this.moveTo(0, 0);
+    this.moveTo(x, y);
     this.canvas.showMsgBox(TEXT.msgBox01);
     if (this.canvas.page === 'game') {
       this.deathCount += 1;
@@ -2748,6 +3094,8 @@ class Board {
     this.xCount = xCount;
     this.yCount = yCount;
     this.cellCount = xCount * yCount;
+    this.start = 0;
+    this.destination = this.cellCount - 1;
     this.showShapeSwitch = canvas.gameInfo.shapeSwitch;
     this.itemInfo = { isItemUsed: false, item1: 0, item2: 0, item3: 0, item4: 0 };
     this.selectedCell = null;
@@ -2781,10 +3129,10 @@ class Board {
 
   initBoardSetting() {
     this.cellArr = [...Array(this.yCount)].map((_, y) => [...Array(this.xCount)].map((_, x) => new Cell(x, y, this)));
+    this.curArr = 'cellArr';
     this.boardSetting = null;
     this.remainingMine = 0;
     this.accessable = [];
-    this.minePlantable = this.getMinePlantable();
     this.shortest = 0;
     this.me = new Me(this);
   }
@@ -2836,12 +3184,12 @@ class Board {
 
   get isPossible() {
     const visited = new Array(this.cellCount).fill(false);
-    const stack = [0];
+    const stack = [this.start];
     let isPossible = false;
 
     while (stack.length) {
       const idx = stack.pop();
-      if (idx === this.cellCount-1) {
+      if (idx === this.destination) {
         isPossible = true;
         break;
       }
@@ -2862,11 +3210,10 @@ class Board {
     return isPossible;
   }
 
-  getMinePlantable() {
-    const arr = this.cellArr.flat();
-    arr.pop();
-    arr.shift();
-    return arr;
+  get minePlantable() {
+    return this[this.curArr]
+      .flat()
+      .filter(cell => cell !== this.getCell(this.start) && cell !== this.getCell(this.destination));
   }
 
   getXY(idx) {
@@ -2882,11 +3229,12 @@ class Board {
   }
 
   getCell(x, y = null) {
+    const arr = this[this.curArr];
     if (y === null) {
       const [ dx, dy ] = this.getXY(x);
-      return this.cellArr[dy][dx];
+      return arr[dy][dx];
     }
-    return this.cellArr[y][x];
+    return arr[y][x];
   }
 
   isValid(x, y) {
@@ -2894,7 +3242,7 @@ class Board {
   }
 
   forEachCell(callback, ...args) {
-    this.cellArr.forEach(
+    this[this.curArr].forEach(
       row => row.forEach(cell => {
         callback.bind(this)(cell, ...args);
       })
@@ -2939,13 +3287,15 @@ class Board {
     };
 
     setGraph();
-    graph.push(this.getCell(this.cellCount-1));
+    graph.push(this.getCell(this.destination));
     this.accessable = graph;
   }
 
   // 지뢰 배치 단계 1 - 시작점과 도착점을 제외한 칸에 지뢰를 지정된 개수만큼 랜덤하게 배치
   arrangeMine(mine) {
-    let randArr = [...new Array(this.cellCount-2)].map((_, i) => i+1);
+    let randArr = [...new Array(this.cellCount)]
+      .map((_, i) => i)
+      .filter(idx => idx !== this.start && idx !== this.destination);
     while (mine--) {
       const randIdx = randRange(0, randArr.length-1);
       this.getCell(randArr.splice(randIdx, 1)[0]).type = 'mine';
@@ -2966,7 +3316,7 @@ class Board {
       }
     });
     return removedMineArr;
-    // 어차피 게임판을 그리기 전에 updateWholeCellProperty()를 실행하기 때문에 cell들의 value값은 정정하지 않고 놔둠
+    // 어차피 게임판을 그리기 전에 setWholeCellProperty()를 실행하기 때문에 cell들의 value값은 정정하지 않고 놔둠
   }
 
   // 지뢰 배치 단계 3 - 인접한 safe칸들로 구성된 구간과 인접한 mine으로 구성된 구간을 분류
@@ -3146,14 +3496,14 @@ class Board {
   }
 
   // 최단거리 구하기
-  getShortest(start = 0) {
+  getShortest() {
     const visited = new Array(this.cellCount).fill(false);
     const count = new Array(this.cellCount).fill(0);
-    const queue = [start];
+    const queue = [this.start];
     
     while (queue.length) {
       const idx = queue.shift();
-      if (idx === this.cellCount-1) {
+      if (idx === this.destination) {
         return count[idx];
       }
       if (!visited[idx]) {
@@ -3174,15 +3524,24 @@ class Board {
     return 0;
   }
 
-  setBoard(mine) {
+  setStartAndDestination(start, destination) {
+    this.start = start ?? this.start;
+    this.destination = destination ?? this.destination;
+  }
+
+  setBoard(mine, isSurvival = false) {
+    const [ x, y ] = this.getXY(this.start);
+    this.me.moveTo(x, y);
     const removedMineArr = [];
     this.arrangeMine(mine);
     removedMineArr.push(...this.relaxMineDensity());
     removedMineArr.push(...this.connectSafeGraph());
     this.relocateMine(removedMineArr);
-    this.setAccessable();
-    this.shortest = this.getShortest();
-    this.updateWholeCellProperty();
+    if (!isSurvival) {
+      this.setAccessable();
+      this.shortest = this.getShortest();
+    }
+    this.setWholeCellProperty();
   }
 
   setNormalCellNumber(cell) {
@@ -3194,6 +3553,7 @@ class Board {
       }
     });
     cell.number = count;
+    
   }
 
   setSpecialCellNumber(cell) {
@@ -3223,7 +3583,7 @@ class Board {
 
   setSpecialHint() {
     if (!this.boardSetting) return;
-    const candidate = [...this.minePlantable];
+    const candidate = [...this[this.curArr].flat()];
     RAINBOW.forEach(type => {
       let count = this.boardSetting[type] ?? 0;
       while (count--) {
@@ -3231,7 +3591,7 @@ class Board {
         const cell = candidate.splice(rand, 1)[0];
         cell.hintType = type;
         cell.textColor = colorMatch[type];
-        cell.fontSize = cell.fontSize * 1.1;
+        cell.fontSize = this.cellSize * 0.55;
         if (type === 'purple') {
           const shape = [...new Array(9)].map((_, i) => i);
           let range = randRange(1, 7);
@@ -3262,12 +3622,20 @@ class Board {
     while (candidate.length && highLow) {
       const rand = randRange(0, candidate.length-1);
       const cell = candidate.splice(rand, 1)[0];
-      const numArr = cell.getSurroundingCell().map(surCell => surCell.number);
-      if (cell.number >= Math.max(...numArr)) {
+      const numArr = cell.getSurroundingCell(3).map(surCell => surCell.number);
+      const max = Math.max(...numArr);
+      const min = Math.min(...numArr);
+      if (cell.number === max) {
         cell.textType = 'high';
         highLow--;
-      } else if (cell.number <= Math.min(...numArr)) {
+      } else if (cell.number > max) {
+        cell.textType = 'highest';
+        highLow--;
+      } else if (cell.number === min) {
         cell.textType = 'low';
+        highLow--;
+      } else if (cell.number < min) {
+        cell.textType = 'lowest';
         highLow--;
       } else if (middle) {
         cell.textType = 'middle'
@@ -3298,7 +3666,7 @@ class Board {
     }
   }
 
-  updateWholeCellProperty() {
+  setWholeCellProperty() {
     this.setSpecialHint();
     this.forEachCell(this.setProperty);
     this.setSpecialText();
@@ -3332,7 +3700,7 @@ class Board {
   }
 
   // 단일 셀 업데이트
-  updateCell(cell, isCallback=false) {
+  updateCell(cell, isCallback = false) {
     if (!(cell instanceof Cell)) {
       cell = this.getCell(...cell);
     }
@@ -3410,9 +3778,191 @@ class Board {
   }
 }
 
+class SurvivalBoard extends Board {
+  constructor(canvas, xCount, yCount) {
+    super(canvas, xCount, yCount, false);
+    this.nextBoard = [...Array(this.yCount)].map((_, y) => [...Array(this.xCount)].map((_, x) => new Cell(x, y, this)));
+    this.cellArrItem = [];
+    this.nextBoardItem = [];
+    this.curDelay = 10000;
+    this.nextDelay = 10000;
+  }
+
+  initCellProperty() {
+    const startCell = this.getCell(this.start);
+    startCell.getSurroundingCell(4).forEach(cell => this.ensureCell(cell));
+  }
+
+  replaceBoard() {
+    if (this.canvas.survivalTimer) {
+      clearInterval(this.canvas.survivalTimer);
+    }
+    const newStart = this.destination - (this.destination % this.xCount);
+    const newDestination = randRange(1, 7) * 15 - 1;
+    this.setStartAndDestination(newStart, newDestination);
+    this.curArr = 'nextBoard';
+  }
+
+  restoreBoard() {
+    this.curArr = 'cellArr';
+    this.curDelay = this.nextDelay;
+    this.canvas.survivalTimer = setInterval(this.canvas.setSurvivalTimer.bind(this.canvas), this.curDelay);
+    this.nextDelay = Math.floor(this.curDelay*0.95);
+  }
+
+  setNextBoardSetting() {
+    const procedure = this.canvas.crossMode('procedure');
+    const { mine, boardSetting, isFinalSetting } = procedure;
+    const { time } = this.boardSetting;
+    this.boardSetting = { mine, time, ...boardSetting };
+    if (isFinalSetting) {
+      this.canvas.gameInfo.procedure--;
+    }
+  }
+
+  setNextBoard(mine) {
+    this.replaceBoard();
+    const removedMineArr = [];
+    this.arrangeMine(mine);
+    removedMineArr.push(...this.relaxMineDensity());
+    removedMineArr.push(...this.connectSafeGraph());
+    this.relocateMine(removedMineArr);
+    this.setWholeCellProperty();
+    this.setItem();
+    this.restoreBoard();
+  }
+
+  setBoard(mine) {
+    super.setBoard(mine, true);
+    this.initCellProperty();
+    this.setItem(true);
+    this.setNextBoardSetting();
+    this.setNextBoard(mine);
+  }
+
+  setItem(isFirstBoard = false) {
+    const { xCount, yCount } = this;
+    let { itemDrop } = this.boardSetting;
+    let candidate = [...Array((xCount - 1) * (yCount - 1))].map((_, i) => i);
+    if (isFirstBoard) {
+      candidate = candidate.filter(idx => idx % (xCount - 1) > 2);
+    }
+    while (itemDrop--) {
+      const randIdx = randRange(0, candidate.length-1);
+      const idx = candidate.splice(randIdx, 1)[0];
+      const [ x, y ] = [ idx % (xCount - 1), Math.floor(idx / (xCount - 1)) ];
+      this[this.curArr+'Item'].push(new Item(x, y, this));
+    }
+  }
+
+  updateItem() {
+    this[this.curArr+'Item'].forEach(item => item.paint());
+  }
+
+  updateCanvas() {
+    super.updateCanvas();
+    this.updateItem();
+  }
+
+  updateCell(cell, isCallback = false) {
+    super.updateCell(cell, isCallback);
+    this.updateItem();
+  }
+
+  correctHighLow() {
+    this.forEachCell(cell => {
+      if (['high', 'low', 'highest', 'lowest'].includes(cell.textType)) {
+        const numArr = cell.getSurroundingCell(3).map(surCell => surCell.number);
+        const max = Math.max(...numArr);
+        const min = Math.min(...numArr);
+        if (cell.number === max) {
+          cell.textType = 'high';
+        } else if (cell.number > max) {
+          cell.textType = 'highest';
+        } else if (cell.number === min) {
+          cell.textType = 'low';
+        } else if (cell.number < min) {
+          cell.textType = 'lowest';
+        } else {
+          cell.textType = 'normal';
+        }
+      }
+    });
+  }
+}
+
+class Item extends Rect {
+  constructor(x, y, board) {
+    super();
+    this.x = x;
+    this.y = y;
+    this.board = board;
+    this.canvas = board.canvas;
+    this.initValue();
+    this.initContextInfo();
+  }
+
+  initValue() {
+    const rand = Math.random();
+    if (rand < 120/300) {
+      this.value = 'item1';
+    } else if (rand < 180/300) {
+      this.value = 'item2';
+    } else if (rand < 230/300) {
+      this.value = 'item4';
+    } else if (rand < 260/300) {
+      this.value = 'item3';
+    } else if (rand < 290/300) {
+      this.value = 'life';
+    } else {
+      this.value = 'slow';
+    }
+  }
+
+  initContextInfo() {
+    const { x, y, cellSize } = this.board;
+    this.contextInfo.x = x + (this.x + 1) * cellSize;
+    this.contextInfo.y = y + (this.y + 1) * cellSize;
+    this.setTextInfo(this.value, cellSize/3, BLACK);
+  }
+
+  setX(value) {
+    this.x = value;
+    const { x, y, cellSize } = this.board;
+    this.contextInfo.x = x + (this.x + 1) * cellSize;
+    this.contextInfo.y = y + (this.y + 1) * cellSize;
+  }
+
+  fillText() {
+    this.text = itemMatch[this.value];
+    this.canvas.fillText(this);
+  }
+
+  paint() {
+    this.fillText();
+  }
+
+  acquireItem() {
+    if (this.value === 'slow') {
+      this.board.curDelay = Math.floor(this.board.curDelay*1.1);
+      this.board.nextDelay = Math.floor(this.board.nextDelay*1.1);
+      if (this.canvas.survivalTimer) {
+        clearInterval(this.canvas.survivalTimer);
+        this.canvas.survivalTimer = setInterval(this.canvas.setSurvivalTimer.bind(this.canvas), this.board.curDelay);
+      }
+    } else {
+      this.canvas.gameInfo[this.value]++;
+    }
+    this.board.cellArrItem.splice(this.board.cellArrItem.indexOf(this), 1);
+    this.board.updateCanvas();
+    this.canvas.paintBottomBar();
+    this.canvas.playSound('acquisition');
+  }
+}
+
 //--------------------------------------------------------------------------------------------------
 // main
 
 let mainCanvas = new Canvas(document.getElementById('canvas'));
 mainCanvas.paintMainPage();
-mainCanvas = null;
+//mainCanvas = null;

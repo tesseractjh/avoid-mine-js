@@ -6,11 +6,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const User = require('./models/User');
 const challengeRoute = require('./routes/challengeRoute');
+const survivalRoute = require('./routes/survivalRoute');
 
 app.use(cors());
 app.use(express.json());
 app.use('/', express.static(__dirname + '/'));
 app.use('/', challengeRoute);
+app.use('/', survivalRoute);
 
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, err => {
   if (err) {
@@ -21,7 +23,7 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, err => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/dist/index.html');
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 // 현재 버전

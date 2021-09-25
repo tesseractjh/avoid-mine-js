@@ -131,6 +131,14 @@ li {
     row-gap: 10px;
 }
 
+.survival-grid {
+    width: 95%;
+    margin: 15px auto;
+    display: grid;
+    grid-template-columns: 9% 33% 22% 9% 9% 9% 9%;
+    row-gap: 10px;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -231,8 +239,8 @@ input[type="radio"]:checked + div {
     color: white;
 }
 
-.half {
-    width: 50%;
+.select-mode {
+    flex: 1;
 }
 
 .select {
