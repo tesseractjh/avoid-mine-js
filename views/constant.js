@@ -2237,7 +2237,7 @@ const MODE_CHALLENGE = [
     boardSetting: {
       time: 180,
       yellow: 90,
-      oddEven: 90
+      oddEven: 88
     },
     selectInfo: {
       name: '중급 06',
