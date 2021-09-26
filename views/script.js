@@ -3965,4 +3965,4 @@ class Item extends Rect {
 
 let mainCanvas = new Canvas(document.getElementById('canvas'));
 mainCanvas.paintMainPage();
-//mainCanvas = null;
+mainCanvas = null;
