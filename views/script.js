@@ -3784,8 +3784,9 @@ class SurvivalBoard extends Board {
     this.nextBoard = [...Array(this.yCount)].map((_, y) => [...Array(this.xCount)].map((_, x) => new Cell(x, y, this)));
     this.cellArrItem = [];
     this.nextBoardItem = [];
-    this.curDelay = 10000;
-    this.nextDelay = 10000;
+    this.curDelay = SURVIVAL_DELAY;
+    this.nextDelay = SURVIVAL_DELAY;
+    this.delayRatio = SURVIVAL_INIT_RATIO;
   }
 
   initCellProperty() {
@@ -3807,7 +3808,10 @@ class SurvivalBoard extends Board {
     this.curArr = 'cellArr';
     this.curDelay = this.nextDelay;
     this.canvas.survivalTimer = setInterval(this.canvas.setSurvivalTimer.bind(this.canvas), this.curDelay);
-    this.nextDelay = Math.floor(this.curDelay*0.95);
+    this.nextDelay = Math.floor(this.curDelay*this.delayRatio);
+    if (this.delayRatio < SURVIVAL_FINAL_RATIO) {
+      this.delayRatio = (Math.floor(this.delayRatio * 100) + 1)/100;
+    }
   }
 
   setNextBoardSetting() {
@@ -3910,9 +3914,9 @@ class Item extends Rect {
       this.value = 'item2';
     } else if (rand < 230/300) {
       this.value = 'item4';
-    } else if (rand < 260/300) {
+    } else if (rand < 265/300) {
       this.value = 'item3';
-    } else if (rand < 290/300) {
+    } else if (rand < 295/300) {
       this.value = 'life';
     } else {
       this.value = 'slow';

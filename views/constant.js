@@ -2407,10 +2407,9 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 31,
     boardSetting: {
-      red: randRange(3, 5),
-      orange: randRange(3, 5),
-      oddEven: randRange(3, 5),
-      itemDrop: 4
+      red: randRange(4, 6),
+      orange: randRange(4, 6),
+      itemDrop: 3
     }
   },
 
@@ -2418,12 +2417,10 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 32,
     boardSetting: {
-      red: randRange(4, 6),
-      orange: randRange(4, 6),
-      yellow: randRange(5, 7),
-      green: randRange(5, 7),
-      oddEven: randRange(3, 6),
-      itemDrop: 5
+      red: randRange(3, 5),
+      orange: randRange(3, 5),
+      oddEven: randRange(4, 6),
+      itemDrop: 4
     }
   },
 
@@ -2431,14 +2428,12 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 33,
     boardSetting: {
-      red: randRange(4, 6),
-      orange: randRange(4, 6),
-      yellow: randRange(4, 6),
-      green: randRange(4, 6),
-      blue: randRange(5, 7),
-      navy: randRange(5, 7),
-      oddEven: randRange(6, 9),
-      itemDrop: randRange(2, 5)
+      red: randRange(3, 5),
+      orange: randRange(3, 5),
+      yellow: randRange(3, 5),
+      green: randRange(3, 5),
+      oddEven: randRange(4, 6),
+      itemDrop: 4
     }
   },
 
@@ -2446,16 +2441,14 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 34,
     boardSetting: {
-      red: randRange(2, 3),
-      orange: randRange(2, 3),
-      yellow: randRange(4, 6),
-      green: randRange(4, 6),
-      blue: randRange(4, 6),
-      navy: randRange(4, 6),
-      purple: randRange(5, 7),
-      oddEven: randRange(6, 9),
-      highLow: randRange(3, 6),
-      itemDrop: randRange(3, 6)
+      red: randRange(3, 5),
+      orange: randRange(3, 5),
+      yellow: randRange(3, 5),
+      green: randRange(3, 5),
+      blue: randRange(3, 5),
+      navy: randRange(3, 5),
+      oddEven: randRange(4, 6),
+      itemDrop: 5
     }
   },
 
@@ -2463,40 +2456,113 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 35,
     boardSetting: {
+      red: randRange(3, 5),
+      orange: randRange(3, 5),
+      yellow: randRange(3, 5),
+      green: randRange(3, 5),
+      blue: randRange(3, 5),
+      navy: randRange(3, 5),
+      oddEven: randRange(4, 6),
+      highLow: randRange(4, 6),
+      itemDrop: 5
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: 36,
+    boardSetting: {
+      red: randRange(3, 5),
+      orange: randRange(3, 5),
+      yellow: randRange(3, 5),
+      green: randRange(3, 5),
+      blue: randRange(3, 5),
+      navy: randRange(3, 5),
+      purple: randRange(3, 5),
+      oddEven: randRange(4, 6),
+      highLow: randRange(4, 6),
+      itemDrop: randRange(4, 6)
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: 37,
+    boardSetting: {
       red: randRange(2, 3),
       orange: randRange(2, 3),
       yellow: randRange(3, 5),
       green: randRange(3, 5),
       blue: randRange(3, 5),
       navy: randRange(3, 5),
-      purple: randRange(4, 6),
-      oddEven: randRange(6, 9),
-      highLow: randRange(3, 6),
-      block: [randRange(3, 6), []],
-      itemDrop: randRange(4, 7)
+      purple: randRange(3, 5),
+      oddEven: randRange(5, 7),
+      highLow: randRange(5, 7),
+      block: [randRange(3, 5), []],
+      itemDrop: randRange(4, 6)
     }
   },
 
   {
     type: 'survivalSetting',
-    mine: randRange(35, 50),
+    mine: 38,
+    boardSetting: {
+      red: randRange(2, 3),
+      orange: randRange(2, 3),
+      yellow: randRange(3, 6),
+      green: randRange(3, 6),
+      blue: randRange(3, 6),
+      navy: randRange(3, 6),
+      purple: randRange(4, 6),
+      oddEven: randRange(6, 8),
+      highLow: randRange(6, 8),
+      block: [randRange(4, 6), []],
+      itemDrop: randRange(4, 6)
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: 39,
+    boardSetting: {
+      red: randRange(2, 4),
+      orange: randRange(2, 4),
+      yellow: randRange(4, 7),
+      green: randRange(4, 7),
+      blue: randRange(4, 7),
+      navy: randRange(4, 7),
+      purple: randRange(4, 7),
+      oddEven: randRange(6, 8),
+      highLow: randRange(6, 8),
+      block: [randRange(5, 7), []],
+      itemDrop: randRange(4, 6)
+    }
+  },
+
+  {
+    type: 'survivalSetting',
+    mine: randRange(35, 45),
     isFinalSetting: true,
     boardSetting: {
-      red: randRange(1, 4),
-      orange: randRange(1, 4),
-      yellow: randRange(2, 6),
-      green: randRange(2, 6),
-      blue: randRange(2, 6),
-      navy: randRange(2, 6),
-      purple: randRange(2, 6),
-      oddEven: randRange(4, 10),
-      highLow: randRange(3, 6),
-      block: [randRange(2, 9), []],
-      itemDrop: randRange(5, 11)
+      red: randRange(2, 4),
+      orange: randRange(2, 4),
+      yellow: randRange(3, 6),
+      green: randRange(3, 6),
+      blue: randRange(3, 6),
+      navy: randRange(3, 6),
+      purple: randRange(3, 6),
+      oddEven: randRange(5, 8),
+      highLow: randRange(4, 8),
+      block: [randRange(3, 8), []],
+      itemDrop: randRange(3, 9)
     }
   }
 
 ];
+
+const SURVIVAL_DELAY = 10000;
+const SURVIVAL_INIT_RATIO = 0.91;
+const SURVIVAL_FINAL_RATIO = 0.97;
 
 const BLOCK_MAPS = [9, 10];
 
