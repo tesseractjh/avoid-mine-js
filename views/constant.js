@@ -1,6 +1,6 @@
 // Constant Values
 const VERSION = 100;
-const PATCH_DATE = '마지막 업데이트: 09/25 오후 11시'
+const PATCH_DATE = '마지막 업데이트: 09/28 오전 1시'
 
 const BACKGROUND_COLOR     = 'rgb( 90,  96, 116)';
 const BLACK                = 'rgb(  0,   0,   0)';
@@ -2561,7 +2561,7 @@ const MODE_SURVIVAL = [
 ];
 
 const SURVIVAL_DELAY = 10000;
-const SURVIVAL_INIT_RATIO = 0.91;
+const SURVIVAL_INIT_RATIO = 0.92;
 const SURVIVAL_FINAL_RATIO = 0.97;
 
 const BLOCK_MAPS = [9, 10];
