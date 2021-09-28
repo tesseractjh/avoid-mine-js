@@ -1,0 +1,8 @@
+<rss version="2.0">
+  <channel>
+  <title>지뢰피하기</title>
+  <link>https://avoidmine.herokuapp.com/</link>
+  <description>지뢰찾기를 응용한 새로운 퍼즐게임</description>
+  <language>ko</language>
+  </channel>
+</rss>
