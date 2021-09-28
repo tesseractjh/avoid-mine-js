@@ -3593,14 +3593,12 @@ class Board {
         cell.textColor = colorMatch[type];
         cell.fontSize = this.cellSize * 0.55;
         if (type === 'purple') {
-          const shape = [...new Array(9)].map((_, i) => i);
-          let range = randRange(1, 7);
-          while (range) {
-            const rand = randRange(0, shape.length-1);
-            shape.splice(rand, 1);
-            range--;
+          this.setPurpleShape(cell);
+          let validShapeCount = cell.getSurroundingCell(3).length;
+          while (validShapeCount === 0) {
+            this.setPurpleShape(cell);
+            validShapeCount = cell.getSurroundingCell(3).length;
           }
-          cell.shape = shape;
         } else {
           cell.shape = shapeMatch[type];
         }
@@ -3608,23 +3606,34 @@ class Board {
     });
   }
 
+  setPurpleShape(cell) {
+    const shape = [...new Array(9)].map((_, i) => i);
+    let range = randRange(1, 7);
+    while (range--) {
+      const rand = randRange(0, shape.length-1);
+      shape.splice(rand, 1);
+    }
+    cell.shape = shape;
+  }
+
   setSpecialText() {
     if (!this.boardSetting) return;
     let { oddEven, highLow, middle } = this.boardSetting;
-    const candidate = [...this.minePlantable];
+    const candidate = this[this.curArr].flat();
 
-    while (oddEven) {
+    while (oddEven--) {
       const rand = randRange(0, candidate.length-1);
       const cell = candidate.splice(rand, 1)[0];
       cell.textType = 'oddEven';
-      oddEven--;
     }
+
     while (candidate.length && highLow) {
       const rand = randRange(0, candidate.length-1);
       const cell = candidate.splice(rand, 1)[0];
       const numArr = cell.getSurroundingCell(3).map(surCell => surCell.number);
       const max = Math.max(...numArr);
       const min = Math.min(...numArr);
+
       if (cell.number === max) {
         cell.textType = 'high';
         highLow--;
