@@ -25,6 +25,7 @@ mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, err => {
 app.get('/', (req, res) => res.sendFile(__dirname + '/dist/index.html'));
 app.get('/rss', (req, res) => res.sendFile(__dirname + '/rss.xml'));
 app.get('/sitemap', (req, res) => res.sendFile(__dirname + '/sitemap.xml'));
+app.get('/robots.txt', (req, res) => res.sendFile(__dirname + '/robots.txt'));
 
 // 현재 버전
 app.post('/v100/save/classic', (req, res) => {
