@@ -4,5 +4,13 @@
   <link>https://avoidmine.herokuapp.com/</link>
   <description>지뢰찾기를 응용한 새로운 퍼즐게임</description>
   <language>ko</language>
+  <pubDate>Tue, 28 Sep 2021 20:47:19 +0900</pubDate>
+  <item>
+    <title>지뢰피하기 메인화면</title>
+    <button>게임방법</button>
+    <button>게임시작</button>
+    <button>순위표</button>
+    <button>패치노트</button>
+  </item>
   </channel>
 </rss>
