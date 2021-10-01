@@ -2286,6 +2286,31 @@ const MODE_CHALLENGE = [
       difficulty: 3,
       item: [10, 5, 2]
     }
+  },
+
+  {
+    type: 'game',
+    xCount: 10,
+    yCount: 10,
+    mine: 35,
+    boardSetting: {
+      time: 480,
+      red: 10,
+      orange: 10,
+      yellow: 10,
+      green: 10,
+      blue: 10,
+      navy: 10,
+      purple: 10,
+      oddEven: 25,
+      highLow: 25,
+      block: [20, []]
+    },
+    selectInfo: {
+      name: '고급 03',
+      difficulty: 3,
+      item: [10, 5, 2, 12]
+    }
   }
 
 ];
