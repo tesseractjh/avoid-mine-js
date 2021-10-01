@@ -59,7 +59,7 @@ const RAINBOW = [
 ];
 
 const TEXT_HINT = [
-  'oddEven', 'highLow'
+  'oddEven', 'highLow', 'plus'
 ]
 
 const shapeMatch = {
@@ -73,7 +73,8 @@ const shapeMatch = {
 
 const textHintMatch = {
   oddEven: '홀짝',
-  highLow: '▲▼'
+  highLow: '▲▼',
+  plus: '+'
 }
 
 const itemMatch = {
@@ -2298,7 +2299,7 @@ const MODE_CHALLENGE = [
     yCount: 10,
     mine: 35,
     boardSetting: {
-      time: 480,
+      time: 450,
       red: 10,
       orange: 10,
       yellow: 10,
@@ -2323,7 +2324,7 @@ const MODE_CHALLENGE = [
     yCount: 10,
     mine: 42,
     boardSetting: {
-      time: 540,
+      time: 450,
       red: 10,
       orange: 10,
       yellow: 12,
