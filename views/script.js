@@ -2785,8 +2785,8 @@ class Cell extends Rect {
         return '△'
       case 'low':
         return '▽'
-      case 'middle':
-        return '─';
+      case 'plus':
+        return '+';
     }
   }
 
@@ -3618,7 +3618,7 @@ class Board {
 
   setSpecialText() {
     if (!this.boardSetting) return;
-    let { oddEven, highLow, middle } = this.boardSetting;
+    let { oddEven, highLow, plus } = this.boardSetting;
     const candidate = this[this.curArr].flat();
 
     while (oddEven--) {
@@ -3646,10 +3646,18 @@ class Board {
       } else if (cell.number < min) {
         cell.textType = 'lowest';
         highLow--;
-      } else if (middle) {
-        cell.textType = 'middle'
-        highLow--;
       }
+    }
+
+    if (plus) {
+      this.forEachCell(cell => {
+        const lastNum = cell.getSurroundingCell(3)
+          .map(surCell => surCell.number)
+          .reduce((acc, num) => acc + num, 0) % 10;
+        if (cell.number === lastNum) {
+          cell.textType = 'plus';
+        }
+      });
     }
   }
 

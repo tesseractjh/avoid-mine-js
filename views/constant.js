@@ -279,6 +279,10 @@ const TEXT = {
   newElementTitle03: '퍼펙트 클리어 조건',
   newElementBlock03: '벽이 있는 맵에서 퍼펙트 클리어 조건은<br>지뢰뿐 아니라 벽까지 고려하여<br>밟을 수 있는 모든 칸을 밟는 것입니다.',
 
+  newElementTitle04: '덧셈 힌트',
+  newElementPlus01: '일부 칸의 숫자 힌트가 덧셈 힌트로 전환됩니다.<br>+가 표시된 칸은 이 칸을 제외한 이 칸의 범위 내<br>모든 숫자들의 합의 마지막 숫자가 이 칸이 가리키는 숫자와 같습니다.',
+  newElementPlus02: '예를 들어 아래 그림에서 숫자 4가 적힌 칸은<br>이 칸을 제외한 이 칸의 범위 내 숫자들의 합이 14이고<br>14의 마지막 숫자인 4와 이 칸의 숫자가 같습니다.',
+
   survivalMode01: '생존 모드',
   survivalMode02: '생존 모드에서는 맵이 계속 왼쪽으로 움직입니다.<br>만약 맵이 움직일 때, 내 캐릭터가 맨 왼쪽줄에 위치해있다면 즉시 패배합니다.',
   survivalMode03: '각 칸의 힌트는 현재 보이는 맵을 기준으로 숫자가 결정됩니다.<br>따라서, 맵이 움직이면서 일부 칸들의 힌트가 변경될 수 있습니다.',
@@ -2311,6 +2315,90 @@ const MODE_CHALLENGE = [
       difficulty: 3,
       item: [10, 5, 2, 12]
     }
+  },
+
+  {
+    type: 'game',
+    xCount: 12,
+    yCount: 10,
+    mine: 42,
+    boardSetting: {
+      time: 540,
+      red: 10,
+      orange: 10,
+      yellow: 12,
+      green: 12,
+      blue: 15,
+      navy: 15,
+      purple: 20,
+      oddEven: 25,
+      highLow: 20,
+      plus: true
+    },
+    selectInfo: {
+      name: '고급 04',
+      difficulty: 3,
+      item: [10, 5, 2]
+    },
+    add: [
+      {
+        type: 'info',
+        layout: 'leftRight',
+        title: TEXT.newElementTitle04,
+        half1: {
+          type: 'board',
+          xCount: 3,
+          yCount: 3,
+          ensured: [
+            [0, 0, 2], [1, 0, 2], [2, 0, 1],
+            [0, 1, 1], [1, 1, 4], [2, 1, 3],
+            [0, 2, 2], [1, 2, 1], [2, 2, 2]
+          ]
+        },
+        half2: {
+          type: 'board',
+          xCount: 3,
+          yCount: 3,
+          ensured: [
+            [0, 0, 2], [1, 0, 2], [2, 0, 1],
+            [0, 1, 1], [1, 1, '+'], [2, 1, 3],
+            [0, 2, 2], [1, 2, 1], [2, 2, 2]
+          ]
+        },
+        arrow: true,
+        header: TEXT.newElementPlus01,
+        footer: TEXT.pressH2,
+      },
+
+      {
+        type: 'info',
+        layout: 'leftRight',
+        title: TEXT.newElementTitle04,
+        half1: {
+          type: 'board',
+          xCount: 3,
+          yCount: 3,
+          ensured: [
+            [0, 0, 2], [1, 0, 2], [2, 0, 1],
+            [0, 1, 1], [1, 1, 4], [2, 1, 3],
+            [0, 2, 2], [1, 2, 1], [2, 2, 2]
+          ]
+        },
+        half2: {
+          type: 'board',
+          xCount: 3,
+          yCount: 3,
+          ensured: [
+            [0, 0, 2], [1, 0, 2], [2, 0, 1],
+            [0, 1, 1], [1, 1, '+'], [2, 1, 3],
+            [0, 2, 2], [1, 2, 1], [2, 2, 2]
+          ]
+        },
+        arrow: true,
+        header: TEXT.newElementPlus02,
+        footer: TEXT.pressH3,
+      }
+    ]
   }
 
 ];
