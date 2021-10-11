@@ -2399,7 +2399,32 @@ const MODE_CHALLENGE = [
         footer: TEXT.pressH3,
       }
     ]
-  }
+  },
+
+  {
+    type: 'game',
+    xCount: 13,
+    yCount: 10,
+    mine: 45,
+    boardSetting: {
+      time: 540,
+      purple: 130,
+      oddEven: 20,
+      highLow: 20,
+      block: [0, [
+        1, 3, 5, 7, 9, 11,
+        26, 28, 30, 32, 34, 36, 38,
+        53, 55, 57, 59, 61, 63,
+        78, 80, 82, 84, 86, 88, 90,
+        105, 107, 109, 111, 113, 115
+      ]]
+    },
+    selectInfo: {
+      name: '고급 05',
+      difficulty: 4,
+      item: [10, 5, 2, 17]
+    }
+  },
 
 ];
 
