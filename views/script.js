@@ -2916,6 +2916,11 @@ class Cell extends Rect {
     this.text = this.value;
     this.strokeColor = strokeColor;
     this.lineWidth = lineWidth;
+    if (this.textType === 'oddEven') {
+      this.fontWeight = 600;
+    } else {
+      this.fontWeight = 700;
+    }
     this.canvas.strokeText(this);
   }
 
