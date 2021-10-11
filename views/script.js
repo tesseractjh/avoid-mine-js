@@ -495,11 +495,11 @@ class Canvas {
       this.$leaderboard.show();
       this.page = 'leaderboard';
     } else { // GET요청
-      let url = id ?? '';
-      if (url !== '') {
-        url = '/' + url;
+      let param = id ?? '';
+      if (param !== '') {
+        param = '/' + param;
       }
-      fetch(`/v${VERSION}/leaderboard/${this.mode.toLowerCase()}${url}`)
+      fetch(`/${this.mode.toLowerCase()}${param}`)
       .then(res => res.json())
       .then(users => {
         this.leaderboardInfo.record = users;
@@ -516,10 +516,10 @@ class Canvas {
   }
 
   postLeaderBoard(userInfo) {
-    const [ $elem, url ] = this.crossMode('post');
+    const [ $elem, param ] = this.crossMode('post');
     $elem.show();
     this.elementDropEffect($elem);
-    fetch(`/v${VERSION}/save/${this.mode.toLowerCase()}${url}`, {
+    fetch(`/${this.mode.toLowerCase()}${param}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(userInfo)

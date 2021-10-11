@@ -1,5 +1,4 @@
 // Constant Values
-const VERSION = 100;
 const PATCH_DATE = '마지막 업데이트: 10/04 오후 1시'
 
 const BACKGROUND_COLOR     = 'rgb( 90,  96, 116)';

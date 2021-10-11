@@ -28,6 +28,42 @@ app.get('/sitemap', (req, res) => res.sendFile(__dirname + '/sitemap.xml'));
 app.get('/robots.txt', (req, res) => res.sendFile(__dirname + '/robots.txt'));
 
 // 현재 버전
+app.post('/classic', (req, res) => {
+  const user = new User();
+  for (const [ key, value ] of Object.entries(req.body)) {
+    user[key] = value;
+  }
+
+  if (user.score <= 0) {
+    res.send('fail');
+  } else {
+    User.find({}, '_id score').sort({ score: -1, createdAt: 1 })
+      .then(users => {
+        const len = users.length;
+        if (len < 500) {
+          user.save();
+        } else {
+          const lastUser = users[len-1];
+          const { _id, score } = lastUser;
+          if (user.score <= score) {
+            console.log(`500위 점수 ${score}점 이하라서 저장되지 않습니다.`)
+            return;
+          }
+
+          Promise.all([
+            user.save(),
+            new Promise(resolve => resolve(User.deleteOne({ _id }))),
+          ])
+          .then(() => console.log(`_id ${_id}, score ${score} document 삭제됨`));
+        }
+      })
+      .then(() => res.send('success'))
+      .then(() => console.log(`name: ${user.name}, score: ${user.score}, stage: ${user.stage}`))
+      .catch(console.error);
+  }
+});
+
+// 이전 버전
 app.post('/v100/save/classic', (req, res) => {
   const user = new User();
   for (const [ key, value ] of Object.entries(req.body)) {
@@ -64,6 +100,14 @@ app.post('/v100/save/classic', (req, res) => {
 });
 
 // 현재 버전
+app.get('/classic', (req, res) => {
+  User.find({}, '-_id name score stage')
+    .sort({ score: -1, createdAt: 1 }).exec()
+    .then(users => res.json(users))
+    .catch(console.error);
+});
+
+// 이전 버전
 app.get('/v100/leaderboard/classic', (req, res) => {
   User.find({}, '-_id name score stage')
     .sort({ score: -1, createdAt: 1 }).exec()
