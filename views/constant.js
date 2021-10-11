@@ -1,5 +1,5 @@
 // Constant Values
-const PATCH_DATE = '마지막 업데이트: 10/04 오후 1시'
+const PATCH_DATE = '마지막 업데이트: 10/12 오후 1시'
 
 const BACKGROUND_COLOR     = 'rgb( 90,  96, 116)';
 const BLACK                = 'rgb(  0,   0,   0)';
