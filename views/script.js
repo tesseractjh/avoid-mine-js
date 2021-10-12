@@ -2446,7 +2446,7 @@ class Canvas {
           const rank = getRank(score, 'SURVIVAL');
           const minute = Math.floor(time / 60);
           const sec = time % 60;
-          const second = sec > 10 ? sec : '0' + sec;
+          const second = sec >= 10 ? sec : '0' + sec;
           return [ ranking, name, score, rank, `${minute}:${second}`, `${delay}s`, cellCount ];
         }
 
