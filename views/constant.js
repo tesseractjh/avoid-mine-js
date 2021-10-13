@@ -1675,13 +1675,13 @@ const MODE_CLASSIC = [
 	  mine: 30,
 	  boardSetting: {
 		  time: 360,
-      red: randRange(1, 2),
-      orange: randRange(1, 2),
-      yellow: randRange(1, 3),
-      green: randRange(1, 3),
-      blue: randRange(3, 5),
-      oddEven: randRange(3, 5),
-      highLow: randRange(2, 4)
+      get red() { return randRange(1, 2); },
+      get orange() { return randRange(1, 2); },
+      get yellow() { return randRange(1, 3); },
+      get green() { return randRange(1, 3); },
+      get blue() { return randRange(3, 5); },
+      get oddEven() { return randRange(3, 5); },
+      get highLow() { return randRange(2, 4); },
 	  }
 	},
 
@@ -1713,14 +1713,14 @@ const MODE_CLASSIC = [
 	  mine: 30,
 	  boardSetting: {
 		  time: 360,
-      red: randRange(1, 2),
-      orange: randRange(1, 2),
-      yellow: randRange(1, 2),
-      green: randRange(1, 2),
-      blue: randRange(1, 2),
-      navy: randRange(5, 6),
-      oddEven: randRange(2, 4),
-      highLow: randRange(1, 3)
+      get red() { return randRange(1, 2); },
+      get orange() { return randRange(1, 2); },
+      get yellow() { return randRange(1, 2); },
+      get green() { return randRange(1, 2); },
+      get blue() { return randRange(1, 2); },
+      get navy() { return randRange(5, 6); },
+      get oddEven() { return randRange(2, 4); },
+      get highLow() { return randRange(1, 3); },
 	  }
 	},
 
@@ -1731,14 +1731,14 @@ const MODE_CLASSIC = [
 	  mine: 30,
 	  boardSetting: {
 		  time: 360,
-      red: randRange(1, 3),
-      orange: randRange(1, 3),
-      yellow: randRange(1, 3),
-      green: randRange(1, 3),
-      blue: randRange(1, 3),
-      navy: randRange(4, 6),
-      oddEven: randRange(3, 5),
-      highLow: randRange(2, 4)
+      get red() { return randRange(1, 3); },
+      get orange() { return randRange(1, 3); },
+      get yellow() { return randRange(1, 3); },
+      get green() { return randRange(1, 3); },
+      get blue() { return randRange(1, 3); },
+      get navy() { return randRange(4, 6); },
+      get oddEven() { return randRange(3, 5); },
+      get highLow() { return randRange(2, 4); },
 	  }
 	},
 
@@ -1749,14 +1749,14 @@ const MODE_CLASSIC = [
 	  mine: 30,
 	  boardSetting: {
 		  time: 360,
-      red: randRange(2, 3),
-      orange: randRange(2, 3),
-      yellow: randRange(3, 4),
-      green: randRange(3, 4),
-      blue: randRange(4, 5),
-      navy: randRange(4, 5),
-      oddEven: randRange(5, 6),
-      highLow: randRange(3, 5)
+      get red() { return randRange(2, 3); },
+      get orange() { return randRange(2, 3); },
+      get yellow() { return randRange(3, 4); },
+      get green() { return randRange(3, 4); },
+      get blue() { return randRange(4, 5); },
+      get navy() { return randRange(4, 5); },
+      get oddEven() { return randRange(5, 6); },
+      get highLow() { return randRange(3, 5); },
 	  }
 	},
 
@@ -1768,14 +1768,14 @@ const MODE_CLASSIC = [
 	  mine: 30,
 	  boardSetting: {
 		  time: 360,
-      red: randRange(2, 3),
-      orange: randRange(2, 3),
-      yellow: randRange(3, 4),
-      green: randRange(3, 4),
-      blue: randRange(4, 5),
-      navy: randRange(4, 5),
-      oddEven: randRange(5, 7),
-      highLow: randRange(4, 6)
+      get red() { return randRange(2, 3); },
+      get orange() { return randRange(2, 3); },
+      get yellow() { return randRange(3, 4); },
+      get green() { return randRange(3, 4); },
+      get blue() { return randRange(4, 5); },
+      get navy() { return randRange(4, 5); },
+      get oddEven() { return randRange(5, 7); },
+      get highLow() { return randRange(4, 6); },
 	  }
 	},
 
@@ -1824,15 +1824,15 @@ const MODE_CLASSIC = [
 	  mine: 35,
 	  boardSetting: {
 		  time: 420,
-      red: randRange(1, 3),
-      orange: randRange(1, 3),
-      yellow: randRange(3, 4),
-      green: randRange(3, 4),
-      blue: randRange(4, 5),
-      navy: randRange(4, 5),
-      purple: randRange(3, 4),
-      oddEven: randRange(4, 6),
-      highLow: randRange(4, 6)
+      get red() { return randRange(1, 3); },
+      get orange() { return randRange(1, 3); },
+      get yellow() { return randRange(3, 4); },
+      get green() { return randRange(3, 4); },
+      get blue() { return randRange(4, 5); },
+      get navy() { return randRange(4, 5); },
+      get purple() { return randRange(3, 4); },
+      get oddEven() { return randRange(4, 6); },
+      get highLow() { return randRange(4, 6); },
 	  }
 	},
 
@@ -1843,15 +1843,15 @@ const MODE_CLASSIC = [
 	  mine: 42,
 	  boardSetting: {
 		  time: 480,
-      red: randRange(1, 3),
-      orange: randRange(1, 3),
-      yellow: randRange(3, 4),
-      green: randRange(3, 4),
-      blue: randRange(3, 4),
-      navy: randRange(3, 4),
-      purple: randRange(4, 6),
-      oddEven: randRange(5, 7),
-      highLow: randRange(5, 6)
+      get red() { return randRange(1, 3); },
+      get orange() { return randRange(1, 3); },
+      get yellow() { return randRange(3, 4); },
+      get green() { return randRange(3, 4); },
+      get blue() { return randRange(3, 4); },
+      get navy() { return randRange(3, 4); },
+      get purple() { return randRange(4, 6); },
+      get oddEven() { return randRange(5, 7); },
+      get highLow() { return randRange(5, 6); },
 	  }
 	},
 
@@ -1862,15 +1862,15 @@ const MODE_CLASSIC = [
 	  mine: 49,
 	  boardSetting: {
 		  time: 480,
-      red: randRange(2, 5),
-      orange: randRange(2, 5),
-      yellow: randRange(4, 5),
-      green: randRange(4, 5),
-      blue: randRange(4, 5),
-      navy: randRange(4, 5),
-      purple: randRange(6, 8),
-      oddEven: randRange(6, 8),
-      highLow: randRange(5, 6)
+      get red() { return randRange(2, 5); },
+      get orange() { return randRange(2, 5); },
+      get yellow() { return randRange(4, 5); },
+      get green() { return randRange(4, 5); },
+      get blue() { return randRange(4, 5); },
+      get navy() { return randRange(4, 5); },
+      get purple() { return randRange(6, 8); },
+      get oddEven() { return randRange(6, 8); },
+      get highLow() { return randRange(5, 6); },
 	  }
 	},
 
@@ -1881,15 +1881,15 @@ const MODE_CLASSIC = [
 	  mine: 60,
 	  boardSetting: {
 		  time: 600,
-      red: randRange(2, 5),
-      orange: randRange(2, 5),
-      yellow: randRange(4, 6),
-      green: randRange(4, 6),
-      blue: randRange(4, 6),
-      navy: randRange(4, 6),
-      purple: randRange(6, 8),
-      oddEven: randRange(6, 8),
-      highLow: randRange(5, 6)
+      get red() { return randRange(2, 5); },
+      get orange() { return randRange(2, 5); },
+      get yellow() { return randRange(4, 6); },
+      get green() { return randRange(4, 6); },
+      get blue() { return randRange(4, 6); },
+      get navy() { return randRange(4, 6); },
+      get purple() { return randRange(6, 8); },
+      get oddEven() { return randRange(6, 8); },
+      get highLow() { return randRange(5, 6); },
 	  }
 	},
   
@@ -1901,15 +1901,15 @@ const MODE_CLASSIC = [
 	  mine: 90,
 	  boardSetting: {
 		  time: 900,
-      red: randRange(4, 7),
-      orange: randRange(4, 7),
-      yellow: randRange(5, 7),
-      green: randRange(5, 7),
-      blue: randRange(6, 7),
-      navy: randRange(6, 7),
-      purple: randRange(7, 10),
-      oddEven: randRange(10, 12),
-      highLow: randRange(8, 11)
+      get red() { return randRange(4, 7); },
+      get orange() { return randRange(4, 7); },
+      get yellow() { return randRange(5, 7); },
+      get green() { return randRange(5, 7); },
+      get blue() { return randRange(6, 7); },
+      get navy() { return randRange(6, 7); },
+      get purple() { return randRange(7, 10); },
+      get oddEven() { return randRange(10, 12); },
+      get highLow() { return randRange(8, 11); },
 	  }
 	},
 ];
@@ -1948,8 +1948,8 @@ const MODE_CHALLENGE = [
     mine: 20,
     boardSetting: {
       time: 90,
-      red: randRange(2, 3),
-      orange: randRange(2, 3)
+      get red() { return randRange(2, 3); },
+      get orange() { return randRange(2, 3); },
     },
     selectInfo: {
       name: '초급 02',
@@ -1965,9 +1965,9 @@ const MODE_CHALLENGE = [
     mine: 20,
     boardSetting: {
       time: 100,
-      red: randRange(2, 4),
-      orange: randRange(2, 4),
-      oddEven: randRange(2, 3)
+      get red() { return randRange(2, 4); },
+      get orange() { return randRange(2, 4); },
+      get oddEven() { return randRange(2, 3); },
     },
     selectInfo: {
       name: '초급 03',
@@ -1983,10 +1983,10 @@ const MODE_CHALLENGE = [
     mine: 26,
     boardSetting: {
       time: 110,
-      red: randRange(2, 4),
-      orange: randRange(2, 4),
-      yellow: randRange(2, 3),
-      oddEven: randRange(3, 4)
+      get red() { return randRange(2, 4); },
+      get orange() { return randRange(2, 4); },
+      get yellow() { return randRange(2, 3); },
+      get oddEven() { return randRange(3, 4); },
     },
     selectInfo: {
       name: '초급 04',
@@ -2002,8 +2002,8 @@ const MODE_CHALLENGE = [
     mine: 26,
     boardSetting: {
       time: 110,
-      yellow: randRange(4, 5),
-      green: randRange(4, 5)
+      get yellow() { return randRange(4, 5); },
+      get green() { return randRange(4, 5); },
     },
     selectInfo: {
       name: '초급 05',
@@ -2019,9 +2019,9 @@ const MODE_CHALLENGE = [
     mine: 26,
     boardSetting: {
       time: 120,
-      yellow: randRange(8, 11),
-      green: randRange(8, 11),
-      oddEven: randRange(4, 7)
+      get yellow() { return randRange(8, 11); },
+      get green() { return randRange(8, 11); },
+      get oddEven() { return randRange(4, 7); },
     },
     selectInfo: {
       name: '초급 06',
@@ -2071,13 +2071,13 @@ const MODE_CHALLENGE = [
     mine: 35,
     boardSetting: {
       time: 210,
-      red: randRange(2, 4),
-      orange: randRange(2, 4),
-      yellow: randRange(3, 5),
-      green: randRange(3, 5),
-      blue: randRange(3, 5),
-      navy: randRange(3, 5),
-      oddEven: randRange(4, 6)
+      get red() { return randRange(2, 4); },
+      get orange() { return randRange(2, 4); },
+      get yellow() { return randRange(3, 5); },
+      get green() { return randRange(3, 5); },
+      get blue() { return randRange(3, 5); },
+      get navy() { return randRange(3, 5); },
+      get oddEven() { return randRange(4, 6); },
     },
     selectInfo: {
       name: '중급 03',
@@ -2213,9 +2213,9 @@ const MODE_CHALLENGE = [
     mine: 24,
     boardSetting: {
       time: 240,
-      red: randRange(2, 4),
-      orange: randRange(2, 4),
-      oddEven: randRange(6, 8),
+      get red() { return randRange(2, 4); },
+      get orange() { return randRange(2, 4); },
+      get oddEven() { return randRange(6, 8); },
       block: [0, [
         2, 5, 10, 13,
         16, 17, 19,
@@ -2553,8 +2553,8 @@ const MODE_SURVIVAL = [
     boardSetting: {
       time: 0,
       specialCells: {
-        start: randRange(0, 6) * 15,
-        destination: randRange(1, 7) * 15 - 1
+        get start() { return randRange(0, 6) * 15; },
+        get destination() { return randRange(1, 7) * 15 - 1; } 
       },
       itemDrop: 3
     }
@@ -2564,8 +2564,8 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 31,
     boardSetting: {
-      red: randRange(4, 6),
-      orange: randRange(4, 6),
+      get red() { return randRange(4, 6); },
+      get orange() { return randRange(4, 6); },
       itemDrop: 3
     }
   },
@@ -2574,9 +2574,9 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 32,
     boardSetting: {
-      red: randRange(3, 5),
-      orange: randRange(3, 5),
-      oddEven: randRange(4, 6),
+      get red() { return randRange(3, 5); },
+      get orange() { return randRange(3, 5); },
+      get oddEven() { return randRange(4, 6); },
       itemDrop: 4
     }
   },
@@ -2585,11 +2585,11 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 33,
     boardSetting: {
-      red: randRange(3, 5),
-      orange: randRange(3, 5),
-      yellow: randRange(3, 5),
-      green: randRange(3, 5),
-      oddEven: randRange(4, 6),
+      get red() { return randRange(3, 5); },
+      get orange() { return randRange(3, 5); },
+      get yellow() { return randRange(3, 5); },
+      get green() { return randRange(3, 5); },
+      get oddEven() { return randRange(4, 6); },
       itemDrop: 4
     }
   },
@@ -2598,13 +2598,13 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 34,
     boardSetting: {
-      red: randRange(3, 5),
-      orange: randRange(3, 5),
-      yellow: randRange(3, 5),
-      green: randRange(3, 5),
-      blue: randRange(3, 5),
-      navy: randRange(3, 5),
-      oddEven: randRange(4, 6),
+      get red() { return randRange(3, 5); },
+      get orange() { return randRange(3, 5); },
+      get yellow() { return randRange(3, 5); },
+      get green() { return randRange(3, 5); },
+      get blue() { return randRange(3, 5); },
+      get navy() { return randRange(3, 5); },
+      get oddEven() { return randRange(4, 6); },
       itemDrop: 5
     }
   },
@@ -2613,14 +2613,14 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 35,
     boardSetting: {
-      red: randRange(3, 5),
-      orange: randRange(3, 5),
-      yellow: randRange(3, 5),
-      green: randRange(3, 5),
-      blue: randRange(3, 5),
-      navy: randRange(3, 5),
-      oddEven: randRange(4, 6),
-      highLow: randRange(4, 6),
+      get red() { return randRange(3, 5); },
+      get orange() { return randRange(3, 5); },
+      get yellow() { return randRange(3, 5); },
+      get green() { return randRange(3, 5); },
+      get blue() { return randRange(3, 5); },
+      get navy() { return randRange(3, 5); },
+      get oddEven() { return randRange(4, 6); },
+      get highLow() { return randRange(4, 6); },
       itemDrop: 5
     }
   },
@@ -2629,16 +2629,16 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 36,
     boardSetting: {
-      red: randRange(3, 5),
-      orange: randRange(3, 5),
-      yellow: randRange(3, 5),
-      green: randRange(3, 5),
-      blue: randRange(3, 5),
-      navy: randRange(3, 5),
-      purple: randRange(3, 5),
-      oddEven: randRange(4, 6),
-      highLow: randRange(4, 6),
-      itemDrop: randRange(4, 6)
+      get red() { return randRange(3, 5); },
+      get orange() { return randRange(3, 5); },
+      get yellow() { return randRange(3, 5); },
+      get green() { return randRange(3, 5); },
+      get blue() { return randRange(3, 5); },
+      get navy() { return randRange(3, 5); },
+      get purple() { return randRange(3, 5); },
+      get oddEven() { return randRange(4, 6); },
+      get highLow() { return randRange(4, 6); },
+      get itemDrop() { return randRange(4, 6); },
     }
   },
 
@@ -2646,17 +2646,17 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 37,
     boardSetting: {
-      red: randRange(2, 3),
-      orange: randRange(2, 3),
-      yellow: randRange(3, 5),
-      green: randRange(3, 5),
-      blue: randRange(3, 5),
-      navy: randRange(3, 5),
-      purple: randRange(3, 5),
-      oddEven: randRange(5, 7),
-      highLow: randRange(5, 7),
-      block: [randRange(3, 5), []],
-      itemDrop: randRange(4, 6)
+      get red() { return randRange(2, 3); },
+      get orange() { return randRange(2, 3); },
+      get yellow() { return randRange(3, 5); },
+      get green() { return randRange(3, 5); },
+      get blue() { return randRange(3, 5); },
+      get navy() { return randRange(3, 5); },
+      get purple() { return randRange(3, 5); },
+      get oddEven() { return randRange(5, 7); },
+      get highLow() { return randRange(5, 7); },
+      get block() { return [randRange(3, 5), []]; },
+      get itemDrop() { return randRange(4, 6); },
     }
   },
 
@@ -2664,17 +2664,17 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 38,
     boardSetting: {
-      red: randRange(2, 3),
-      orange: randRange(2, 3),
-      yellow: randRange(3, 6),
-      green: randRange(3, 6),
-      blue: randRange(3, 6),
-      navy: randRange(3, 6),
-      purple: randRange(4, 6),
-      oddEven: randRange(6, 8),
-      highLow: randRange(6, 8),
-      block: [randRange(4, 6), []],
-      itemDrop: randRange(4, 6)
+      get red() { return randRange(2, 3); },
+      get orange() { return randRange(2, 3); },
+      get yellow() { return randRange(3, 6); },
+      get green() { return randRange(3, 6); },
+      get blue() { return randRange(3, 6); },
+      get navy() { return randRange(3, 6); },
+      get purple() { return randRange(4, 6); },
+      get oddEven() { return randRange(6, 8); },
+      get highLow() { return randRange(6, 8); },
+      get block() { return [randRange(4, 6), []]; },
+      get itemDrop() { return randRange(4, 6); },
     }
   },
 
@@ -2682,39 +2682,38 @@ const MODE_SURVIVAL = [
     type: 'survivalSetting',
     mine: 39,
     boardSetting: {
-      red: randRange(2, 4),
-      orange: randRange(2, 4),
-      yellow: randRange(4, 7),
-      green: randRange(4, 7),
-      blue: randRange(4, 7),
-      navy: randRange(4, 7),
-      purple: randRange(4, 7),
-      oddEven: randRange(6, 8),
-      highLow: randRange(6, 8),
-      block: [randRange(5, 7), []],
-      itemDrop: randRange(4, 6)
+      get red() { return randRange(2, 4); },
+      get orange() { return randRange(2, 4); },
+      get yellow() { return randRange(4, 7); },
+      get green() { return randRange(4, 7); },
+      get blue() { return randRange(4, 7); },
+      get navy() { return randRange(4, 7); },
+      get purple() { return randRange(4, 7); },
+      get oddEven() { return randRange(6, 8); },
+      get highLow() { return randRange(6, 8); },
+      get block() { return [randRange(5, 7), []]; },
+      get itemDrop() { return randRange(4, 6); },
     }
   },
 
   {
     type: 'survivalSetting',
-    mine: randRange(35, 45),
+    get mine() { return randRange(35, 45); },
     isFinalSetting: true,
     boardSetting: {
-      red: randRange(2, 4),
-      orange: randRange(2, 4),
-      yellow: randRange(3, 6),
-      green: randRange(3, 6),
-      blue: randRange(3, 6),
-      navy: randRange(3, 6),
-      purple: randRange(3, 6),
-      oddEven: randRange(5, 8),
-      highLow: randRange(4, 8),
-      block: [randRange(3, 8), []],
-      itemDrop: randRange(3, 9)
+      get red() { return randRange(2, 4); },
+      get orange() { return randRange(2, 4); },
+      get yellow() { return randRange(3, 6); },
+      get green() { return randRange(3, 6); },
+      get blue() { return randRange(3, 6); },
+      get navy() { return randRange(3, 6); },
+      get purple() { return randRange(3, 6); },
+      get oddEven() { return randRange(5, 8); },
+      get highLow() { return randRange(4, 8); },
+      get block() { return [randRange(3, 8), []]; },
+      get itemDrop() { return randRange(3, 9); },
     }
   }
-
 ];
 
 const SURVIVAL_DELAY = 10000;
