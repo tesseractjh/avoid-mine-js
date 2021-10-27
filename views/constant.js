@@ -2228,7 +2228,7 @@ const MODE_CHALLENGE = [
     },
     selectInfo: {
       name: '중급 05',
-      difficulty: 3,
+      difficulty: 2,
       item: [10, 5, 2, 12]
     },
   },
@@ -2245,7 +2245,7 @@ const MODE_CHALLENGE = [
     },
     selectInfo: {
       name: '중급 06',
-      difficulty: 3,
+      difficulty: 2,
       item: [5, 3, 1]
     }
   },
@@ -2337,7 +2337,7 @@ const MODE_CHALLENGE = [
     },
     selectInfo: {
       name: '고급 04',
-      difficulty: 3,
+      difficulty: 4,
       item: [10, 5, 2]
     },
     add: [
