@@ -1,9 +1,6 @@
-* {
+body {
     margin: 0;
     padding: 0;
-}
-
-body {
     background: rgb(90, 96, 116);
 }
 
@@ -470,13 +467,17 @@ input[type="radio"]:checked + div {
 #leaderboard-container {
     border: 3px solid tomato;
     width: 95%;
-    
 }
 
 #leaderboard-select {
     height: 50px;
     justify-content: center;
     background-color: #ffcccc;
+}
+
+#leaderboard-select * {
+    margin: 0;
+    padding: 0;
 }
 
 #main-container {
