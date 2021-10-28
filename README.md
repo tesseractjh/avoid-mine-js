@@ -10,6 +10,8 @@
 - 지뢰를 밟으면 라이프(💖)가 감소하고, 라이프가 0일때 지뢰를 밟으면 패배
 - 제한 시간이 다 되면 즉시 패배
 
+![classic](https://user-images.githubusercontent.com/67459853/137245049-944015f1-59e9-407d-87b0-f7e855957cc3.png)
+
 ## 게임 모드
 ### 클래식 모드
 - 1스테이지부터 45스테이지까지 점점 난이도가 증가하는 기본 모드
@@ -21,8 +23,12 @@
 - 다양한 난이도의 맵이 여러 개 있고, 원하는 맵을 선택하여 도전 가능
 - 각 맵별로 순위표가 따로 존재함
 
+![challenge](https://user-images.githubusercontent.com/67459853/137245030-5936e91f-c37d-47e0-b727-a8ef94a5a2d0.PNG)
+
 ### 생존 모드
 - 제한 시간 없이 최대한 오래 생존하는 모드
 - 횡스크롤 러닝 액션 게임(ex: 쿠키런)처럼 맵이 좌에서 우로 움직임
 - 라이프를 모두 잃거나 맵 밖으로 벗어나면 패배
 - 플레이 영상 URL : https://www.youtube.com/watch?v=Pzr3HubY6FA
+
+![survival](https://user-images.githubusercontent.com/67459853/137246290-12cec32a-4aa1-4384-a1a7-6cbc08de3088.gif)
