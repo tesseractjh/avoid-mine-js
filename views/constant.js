@@ -2756,7 +2756,7 @@ const SURVIVAL_DELAY = 10000;
 const SURVIVAL_INIT_RATIO = 0.92;
 const SURVIVAL_FINAL_RATIO = 0.97;
 
-const BLOCK_MAPS = [9, 10, 14, 16];
+const BLOCK_MAPS = [9, 10, 14, 16, 17];
 
 [
   colorMatch, itemMatch, shapeMatch, textHintMatch, RAINBOW, TEXT_HINT,
