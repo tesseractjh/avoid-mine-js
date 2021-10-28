@@ -122,7 +122,7 @@ class Canvas {
     this.$leaderboard.$challenge = new Modal('challenge-check');
     this.$leaderboard.$survival = new Modal('survival-check');
     this.$leaderboard.$select = new Modal('leaderboard-select');
-    this.appendComboBox();
+    this.appendDropdown();
     this.$leaderboard.elem.addEventListener('change', this.getCallback('change'));
 
     this.$updateLog = new Modal('update-log');
@@ -487,7 +487,6 @@ class Canvas {
   setLeaderboard(id) {
     this.page = 'fetching';
     const { page, record } = this.leaderboardInfo;
-
     if (record.length > (page - 1) * 10) { // record가 커버 가능한 목록 이동
       this.initHead();
       this.crossMode('grid');
@@ -554,22 +553,43 @@ class Canvas {
     this.gameInfo.log.push(log);
   }
 
-  appendComboBox() {
-    const select = document.createElement('select');
+  appendDropdown() {
+    const leaderboard = this.$leaderboard;
+    const dropdown = document.createElement('ul');
+    dropdown.classList.add('dropdown');
+    const dropdownList = [];
+    let curDiff;
     MODE_CHALLENGE.forEach((chal, i) => {
       const { name } = chal.selectInfo;
-      const option = document.createElement('option');
-      this.setText(option, name);
-      option.value = i;
-      if (i === 0) {
-        option.selected = true;
+      const diff = name.split(' ')[0];
+      if (!dropdownList.includes(diff)) {
+        const diffLi = document.createElement('li');
+        diffLi.classList.add('dropdown-li');
+        const div = document.createElement('div');
+        this.setText(div, diff);
+        div.classList.add('diff-type');
+        diffLi.appendChild(div);
+        const ul = document.createElement('ul');
+        ul.classList.add('map-dropdown');
+        diffLi.appendChild(ul);
+        dropdown.appendChild(diffLi);
+        dropdownList.push(diff);
+        curDiff = ul;
+        div.addEventListener('mouseover', () => ul.style.display = '');
       }
-      select.appendChild(option);
+      const li = document.createElement('ul');
+      li.classList.add('challenge-map-li');
+      this.setText(li, name);
+      const tempDiff = curDiff;
+      li.addEventListener('click', () => tempDiff.style.display = 'none');
+      li.addEventListener('click', () => leaderboard.curChalMap = i);
+      li.addEventListener('click', this.getCallback('clickChallengeLeaderboard'));
+      curDiff.appendChild(li);
     });
-    select.addEventListener('change', this.getCallback('change'));
-    select.classList.add('select');
-    this.$leaderboard.$select.comboBox = select;
-    this.$leaderboard.$select.elem.appendChild(select);
+
+    dropdown.addEventListener('change', this.getCallback('change'));
+    this.$leaderboard.$select.dropdown = dropdown;
+    this.$leaderboard.$select.elem.appendChild(dropdown);
   }
 
   setMovementDiv() {
@@ -1925,6 +1945,15 @@ class Canvas {
     }
   }
 
+  clickChallengeLeaderboardCallback() {
+    this.leaderboardInfo.page = 1;
+    this.leaderboardInfo.record = [];
+    const { curChalMap } = this.$leaderboard;
+    this.leaderboardInfo.id = curChalMap;
+    this.$leaderboard.$mode02.innerHTML = MODE_CHALLENGE[curChalMap].selectInfo.name;
+    this.setLeaderboard(this.leaderboardInfo.id);
+  }
+
   buttonHoverCallback({ offsetX, offsetY }) {
     this.button.forEach(btn => {
       if (btn.contextInfo.isCollision(offsetX, offsetY)) {
@@ -2101,6 +2130,7 @@ class Canvas {
         this.mode = 'CLASSIC';
         this.leaderboardInfo.record = [];
         this.leaderboardInfo.page = 1;
+        this.$leaderboard.$mode02.innerHTML = '도전 모드';
         this.$leaderboard.$challenge.elem.checked = false;
         this.$leaderboard.$classic.elem.checked = true;
         this.$leaderboard.$list.elem.classList.add('classic-grid');
@@ -2184,20 +2214,19 @@ class Canvas {
     if (tagName === 'INPUT') {
       if (this.$leaderboard.$classic.elem.checked) {
         this.mode = 'CLASSIC';
+        this.$leaderboard.$mode02.innerHTML = '도전 모드';
         this.setLeaderboard();
       } else if (this.$leaderboard.$challenge.elem.checked) {
         this.mode = 'CHALLENGE';
-        this.$leaderboard.$select.comboBox.options[0].selected = true;
+        this.$leaderboard.curChalMap = 0;
         this.leaderboardInfo.id = 0;
+        this.$leaderboard.$mode02.innerHTML = MODE_CHALLENGE[0].selectInfo.name;
         this.setLeaderboard(0);
       } else if (this.$leaderboard.$survival.elem.checked) {
         this.mode = 'SURVIVAL';
+        this.$leaderboard.$mode02.innerHTML = '도전 모드';
         this.setLeaderboard();
       }
-    } else if (tagName === 'SELECT') {
-      const { options } = target;
-      this.leaderboardInfo.id = options.selectedIndex;
-      this.setLeaderboard(this.leaderboardInfo.id);
     }
   }
 
