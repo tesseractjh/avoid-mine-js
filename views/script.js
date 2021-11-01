@@ -148,17 +148,25 @@ class Canvas {
 
     this.$nav = new Modal('nav');
     this.$nav.$help = new Modal('nav-help');
+    this.$nav.$license = new Modal('nav-license');
 
     this.$help = new Modal('help');
     this.$help.$title = new Modal('help-title');
     this.$help.$article = new Modal('help-article');
     this.$help.$footer = new Modal('help-footer');
+
+    this.$license = new Modal('license');
+    this.$license.$title = new Modal('license-title');
+    this.$license.$article = new Modal('license-article');
+    this.$license.$footer = new Modal('license-footer');
   }
 
   initEventListener() {
     this.canvas.addEventListener('click', this.getCallback('clickButton'));
     this.canvas.addEventListener('mousemove', this.getCallback('buttonHover'));
     this.$nav.$help.elem.addEventListener('click', this.getCallback('clickHelp'));
+    const curCanvas = this;
+    this.$nav.$license.elem.addEventListener('click', () => curCanvas.showLicense());
     window.addEventListener('keydown', this.getCallback('keydown'));
   }
 
@@ -1751,6 +1759,30 @@ class Canvas {
     this.$help.show();
   }
 
+  showLicense() {
+    const { $title, $article } = this.$license;
+
+    this.$license.backgroundColor = WHITE_ALPHA;
+    this.$license.font = this.FONT_SIZE/2;
+    this.$license.width = this.width * BOARD_WIDTH_RATIO;
+    this.$license.height = this.height;
+
+    $title.font = this.FONT_SIZE;
+    
+    LICENSE.forEach(([ title, desc ]) => {
+      const titleDiv = document.createElement('div');
+      const descDiv = document.createElement('div');
+      titleDiv.innerHTML = title;
+      descDiv.innerHTML = desc;
+      titleDiv.classList.add('license-title');
+      descDiv.classList.add('license-desc');
+      $article.elem.appendChild(titleDiv);
+      $article.elem.appendChild(descDiv);
+    });
+    
+    this.$license.show();
+  }
+
   showShape() {
     if (this.gameInfo.shapeSwitch) {
       this.showMsgBox(TEXT.msgBox09, TOMATO, 'shape');
@@ -2055,6 +2087,9 @@ class Canvas {
       this.$help.hide();
       this.$help.$article.clear();
       return;
+    } else if (keyCode === 70) { // F
+      this.$license.hide();
+      this.$license.$article.clear();
     }
 
     if (this.page === 'game' || this.page === 'tutorial') {

@@ -2758,10 +2758,72 @@ const SURVIVAL_FINAL_RATIO = 0.97;
 
 const BLOCK_MAPS = [9, 10, 14, 16, 17];
 
+const LICENSE = [
+  [
+    '스테이지 클리어 효과음',
+    `CC0 1.0 Universal made by DayDreamSound<br>
+    https://youtu.be/kfnh9QAfDgA`
+  ],
+  [
+    '지뢰 폭발음',
+    `Thanks to, Mike Koenig<br>
+    From: http://soundbible.com/1151-Grenade.html<br>
+    Distributor: 저작권 걱정없는 유튜브용 음원 & 무료 효과음 서비스 ‘뮤팟’<br>
+    https://www.mewpot.com`
+  ],
+  [
+    '패배 효과음',
+    `CC0 1.0 Universal<br>
+    Short jingles by Kenney Vleugels (www.kenney.nl)`
+  ],
+  [
+    '생존 모드 맵 이동 효과음',
+    `CC0 1.0 Universal made by qubodup https://freesound.org/people/qubodup/packs/12143/`
+  ],
+  [
+    '아이템 사용 효과음',
+    `Thanks to, KevanGC<br>
+    From: http://soundbible.com/1645-Pling.html<br>
+    Distributor: 저작권 걱정없는 유튜브용 음원 & 무료 효과음 서비스 ‘뮤팟’<br>
+    https://www.mewpot.com`
+  ],
+  [
+    '벽 파괴 효과음',
+    `Thanks to, Mike Koenig<br>
+    From: http://soundbible.com/1761-Glass-Breaking.html<br>
+    Distributor: 저작권 걱정없는 유튜브용 음원 & 무료 효과음 서비스 ‘뮤팟’<br>
+    https://www.mewpot.com`
+  ],
+  [
+    '아이템 획득 효과음',
+    `CC0 1.0 Universal made by DayDreamSound<br>
+    https://youtu.be/kfnh9QAfDgA`
+  ],
+  [
+    '힌트 모양 효과음',
+    `Thanks to, DeepFrozenApps<br>
+    From: http://soundbible.com/2044-Tick.html<br>
+    Distributor: 저작권 걱정없는 유튜브용 음원 & 무료 효과음 서비스 ‘뮤팟’<br>
+    https://www.mewpot.com`
+  ],
+  [
+    '30초 카운트다운 효과음',
+    `CC BY-NC 4.0<br>
+    Artist: Alexander<br>
+    From: https://orangefreesounds.com/stopwatch-sound-effect/#google_vignette`
+  ],
+  [
+    '아이템 사용 불가 효과음',
+    `CC0 1.0 Universal<br>
+    Short jingles by Kenney Vleugels (www.kenney.nl)`
+  ]
+];
+
 [
   colorMatch, itemMatch, shapeMatch, textHintMatch, RAINBOW, TEXT_HINT,
   OFFSET_X, OFFSET_Y, 
   OFFSET5_X, OFFSET5_Y, 
   TEXT, BUTTON, TUTORIAL, 
-  MODE_CLASSIC, MODE_CHALLENGE, MODE_SURVIVAL
+  MODE_CLASSIC, MODE_CHALLENGE, MODE_SURVIVAL,
+  LICENSE
 ].forEach(obj => Object.freeze(obj));
