@@ -436,6 +436,17 @@ input[type="radio"]:checked + div {
     color: black;
 }
 
+.license-title {
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+.license-desc {
+    padding-left: 20px;
+    font-weight: normal;
+    color: gray;
+}
+
 #msg-box {
     top: 10%;
     border: 3px solid black;
