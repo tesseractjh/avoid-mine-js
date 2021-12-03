@@ -2608,7 +2608,7 @@ class ContextInfo {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.fontWeight = 700;
+    this.fontWeight = 500;
   }
 
   get x1() {
@@ -3008,6 +3008,11 @@ class Cell extends Rect {
 
   fillText() {
     this.text = this.value;
+    if (this.type === 'ensuredMine' && !this.isSelected) {
+      this.fontWeight = 500;
+    } else {
+      this.fontWeight = 700;
+    }
     this.canvas.fillText(this);
   }
 
