@@ -1,5 +1,5 @@
 # 💣 지뢰피하기 💣
-배포 URL : https://avoidmine.herokuapp.com/
+배포 URL : https://avoidmine-gvwrc.run.goorm.io/
 
 ![12121](https://user-images.githubusercontent.com/67459853/136982684-404dabfb-808b-47f7-9f01-d05c34cca468.png)
 - 지뢰찾기(Minesweeper)를 키보드로 조작한다는 컨셉으로 만든 퍼즐게임
